@@ -9,28 +9,34 @@ export function generateCode(): string {
 }
 
 export async function sendSms(phone: string, message: string): Promise<void> {
-  const token = process.env.GATEWAYAPI_TOKEN;
-  if (!token) {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_FROM_NUMBER || process.env.TWILIO_FROM;
+
+  if (!accountSid || !authToken || !from) {
     // Dev mode: log koden til konsollen
     console.log(`[SMS DEV] Til ${phone}: ${message}`);
     return;
   }
 
-  const res = await fetch("https://gatewayapi.com/rest/mtsms", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      sender: "StemPal",
-      message,
-      recipients: [{ msisdn: phone.replace(/\D/g, "") }],
-    }),
-  });
+  const res = await fetch(
+    `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${btoa(`${accountSid}:${authToken}`)}`,
+      },
+      body: new URLSearchParams({
+        To: phone,
+        From: from,
+        Body: message,
+      }),
+    }
+  );
 
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`GatewayAPI fejl: ${res.status} ${text}`);
+    const data = await res.json();
+    throw new Error(`Twilio fejl: ${res.status} ${data.message}`);
   }
 }
