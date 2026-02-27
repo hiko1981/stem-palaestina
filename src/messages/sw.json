@@ -25,7 +25,8 @@
     "yourVote": "Ulipiga kura",
     "yourVoteYes": "Ndiyo, kwa madai matatu",
     "yourVoteNo": "Hapana",
-    "missingCandidate": "Hupati mgombea wako?"
+    "missingCandidate": "Hupati mgombea wako?",
+    "intro": "Hapa wapiga kura wanaweza kuwaonyesha wanasiasa wanachokifikiri — na wagombea wanaweza kuwaonyesha wapiga kura msimamo wao. Huwezi kuona msimamo wa mgombea wako? Mwambie atoe maoni yake hapa."
   },
   "candidates": {
     "title": "Wagombea",

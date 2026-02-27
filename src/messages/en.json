@@ -25,7 +25,8 @@
     "yourVote": "You voted",
     "yourVoteYes": "Yes, for the three demands",
     "yourVoteNo": "No",
-    "missingCandidate": "Missing your candidate?"
+    "missingCandidate": "Missing your candidate?",
+    "intro": "Here voters can show politicians what they think — and candidates can show voters where they stand. Can't see your candidate's position? Ask them to share it here."
   },
   "candidates": {
     "title": "Candidates",

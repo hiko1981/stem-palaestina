@@ -25,7 +25,8 @@
     "yourVote": "你投了",
     "yourVoteYes": "是，支持三项要求",
     "yourVoteNo": "否",
-    "missingCandidate": "找不到你的候选人？"
+    "missingCandidate": "找不到你的候选人？",
+    "intro": "在这里，选民可以向政治家展示自己的想法——候选人也可以向选民展示自己的立场。看不到你的候选人的态度？请他们在这里表明立场。"
   },
   "candidates": {
     "title": "候选人",

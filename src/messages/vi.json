@@ -25,7 +25,8 @@
     "yourVote": "Bạn đã bỏ phiếu",
     "yourVoteYes": "Có, cho ba yêu cầu",
     "yourVoteNo": "Không",
-    "missingCandidate": "Không tìm thấy ứng viên?"
+    "missingCandidate": "Không tìm thấy ứng viên?",
+    "intro": "Tại đây cử tri có thể cho các chính trị gia thấy họ nghĩ gì — và ứng viên có thể cho cử tri thấy lập trường của mình. Không thấy quan điểm của ứng viên? Hãy yêu cầu họ chia sẻ ý kiến tại đây."
   },
   "candidates": {
     "title": "Ứng viên",

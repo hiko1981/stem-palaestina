@@ -295,6 +295,11 @@ export default function Home() {
               </h1>
             </div>
 
+            {/* Purpose description */}
+            <p className="text-center text-sm text-gray-500 mb-4 leading-relaxed">
+              {h("intro")}
+            </p>
+
             {/* 3 demands — compact numbered list */}
             <ul className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
               <li className="flex items-start gap-2">

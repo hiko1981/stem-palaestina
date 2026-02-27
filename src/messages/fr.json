@@ -25,7 +25,8 @@
     "yourVote": "Vous avez voté",
     "yourVoteYes": "Oui, pour les trois revendications",
     "yourVoteNo": "Non",
-    "missingCandidate": "Votre candidat manque ?"
+    "missingCandidate": "Votre candidat manque ?",
+    "intro": "Ici, les électeurs peuvent montrer aux politiciens ce qu'ils pensent — et les candidats peuvent montrer aux électeurs où ils se situent. Vous ne voyez pas la position de votre candidat ? Demandez-lui de s'exprimer ici."
   },
   "candidates": {
     "title": "Candidats",

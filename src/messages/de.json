@@ -25,7 +25,8 @@
     "yourVote": "Du hast gestimmt",
     "yourVoteYes": "Ja, für die drei Forderungen",
     "yourVoteNo": "Nein",
-    "missingCandidate": "Kandidat nicht gefunden?"
+    "missingCandidate": "Kandidat nicht gefunden?",
+    "intro": "Hier können Wähler den Politikern zeigen, was sie denken — und Kandidaten können den Wählern zeigen, wo sie stehen. Können Sie die Haltung Ihres Kandidaten nicht sehen? Bitten Sie ihn, hier Stellung zu beziehen."
   },
   "candidates": {
     "title": "Kandidaten",

@@ -25,7 +25,8 @@
     "yourVote": "Você votou",
     "yourVoteYes": "Sim, pelas três demandas",
     "yourVoteNo": "Não",
-    "missingCandidate": "Não encontra seu candidato?"
+    "missingCandidate": "Não encontra seu candidato?",
+    "intro": "Aqui os eleitores podem mostrar aos políticos o que pensam — e os candidatos podem mostrar aos eleitores a sua posição. Não consegue ver a posição do seu candidato? Peça-lhe que partilhe a sua opinião aqui."
   },
   "candidates": {
     "title": "Candidatos",

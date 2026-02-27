@@ -25,7 +25,8 @@
     "yourVote": "Oy verdiniz",
     "yourVoteYes": "Evet, üç talep için",
     "yourVoteNo": "Hayır",
-    "missingCandidate": "Adayınızı bulamıyor musunuz?"
+    "missingCandidate": "Adayınızı bulamıyor musunuz?",
+    "intro": "Burada seçmenler politikacılara ne düşündüklerini gösterebilir — ve adaylar seçmenlere nerede durduklarını gösterebilir. Adayınızın tutumunu göremiyorsunuz mu? Ondan burada fikrini belirtmesini isteyin."
   },
   "candidates": {
     "title": "Adaylar",
