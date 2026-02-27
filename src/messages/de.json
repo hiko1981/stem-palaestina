@@ -124,7 +124,8 @@
     "anonNote": "Deine Stimme ist anonym und kann nicht zu deiner Telefonnummer zurückverfolgt werden.",
     "autoSubmitting": "Deine Stimme wird registriert...",
     "viewResults": "Ergebnisse ansehen",
-    "phoneNote": "Ihre Telefonnummer wird verschlüsselt und nicht gespeichert. Nur eine Stimme pro Telefon."
+    "phoneNote": "Ihre Telefonnummer wird verschlüsselt und nicht gespeichert. Nur eine Stimme pro Telefon. {link}",
+    "phoneNoteLink": "Mehr erfahren"
   },
   "voteCounter": {
     "singular": "Stimme",

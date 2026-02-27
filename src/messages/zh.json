@@ -124,7 +124,8 @@
     "anonNote": "您的投票是匿名的，无法追溯到您的手机号码。",
     "autoSubmitting": "正在登记您的投票...",
     "viewResults": "查看结果",
-    "phoneNote": "您的手机号码经过加密且不会被存储。每个手机号只能投一票。"
+    "phoneNote": "您的手机号码经过加密且不会被存储。每个手机号只能投一票。{link}",
+    "phoneNoteLink": "了解更多"
   },
   "voteCounter": {
     "singular": "票",

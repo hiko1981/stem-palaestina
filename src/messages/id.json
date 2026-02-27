@@ -124,7 +124,8 @@
     "anonNote": "Suaramu anonim dan tidak dapat dilacak kembali ke nomor teleponmu.",
     "autoSubmitting": "Mendaftarkan suara Anda...",
     "viewResults": "Lihat hasil",
-    "phoneNote": "Nomor telepon Anda dienkripsi dan tidak disimpan. Hanya satu suara per telepon."
+    "phoneNote": "Nomor telepon Anda dienkripsi dan tidak disimpan. Hanya satu suara per telepon. {link}",
+    "phoneNoteLink": "Baca selengkapnya"
   },
   "voteCounter": {
     "singular": "suara",

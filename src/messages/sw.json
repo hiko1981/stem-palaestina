@@ -124,7 +124,8 @@
     "anonNote": "Kura yako ni ya siri na haiwezi kufuatiliwa kurudi kwenye nambari yako ya simu.",
     "autoSubmitting": "Inasajili kura yako...",
     "viewResults": "Tazama matokeo",
-    "phoneNote": "Nambari yako ya simu inasimbwa kwa njia fiche na haihifadhiwi. Kura moja tu kwa kila simu."
+    "phoneNote": "Nambari yako ya simu inasimbwa kwa njia fiche na haihifadhiwi. Kura moja tu kwa kila simu. {link}",
+    "phoneNoteLink": "Soma zaidi"
   },
   "voteCounter": {
     "singular": "kura",

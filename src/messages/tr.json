@@ -124,7 +124,8 @@
     "anonNote": "Oyun anonimdir ve telefon numarana geri izlenemez.",
     "autoSubmitting": "Oyunuz kaydediliyor...",
     "viewResults": "Sonuçları gör",
-    "phoneNote": "Telefon numaranız şifrelenir ve saklanmaz. Her telefon için yalnızca bir oy."
+    "phoneNote": "Telefon numaranız şifrelenir ve saklanmaz. Her telefon için yalnızca bir oy. {link}",
+    "phoneNoteLink": "Daha fazla bilgi"
   },
   "voteCounter": {
     "singular": "oy",

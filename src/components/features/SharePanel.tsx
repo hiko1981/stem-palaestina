@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import Button from "@/components/ui/Button";
+import PhoneNote from "@/components/ui/PhoneNote";
 
 type Mode = null | "sms" | "email";
 
@@ -18,7 +19,6 @@ export default function SharePanel() {
   const [copied, setCopied] = useState(false);
 
   const t = useTranslations("sharePanel");
-  const b = useTranslations("ballot");
 
   const handleDialCode = useCallback((code: string) => {
     setDialCode(code);
@@ -123,7 +123,7 @@ export default function SharePanel() {
               >
                 {t("send")}
               </Button>
-              <p className="text-center text-[11px] text-gray-400">{b("phoneNote")}</p>
+              <PhoneNote />
               {error && (
                 <p className="text-center text-xs text-melon-red">{error}</p>
               )}

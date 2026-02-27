@@ -124,7 +124,8 @@
     "anonNote": "Phiếu bầu của bạn là ẩn danh và không thể truy ngược về số điện thoại của bạn.",
     "autoSubmitting": "Đang ghi nhận phiếu bầu của bạn...",
     "viewResults": "Xem kết quả",
-    "phoneNote": "Số điện thoại của bạn được mã hóa và không được lưu trữ. Chỉ một phiếu bầu cho mỗi số điện thoại."
+    "phoneNote": "Số điện thoại của bạn được mã hóa và không được lưu trữ. Chỉ một phiếu bầu cho mỗi số điện thoại. {link}",
+    "phoneNoteLink": "Đọc thêm"
   },
   "voteCounter": {
     "singular": "phiếu",

@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import CandidateSelect from "@/components/features/CandidateSelect";
 import CandidateBoard from "@/components/features/CandidateBoard";
+import PhoneNote from "@/components/ui/PhoneNote";
 import SharePanel from "@/components/features/SharePanel";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
@@ -278,7 +279,7 @@ export default function Home() {
       >
         {b("send")}
       </Button>
-      <p className="text-center text-[11px] text-gray-400">{b("phoneNote")}</p>
+      <PhoneNote />
       {phoneError && (
         <p className="text-center text-sm text-melon-red">{phoneError}</p>
       )}

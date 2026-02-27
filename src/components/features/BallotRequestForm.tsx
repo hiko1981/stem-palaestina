@@ -6,6 +6,7 @@ import Input from "@/components/ui/Input";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import InviteSection from "@/components/features/InviteSection";
 import { useTranslations } from "next-intl";
+import PhoneNote from "@/components/ui/PhoneNote";
 
 export default function BallotRequestForm() {
   const [phone, setPhone] = useState("");
@@ -96,7 +97,7 @@ export default function BallotRequestForm() {
       >
         {t("send")}
       </Button>
-      <p className="text-center text-[11px] text-gray-400">{t("phoneNote")}</p>
+      <PhoneNote />
       {error && (
         <p className="text-center text-sm text-melon-red">{error}</p>
       )}

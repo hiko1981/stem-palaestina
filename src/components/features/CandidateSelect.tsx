@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { STORKREDSE } from "@/lib/storkredse";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import Button from "@/components/ui/Button";
+import PhoneNote from "@/components/ui/PhoneNote";
 
 interface UnclaimedCandidate {
   id: number;
@@ -232,7 +233,7 @@ export default function CandidateSelect({
           >
             {b("send")}
           </Button>
-          <p className="text-center text-[11px] text-gray-400">{b("phoneNote")}</p>
+          <PhoneNote />
           {phoneError && (
             <p className="text-center text-xs text-melon-red">{phoneError}</p>
           )}

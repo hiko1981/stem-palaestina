@@ -124,7 +124,8 @@
     "anonNote": "O seu voto é anónimo e não pode ser rastreado até ao seu número de telefone.",
     "autoSubmitting": "Registando o seu voto...",
     "viewResults": "Ver resultados",
-    "phoneNote": "O seu número de telefone é encriptado e não é armazenado. Apenas um voto por telefone."
+    "phoneNote": "O seu número de telefone é encriptado e não é armazenado. Apenas um voto por telefone. {link}",
+    "phoneNoteLink": "Saiba mais"
   },
   "voteCounter": {
     "singular": "voto",
