@@ -37,6 +37,15 @@ model Vote {
   @@map("votes")
 }
 
+model LanguageMiss {
+  id       Int      @id @default(autoincrement())
+  language String   @unique
+  count    Int      @default(1)
+  lastSeen DateTime @default(now()) @map("last_seen")
+
+  @@map("language_misses")
+}
+
 model Candidate {
   id              Int      @id @default(autoincrement())
   name            String

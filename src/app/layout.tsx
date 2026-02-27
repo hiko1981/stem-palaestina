@@ -5,6 +5,7 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { rtlLocales, type Locale } from "@/i18n/config";
 import TopBar from "@/components/layout/TopBar";
 import AppShell from "@/components/layout/AppShell";
+import LangMissLogger from "@/components/features/LangMissLogger";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("meta");
@@ -33,6 +34,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <TopBar />
           <AppShell>{children}</AppShell>
+          <LangMissLogger />
         </NextIntlClientProvider>
       </body>
     </html>

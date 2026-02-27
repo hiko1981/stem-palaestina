@@ -5,6 +5,12 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Card from "@/components/ui/Card";
 
+interface LangMissRecord {
+  language: string;
+  count: number;
+  lastSeen: string;
+}
+
 interface VoteRecord {
   id: number;
   phoneHash: string;
@@ -27,6 +33,7 @@ export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
+  const [langMisses, setLangMisses] = useState<LangMissRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -46,6 +53,13 @@ export default function AdminPage() {
       setVotes(data.votes);
       setCandidates(data.candidates || []);
       setAuthed(true);
+      // Fetch language misses
+      fetch("/api/admin/lang-miss", {
+        headers: { Authorization: `Bearer ${password}` },
+      })
+        .then((r) => r.json())
+        .then((d) => setLangMisses(d.misses || []))
+        .catch(() => {});
     } catch {
       setError("Netværksfejl");
     } finally {
@@ -62,6 +76,12 @@ export default function AdminPage() {
       setVotes(data.votes);
       setCandidates(data.candidates || []);
     }
+    fetch("/api/admin/lang-miss", {
+      headers: { Authorization: `Bearer ${password}` },
+    })
+      .then((r) => r.json())
+      .then((d) => setLangMisses(d.misses || []))
+      .catch(() => {});
   }
 
   async function deleteVote(phoneHash: string) {
@@ -292,6 +312,38 @@ export default function AdminPage() {
           </div>
         )}
       </section>
+
+      {/* Sprogbehov */}
+      {langMisses.length > 0 && (
+        <section>
+          <h2 className="text-xl font-bold mb-4">Sprogbehov</h2>
+          <p className="text-sm text-gray-500 mb-3">
+            Sprog som brugere har, men vi ikke understøtter endnu.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-gray-500">
+                  <th className="pb-2 pr-4">Sprog</th>
+                  <th className="pb-2 pr-4">Antal</th>
+                  <th className="pb-2">Sidst set</th>
+                </tr>
+              </thead>
+              <tbody>
+                {langMisses.map((m) => (
+                  <tr key={m.language} className="border-b">
+                    <td className="py-2 pr-4 font-mono font-medium">{m.language}</td>
+                    <td className="py-2 pr-4">{m.count}</td>
+                    <td className="py-2 text-gray-500">
+                      {new Date(m.lastSeen).toLocaleString("da-DK")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       {/* Stemmer */}
       <section>
