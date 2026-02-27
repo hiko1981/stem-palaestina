@@ -165,8 +165,11 @@ export default function AdminPage() {
     );
   }
 
-  const pendingCandidates = candidates.filter((c) => !c.verified);
-  const verifiedCandidates = candidates.filter((c) => c.verified);
+  // Only show candidates who have claimed their profile (phoneHash set = voted + verified phone)
+  // Seeded candidates without phoneHash are just directory entries, not applications
+  const claimed = candidates.filter((c) => c.phoneHash);
+  const pendingCandidates = claimed.filter((c) => !c.verified);
+  const verifiedCandidates = claimed.filter((c) => c.verified);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 space-y-12">
