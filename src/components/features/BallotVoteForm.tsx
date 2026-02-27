@@ -8,11 +8,13 @@ import { useTranslations } from "next-intl";
 
 interface BallotVoteFormProps {
   token: string;
+  role?: string;
+  candidateId?: string;
 }
 
 type Status = "loading" | "submitting" | "voted" | "used" | "expired" | "not_found" | "already_voted" | "error";
 
-export default function BallotVoteForm({ token }: BallotVoteFormProps) {
+export default function BallotVoteForm({ token, role, candidateId }: BallotVoteFormProps) {
   const [status, setStatus] = useState<Status>("loading");
   const [error, setError] = useState("");
   const [isCandidate, setIsCandidate] = useState(false);
@@ -22,9 +24,12 @@ export default function BallotVoteForm({ token }: BallotVoteFormProps) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsCandidate(localStorage.getItem("stem_palaestina_role") === "candidate");
+      // URL param (r=c) is primary source — survives cross-browser SMS opens
+      const fromUrl = role === "c";
+      const fromStorage = localStorage.getItem("stem_palaestina_role") === "candidate";
+      setIsCandidate(fromUrl || fromStorage);
     }
-  }, []);
+  }, [role]);
 
   useEffect(() => {
     // Check ballot validity then auto-submit
@@ -70,21 +75,22 @@ export default function BallotVoteForm({ token }: BallotVoteFormProps) {
       localStorage.setItem("stem_palaestina_voted", "true");
 
       // Voter → redirect to results
-      const role = localStorage.getItem("stem_palaestina_role");
-      if (role !== "candidate") {
+      const fromUrl = role === "c";
+      const fromStorage = localStorage.getItem("stem_palaestina_role") === "candidate";
+      if (!fromUrl && !fromStorage) {
         router.push("/");
         return;
       }
 
       // Candidate: try auto-claim if an on-list candidate was selected
-      const candidateId = localStorage.getItem("stem_palaestina_candidate_id");
-      if (candidateId && candidateId !== "new") {
+      const cid = candidateId || localStorage.getItem("stem_palaestina_candidate_id");
+      if (cid && cid !== "new") {
         try {
           const claimRes = await fetch("/api/candidate/claim", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              candidateId: Number(candidateId),
+              candidateId: Number(cid),
               token,
             }),
           });

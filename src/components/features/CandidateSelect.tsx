@@ -101,6 +101,8 @@ export default function CandidateSelect({
             typeof window !== "undefined"
               ? localStorage.getItem("stem_device_id") || undefined
               : undefined,
+          role: "candidate",
+          candidateId: selectedId,
         }),
       });
       const data = await res.json();

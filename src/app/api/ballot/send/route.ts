@@ -116,8 +116,14 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Send SMS with ballot link
-    const ballotUrl = `${getBaseUrl()}/stem/${token}`;
+    // Send SMS with ballot link (include role context as query params)
+    const params = new URLSearchParams();
+    if (parsed.data.role === "candidate") {
+      params.set("r", "c");
+      if (parsed.data.candidateId) params.set("cid", parsed.data.candidateId);
+    }
+    const qs = params.toString();
+    const ballotUrl = `${getBaseUrl()}/stem/${token}${qs ? `?${qs}` : ""}`;
     await sendSms(
       phone,
       `Din stemmeseddel til Stem Palæstina: ${ballotUrl}\n\nLinket udløber om ${BALLOT_EXPIRY_HOURS} timer.`

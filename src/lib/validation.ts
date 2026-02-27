@@ -4,6 +4,8 @@ export const ballotRequestSchema = z.object({
   phone: z.string().min(1, "Telefonnummer mangler"),
   dialCode: z.string().min(1, "Landekode mangler"),
   deviceId: z.string().optional(),
+  role: z.enum(["voter", "candidate"]).optional(),
+  candidateId: z.string().optional(),
 });
 
 export const ballotVoteSchema = z.object({
