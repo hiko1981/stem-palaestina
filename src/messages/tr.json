@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Filistin'e Oy Ver",
+    "description": "Filistin'e desteğini göster. Devleti tanı, silah satışlarını durdur, yasadışı yatırımları durdur."
+  },
+  "nav": {
+    "vote": "Oy Ver",
+    "candidates": "Adaylar",
+    "results": "Sonuçlar",
+    "map": "Harita",
+    "about": "Hakkında"
+  },
+  "footer": {
+    "anonymous": "Tamamen anonim. Hiçbir kişisel veri saklanmaz."
+  },
+  "home": {
+    "heroTitle": "Oy ver",
+    "heroHighlight": "Filistin",
+    "heroSubtitle": "Harekete geç. Anonim, güvenli ve bir dakikadan kısa sürede.",
+    "cta": "Oyunu kullan",
+    "demandsHeading": "Üç eylem talebi",
+    "anonTitle": "Tamamen anonim",
+    "anonText": "Telefon numaran tek yönlü şifreleme ile korunur. Kimin oy verdiğini kimse göremez.",
+    "readMore": "Daha fazla oku",
+    "yourVote": "Oy verdiniz",
+    "yourVoteYes": "Evet, üç talep için",
+    "yourVoteNo": "Hayır",
+    "missingCandidate": "Adayınızı bulamıyor musunuz?"
+  },
+  "candidates": {
+    "title": "Adaylar",
+    "subtitle": "Üç talep hakkında tavır alan ilk aday ol.",
+    "register": "Aday olarak kaydol",
+    "emptyTitle": "Henüz aday yok",
+    "emptyText": "Üç talebi kamuoyu önünde destekleyen ilk aday ol."
+  },
+  "about": {
+    "title": "Filistin'e Oy Ver Hakkında",
+    "whatTitle": "Filistin'e Oy Ver nedir?",
+    "whatText": "Filistin'e Oy Ver, üç somut talebe anonim olarak destek gösterebileceğin bir sivil platformdur: Filistin devletinin tanınması, İsrail'e silah satışlarının durdurulması ve işgaldeki yasadışı yatırımların sona erdirilmesi.",
+    "howTitle": "Nasıl çalışır?",
+    "howIntro": "Gizliliğinizi çok ciddiye alıyoruz. İşte nasıl çalışır:",
+    "howStep1Title": "Talep:",
+    "howStep1Text": "Telefon numaranı gir ve SMS ile benzersiz bir bağlantı içeren oy pusulası al.",
+    "howStep2Title": "Oylama:",
+    "howStep2Text": "Bağlantıyı aç ve üç talep hakkında evet veya hayır oyu ver. Telefon numaran tek yönlü bir algoritma ile şifrelenir ve yeniden oluşturulamaz.",
+    "howStep3Title": "Numara başına bir oy:",
+    "howStep3Text": "Her telefon numarası yalnızca bir kez oy kullanabilir. Oy pusulası 24 saat sonra geçerliliğini yitirir.",
+    "howPrivacy": "Oylarla bağlantılı olarak hiçbir IP adresi, çerez veya kişisel veri saklamıyoruz.",
+    "bundleTitle": "Oy gruplama",
+    "bundleText": "Erken oy kullananları korumak için toplam oy sayısı ancak en az 50'ye ulaştığında gösterilir. O zamana kadar yalnızca toplama durumu gösterilir.",
+    "demandsTitle": "Üç talep",
+    "securityTitle": "Teknik güvenlik",
+    "security1": "Sunucu tarafı salt ile telefon numaralarının SHA-256 şifrelemesi",
+    "security2": "24 saatlik geçerlilik süreli oy pusulası tokenleri",
+    "security3": "Tüm uç noktalarda hız sınırlaması",
+    "security4": "Cihaz başına en fazla 3 bekleyen oy pusulası",
+    "security5": "Üçüncü taraf izleme veya analitik yok"
+  },
+  "demands": {
+    "d1Title": "Filistin'i tanıyın",
+    "d1Short": "Ülkeniz Filistin devletini resmi olarak tanımalıdır.",
+    "d1Long": "Ülkeniz Filistin devletini egemen bir devlet olarak resmi olarak tanımalıdır.",
+    "d2Title": "İsrail'e silah satışlarını durdurun",
+    "d2Short": "İsrail'e tüm silah ve askeri teçhizat satışları ve ihracatı durdurulmalıdır.",
+    "d2Long": "İsrail'e tüm silah ve askeri teçhizat satışları ve ihracatı durdurulmalıdır.",
+    "d3Title": "Yasadışı yatırımları durdurun",
+    "d3Short": "Emeklilik fonları ve kamu fonları, yasadışı işgalden kâr eden şirketlerden yatırımlarını çekmelidir.",
+    "d3Long": "Emeklilik fonları ve kamu fonları, yasadışı işgalden kâr eden şirketlerden yatırımlarını çekmelidir."
+  },
+  "vote": {
+    "thanksTitle": "Oyun için teşekkürler!",
+    "thanksText": "Oyun kaydedildi. Arkadaşlarını davet et ve fark yarat.",
+    "title": "Filistin'e Oy Ver",
+    "chooseRole": "Başlamak için rolünü seç.",
+    "voterTitle": "Ben seçmenim",
+    "voterText": "SMS bağlantısı ile anonim olarak oy kullan.",
+    "candidateTitle": "Ben adayım",
+    "candidateText": "Oy ver ve tutumunu kamuoyu önünde göster.",
+    "back": "Geri",
+    "castTitle": "Oyunu kullan",
+    "castSubtitle": "Telefon numaranı gir ve SMS ile oy pusulası al.",
+    "candidateNote": "Oy verdikten sonra oyunu aday olarak kamuoyu önünde gösterebilirsin.",
+    "next": "İleri",
+    "privacyNote": "Telefon numaran tek yönlü bir algoritma ile şifrelenir ve sana geri izlenemez. Daha fazlası için",
+    "privacyLink": "Hakkında sayfası"
+  },
+  "results": {
+    "title": "İnsanlar nasıl oy veriyor",
+    "subtitle": "Seçmenlerin ve adayların nasıl oy verdiğini gör.",
+    "cta": "Oyunu kullan"
+  },
+  "ballot": {
+    "sentTitle": "Oy pusulası gönderildi!",
+    "sentText": "SMS'ini kontrol et ve oy vermek için bağlantıya tıkla. Bağlantı 24 saat içinde geçerliliğini yitirir.",
+    "phoneLabel": "Cep telefonu numarası",
+    "send": "Oy pusulası gönder",
+    "networkError": "Ağ hatası. Lütfen tekrar deneyin.",
+    "loading": "Oy pusulası yükleniyor...",
+    "thanksTitle": "Oyun için teşekkürler!",
+    "thanksVoted": "Oyun kaydedildi. Arkadaşlarını davet et ve fark yarat.",
+    "thanksCandidate": "Oyun kaydedildi. Artık kamuoyu önünde gösterebilirsin.",
+    "alreadyVotedTitle": "Zaten oy kullandın",
+    "alreadyVotedText": "Arkadaşlarını davet et ve fark yarat.",
+    "expiredTitle": "Oy pusulası süresi doldu",
+    "expiredText": "Bu oy pusulasının süresi doldu. Yeni bir tane istemek için {link} sayfasına git.",
+    "expiredLink": "oy verme sayfası",
+    "invalidTitle": "Geçersiz oy pusulası",
+    "invalidText": "Bu oy pusulası mevcut değil. Yeni bir tane istemek için {link} sayfasına git.",
+    "invalidLink": "oy verme sayfası",
+    "yourBallot": "Oy pusulan",
+    "question": "Üç talebi destekliyor musun?",
+    "yes": "Evet, lehte oy veriyorum",
+    "no": "Hayır",
+    "anonNote": "Oyun anonimdir ve telefon numarana geri izlenemez.",
+    "autoSubmitting": "Oyunuz kaydediliyor...",
+    "viewResults": "Sonuçları gör"
+  },
+  "voteCounter": {
+    "singular": "oy",
+    "plural": "oy",
+    "yes": "Evet",
+    "no": "Hayır"
+  },
+  "invite": {
+    "title": "Arkadaşlarını davet et",
+    "copied": "Bağlantı kopyalandı!",
+    "share": "Bir arkadaşınla paylaş",
+    "sendBallot": "Bir arkadaşına oy pusulası gönder ({count} kaldı)",
+    "friendPhone": "Arkadaşının telefon numarasını gir, ona bir oy pusulası göndereceğiz.",
+    "phoneLabel": "Cep telefonu numarası",
+    "send": "Oy pusulası gönder",
+    "sent": "Oy pusulası gönderildi!",
+    "sendAnother": "Başka bir arkadaşına gönder ({count} kaldı)",
+    "allUsed": "3 davetin tamamını kullandın.",
+    "shareTitle": "Filistin'e Oy Ver",
+    "shareText": "Üç talep için oyunu kullan.",
+    "networkError": "Ağ hatası. Lütfen tekrar deneyin."
+  },
+  "inviteCandidate": {
+    "button": "Adayını davet et",
+    "ready": "Davet hazır!",
+    "another": "Başka bir aday davet et",
+    "how": "Nasıl davet etmek istersin?",
+    "sms": "SMS",
+    "email": "E-posta",
+    "cancel": "İptal",
+    "phoneLabel": "Telefon numarası",
+    "emailLabel": "E-posta adresi",
+    "send": "Davet gönder",
+    "back": "Geri",
+    "message": "Merhaba! Seni Filistin'e Oy Ver platformunda üç talep hakkında tavır almaya davet etmek istiyorum. Buradan aday olarak kaydol:",
+    "emailSubject": "Davet: Filistin'e Oy Ver'de tavır al"
+  },
+  "candidateVotes": {
+    "title": "Adaylar nasıl oy kullandı?",
+    "yes": "Evet",
+    "no": "Hayır",
+    "notVoted": "Oy kullanmadı"
+  },
+  "mobileGate": {
+    "title": "Telefonunda aç",
+    "text": "Oy pusulası SMS'i alan telefonda açılmalıdır. Bu, her oyun gerçek bir cihazdan geldiğini garanti eder.",
+    "hint": "SMS'ini kontrol et ve bağlantıya cep telefonundan tıkla."
+  },
+  "candidateForm": {
+    "submittedTitle": "Başvurun gönderildi!",
+    "submittedText": "Bilgilerinizi doğrulayacağız ve onaylandıktan sonra oyunuz kamuoyu önünde gösterilecektir.",
+    "intro": "Aday olarak oyunu kamuoyu önünde gösterebilirsin.",
+    "showPublic": "Oyunu kamuoyu önünde göster",
+    "formIntro": "Bilgilerini doldur. Oyun onaydan sonra kamuoyu önünde gösterilecektir.",
+    "nameLabel": "Ad soyad",
+    "namePlaceholder": "Adın ve soyadın",
+    "partyLabel": "Parti",
+    "partyPlaceholder": "Parti adı",
+    "constituencyLabel": "Seçim bölgesi",
+    "constituencyPlaceholder": "Seçim bölgen",
+    "submit": "Başvuru gönder",
+    "skip": "Atla",
+    "networkError": "Ağ hatası. Lütfen tekrar deneyin."
+  },
+  "countryCode": {
+    "label": "Ülke kodu"
+  },
+  "map": {
+    "title": "Adayınızı bulun",
+    "selectRegion": "Bölge seçin",
+    "noCandidates": "Bu bölgede henüz aday yok"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

@@ -21,12 +21,12 @@ export default function Input({
       </label>
       <input
         id={id}
-        className={`w-full rounded-lg border px-4 py-3 text-lg focus:ring-2 focus:ring-palestine-green focus:border-transparent focus:outline-none ${
-          error ? "border-palestine-red" : "border-gray-300"
+        className={`w-full rounded-lg border px-4 py-3 text-lg focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none ${
+          error ? "border-melon-red" : "border-gray-300"
         } ${className}`}
         {...props}
       />
-      {error && <p className="mt-1 text-sm text-palestine-red">{error}</p>}
+      {error && <p className="mt-1 text-sm text-melon-red">{error}</p>}
     </div>
   );
 }

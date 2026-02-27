@@ -1,20 +1,10 @@
-import { SMS_CODE_LENGTH } from "./constants";
-
-export function generateCode(): string {
-  const digits = [];
-  for (let i = 0; i < SMS_CODE_LENGTH; i++) {
-    digits.push(Math.floor(Math.random() * 10));
-  }
-  return digits.join("");
-}
-
 export async function sendSms(phone: string, message: string): Promise<void> {
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
   const from = process.env.TWILIO_FROM_NUMBER || process.env.TWILIO_FROM;
 
   if (!accountSid || !authToken || !from) {
-    // Dev mode: log koden til konsollen
+    // Dev mode: log til konsollen
     console.log(`[SMS DEV] Til ${phone}: ${message}`);
     return;
   }

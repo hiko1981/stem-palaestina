@@ -15,23 +15,24 @@ model VerifiedPhone {
   @@map("verified_phones")
 }
 
-model SmsVerification {
+model BallotToken {
   id        Int      @id @default(autoincrement())
+  token     String   @unique @db.Uuid
   phoneHash String   @map("phone_hash")
-  code      String
-  attempts  Int      @default(0)
-  expiresAt DateTime @map("expires_at")
+  deviceId  String?  @map("device_id")
   used      Boolean  @default(false)
+  expiresAt DateTime @map("expires_at")
   createdAt DateTime @default(now()) @map("created_at")
 
-  @@index([phoneHash, used])
-  @@map("sms_verifications")
+  @@index([phoneHash])
+  @@map("ballot_tokens")
 }
 
 model Vote {
-  id      Int      @id @default(autoincrement())
-  tokenId String   @unique @map("token_id") @db.Uuid
-  votedAt DateTime @default(now()) @map("voted_at")
+  id        Int      @id @default(autoincrement())
+  phoneHash String   @unique @map("phone_hash")
+  voteValue Boolean  @map("vote_value")
+  votedAt   DateTime @default(now()) @map("voted_at")
 
   @@map("votes")
 }
@@ -41,6 +42,7 @@ model Candidate {
   name            String
   party           String
   constituency    String
+  phoneHash       String?  @map("phone_hash")
   pledged         Boolean  @default(false)
   publicStatement String?  @map("public_statement")
   verified        Boolean  @default(false)

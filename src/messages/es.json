@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Vota Palestina",
+    "description": "Muestra tu apoyo a Palestina. Reconoce el estado, detén la venta de armas, detén las inversiones ilegales."
+  },
+  "nav": {
+    "vote": "Votar",
+    "candidates": "Candidatos",
+    "results": "Resultados",
+    "map": "Mapa",
+    "about": "Acerca de"
+  },
+  "footer": {
+    "anonymous": "100% anónimo. No se almacenan datos personales."
+  },
+  "home": {
+    "heroTitle": "Vota por",
+    "heroHighlight": "Palestina",
+    "heroSubtitle": "Exige acción. Anónimo, seguro y en menos de un minuto.",
+    "cta": "Emite tu voto",
+    "demandsHeading": "Tres demandas de acción",
+    "anonTitle": "100% anónimo",
+    "anonText": "Tu número de teléfono se cifra con un algoritmo unidireccional. Nadie puede ver quién votó.",
+    "readMore": "Leer más",
+    "yourVote": "Votaste",
+    "yourVoteYes": "Sí, por las tres demandas",
+    "yourVoteNo": "No",
+    "missingCandidate": "¿No encuentras tu candidato?"
+  },
+  "candidates": {
+    "title": "Candidatos",
+    "subtitle": "Sé el primer candidato en posicionarte sobre las tres demandas.",
+    "register": "Regístrate como candidato",
+    "emptyTitle": "Aún no hay candidatos",
+    "emptyText": "Sé el primer candidato en respaldar públicamente las tres demandas."
+  },
+  "about": {
+    "title": "Acerca de Vota Palestina",
+    "whatTitle": "¿Qué es Vota Palestina?",
+    "whatText": "Vota Palestina es una plataforma cívica donde puedes mostrar anónimamente tu apoyo a tres demandas concretas: el reconocimiento del estado de Palestina, el cese de la venta de armas a Israel y el fin de las inversiones ilegales en la ocupación.",
+    "howTitle": "¿Cómo funciona?",
+    "howIntro": "Nos tomamos tu anonimato muy en serio. Así es como funciona:",
+    "howStep1Title": "Solicitud:",
+    "howStep1Text": "Introduce tu número de teléfono y recibe una papeleta por SMS con un enlace único.",
+    "howStep2Title": "Votación:",
+    "howStep2Text": "Abre el enlace y vota sí o no a las tres demandas. Tu número de teléfono se cifra con un algoritmo unidireccional para que no pueda reconstruirse.",
+    "howStep3Title": "Un voto por número:",
+    "howStep3Text": "Cada número de teléfono solo puede votar una vez. La papeleta expira después de 24 horas.",
+    "howPrivacy": "No almacenamos direcciones IP, cookies ni datos personales en relación con los votos.",
+    "bundleTitle": "Agrupación de votos",
+    "bundleText": "Para proteger a los primeros votantes, el recuento total de votos solo se muestra cuando hay al menos 50. Hasta entonces, solo se muestra el estado de recopilación.",
+    "demandsTitle": "Las tres demandas",
+    "securityTitle": "Seguridad técnica",
+    "security1": "Hashing SHA-256 de números de teléfono con salt del servidor",
+    "security2": "Tokens de papeleta con expiración de 24 horas",
+    "security3": "Limitación de frecuencia en todos los endpoints",
+    "security4": "Máximo 3 papeletas pendientes por dispositivo",
+    "security5": "Sin seguimiento ni analíticas de terceros"
+  },
+  "demands": {
+    "d1Title": "Reconocer Palestina",
+    "d1Short": "Denmark debe reconocer oficialmente el estado de Palestina.",
+    "d1Long": "Denmark debe reconocer oficialmente el estado de Palestina como estado soberano.",
+    "d2Title": "Detener la venta de armas a Israel",
+    "d2Short": "Denmark debe detener todas las ventas y exportaciones de armas y equipamiento militar a Israel.",
+    "d2Long": "Deben detenerse todas las ventas y exportaciones de armas y equipamiento militar a Israel.",
+    "d3Title": "Detener las inversiones ilegales",
+    "d3Short": "Los fondos de pensiones y fondos públicos daneses deben desinvertir en empresas que se benefician de la ocupación ilegal.",
+    "d3Long": "Los fondos de pensiones y fondos públicos daneses deben desinvertir en empresas que se benefician de la ocupación ilegal."
+  },
+  "vote": {
+    "thanksTitle": "¡Gracias por tu voto!",
+    "thanksText": "Tu voto ha sido registrado. Invita a tus amigos y marca la diferencia.",
+    "title": "Vota Palestina",
+    "chooseRole": "Elige tu rol para comenzar.",
+    "voterTitle": "Soy votante",
+    "voterText": "Emite tu voto de forma anónima mediante un enlace SMS.",
+    "candidateTitle": "Soy candidato",
+    "candidateText": "Vota y muestra tu posición públicamente.",
+    "back": "Atrás",
+    "castTitle": "Emite tu voto",
+    "castSubtitle": "Introduce tu número de teléfono y recibe una papeleta por SMS.",
+    "candidateNote": "Después de votar, puedes mostrar tu voto públicamente como candidato.",
+    "next": "Siguiente",
+    "privacyNote": "Tu número de teléfono se cifra con un algoritmo unidireccional y no puede rastrearse hasta ti. Lee más en la",
+    "privacyLink": "página Acerca de"
+  },
+  "results": {
+    "title": "Cómo vota Denmark",
+    "subtitle": "Mira cómo votan los votantes y candidatos.",
+    "cta": "Emite tu voto"
+  },
+  "ballot": {
+    "sentTitle": "¡Papeleta enviada!",
+    "sentText": "Revisa tu SMS y haz clic en el enlace para emitir tu voto. El enlace expira en 24 horas.",
+    "phoneLabel": "Número de móvil",
+    "send": "Enviar papeleta",
+    "networkError": "Error de red. Por favor, inténtalo de nuevo.",
+    "loading": "Cargando papeleta...",
+    "thanksTitle": "¡Gracias por tu voto!",
+    "thanksVoted": "Tu voto ha sido registrado. Invita a tus amigos y marca la diferencia.",
+    "thanksCandidate": "Tu voto ha sido registrado. Ahora puedes mostrarlo públicamente.",
+    "alreadyVotedTitle": "Ya has votado",
+    "alreadyVotedText": "Invita a tus amigos y marca la diferencia.",
+    "expiredTitle": "Papeleta expirada",
+    "expiredText": "Esta papeleta ha expirado. Ve a la {link} para solicitar una nueva.",
+    "expiredLink": "página de votación",
+    "invalidTitle": "Papeleta inválida",
+    "invalidText": "Esta papeleta no existe. Ve a la {link} para solicitar una nueva.",
+    "invalidLink": "página de votación",
+    "yourBallot": "Tu papeleta",
+    "question": "¿Apoyas las tres demandas?",
+    "yes": "Sí, voto a favor",
+    "no": "No",
+    "anonNote": "Tu voto es anónimo y no puede rastrearse hasta tu número de teléfono.",
+    "autoSubmitting": "Registrando tu voto...",
+    "viewResults": "Ver resultados"
+  },
+  "voteCounter": {
+    "singular": "voto",
+    "plural": "votos",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "invite": {
+    "title": "Invitar amigos",
+    "copied": "¡Enlace copiado!",
+    "share": "Compartir con un amigo",
+    "sendBallot": "Enviar papeleta a un amigo ({count} restantes)",
+    "friendPhone": "Introduce el número de teléfono de tu amigo y le enviaremos una papeleta.",
+    "phoneLabel": "Número de móvil",
+    "send": "Enviar papeleta",
+    "sent": "¡Papeleta enviada!",
+    "sendAnother": "Enviar a otro amigo ({count} restantes)",
+    "allUsed": "Has usado las 3 invitaciones.",
+    "shareTitle": "Vota Palestina",
+    "shareText": "Emite tu voto por las tres demandas.",
+    "networkError": "Error de red. Inténtalo de nuevo."
+  },
+  "inviteCandidate": {
+    "button": "Invita a tu candidato",
+    "ready": "¡Invitación lista!",
+    "another": "Invitar a otro candidato",
+    "how": "¿Cómo quieres invitar?",
+    "sms": "SMS",
+    "email": "Correo electrónico",
+    "cancel": "Cancelar",
+    "phoneLabel": "Número de teléfono",
+    "emailLabel": "Correo electrónico",
+    "send": "Enviar invitación",
+    "back": "Atrás",
+    "message": "¡Hola! Me gustaría invitarte a posicionarte sobre las tres demandas en Vota Palestina. Regístrate como candidato aquí:",
+    "emailSubject": "Invitación: Posiciónate en Vota Palestina"
+  },
+  "candidateVotes": {
+    "title": "¿Cómo votaron los candidatos?",
+    "yes": "Sí",
+    "no": "No",
+    "notVoted": "No ha votado"
+  },
+  "mobileGate": {
+    "title": "Abre en tu teléfono",
+    "text": "La papeleta debe abrirse en el teléfono que recibió el SMS. Esto garantiza que cada voto proviene de un dispositivo real.",
+    "hint": "Revisa tu SMS y toca el enlace desde tu móvil."
+  },
+  "candidateForm": {
+    "submittedTitle": "¡Tu solicitud ha sido enviada!",
+    "submittedText": "Verificaremos tu información y tu voto se mostrará públicamente una vez aprobado.",
+    "intro": "Como candidato, puedes mostrar tu voto públicamente.",
+    "showPublic": "Mostrar tu voto públicamente",
+    "formIntro": "Completa tus datos. Tu voto se mostrará públicamente tras la aprobación.",
+    "nameLabel": "Nombre completo",
+    "namePlaceholder": "Tu nombre completo",
+    "partyLabel": "Partido",
+    "partyPlaceholder": "Nombre del partido",
+    "constituencyLabel": "Circunscripción",
+    "constituencyPlaceholder": "Tu circunscripción",
+    "submit": "Enviar solicitud",
+    "skip": "Omitir",
+    "networkError": "Error de red. Por favor, inténtalo de nuevo."
+  },
+  "countryCode": {
+    "label": "Código de país"
+  },
+  "map": {
+    "title": "Encuentra tu candidato",
+    "selectRegion": "Selecciona región",
+    "noCandidates": "Aún no hay candidatos en esta región"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

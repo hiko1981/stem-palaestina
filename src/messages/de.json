@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Stimme für Palästina",
+    "description": "Zeige deine Unterstützung für Palästina. Staat anerkennen, Waffenverkäufe stoppen, illegale Investitionen stoppen."
+  },
+  "nav": {
+    "vote": "Abstimmen",
+    "candidates": "Kandidaten",
+    "results": "Ergebnisse",
+    "map": "Karte",
+    "about": "Über uns"
+  },
+  "footer": {
+    "anonymous": "100% anonym. Keine persönlichen Daten werden gespeichert."
+  },
+  "home": {
+    "heroTitle": "Stimme für",
+    "heroHighlight": "Palästina",
+    "heroSubtitle": "Fordere Handlung. Anonym, sicher und in unter einer Minute.",
+    "cta": "Jetzt abstimmen",
+    "demandsHeading": "Drei Forderungen zum Handeln",
+    "anonTitle": "100% anonym",
+    "anonText": "Deine Telefonnummer wird mit einem Einweg-Algorithmus verschlüsselt. Niemand kann sehen, wer abgestimmt hat.",
+    "readMore": "Mehr erfahren",
+    "yourVote": "Du hast gestimmt",
+    "yourVoteYes": "Ja, für die drei Forderungen",
+    "yourVoteNo": "Nein",
+    "missingCandidate": "Kandidat nicht gefunden?"
+  },
+  "candidates": {
+    "title": "Kandidaten",
+    "subtitle": "Sei der erste Kandidat, der zu den drei Forderungen Stellung bezieht.",
+    "register": "Als Kandidat registrieren",
+    "emptyTitle": "Noch keine Kandidaten",
+    "emptyText": "Sei der erste Kandidat, der die drei Forderungen öffentlich unterstützt."
+  },
+  "about": {
+    "title": "Über Stimme für Palästina",
+    "whatTitle": "Was ist Stimme für Palästina?",
+    "whatText": "Stimme für Palästina ist eine Bürgerplattform, auf der du anonym deine Unterstützung für drei konkrete Forderungen zeigen kannst: die Anerkennung des Staates Palästina, den Stopp von Waffenverkäufen an Israel und das Ende illegaler Investitionen in die Besatzung.",
+    "howTitle": "Wie funktioniert es?",
+    "howIntro": "Wir nehmen deine Anonymität sehr ernst. So funktioniert es:",
+    "howStep1Title": "Anfrage:",
+    "howStep1Text": "Gib deine Telefonnummer ein und erhalte einen Stimmzettel per SMS mit einem einmaligen Link.",
+    "howStep2Title": "Abstimmung:",
+    "howStep2Text": "Öffne den Link und stimme mit Ja oder Nein über die drei Forderungen ab. Deine Telefonnummer wird mit einem Einweg-Algorithmus verschlüsselt, sodass sie nicht rekonstruiert werden kann.",
+    "howStep3Title": "Eine Stimme pro Nummer:",
+    "howStep3Text": "Jede Telefonnummer kann nur einmal abstimmen. Der Stimmzettel läuft nach 24 Stunden ab.",
+    "howPrivacy": "Wir speichern keine IP-Adressen, keine Cookies und keine persönlichen Daten im Zusammenhang mit Abstimmungen.",
+    "bundleTitle": "Stimmen-Bündelung",
+    "bundleText": "Zum Schutz der ersten Abstimmenden wird die Gesamtzahl der Stimmen erst angezeigt, wenn mindestens 50 vorliegen. Bis dahin wird nur der Sammlungsstatus angezeigt.",
+    "demandsTitle": "Die drei Forderungen",
+    "securityTitle": "Technische Sicherheit",
+    "security1": "SHA-256-Hashing von Telefonnummern mit serverseitigem Salt",
+    "security2": "Stimmzettel-Tokens mit 24-Stunden-Ablauf",
+    "security3": "Rate-Limiting auf allen Endpunkten",
+    "security4": "Maximal 3 ausstehende Stimmzettel pro Gerät",
+    "security5": "Kein Tracking oder Analysen durch Drittanbieter"
+  },
+  "demands": {
+    "d1Title": "Palästina anerkennen",
+    "d1Short": "Denmark muss den Staat Palästina offiziell anerkennen.",
+    "d1Long": "Denmark muss den Staat Palästina offiziell als souveränen Staat anerkennen.",
+    "d2Title": "Waffenverkäufe an Israel stoppen",
+    "d2Short": "Denmark muss alle Verkäufe und Exporte von Waffen und Militärausrüstung an Israel einstellen.",
+    "d2Long": "Alle Verkäufe und Exporte von Waffen und Militärausrüstung an Israel müssen eingestellt werden.",
+    "d3Title": "Illegale Investitionen stoppen",
+    "d3Short": "Dänische Pensionsfonds und öffentliche Mittel müssen aus Unternehmen desinvestieren, die von der illegalen Besatzung profitieren.",
+    "d3Long": "Dänische Pensionsfonds und öffentliche Mittel müssen aus Unternehmen desinvestieren, die von der illegalen Besatzung profitieren."
+  },
+  "vote": {
+    "thanksTitle": "Danke für deine Stimme!",
+    "thanksText": "Deine Stimme wurde registriert. Lade deine Freunde ein und bewirke etwas.",
+    "title": "Stimme für Palästina",
+    "chooseRole": "Wähle deine Rolle, um zu beginnen.",
+    "voterTitle": "Ich bin Wähler",
+    "voterText": "Stimme anonym über einen SMS-Link ab.",
+    "candidateTitle": "Ich bin Kandidat",
+    "candidateText": "Stimme ab und zeige deine Position öffentlich.",
+    "back": "Zurück",
+    "castTitle": "Gib deine Stimme ab",
+    "castSubtitle": "Gib deine Telefonnummer ein und erhalte einen Stimmzettel per SMS.",
+    "candidateNote": "Nach der Abstimmung kannst du deine Stimme öffentlich als Kandidat zeigen.",
+    "next": "Weiter",
+    "privacyNote": "Deine Telefonnummer wird mit einem Einweg-Algorithmus verschlüsselt und kann nicht zu dir zurückverfolgt werden. Lies mehr auf der",
+    "privacyLink": "Über-uns-Seite"
+  },
+  "results": {
+    "title": "Wie Denmark abstimmt",
+    "subtitle": "Sieh, wie Wähler und Kandidaten abstimmen.",
+    "cta": "Jetzt abstimmen"
+  },
+  "ballot": {
+    "sentTitle": "Stimmzettel gesendet!",
+    "sentText": "Prüfe deine SMS und klicke auf den Link, um abzustimmen. Der Link läuft in 24 Stunden ab.",
+    "phoneLabel": "Handynummer",
+    "send": "Stimmzettel senden",
+    "networkError": "Netzwerkfehler. Bitte versuche es erneut.",
+    "loading": "Stimmzettel wird geladen...",
+    "thanksTitle": "Danke für deine Stimme!",
+    "thanksVoted": "Deine Stimme wurde registriert. Lade deine Freunde ein und bewirke etwas.",
+    "thanksCandidate": "Deine Stimme wurde registriert. Du kannst sie jetzt öffentlich zeigen.",
+    "alreadyVotedTitle": "Du hast bereits abgestimmt",
+    "alreadyVotedText": "Lade deine Freunde ein und bewirke etwas.",
+    "expiredTitle": "Stimmzettel abgelaufen",
+    "expiredText": "Dieser Stimmzettel ist abgelaufen. Gehe zur {link}, um einen neuen anzufordern.",
+    "expiredLink": "Abstimmungsseite",
+    "invalidTitle": "Ungültiger Stimmzettel",
+    "invalidText": "Dieser Stimmzettel existiert nicht. Gehe zur {link}, um einen neuen anzufordern.",
+    "invalidLink": "Abstimmungsseite",
+    "yourBallot": "Dein Stimmzettel",
+    "question": "Unterstützt du die drei Forderungen?",
+    "yes": "Ja, ich stimme dafür",
+    "no": "Nein",
+    "anonNote": "Deine Stimme ist anonym und kann nicht zu deiner Telefonnummer zurückverfolgt werden.",
+    "autoSubmitting": "Deine Stimme wird registriert...",
+    "viewResults": "Ergebnisse ansehen"
+  },
+  "voteCounter": {
+    "singular": "Stimme",
+    "plural": "Stimmen",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "invite": {
+    "title": "Freunde einladen",
+    "copied": "Link kopiert!",
+    "share": "Mit einem Freund teilen",
+    "sendBallot": "Stimmzettel an einen Freund senden ({count} übrig)",
+    "friendPhone": "Gib die Telefonnummer deines Freundes ein und wir senden einen Stimmzettel.",
+    "phoneLabel": "Handynummer",
+    "send": "Stimmzettel senden",
+    "sent": "Stimmzettel gesendet!",
+    "sendAnother": "An einen weiteren Freund senden ({count} übrig)",
+    "allUsed": "Du hast alle 3 Einladungen verbraucht.",
+    "shareTitle": "Stimme für Palästina",
+    "shareText": "Gib deine Stimme für die drei Forderungen ab.",
+    "networkError": "Netzwerkfehler. Bitte erneut versuchen."
+  },
+  "inviteCandidate": {
+    "button": "Lade deinen Kandidaten ein",
+    "ready": "Einladung bereit!",
+    "another": "Weiteren Kandidaten einladen",
+    "how": "Wie möchtest du einladen?",
+    "sms": "SMS",
+    "email": "E-Mail",
+    "cancel": "Abbrechen",
+    "phoneLabel": "Telefonnummer",
+    "emailLabel": "E-Mail-Adresse",
+    "send": "Einladung senden",
+    "back": "Zurück",
+    "message": "Hallo! Ich möchte dich einladen, zu den drei Forderungen auf Stimme für Palästina Stellung zu beziehen. Registriere dich hier als Kandidat:",
+    "emailSubject": "Einladung: Beziehe Stellung auf Stimme für Palästina"
+  },
+  "candidateVotes": {
+    "title": "Wie haben die Kandidaten abgestimmt?",
+    "yes": "Ja",
+    "no": "Nein",
+    "notVoted": "Nicht abgestimmt"
+  },
+  "mobileGate": {
+    "title": "Auf dem Handy öffnen",
+    "text": "Der Stimmzettel muss auf dem Handy geöffnet werden, das die SMS empfangen hat. So wird sichergestellt, dass jede Stimme von einem echten Gerät stammt.",
+    "hint": "Prüfe deine SMS und tippe auf den Link von deinem Handy."
+  },
+  "candidateForm": {
+    "submittedTitle": "Deine Bewerbung wurde gesendet!",
+    "submittedText": "Wir werden deine Angaben überprüfen und deine Stimme wird nach Genehmigung öffentlich angezeigt.",
+    "intro": "Als Kandidat kannst du deine Stimme öffentlich zeigen.",
+    "showPublic": "Deine Stimme öffentlich zeigen",
+    "formIntro": "Fülle deine Daten aus. Deine Stimme wird nach Genehmigung öffentlich angezeigt.",
+    "nameLabel": "Vollständiger Name",
+    "namePlaceholder": "Dein vollständiger Name",
+    "partyLabel": "Partei",
+    "partyPlaceholder": "Parteiname",
+    "constituencyLabel": "Wahlkreis",
+    "constituencyPlaceholder": "Dein Wahlkreis",
+    "submit": "Bewerbung einreichen",
+    "skip": "Überspringen",
+    "networkError": "Netzwerkfehler. Bitte versuche es erneut."
+  },
+  "countryCode": {
+    "label": "Landesvorwahl"
+  },
+  "map": {
+    "title": "Finde deinen Kandidaten",
+    "selectRegion": "Region wählen",
+    "noCandidates": "Noch keine Kandidaten in dieser Region"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

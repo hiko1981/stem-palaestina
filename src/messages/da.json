@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "title": "Stem Palæstina",
+    "description": "Vis din støtte til Palæstina. Anerkend staten, stop våbensalg, stop ulovlige investeringer."
+  },
+  "nav": {
+    "vote": "Stem",
+    "candidates": "Kandidater",
+    "results": "Resultater",
+    "map": "Kort",
+    "about": "Om"
+  },
+  "footer": {
+    "anonymous": "100% anonym. Ingen persondata gemmes."
+  },
+  "home": {
+    "heroTitle": "Stem for",
+    "heroHighlight": "Palæstina",
+    "heroSubtitle": "Kræv handling. Anonymt, sikkert og på under ét minut.",
+    "cta": "Afgiv din stemme",
+    "demandsHeading": "Tre krav til handling",
+    "anonTitle": "100% anonymt",
+    "anonText": "Dit telefonnummer krypteres med envejs-hashing. Ingen kan se, hvem der har stemt.",
+    "readMore": "Læs mere",
+    "yourVote": "Du stemte",
+    "yourVoteYes": "Ja, for de tre krav",
+    "yourVoteNo": "Nej",
+    "missingCandidate": "Mangler din kandidat?"
+  },
+  "candidates": {
+    "title": "Kandidater",
+    "subtitle": "Vær den første kandidat, der tager stilling til de tre krav.",
+    "register": "Registrer dig som kandidat",
+    "emptyTitle": "Ingen kandidater endnu",
+    "emptyText": "Vær den første kandidat, der offentligt tilslutter sig de tre krav."
+  },
+  "about": {
+    "title": "Om Stem Palæstina",
+    "whatTitle": "Hvad er Stem Palæstina?",
+    "whatText": "Stem Palæstina er en borgerplatform, hvor man anonymt kan vise sin støtte til tre konkrete krav: anerkendelse af staten Palæstina, stop for våbensalg til Israel og stop for ulovlige investeringer i besættelsen.",
+    "howTitle": "Hvordan fungerer det?",
+    "howIntro": "Vi tager din anonymitet meget alvorligt. Sådan fungerer det:",
+    "howStep1Title": "Anmodning:",
+    "howStep1Text": "Du indtaster dit telefonnummer og modtager en stemmeseddel via SMS med et unikt link.",
+    "howStep2Title": "Stemmeafgivelse:",
+    "howStep2Text": "Du åbner linket og stemmer ja eller nej til de tre krav. Dit telefonnummer krypteres med en envejs-algoritme, så det ikke kan genskabes.",
+    "howStep3Title": "Én stemme per nummer:",
+    "howStep3Text": "Hvert telefonnummer kan kun stemme én gang. Stemmesedlen udløber efter 24 timer.",
+    "howPrivacy": "Vi gemmer ingen IP-adresser, ingen cookies og ingen persondata i forbindelse med stemmer.",
+    "bundleTitle": "Bundling af stemmer",
+    "bundleText": "For at beskytte tidlige stemmere vises det samlede antal stemmer først, når der er mindst 50. Indtil da vises kun, at indsamlingen er i gang.",
+    "demandsTitle": "De tre krav",
+    "securityTitle": "Teknisk sikkerhed",
+    "security1": "SHA-256 hashing af telefonnumre med server-side salt",
+    "security2": "Stemmeseddel-tokens med 24 timers udløb",
+    "security3": "Rate limiting på alle endpoints",
+    "security4": "Maks 3 ventende stemmesedler per enhed",
+    "security5": "Ingen tredjepartstracking eller analytics"
+  },
+  "demands": {
+    "d1Title": "Anerkend Palæstina",
+    "d1Short": "Danmark skal officielt anerkende staten Palæstina.",
+    "d1Long": "Danmark skal officielt anerkende staten Palæstina som en suveræn stat.",
+    "d2Title": "Stop våbensalg til Israel",
+    "d2Short": "Danmark skal stoppe alt salg og eksport af våben og militærudstyr til Israel.",
+    "d2Long": "Alt salg og eksport af våben og militærudstyr til Israel skal stoppes.",
+    "d3Title": "Stop ulovlige investeringer",
+    "d3Short": "Danske pensionskasser og offentlige fonde skal trække investeringer ud af virksomheder, der profiterer på den ulovlige besættelse.",
+    "d3Long": "Danske pensionskasser og offentlige fonde skal trække investeringer ud af virksomheder der profiterer på den ulovlige besættelse."
+  },
+  "vote": {
+    "thanksTitle": "Tak for din stemme!",
+    "thanksText": "Din stemme er registreret. Inviter dine venner og gør en forskel.",
+    "title": "Stem Palæstina",
+    "chooseRole": "Vælg din rolle for at komme i gang.",
+    "voterTitle": "Jeg er vælger",
+    "voterText": "Afgiv din stemme anonymt via SMS-link.",
+    "candidateTitle": "Jeg er kandidat",
+    "candidateText": "Stem og vis din holdning offentligt.",
+    "back": "Tilbage",
+    "castTitle": "Afgiv din stemme",
+    "castSubtitle": "Indtast dit telefonnummer, og modtag en stemmeseddel via SMS.",
+    "candidateNote": "Efter stemmeafgivelse kan du vise din stemme offentligt som kandidat.",
+    "next": "Næste",
+    "privacyNote": "Dit telefonnummer krypteres med en envejs-algoritme og kan ikke spores tilbage til dig. Læs mere på",
+    "privacyLink": "Om-siden"
+  },
+  "results": {
+    "title": "Det stemmer Danmark",
+    "subtitle": "Sådan stemmer vælgerne og kandidaterne.",
+    "cta": "Afgiv din stemme"
+  },
+  "ballot": {
+    "sentTitle": "Stemmeseddel sendt!",
+    "sentText": "Tjek din SMS, og klik på linket for at afgive din stemme. Linket udløber om 24 timer.",
+    "phoneLabel": "Mobilnummer",
+    "send": "Send stemmeseddel",
+    "networkError": "Netværksfejl. Prøv igen.",
+    "loading": "Henter stemmeseddel...",
+    "thanksTitle": "Tak for din stemme!",
+    "thanksVoted": "Din stemme er registreret. Inviter dine venner og gør en forskel.",
+    "thanksCandidate": "Din stemme er registreret. Du kan nu vise den offentligt.",
+    "alreadyVotedTitle": "Du har allerede stemt",
+    "alreadyVotedText": "Inviter dine venner og gør en forskel.",
+    "expiredTitle": "Stemmeseddel udløbet",
+    "expiredText": "Denne stemmeseddel er udløbet. Gå til <link>stem-siden</link> for at anmode om en ny.",
+    "invalidTitle": "Ugyldig stemmeseddel",
+    "invalidText": "Denne stemmeseddel findes ikke. Gå til <link>stem-siden</link> for at anmode om en ny.",
+    "yourBallot": "Din stemmeseddel",
+    "question": "Stemmer du for de tre krav?",
+    "yes": "Ja, jeg stemmer for",
+    "no": "Nej",
+    "anonNote": "Din stemme er anonym og kan ikke spores tilbage til dit telefonnummer.",
+    "autoSubmitting": "Registrerer din stemme...",
+    "viewResults": "Se resultater"
+  },
+  "voteCounter": {
+    "singular": "stemme",
+    "plural": "stemmer",
+    "yes": "Ja",
+    "no": "Nej"
+  },
+  "invite": {
+    "title": "Inviter venner",
+    "copied": "Link kopieret!",
+    "share": "Del med en ven",
+    "sendBallot": "Send stemmeseddel til en ven ({count} tilbage)",
+    "friendPhone": "Indtast din vens telefonnummer, så sender vi en stemmeseddel.",
+    "phoneLabel": "Mobilnummer",
+    "send": "Send stemmeseddel",
+    "sent": "Stemmeseddel sendt!",
+    "sendAnother": "Send til endnu en ven ({count} tilbage)",
+    "allUsed": "Du har brugt alle 3 invitationer.",
+    "shareTitle": "Stem Palæstina",
+    "shareText": "Afgiv din stemme for de tre krav.",
+    "networkError": "Netværksfejl. Prøv igen."
+  },
+  "inviteCandidate": {
+    "button": "Inviter din kandidat",
+    "ready": "Invitation klar!",
+    "another": "Inviter endnu en kandidat",
+    "how": "Hvordan vil du invitere?",
+    "sms": "SMS",
+    "email": "E-mail",
+    "cancel": "Annuller",
+    "phoneLabel": "Telefonnummer",
+    "emailLabel": "E-mailadresse",
+    "send": "Send invitation",
+    "back": "Tilbage",
+    "message": "Hej! Jeg vil gerne invitere dig til at tage stilling til de tre krav på Stem Palæstina. Registrer dig som kandidat her:",
+    "emailSubject": "Inviter: Tag stilling på Stem Palæstina"
+  },
+  "candidateVotes": {
+    "title": "Hvordan stemte kandidaterne?",
+    "yes": "Ja",
+    "no": "Nej",
+    "notVoted": "Ikke stemt"
+  },
+  "mobileGate": {
+    "title": "Åbn på din telefon",
+    "text": "Stemmesedlen skal åbnes på den telefon der modtog SMS'en. Det sikrer at hver stemme kommer fra en ægte enhed.",
+    "hint": "Tjek din SMS og tryk på linket fra din mobil."
+  },
+  "candidateForm": {
+    "submittedTitle": "Din ansøgning er sendt!",
+    "submittedText": "Vi verificerer dine oplysninger, og din stemme vises offentligt, når du er godkendt.",
+    "intro": "Som kandidat kan du vise din stemme offentligt.",
+    "showPublic": "Vis din stemme offentligt",
+    "formIntro": "Udfyld dine oplysninger. Din stemme vises offentligt efter godkendelse.",
+    "nameLabel": "Fulde navn",
+    "namePlaceholder": "Dit fulde navn",
+    "partyLabel": "Parti",
+    "partyPlaceholder": "Partinavn",
+    "constituencyLabel": "Valgkreds",
+    "constituencyPlaceholder": "Din valgkreds",
+    "submit": "Send ansøgning",
+    "skip": "Spring over",
+    "networkError": "Netværksfejl. Prøv igen."
+  },
+  "countryCode": {
+    "label": "Landekode"
+  },
+  "map": {
+    "title": "Find din kandidat",
+    "selectRegion": "Vælg storkreds",
+    "noCandidates": "Ingen kandidater i denne storkreds endnu"
+  },
+  "storkredse": {
+    "copenhagen": "Københavns Storkreds",
+    "copenhagen-suburbs": "Københavns Omegns Storkreds",
+    "north-zealand": "Nordsjællands Storkreds",
+    "zealand": "Sjællands Storkreds",
+    "funen": "Fyns Storkreds",
+    "south-jutland": "Sydjyllands Storkreds",
+    "east-jutland": "Østjyllands Storkreds",
+    "west-jutland": "Vestjyllands Storkreds",
+    "north-jutland": "Nordjyllands Storkreds",
+    "bornholm": "Bornholms Storkreds"
+  }
+}

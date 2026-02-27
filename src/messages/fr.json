@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Vote Palestine",
+    "description": "Montrez votre soutien pour la Palestine. Reconnaissez l'État, arrêtez les ventes d'armes, cessez les investissements illégaux."
+  },
+  "nav": {
+    "vote": "Voter",
+    "candidates": "Candidats",
+    "results": "Résultats",
+    "map": "Carte",
+    "about": "À propos"
+  },
+  "footer": {
+    "anonymous": "100 % anonyme. Aucune donnée personnelle n'est stockée."
+  },
+  "home": {
+    "heroTitle": "Votez pour la",
+    "heroHighlight": "Palestine",
+    "heroSubtitle": "Exigez des actes. Anonyme, sécurisé, en moins d'une minute.",
+    "cta": "Votez maintenant",
+    "demandsHeading": "Trois exigences d'action",
+    "anonTitle": "100 % anonyme",
+    "anonText": "Votre numéro de téléphone est chiffré par hachage irréversible. Personne ne peut savoir qui a voté.",
+    "readMore": "En savoir plus",
+    "yourVote": "Vous avez voté",
+    "yourVoteYes": "Oui, pour les trois revendications",
+    "yourVoteNo": "Non",
+    "missingCandidate": "Votre candidat manque ?"
+  },
+  "candidates": {
+    "title": "Candidats",
+    "subtitle": "Soyez le premier candidat à prendre position sur les trois exigences.",
+    "register": "S'inscrire comme candidat",
+    "emptyTitle": "Aucun candidat pour l'instant",
+    "emptyText": "Soyez le premier candidat à soutenir publiquement les trois exigences."
+  },
+  "about": {
+    "title": "À propos de Vote Palestine",
+    "whatTitle": "Qu'est-ce que Vote Palestine ?",
+    "whatText": "Vote Palestine est une plateforme citoyenne où vous pouvez montrer anonymement votre soutien à trois exigences concrètes : la reconnaissance de l'État de Palestine, l'arrêt des ventes d'armes à Israël et la fin des investissements illégaux dans l'occupation.",
+    "howTitle": "Comment ça marche ?",
+    "howIntro": "Nous prenons votre anonymat très au sérieux. Voici comment cela fonctionne :",
+    "howStep1Title": "Demande :",
+    "howStep1Text": "Saisissez votre numéro de téléphone et recevez un bulletin de vote par SMS avec un lien unique.",
+    "howStep2Title": "Vote :",
+    "howStep2Text": "Ouvrez le lien et votez oui ou non aux trois exigences. Votre numéro de téléphone est chiffré par un algorithme irréversible et ne peut pas être reconstitué.",
+    "howStep3Title": "Un vote par numéro :",
+    "howStep3Text": "Chaque numéro de téléphone ne peut voter qu'une seule fois. Le bulletin expire après 24 heures.",
+    "howPrivacy": "Nous ne stockons aucune adresse IP, aucun cookie et aucune donnée personnelle en lien avec les votes.",
+    "bundleTitle": "Regroupement des votes",
+    "bundleText": "Pour protéger les premiers votants, le nombre total de votes n'est affiché qu'à partir de 50 votes minimum. Jusque-là, seul l'état de collecte est affiché.",
+    "demandsTitle": "Les trois exigences",
+    "securityTitle": "Sécurité technique",
+    "security1": "Hachage SHA-256 des numéros de téléphone avec sel côté serveur",
+    "security2": "Jetons de bulletin avec expiration de 24 heures",
+    "security3": "Limitation de débit sur tous les points d'accès",
+    "security4": "Maximum 3 bulletins en attente par appareil",
+    "security5": "Aucun suivi ni analytique tiers"
+  },
+  "demands": {
+    "d1Title": "Reconnaître la Palestine",
+    "d1Short": "Votre pays doit reconnaître officiellement l'État de Palestine.",
+    "d1Long": "Votre pays doit reconnaître officiellement l'État de Palestine en tant qu'État souverain.",
+    "d2Title": "Arrêter les ventes d'armes à Israël",
+    "d2Short": "Toutes les ventes et exportations d'armes et d'équipements militaires vers Israël doivent être arrêtées.",
+    "d2Long": "Toutes les ventes et exportations d'armes et d'équipements militaires vers Israël doivent être arrêtées.",
+    "d3Title": "Arrêter les investissements illégaux",
+    "d3Short": "Les fonds de pension et les fonds publics doivent se désengager des entreprises qui profitent de l'occupation illégale.",
+    "d3Long": "Les fonds de pension et les fonds publics doivent se désengager des entreprises qui profitent de l'occupation illégale."
+  },
+  "vote": {
+    "thanksTitle": "Merci pour votre vote !",
+    "thanksText": "Votre vote a été enregistré. Invitez vos amis et faites la différence.",
+    "title": "Vote Palestine",
+    "chooseRole": "Choisissez votre rôle pour commencer.",
+    "voterTitle": "Je suis électeur",
+    "voterText": "Votez anonymement via un lien SMS.",
+    "candidateTitle": "Je suis candidat",
+    "candidateText": "Votez et affichez votre position publiquement.",
+    "back": "Retour",
+    "castTitle": "Votez maintenant",
+    "castSubtitle": "Saisissez votre numéro de téléphone et recevez un bulletin de vote par SMS.",
+    "candidateNote": "Après avoir voté, vous pouvez afficher votre vote publiquement en tant que candidat.",
+    "next": "Suivant",
+    "privacyNote": "Votre numéro de téléphone est chiffré par un algorithme irréversible et ne peut pas être retracé jusqu'à vous. En savoir plus sur la",
+    "privacyLink": "page À propos"
+  },
+  "results": {
+    "title": "Comment votent les gens",
+    "subtitle": "Découvrez comment les électeurs et les candidats votent.",
+    "cta": "Votez maintenant"
+  },
+  "ballot": {
+    "sentTitle": "Bulletin envoyé !",
+    "sentText": "Vérifiez vos SMS et cliquez sur le lien pour voter. Le lien expire dans 24 heures.",
+    "phoneLabel": "Numéro de mobile",
+    "send": "Envoyer le bulletin",
+    "networkError": "Erreur réseau. Veuillez réessayer.",
+    "loading": "Chargement du bulletin...",
+    "thanksTitle": "Merci pour votre vote !",
+    "thanksVoted": "Votre vote a été enregistré. Invitez vos amis et faites la différence.",
+    "thanksCandidate": "Votre vote a été enregistré. Vous pouvez maintenant l'afficher publiquement.",
+    "alreadyVotedTitle": "Vous avez déjà voté",
+    "alreadyVotedText": "Invitez vos amis et faites la différence.",
+    "expiredTitle": "Bulletin expiré",
+    "expiredText": "Ce bulletin a expiré. Rendez-vous sur la {link} pour en demander un nouveau.",
+    "expiredLink": "page de vote",
+    "invalidTitle": "Bulletin invalide",
+    "invalidText": "Ce bulletin n'existe pas. Rendez-vous sur la {link} pour en demander un nouveau.",
+    "invalidLink": "page de vote",
+    "yourBallot": "Votre bulletin",
+    "question": "Soutenez-vous les trois exigences ?",
+    "yes": "Oui, je vote pour",
+    "no": "Non",
+    "anonNote": "Votre vote est anonyme et ne peut pas être retracé jusqu'à votre numéro de téléphone.",
+    "autoSubmitting": "Enregistrement de votre vote...",
+    "viewResults": "Voir les résultats"
+  },
+  "voteCounter": {
+    "singular": "vote",
+    "plural": "votes",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "invite": {
+    "title": "Invitez vos amis",
+    "copied": "Lien copié !",
+    "share": "Partager avec un ami",
+    "sendBallot": "Envoyer un bulletin à un ami ({count} restants)",
+    "friendPhone": "Saisissez le numéro de téléphone de votre ami et nous lui enverrons un bulletin.",
+    "phoneLabel": "Numéro de mobile",
+    "send": "Envoyer le bulletin",
+    "sent": "Bulletin envoyé !",
+    "sendAnother": "Envoyer à un autre ami ({count} restants)",
+    "allUsed": "Vous avez utilisé vos 3 invitations.",
+    "shareTitle": "Vote Palestine",
+    "shareText": "Votez pour les trois exigences.",
+    "networkError": "Erreur réseau. Veuillez réessayer."
+  },
+  "inviteCandidate": {
+    "button": "Invitez votre candidat",
+    "ready": "Invitation prête !",
+    "another": "Inviter un autre candidat",
+    "how": "Comment souhaitez-vous inviter ?",
+    "sms": "SMS",
+    "email": "E-mail",
+    "cancel": "Annuler",
+    "phoneLabel": "Numéro de téléphone",
+    "emailLabel": "Adresse e-mail",
+    "send": "Envoyer l'invitation",
+    "back": "Retour",
+    "message": "Bonjour ! Je vous invite à prendre position sur les trois exigences sur Vote Palestine. Inscrivez-vous comme candidat ici :",
+    "emailSubject": "Invitation : Prenez position sur Vote Palestine"
+  },
+  "candidateVotes": {
+    "title": "Comment les candidats ont-ils voté ?",
+    "yes": "Oui",
+    "no": "Non",
+    "notVoted": "N'a pas voté"
+  },
+  "mobileGate": {
+    "title": "Ouvrez sur votre téléphone",
+    "text": "Le bulletin doit être ouvert sur le téléphone qui a reçu le SMS. Cela garantit que chaque vote provient d'un appareil réel.",
+    "hint": "Vérifiez vos SMS et appuyez sur le lien depuis votre mobile."
+  },
+  "candidateForm": {
+    "submittedTitle": "Votre candidature a été envoyée !",
+    "submittedText": "Nous vérifierons vos informations et votre vote sera affiché publiquement une fois approuvé.",
+    "intro": "En tant que candidat, vous pouvez afficher votre vote publiquement.",
+    "showPublic": "Afficher votre vote publiquement",
+    "formIntro": "Remplissez vos informations. Votre vote sera affiché publiquement après approbation.",
+    "nameLabel": "Nom complet",
+    "namePlaceholder": "Votre nom complet",
+    "partyLabel": "Parti",
+    "partyPlaceholder": "Nom du parti",
+    "constituencyLabel": "Circonscription",
+    "constituencyPlaceholder": "Votre circonscription",
+    "submit": "Envoyer la candidature",
+    "skip": "Passer",
+    "networkError": "Erreur réseau. Veuillez réessayer."
+  },
+  "countryCode": {
+    "label": "Indicatif pays"
+  },
+  "map": {
+    "title": "Trouvez votre candidat",
+    "selectRegion": "Sélectionnez une région",
+    "noCandidates": "Aucun candidat dans cette région pour le moment"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "title": "Vote Palestine",
+    "description": "Show your support for Palestine. Recognize the state, stop arms sales, stop illegal investments."
+  },
+  "nav": {
+    "vote": "Vote",
+    "candidates": "Candidates",
+    "results": "Results",
+    "map": "Map",
+    "about": "About"
+  },
+  "footer": {
+    "anonymous": "100% anonymous. No personal data stored."
+  },
+  "home": {
+    "heroTitle": "Vote for",
+    "heroHighlight": "Palestine",
+    "heroSubtitle": "Demand action. Anonymous, secure, and in under one minute.",
+    "cta": "Cast your vote",
+    "demandsHeading": "Three demands for action",
+    "anonTitle": "100% anonymous",
+    "anonText": "Your phone number is encrypted with one-way hashing. No one can see who voted.",
+    "readMore": "Read more",
+    "yourVote": "You voted",
+    "yourVoteYes": "Yes, for the three demands",
+    "yourVoteNo": "No",
+    "missingCandidate": "Missing your candidate?"
+  },
+  "candidates": {
+    "title": "Candidates",
+    "subtitle": "Be the first candidate to take a stand on the three demands.",
+    "register": "Register as a candidate",
+    "emptyTitle": "No candidates yet",
+    "emptyText": "Be the first candidate to publicly endorse the three demands."
+  },
+  "about": {
+    "title": "About Vote Palestine",
+    "whatTitle": "What is Vote Palestine?",
+    "whatText": "Vote Palestine is a civic platform where you can anonymously show your support for three concrete demands: recognition of the state of Palestine, stopping arms sales to Israel, and ending illegal investments in the occupation.",
+    "howTitle": "How does it work?",
+    "howIntro": "We take your anonymity very seriously. Here's how it works:",
+    "howStep1Title": "Request:",
+    "howStep1Text": "Enter your phone number and receive a ballot via SMS with a unique link.",
+    "howStep2Title": "Voting:",
+    "howStep2Text": "Open the link and vote yes or no on the three demands. Your phone number is encrypted with a one-way algorithm so it cannot be reconstructed.",
+    "howStep3Title": "One vote per number:",
+    "howStep3Text": "Each phone number can only vote once. The ballot expires after 24 hours.",
+    "howPrivacy": "We store no IP addresses, no cookies, and no personal data in connection with votes.",
+    "bundleTitle": "Vote bundling",
+    "bundleText": "To protect early voters, the total vote count is only displayed once there are at least 50. Until then, only the collection status is shown.",
+    "demandsTitle": "The three demands",
+    "securityTitle": "Technical security",
+    "security1": "SHA-256 hashing of phone numbers with server-side salt",
+    "security2": "Ballot tokens with 24-hour expiry",
+    "security3": "Rate limiting on all endpoints",
+    "security4": "Max 3 pending ballots per device",
+    "security5": "No third-party tracking or analytics"
+  },
+  "demands": {
+    "d1Title": "Recognize Palestine",
+    "d1Short": "Denmark must officially recognize the state of Palestine.",
+    "d1Long": "Denmark must officially recognize the state of Palestine as a sovereign state.",
+    "d2Title": "Stop arms sales to Israel",
+    "d2Short": "Denmark must stop all sales and exports of weapons and military equipment to Israel.",
+    "d2Long": "All sales and exports of weapons and military equipment to Israel must be stopped.",
+    "d3Title": "Stop illegal investments",
+    "d3Short": "Danish pension funds and public funds must divest from companies profiting from the illegal occupation.",
+    "d3Long": "Danish pension funds and public funds must divest from companies profiting from the illegal occupation."
+  },
+  "vote": {
+    "thanksTitle": "Thank you for your vote!",
+    "thanksText": "Your vote has been registered. Invite your friends and make a difference.",
+    "title": "Vote Palestine",
+    "chooseRole": "Choose your role to get started.",
+    "voterTitle": "I am a voter",
+    "voterText": "Cast your vote anonymously via SMS link.",
+    "candidateTitle": "I am a candidate",
+    "candidateText": "Vote and show your position publicly.",
+    "back": "Back",
+    "castTitle": "Cast your vote",
+    "castSubtitle": "Enter your phone number and receive a ballot via SMS.",
+    "candidateNote": "After voting, you can show your vote publicly as a candidate.",
+    "next": "Next",
+    "privacyNote": "Your phone number is encrypted with a one-way algorithm and cannot be traced back to you. Read more on the",
+    "privacyLink": "About page"
+  },
+  "results": {
+    "title": "How Denmark votes",
+    "subtitle": "See how voters and candidates are voting.",
+    "cta": "Cast your vote"
+  },
+  "ballot": {
+    "sentTitle": "Ballot sent!",
+    "sentText": "Check your SMS and click the link to cast your vote. The link expires in 24 hours.",
+    "phoneLabel": "Mobile number",
+    "send": "Send ballot",
+    "networkError": "Network error. Please try again.",
+    "loading": "Loading ballot...",
+    "thanksTitle": "Thank you for your vote!",
+    "thanksVoted": "Your vote has been registered. Invite your friends and make a difference.",
+    "thanksCandidate": "Your vote has been registered. You can now show it publicly.",
+    "alreadyVotedTitle": "You have already voted",
+    "alreadyVotedText": "Invite your friends and make a difference.",
+    "expiredTitle": "Ballot expired",
+    "expiredText": "This ballot has expired. Go to the <link>vote page</link> to request a new one.",
+    "invalidTitle": "Invalid ballot",
+    "invalidText": "This ballot does not exist. Go to the <link>vote page</link> to request a new one.",
+    "yourBallot": "Your ballot",
+    "question": "Do you support the three demands?",
+    "yes": "Yes, I vote in favor",
+    "no": "No",
+    "anonNote": "Your vote is anonymous and cannot be traced back to your phone number.",
+    "autoSubmitting": "Registering your vote...",
+    "viewResults": "View results"
+  },
+  "voteCounter": {
+    "singular": "vote",
+    "plural": "votes",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "invite": {
+    "title": "Invite friends",
+    "copied": "Link copied!",
+    "share": "Share with a friend",
+    "sendBallot": "Send ballot to a friend ({count} left)",
+    "friendPhone": "Enter your friend's phone number and we'll send a ballot.",
+    "phoneLabel": "Mobile number",
+    "send": "Send ballot",
+    "sent": "Ballot sent!",
+    "sendAnother": "Send to another friend ({count} left)",
+    "allUsed": "You have used all 3 invitations.",
+    "shareTitle": "Vote Palestine",
+    "shareText": "Cast your vote for the three demands.",
+    "networkError": "Network error. Please try again."
+  },
+  "inviteCandidate": {
+    "button": "Invite your candidate",
+    "ready": "Invitation ready!",
+    "another": "Invite another candidate",
+    "how": "How would you like to invite?",
+    "sms": "SMS",
+    "email": "Email",
+    "cancel": "Cancel",
+    "phoneLabel": "Phone number",
+    "emailLabel": "Email address",
+    "send": "Send invitation",
+    "back": "Back",
+    "message": "Hi! I'd like to invite you to take a stand on the three demands on Vote Palestine. Register as a candidate here:",
+    "emailSubject": "Invitation: Take a stand on Vote Palestine"
+  },
+  "candidateVotes": {
+    "title": "How did the candidates vote?",
+    "yes": "Yes",
+    "no": "No",
+    "notVoted": "Not voted"
+  },
+  "mobileGate": {
+    "title": "Open on your phone",
+    "text": "The ballot must be opened on the phone that received the SMS. This ensures each vote comes from a real device.",
+    "hint": "Check your SMS and tap the link from your mobile."
+  },
+  "candidateForm": {
+    "submittedTitle": "Your application has been sent!",
+    "submittedText": "We will verify your information and your vote will be shown publicly once approved.",
+    "intro": "As a candidate, you can show your vote publicly.",
+    "showPublic": "Show your vote publicly",
+    "formIntro": "Fill in your details. Your vote will be shown publicly after approval.",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Your full name",
+    "partyLabel": "Party",
+    "partyPlaceholder": "Party name",
+    "constituencyLabel": "Constituency",
+    "constituencyPlaceholder": "Your constituency",
+    "submit": "Submit application",
+    "skip": "Skip",
+    "networkError": "Network error. Please try again."
+  },
+  "countryCode": {
+    "label": "Country code"
+  },
+  "map": {
+    "title": "Find your candidate",
+    "selectRegion": "Select region",
+    "noCandidates": "No candidates in this region yet"
+  },
+  "storkredse": {
+    "copenhagen": "Copenhagen",
+    "copenhagen-suburbs": "Copenhagen Suburbs",
+    "north-zealand": "North Zealand",
+    "zealand": "Zealand",
+    "funen": "Funen",
+    "south-jutland": "South Jutland",
+    "east-jutland": "East Jutland",
+    "west-jutland": "West Jutland",
+    "north-jutland": "North Jutland",
+    "bornholm": "Bornholm"
+  }
+}

@@ -4,12 +4,22 @@ import { VOTE_BUNDLE_THRESHOLD } from "@/lib/constants";
 
 export async function GET() {
   try {
-    const count = await prisma.vote.count();
+    const [total, jaCount, candidateCount] = await Promise.all([
+      prisma.vote.count(),
+      prisma.vote.count({ where: { voteValue: true } }),
+      prisma.candidate.count({ where: { verified: true } }),
+    ]);
+
+    const nejCount = total - jaCount;
+    const thresholdReached = total >= VOTE_BUNDLE_THRESHOLD;
 
     return NextResponse.json(
       {
-        count: count >= VOTE_BUNDLE_THRESHOLD ? count : null,
-        thresholdReached: count >= VOTE_BUNDLE_THRESHOLD,
+        total,
+        ja: thresholdReached ? jaCount : null,
+        nej: thresholdReached ? nejCount : null,
+        thresholdReached,
+        candidateCount,
       },
       {
         headers: {

@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Bỏ phiếu cho Palestine",
+    "description": "Thể hiện sự ủng hộ của bạn dành cho Palestine. Công nhận nhà nước, ngừng bán vũ khí, chấm dứt đầu tư bất hợp pháp."
+  },
+  "nav": {
+    "vote": "Bỏ phiếu",
+    "candidates": "Ứng viên",
+    "results": "Kết quả",
+    "map": "Bản đồ",
+    "about": "Giới thiệu"
+  },
+  "footer": {
+    "anonymous": "100% ẩn danh. Không lưu trữ dữ liệu cá nhân."
+  },
+  "home": {
+    "heroTitle": "Bỏ phiếu cho",
+    "heroHighlight": "Palestine",
+    "heroSubtitle": "Yêu cầu hành động. Ẩn danh, an toàn, chỉ trong một phút.",
+    "cta": "Bỏ phiếu ngay",
+    "demandsHeading": "Ba yêu cầu hành động",
+    "anonTitle": "100% ẩn danh",
+    "anonText": "Số điện thoại của bạn được mã hóa bằng hàm băm một chiều. Không ai có thể biết ai đã bỏ phiếu.",
+    "readMore": "Tìm hiểu thêm",
+    "yourVote": "Bạn đã bỏ phiếu",
+    "yourVoteYes": "Có, cho ba yêu cầu",
+    "yourVoteNo": "Không",
+    "missingCandidate": "Không tìm thấy ứng viên?"
+  },
+  "candidates": {
+    "title": "Ứng viên",
+    "subtitle": "Hãy là ứng viên đầu tiên lên tiếng về ba yêu cầu.",
+    "register": "Đăng ký làm ứng viên",
+    "emptyTitle": "Chưa có ứng viên nào",
+    "emptyText": "Hãy là ứng viên đầu tiên công khai ủng hộ ba yêu cầu."
+  },
+  "about": {
+    "title": "Giới thiệu Vote Palestine",
+    "whatTitle": "Vote Palestine là gì?",
+    "whatText": "Vote Palestine là một nền tảng dân sự nơi bạn có thể ẩn danh thể hiện sự ủng hộ cho ba yêu cầu cụ thể: công nhận nhà nước Palestine, ngừng bán vũ khí cho Israel và chấm dứt đầu tư bất hợp pháp vào việc chiếm đóng.",
+    "howTitle": "Hoạt động như thế nào?",
+    "howIntro": "Chúng tôi rất coi trọng quyền ẩn danh của bạn. Đây là cách hoạt động:",
+    "howStep1Title": "Yêu cầu:",
+    "howStep1Text": "Nhập số điện thoại của bạn và nhận phiếu bầu qua SMS với một liên kết duy nhất.",
+    "howStep2Title": "Bỏ phiếu:",
+    "howStep2Text": "Mở liên kết và bỏ phiếu đồng ý hoặc không đồng ý với ba yêu cầu. Số điện thoại của bạn được mã hóa bằng thuật toán một chiều nên không thể khôi phục.",
+    "howStep3Title": "Mỗi số một phiếu:",
+    "howStep3Text": "Mỗi số điện thoại chỉ được bỏ phiếu một lần. Phiếu bầu hết hạn sau 24 giờ.",
+    "howPrivacy": "Chúng tôi không lưu trữ địa chỉ IP, cookie hay dữ liệu cá nhân nào liên quan đến phiếu bầu.",
+    "bundleTitle": "Gộp phiếu bầu",
+    "bundleText": "Để bảo vệ những người bỏ phiếu sớm, tổng số phiếu chỉ được hiển thị khi đạt ít nhất 50 phiếu. Trước đó, chỉ hiển thị trạng thái thu thập.",
+    "demandsTitle": "Ba yêu cầu",
+    "securityTitle": "Bảo mật kỹ thuật",
+    "security1": "Băm SHA-256 số điện thoại với muối phía máy chủ",
+    "security2": "Mã phiếu bầu hết hạn sau 24 giờ",
+    "security3": "Giới hạn tần suất truy cập trên tất cả các điểm cuối",
+    "security4": "Tối đa 3 phiếu bầu đang chờ xử lý trên mỗi thiết bị",
+    "security5": "Không theo dõi hoặc phân tích từ bên thứ ba"
+  },
+  "demands": {
+    "d1Title": "Công nhận Palestine",
+    "d1Short": "Đan Mạch phải chính thức công nhận nhà nước Palestine.",
+    "d1Long": "Đan Mạch phải chính thức công nhận Palestine là một quốc gia có chủ quyền.",
+    "d2Title": "Ngừng bán vũ khí cho Israel",
+    "d2Short": "Đan Mạch phải ngừng tất cả hoạt động bán và xuất khẩu vũ khí cùng thiết bị quân sự cho Israel.",
+    "d2Long": "Tất cả hoạt động bán và xuất khẩu vũ khí cùng thiết bị quân sự cho Israel phải được chấm dứt.",
+    "d3Title": "Chấm dứt đầu tư bất hợp pháp",
+    "d3Short": "Các quỹ hưu trí và quỹ công của Đan Mạch phải rút vốn khỏi các công ty trục lợi từ việc chiếm đóng bất hợp pháp.",
+    "d3Long": "Các quỹ hưu trí và quỹ công của Đan Mạch phải rút vốn khỏi các công ty trục lợi từ việc chiếm đóng bất hợp pháp."
+  },
+  "vote": {
+    "thanksTitle": "Cảm ơn bạn đã bỏ phiếu!",
+    "thanksText": "Phiếu bầu của bạn đã được ghi nhận. Mời bạn bè cùng tham gia để tạo sự khác biệt.",
+    "title": "Bỏ phiếu cho Palestine",
+    "chooseRole": "Chọn vai trò của bạn để bắt đầu.",
+    "voterTitle": "Tôi là cử tri",
+    "voterText": "Bỏ phiếu ẩn danh qua liên kết SMS.",
+    "candidateTitle": "Tôi là ứng viên",
+    "candidateText": "Bỏ phiếu và công khai lập trường của bạn.",
+    "back": "Quay lại",
+    "castTitle": "Bỏ phiếu",
+    "castSubtitle": "Nhập số điện thoại của bạn và nhận phiếu bầu qua SMS.",
+    "candidateNote": "Sau khi bỏ phiếu, bạn có thể công khai phiếu bầu với tư cách ứng viên.",
+    "next": "Tiếp theo",
+    "privacyNote": "Số điện thoại của bạn được mã hóa bằng thuật toán một chiều và không thể truy ngược về bạn. Tìm hiểu thêm tại",
+    "privacyLink": "trang Giới thiệu"
+  },
+  "results": {
+    "title": "Đan Mạch bỏ phiếu như thế nào",
+    "subtitle": "Xem cách cử tri và ứng viên đang bỏ phiếu.",
+    "cta": "Bỏ phiếu ngay"
+  },
+  "ballot": {
+    "sentTitle": "Phiếu bầu đã được gửi!",
+    "sentText": "Kiểm tra SMS và nhấp vào liên kết để bỏ phiếu. Liên kết hết hạn sau 24 giờ.",
+    "phoneLabel": "Số điện thoại di động",
+    "send": "Gửi phiếu bầu",
+    "networkError": "Lỗi mạng. Vui lòng thử lại.",
+    "loading": "Đang tải phiếu bầu...",
+    "thanksTitle": "Cảm ơn bạn đã bỏ phiếu!",
+    "thanksVoted": "Phiếu bầu của bạn đã được ghi nhận. Mời bạn bè cùng tham gia để tạo sự khác biệt.",
+    "thanksCandidate": "Phiếu bầu của bạn đã được ghi nhận. Bạn có thể công khai phiếu bầu ngay bây giờ.",
+    "alreadyVotedTitle": "Bạn đã bỏ phiếu rồi",
+    "alreadyVotedText": "Mời bạn bè cùng tham gia để tạo sự khác biệt.",
+    "expiredTitle": "Phiếu bầu đã hết hạn",
+    "expiredText": "Phiếu bầu này đã hết hạn. Truy cập {link} để yêu cầu phiếu mới.",
+    "expiredLink": "trang bỏ phiếu",
+    "invalidTitle": "Phiếu bầu không hợp lệ",
+    "invalidText": "Phiếu bầu này không tồn tại. Truy cập {link} để yêu cầu phiếu mới.",
+    "invalidLink": "trang bỏ phiếu",
+    "yourBallot": "Phiếu bầu của bạn",
+    "question": "Bạn có ủng hộ ba yêu cầu không?",
+    "yes": "Có, tôi bỏ phiếu đồng ý",
+    "no": "Không",
+    "anonNote": "Phiếu bầu của bạn là ẩn danh và không thể truy ngược về số điện thoại của bạn.",
+    "autoSubmitting": "Đang ghi nhận phiếu bầu của bạn...",
+    "viewResults": "Xem kết quả"
+  },
+  "voteCounter": {
+    "singular": "phiếu",
+    "plural": "phiếu",
+    "yes": "Đồng ý",
+    "no": "Không đồng ý"
+  },
+  "invite": {
+    "title": "Mời bạn bè",
+    "copied": "Đã sao chép liên kết!",
+    "share": "Chia sẻ với bạn bè",
+    "sendBallot": "Gửi phiếu bầu cho bạn bè (còn {count} lượt)",
+    "friendPhone": "Nhập số điện thoại của bạn bè, chúng tôi sẽ gửi phiếu bầu.",
+    "phoneLabel": "Số điện thoại di động",
+    "send": "Gửi phiếu bầu",
+    "sent": "Phiếu bầu đã được gửi!",
+    "sendAnother": "Gửi cho bạn khác (còn {count} lượt)",
+    "allUsed": "Bạn đã sử dụng hết 3 lượt mời.",
+    "shareTitle": "Bỏ phiếu cho Palestine",
+    "shareText": "Bỏ phiếu cho ba yêu cầu.",
+    "networkError": "Lỗi mạng. Vui lòng thử lại."
+  },
+  "inviteCandidate": {
+    "button": "Mời ứng viên của bạn",
+    "ready": "Lời mời đã sẵn sàng!",
+    "another": "Mời ứng viên khác",
+    "how": "Bạn muốn mời bằng cách nào?",
+    "sms": "SMS",
+    "email": "Email",
+    "cancel": "Hủy",
+    "phoneLabel": "Số điện thoại",
+    "emailLabel": "Địa chỉ email",
+    "send": "Gửi lời mời",
+    "back": "Quay lại",
+    "message": "Xin chào! Tôi muốn mời bạn lên tiếng về ba yêu cầu trên Vote Palestine. Đăng ký làm ứng viên tại đây:",
+    "emailSubject": "Lời mời: Hãy lên tiếng trên Vote Palestine"
+  },
+  "candidateVotes": {
+    "title": "Các ứng viên đã bỏ phiếu như thế nào?",
+    "yes": "Đồng ý",
+    "no": "Không đồng ý",
+    "notVoted": "Chưa bỏ phiếu"
+  },
+  "mobileGate": {
+    "title": "Mở trên điện thoại của bạn",
+    "text": "Phiếu bầu phải được mở trên điện thoại đã nhận SMS. Điều này đảm bảo mỗi phiếu bầu đến từ một thiết bị thực.",
+    "hint": "Kiểm tra SMS và nhấn vào liên kết từ điện thoại di động của bạn."
+  },
+  "candidateForm": {
+    "submittedTitle": "Đơn đăng ký đã được gửi!",
+    "submittedText": "Chúng tôi sẽ xác minh thông tin của bạn và phiếu bầu sẽ được hiển thị công khai sau khi được phê duyệt.",
+    "intro": "Với tư cách ứng viên, bạn có thể công khai phiếu bầu của mình.",
+    "showPublic": "Công khai phiếu bầu của bạn",
+    "formIntro": "Điền thông tin của bạn. Phiếu bầu sẽ được hiển thị công khai sau khi được phê duyệt.",
+    "nameLabel": "Họ và tên",
+    "namePlaceholder": "Họ và tên đầy đủ của bạn",
+    "partyLabel": "Đảng",
+    "partyPlaceholder": "Tên đảng",
+    "constituencyLabel": "Khu vực bầu cử",
+    "constituencyPlaceholder": "Khu vực bầu cử của bạn",
+    "submit": "Gửi đơn đăng ký",
+    "skip": "Bỏ qua",
+    "networkError": "Lỗi mạng. Vui lòng thử lại."
+  },
+  "countryCode": {
+    "label": "Mã quốc gia"
+  },
+  "map": {
+    "title": "Tìm ứng viên của bạn",
+    "selectRegion": "Chọn khu vực",
+    "noCandidates": "Chưa có ứng viên trong khu vực này"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

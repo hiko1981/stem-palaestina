@@ -1,25 +1,39 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { rtlLocales, type Locale } from "@/i18n/config";
+import TopBar from "@/components/layout/TopBar";
+import AppShell from "@/components/layout/AppShell";
 
-export const metadata: Metadata = {
-  title: "Stem Palæstina",
-  description:
-    "Vis din støtte til Palæstina. Anerkend staten, stop våbensalg, stop ulovlige investeringer.",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta");
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const dir = rtlLocales.includes(locale as Locale) ? "rtl" : "ltr";
+
   return (
-    <html lang="da">
+    <html lang={locale} dir={dir}>
       <body className="flex min-h-screen flex-col antialiased">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <NextIntlClientProvider messages={messages}>
+          <TopBar />
+          <AppShell>{children}</AppShell>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

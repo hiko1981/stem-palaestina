@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Suarakan Palestina",
+    "description": "Tunjukkan dukunganmu untuk Palestina. Akui negara Palestina, hentikan penjualan senjata, hentikan investasi ilegal."
+  },
+  "nav": {
+    "vote": "Suara",
+    "candidates": "Kandidat",
+    "results": "Hasil",
+    "map": "Peta",
+    "about": "Tentang"
+  },
+  "footer": {
+    "anonymous": "100% anonim. Tidak ada data pribadi yang disimpan."
+  },
+  "home": {
+    "heroTitle": "Berikan suara untuk",
+    "heroHighlight": "Palestina",
+    "heroSubtitle": "Tuntut tindakan. Anonim, aman, dan kurang dari satu menit.",
+    "cta": "Berikan suaramu",
+    "demandsHeading": "Tiga tuntutan untuk bertindak",
+    "anonTitle": "100% anonim",
+    "anonText": "Nomor teleponmu dienkripsi dengan hashing satu arah. Tidak ada yang bisa melihat siapa yang memberikan suara.",
+    "readMore": "Baca selengkapnya",
+    "yourVote": "Anda memilih",
+    "yourVoteYes": "Ya, untuk tiga tuntutan",
+    "yourVoteNo": "Tidak",
+    "missingCandidate": "Tidak menemukan kandidat Anda?"
+  },
+  "candidates": {
+    "title": "Kandidat",
+    "subtitle": "Jadilah kandidat pertama yang mengambil sikap terhadap tiga tuntutan.",
+    "register": "Daftar sebagai kandidat",
+    "emptyTitle": "Belum ada kandidat",
+    "emptyText": "Jadilah kandidat pertama yang mendukung tiga tuntutan secara publik."
+  },
+  "about": {
+    "title": "Tentang Suarakan Palestina",
+    "whatTitle": "Apa itu Suarakan Palestina?",
+    "whatText": "Suarakan Palestina adalah platform sipil di mana kamu bisa secara anonim menunjukkan dukunganmu terhadap tiga tuntutan konkret: pengakuan negara Palestina, penghentian penjualan senjata ke Israel, dan penghentian investasi ilegal dalam pendudukan.",
+    "howTitle": "Bagaimana cara kerjanya?",
+    "howIntro": "Kami sangat serius menjaga anonimitasmu. Begini cara kerjanya:",
+    "howStep1Title": "Permintaan:",
+    "howStep1Text": "Masukkan nomor teleponmu dan terima surat suara melalui SMS dengan tautan unik.",
+    "howStep2Title": "Pemungutan suara:",
+    "howStep2Text": "Buka tautan dan pilih ya atau tidak pada tiga tuntutan. Nomor teleponmu dienkripsi dengan algoritma satu arah sehingga tidak dapat direkonstruksi.",
+    "howStep3Title": "Satu suara per nomor:",
+    "howStep3Text": "Setiap nomor telepon hanya dapat memberikan suara satu kali. Surat suara kedaluwarsa setelah 24 jam.",
+    "howPrivacy": "Kami tidak menyimpan alamat IP, cookie, atau data pribadi apa pun yang terkait dengan suara.",
+    "bundleTitle": "Pengelompokan suara",
+    "bundleText": "Untuk melindungi pemilih awal, jumlah total suara hanya ditampilkan setelah mencapai minimal 50. Sebelum itu, hanya status pengumpulan yang ditampilkan.",
+    "demandsTitle": "Tiga tuntutan",
+    "securityTitle": "Keamanan teknis",
+    "security1": "Hashing SHA-256 untuk nomor telepon dengan salt sisi server",
+    "security2": "Token surat suara dengan masa berlaku 24 jam",
+    "security3": "Pembatasan laju pada semua endpoint",
+    "security4": "Maksimal 3 surat suara tertunda per perangkat",
+    "security5": "Tidak ada pelacakan atau analitik pihak ketiga"
+  },
+  "demands": {
+    "d1Title": "Akui Palestina",
+    "d1Short": "Denmark harus secara resmi mengakui negara Palestina.",
+    "d1Long": "Denmark harus secara resmi mengakui negara Palestina sebagai negara berdaulat.",
+    "d2Title": "Hentikan penjualan senjata ke Israel",
+    "d2Short": "Denmark harus menghentikan semua penjualan dan ekspor senjata serta peralatan militer ke Israel.",
+    "d2Long": "Semua penjualan dan ekspor senjata serta peralatan militer ke Israel harus dihentikan.",
+    "d3Title": "Hentikan investasi ilegal",
+    "d3Short": "Dana pensiun dan dana publik Denmark harus menarik investasi dari perusahaan yang mendapat keuntungan dari pendudukan ilegal.",
+    "d3Long": "Dana pensiun dan dana publik Denmark harus menarik investasi dari perusahaan yang mendapat keuntungan dari pendudukan ilegal."
+  },
+  "vote": {
+    "thanksTitle": "Terima kasih atas suaramu!",
+    "thanksText": "Suaramu telah tercatat. Ajak temanmu dan buatlah perbedaan.",
+    "title": "Suarakan Palestina",
+    "chooseRole": "Pilih peranmu untuk memulai.",
+    "voterTitle": "Saya pemilih",
+    "voterText": "Berikan suaramu secara anonim melalui tautan SMS.",
+    "candidateTitle": "Saya kandidat",
+    "candidateText": "Berikan suara dan tunjukkan posisimu secara publik.",
+    "back": "Kembali",
+    "castTitle": "Berikan suaramu",
+    "castSubtitle": "Masukkan nomor teleponmu dan terima surat suara melalui SMS.",
+    "candidateNote": "Setelah memberikan suara, kamu bisa menunjukkan suaramu secara publik sebagai kandidat.",
+    "next": "Selanjutnya",
+    "privacyNote": "Nomor teleponmu dienkripsi dengan algoritma satu arah dan tidak dapat dilacak kembali kepadamu. Baca selengkapnya di",
+    "privacyLink": "Halaman Tentang"
+  },
+  "results": {
+    "title": "Bagaimana Denmark memberikan suara",
+    "subtitle": "Lihat bagaimana pemilih dan kandidat memberikan suara.",
+    "cta": "Berikan suaramu"
+  },
+  "ballot": {
+    "sentTitle": "Surat suara terkirim!",
+    "sentText": "Periksa SMS-mu dan klik tautan untuk memberikan suara. Tautan kedaluwarsa dalam 24 jam.",
+    "phoneLabel": "Nomor ponsel",
+    "send": "Kirim surat suara",
+    "networkError": "Kesalahan jaringan. Silakan coba lagi.",
+    "loading": "Memuat surat suara...",
+    "thanksTitle": "Terima kasih atas suaramu!",
+    "thanksVoted": "Suaramu telah tercatat. Ajak temanmu dan buatlah perbedaan.",
+    "thanksCandidate": "Suaramu telah tercatat. Kamu sekarang bisa menunjukkannya secara publik.",
+    "alreadyVotedTitle": "Kamu sudah memberikan suara",
+    "alreadyVotedText": "Ajak temanmu dan buatlah perbedaan.",
+    "expiredTitle": "Surat suara kedaluwarsa",
+    "expiredText": "Surat suara ini telah kedaluwarsa. Pergi ke {link} untuk meminta yang baru.",
+    "expiredLink": "halaman suara",
+    "invalidTitle": "Surat suara tidak valid",
+    "invalidText": "Surat suara ini tidak ada. Pergi ke {link} untuk meminta yang baru.",
+    "invalidLink": "halaman suara",
+    "yourBallot": "Surat suaramu",
+    "question": "Apakah kamu mendukung tiga tuntutan?",
+    "yes": "Ya, saya mendukung",
+    "no": "Tidak",
+    "anonNote": "Suaramu anonim dan tidak dapat dilacak kembali ke nomor teleponmu.",
+    "autoSubmitting": "Mendaftarkan suara Anda...",
+    "viewResults": "Lihat hasil"
+  },
+  "voteCounter": {
+    "singular": "suara",
+    "plural": "suara",
+    "yes": "Ya",
+    "no": "Tidak"
+  },
+  "invite": {
+    "title": "Ajak teman",
+    "copied": "Tautan disalin!",
+    "share": "Bagikan ke teman",
+    "sendBallot": "Kirim surat suara ke teman ({count} tersisa)",
+    "friendPhone": "Masukkan nomor telepon temanmu dan kami akan mengirim surat suara.",
+    "phoneLabel": "Nomor ponsel",
+    "send": "Kirim surat suara",
+    "sent": "Surat suara terkirim!",
+    "sendAnother": "Kirim ke teman lain ({count} tersisa)",
+    "allUsed": "Kamu telah menggunakan semua 3 undangan.",
+    "shareTitle": "Suarakan Palestina",
+    "shareText": "Berikan suaramu untuk tiga tuntutan.",
+    "networkError": "Kesalahan jaringan. Silakan coba lagi."
+  },
+  "inviteCandidate": {
+    "button": "Undang kandidatmu",
+    "ready": "Undangan siap!",
+    "another": "Undang kandidat lain",
+    "how": "Bagaimana kamu ingin mengundang?",
+    "sms": "SMS",
+    "email": "Email",
+    "cancel": "Batal",
+    "phoneLabel": "Nomor telepon",
+    "emailLabel": "Alamat email",
+    "send": "Kirim undangan",
+    "back": "Kembali",
+    "message": "Halo! Saya ingin mengundangmu untuk mengambil sikap terhadap tiga tuntutan di Suarakan Palestina. Daftar sebagai kandidat di sini:",
+    "emailSubject": "Undangan: Ambil sikap di Suarakan Palestina"
+  },
+  "candidateVotes": {
+    "title": "Bagaimana kandidat memberikan suara?",
+    "yes": "Ya",
+    "no": "Tidak",
+    "notVoted": "Belum memberikan suara"
+  },
+  "mobileGate": {
+    "title": "Buka di ponselmu",
+    "text": "Surat suara harus dibuka di ponsel yang menerima SMS. Ini memastikan setiap suara berasal dari perangkat nyata.",
+    "hint": "Periksa SMS-mu dan ketuk tautan dari ponselmu."
+  },
+  "candidateForm": {
+    "submittedTitle": "Lamaranmu telah terkirim!",
+    "submittedText": "Kami akan memverifikasi informasimu dan suaramu akan ditampilkan secara publik setelah disetujui.",
+    "intro": "Sebagai kandidat, kamu bisa menunjukkan suaramu secara publik.",
+    "showPublic": "Tunjukkan suaramu secara publik",
+    "formIntro": "Isi datamu. Suaramu akan ditampilkan secara publik setelah disetujui.",
+    "nameLabel": "Nama lengkap",
+    "namePlaceholder": "Nama lengkapmu",
+    "partyLabel": "Partai",
+    "partyPlaceholder": "Nama partai",
+    "constituencyLabel": "Daerah pemilihan",
+    "constituencyPlaceholder": "Daerah pemilihanmu",
+    "submit": "Kirim lamaran",
+    "skip": "Lewati",
+    "networkError": "Kesalahan jaringan. Silakan coba lagi."
+  },
+  "countryCode": {
+    "label": "Kode negara"
+  },
+  "map": {
+    "title": "Temukan kandidat Anda",
+    "selectRegion": "Pilih wilayah",
+    "noCandidates": "Belum ada kandidat di wilayah ini"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

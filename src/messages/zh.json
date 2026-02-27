@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "为巴勒斯坦投票",
+    "description": "表达您对巴勒斯坦的支持。承认巴勒斯坦国，停止军售，终止非法投资。"
+  },
+  "nav": {
+    "vote": "投票",
+    "candidates": "候选人",
+    "results": "结果",
+    "map": "地图",
+    "about": "关于"
+  },
+  "footer": {
+    "anonymous": "100%匿名。不存储任何个人数据。"
+  },
+  "home": {
+    "heroTitle": "为",
+    "heroHighlight": "巴勒斯坦",
+    "heroSubtitle": "要求行动。匿名、安全，一分钟内完成。",
+    "cta": "投出您的一票",
+    "demandsHeading": "三项行动诉求",
+    "anonTitle": "100%匿名",
+    "anonText": "您的手机号码通过单向哈希加密。没有人能看到谁投了票。",
+    "readMore": "了解更多",
+    "yourVote": "你投了",
+    "yourVoteYes": "是，支持三项要求",
+    "yourVoteNo": "否",
+    "missingCandidate": "找不到你的候选人？"
+  },
+  "candidates": {
+    "title": "候选人",
+    "subtitle": "成为第一位就三项诉求表明立场的候选人。",
+    "register": "注册成为候选人",
+    "emptyTitle": "暂无候选人",
+    "emptyText": "成为第一位公开支持三项诉求的候选人。"
+  },
+  "about": {
+    "title": "关于「为巴勒斯坦投票」",
+    "whatTitle": "什么是「为巴勒斯坦投票」？",
+    "whatText": "「为巴勒斯坦投票」是一个公民平台，您可以在此匿名表达对三项具体诉求的支持：承认巴勒斯坦国、停止向以色列出售武器，以及终止对占领行为的非法投资。",
+    "howTitle": "如何运作？",
+    "howIntro": "我们非常重视您的匿名性。以下是运作方式：",
+    "howStep1Title": "请求：",
+    "howStep1Text": "输入您的手机号码，通过短信收到一张带有唯一链接的选票。",
+    "howStep2Title": "投票：",
+    "howStep2Text": "打开链接，对三项诉求投赞成或反对票。您的手机号码通过单向算法加密，无法被还原。",
+    "howStep3Title": "每个号码一票：",
+    "howStep3Text": "每个手机号码只能投票一次。选票在24小时后过期。",
+    "howPrivacy": "我们不存储与投票相关的IP地址、Cookie或任何个人数据。",
+    "bundleTitle": "投票汇总",
+    "bundleText": "为保护早期投票者，总票数仅在达到50票后才会显示。在此之前，只显示收集状态。",
+    "demandsTitle": "三项诉求",
+    "securityTitle": "技术安全",
+    "security1": "使用服务器端盐值对手机号码进行SHA-256哈希",
+    "security2": "选票令牌24小时后过期",
+    "security3": "所有端点均设有速率限制",
+    "security4": "每台设备最多3张待处理选票",
+    "security5": "无第三方跟踪或分析"
+  },
+  "demands": {
+    "d1Title": "承认巴勒斯坦",
+    "d1Short": "丹麦必须正式承认巴勒斯坦国。",
+    "d1Long": "丹麦必须正式承认巴勒斯坦为主权国家。",
+    "d2Title": "停止向以色列军售",
+    "d2Short": "丹麦必须停止向以色列出售和出口所有武器及军事装备。",
+    "d2Long": "必须停止向以色列出售和出口所有武器及军事装备。",
+    "d3Title": "终止非法投资",
+    "d3Short": "丹麦养老基金和公共基金必须从非法占领中获利的公司撤资。",
+    "d3Long": "丹麦养老基金和公共基金必须从非法占领中获利的公司撤资。"
+  },
+  "vote": {
+    "thanksTitle": "感谢您的投票！",
+    "thanksText": "您的投票已登记。邀请朋友，共同做出改变。",
+    "title": "为巴勒斯坦投票",
+    "chooseRole": "选择您的角色以开始。",
+    "voterTitle": "我是投票人",
+    "voterText": "通过短信链接匿名投票。",
+    "candidateTitle": "我是候选人",
+    "candidateText": "投票并公开展示您的立场。",
+    "back": "返回",
+    "castTitle": "投出您的一票",
+    "castSubtitle": "输入您的手机号码，通过短信接收选票。",
+    "candidateNote": "投票后，您可以作为候选人公开展示您的投票。",
+    "next": "下一步",
+    "privacyNote": "您的手机号码通过单向算法加密，无法追溯到您。了解更多请访问",
+    "privacyLink": "关于页面"
+  },
+  "results": {
+    "title": "丹麦如何投票",
+    "subtitle": "查看投票人和候选人的投票情况。",
+    "cta": "投出您的一票"
+  },
+  "ballot": {
+    "sentTitle": "选票已发送！",
+    "sentText": "请查看短信并点击链接进行投票。链接24小时内有效。",
+    "phoneLabel": "手机号码",
+    "send": "发送选票",
+    "networkError": "网络错误，请重试。",
+    "loading": "正在加载选票...",
+    "thanksTitle": "感谢您的投票！",
+    "thanksVoted": "您的投票已登记。邀请朋友，共同做出改变。",
+    "thanksCandidate": "您的投票已登记。您现在可以公开展示。",
+    "alreadyVotedTitle": "您已经投过票了",
+    "alreadyVotedText": "邀请朋友，共同做出改变。",
+    "expiredTitle": "选票已过期",
+    "expiredText": "此选票已过期。请前往{link}重新申请。",
+    "expiredLink": "投票页面",
+    "invalidTitle": "无效选票",
+    "invalidText": "此选票不存在。请前往{link}重新申请。",
+    "invalidLink": "投票页面",
+    "yourBallot": "您的选票",
+    "question": "您支持这三项诉求吗？",
+    "yes": "是的，我投赞成票",
+    "no": "否",
+    "anonNote": "您的投票是匿名的，无法追溯到您的手机号码。",
+    "autoSubmitting": "正在登记您的投票...",
+    "viewResults": "查看结果"
+  },
+  "voteCounter": {
+    "singular": "票",
+    "plural": "票",
+    "yes": "赞成",
+    "no": "反对"
+  },
+  "invite": {
+    "title": "邀请朋友",
+    "copied": "链接已复制！",
+    "share": "分享给朋友",
+    "sendBallot": "发送选票给朋友（剩余{count}次）",
+    "friendPhone": "输入朋友的手机号码，我们将发送选票。",
+    "phoneLabel": "手机号码",
+    "send": "发送选票",
+    "sent": "选票已发送！",
+    "sendAnother": "发送给另一位朋友（剩余{count}次）",
+    "allUsed": "您已用完全部3次邀请。",
+    "shareTitle": "为巴勒斯坦投票",
+    "shareText": "为三项诉求投出您的一票。",
+    "networkError": "网络错误。请重试。"
+  },
+  "inviteCandidate": {
+    "button": "邀请您的候选人",
+    "ready": "邀请已准备好！",
+    "another": "邀请另一位候选人",
+    "how": "您想如何发送邀请？",
+    "sms": "短信",
+    "email": "电子邮件",
+    "cancel": "取消",
+    "phoneLabel": "手机号码",
+    "emailLabel": "电子邮箱",
+    "send": "发送邀请",
+    "back": "返回",
+    "message": "您好！我想邀请您在「为巴勒斯坦投票」平台上就三项诉求表明立场。请在此注册成为候选人：",
+    "emailSubject": "邀请：在「为巴勒斯坦投票」上表明立场"
+  },
+  "candidateVotes": {
+    "title": "候选人如何投票？",
+    "yes": "赞成",
+    "no": "反对",
+    "notVoted": "未投票"
+  },
+  "mobileGate": {
+    "title": "请在手机上打开",
+    "text": "选票必须在收到短信的手机上打开。这确保每一票都来自真实设备。",
+    "hint": "请查看短信并在手机上点击链接。"
+  },
+  "candidateForm": {
+    "submittedTitle": "您的申请已提交！",
+    "submittedText": "我们将核实您的信息，审核通过后您的投票将公开展示。",
+    "intro": "作为候选人，您可以公开展示您的投票。",
+    "showPublic": "公开展示您的投票",
+    "formIntro": "填写您的信息。审核通过后，您的投票将公开展示。",
+    "nameLabel": "全名",
+    "namePlaceholder": "您的全名",
+    "partyLabel": "政党",
+    "partyPlaceholder": "政党名称",
+    "constituencyLabel": "选区",
+    "constituencyPlaceholder": "您的选区",
+    "submit": "提交申请",
+    "skip": "跳过",
+    "networkError": "网络错误，请重试。"
+  },
+  "countryCode": {
+    "label": "国家代码"
+  },
+  "map": {
+    "title": "找到你的候选人",
+    "selectRegion": "选择地区",
+    "noCandidates": "该地区暂无候选人"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

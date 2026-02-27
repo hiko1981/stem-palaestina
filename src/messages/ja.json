@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "パレスチナに投票を",
+    "description": "パレスチナへの支持を示しましょう。国家の承認、武器売却の停止、違法投資の中止を。"
+  },
+  "nav": {
+    "vote": "投票",
+    "candidates": "候補者",
+    "results": "結果",
+    "map": "地図",
+    "about": "概要"
+  },
+  "footer": {
+    "anonymous": "100%匿名。個人データは一切保存されません。"
+  },
+  "home": {
+    "heroTitle": "",
+    "heroHighlight": "パレスチナ",
+    "heroSubtitle": "行動を求めよう。匿名・安全、1分以内で完了。",
+    "cta": "投票する",
+    "demandsHeading": "3つの行動要求",
+    "anonTitle": "100%匿名",
+    "anonText": "あなたの電話番号は一方向ハッシュで暗号化されます。誰が投票したかは誰にもわかりません。",
+    "readMore": "詳しく見る",
+    "yourVote": "あなたの投票",
+    "yourVoteYes": "はい、3つの要求に賛成",
+    "yourVoteNo": "いいえ",
+    "missingCandidate": "候補者が見つかりませんか？"
+  },
+  "candidates": {
+    "title": "候補者",
+    "subtitle": "3つの要求に対して立場を表明する最初の候補者になりましょう。",
+    "register": "候補者として登録",
+    "emptyTitle": "候補者はまだいません",
+    "emptyText": "3つの要求を公に支持する最初の候補者になりましょう。"
+  },
+  "about": {
+    "title": "「パレスチナに投票を」について",
+    "whatTitle": "「パレスチナに投票を」とは？",
+    "whatText": "「パレスチナに投票を」は、3つの具体的な要求——パレスチナ国家の承認、イスラエルへの武器売却の停止、占領への違法投資の中止——への支持を匿名で表明できる市民プラットフォームです。",
+    "howTitle": "仕組みは？",
+    "howIntro": "私たちはあなたの匿名性を非常に重視しています。仕組みは以下の通りです：",
+    "howStep1Title": "リクエスト：",
+    "howStep1Text": "電話番号を入力すると、固有のリンク付き投票用紙がSMSで届きます。",
+    "howStep2Title": "投票：",
+    "howStep2Text": "リンクを開き、3つの要求に賛成または反対を投票します。電話番号は一方向アルゴリズムで暗号化され、復元することはできません。",
+    "howStep3Title": "1番号につき1票：",
+    "howStep3Text": "各電話番号は1回のみ投票できます。投票用紙は24時間後に期限切れとなります。",
+    "howPrivacy": "投票に関連するIPアドレス、Cookie、個人データは一切保存しません。",
+    "bundleTitle": "投票の集約",
+    "bundleText": "初期の投票者を保護するため、総投票数は50票に達した時点で初めて表示されます。それまでは収集状況のみが表示されます。",
+    "demandsTitle": "3つの要求",
+    "securityTitle": "技術的セキュリティ",
+    "security1": "サーバー側ソルトによる電話番号のSHA-256ハッシュ化",
+    "security2": "24時間有効期限付きの投票トークン",
+    "security3": "全エンドポイントにレート制限を適用",
+    "security4": "デバイスごとに保留中の投票用紙は最大3枚",
+    "security5": "サードパーティのトラッキングやアナリティクスなし"
+  },
+  "demands": {
+    "d1Title": "パレスチナを承認する",
+    "d1Short": "デンマークはパレスチナ国を公式に承認すべきです。",
+    "d1Long": "デンマークはパレスチナを主権国家として公式に承認すべきです。",
+    "d2Title": "イスラエルへの武器売却を停止する",
+    "d2Short": "デンマークはイスラエルへのすべての武器および軍事装備の販売・輸出を停止すべきです。",
+    "d2Long": "イスラエルへのすべての武器および軍事装備の販売・輸出を停止すべきです。",
+    "d3Title": "違法投資を中止する",
+    "d3Short": "デンマークの年金基金および公的資金は、違法な占領から利益を得ている企業から撤退すべきです。",
+    "d3Long": "デンマークの年金基金および公的資金は、違法な占領から利益を得ている企業から撤退すべきです。"
+  },
+  "vote": {
+    "thanksTitle": "投票ありがとうございます！",
+    "thanksText": "あなたの投票が登録されました。友人を招待して、変化を起こしましょう。",
+    "title": "パレスチナに投票を",
+    "chooseRole": "役割を選んで始めましょう。",
+    "voterTitle": "投票者として",
+    "voterText": "SMSリンクから匿名で投票します。",
+    "candidateTitle": "候補者として",
+    "candidateText": "投票し、立場を公に示します。",
+    "back": "戻る",
+    "castTitle": "投票する",
+    "castSubtitle": "電話番号を入力し、SMSで投票用紙を受け取ります。",
+    "candidateNote": "投票後、候補者として投票を公開することができます。",
+    "next": "次へ",
+    "privacyNote": "あなたの電話番号は一方向アルゴリズムで暗号化され、追跡することはできません。詳しくは",
+    "privacyLink": "概要ページ"
+  },
+  "results": {
+    "title": "デンマークの投票状況",
+    "subtitle": "投票者と候補者の投票状況をご覧ください。",
+    "cta": "投票する"
+  },
+  "ballot": {
+    "sentTitle": "投票用紙を送信しました！",
+    "sentText": "SMSを確認し、リンクをクリックして投票してください。リンクの有効期限は24時間です。",
+    "phoneLabel": "携帯電話番号",
+    "send": "投票用紙を送信",
+    "networkError": "ネットワークエラーです。もう一度お試しください。",
+    "loading": "投票用紙を読み込み中...",
+    "thanksTitle": "投票ありがとうございます！",
+    "thanksVoted": "あなたの投票が登録されました。友人を招待して、変化を起こしましょう。",
+    "thanksCandidate": "あなたの投票が登録されました。公開することができます。",
+    "alreadyVotedTitle": "すでに投票済みです",
+    "alreadyVotedText": "友人を招待して、変化を起こしましょう。",
+    "expiredTitle": "投票用紙の期限切れ",
+    "expiredText": "この投票用紙は期限切れです。{link}から新しい投票用紙をリクエストしてください。",
+    "expiredLink": "投票ページ",
+    "invalidTitle": "無効な投票用紙",
+    "invalidText": "この投票用紙は存在しません。{link}から新しい投票用紙をリクエストしてください。",
+    "invalidLink": "投票ページ",
+    "yourBallot": "あなたの投票用紙",
+    "question": "3つの要求を支持しますか？",
+    "yes": "はい、賛成します",
+    "no": "いいえ",
+    "anonNote": "あなたの投票は匿名であり、電話番号に追跡されることはありません。",
+    "autoSubmitting": "投票を登録しています...",
+    "viewResults": "結果を見る"
+  },
+  "voteCounter": {
+    "singular": "票",
+    "plural": "票",
+    "yes": "賛成",
+    "no": "反対"
+  },
+  "invite": {
+    "title": "友人を招待",
+    "copied": "リンクをコピーしました！",
+    "share": "友人と共有",
+    "sendBallot": "友人に投票用紙を送信（残り{count}回）",
+    "friendPhone": "友人の電話番号を入力すると、投票用紙を送信します。",
+    "phoneLabel": "携帯電話番号",
+    "send": "投票用紙を送信",
+    "sent": "投票用紙を送信しました！",
+    "sendAnother": "別の友人に送信（残り{count}回）",
+    "allUsed": "3回の招待をすべて使い切りました。",
+    "shareTitle": "パレスチナに投票を",
+    "shareText": "3つの要求に投票しましょう。",
+    "networkError": "ネットワークエラー。もう一度お試しください。"
+  },
+  "inviteCandidate": {
+    "button": "候補者を招待する",
+    "ready": "招待の準備ができました！",
+    "another": "別の候補者を招待",
+    "how": "どのように招待しますか？",
+    "sms": "SMS",
+    "email": "メール",
+    "cancel": "キャンセル",
+    "phoneLabel": "電話番号",
+    "emailLabel": "メールアドレス",
+    "send": "招待を送信",
+    "back": "戻る",
+    "message": "こんにちは！「パレスチナに投票を」で3つの要求に対する立場を表明しませんか。こちらから候補者として登録できます：",
+    "emailSubject": "招待：「パレスチナに投票を」で立場を表明しましょう"
+  },
+  "candidateVotes": {
+    "title": "候補者はどう投票した？",
+    "yes": "賛成",
+    "no": "反対",
+    "notVoted": "未投票"
+  },
+  "mobileGate": {
+    "title": "スマートフォンで開いてください",
+    "text": "投票用紙はSMSを受信したスマートフォンで開く必要があります。これにより、各投票が実際のデバイスからのものであることが保証されます。",
+    "hint": "SMSを確認し、スマートフォンからリンクをタップしてください。"
+  },
+  "candidateForm": {
+    "submittedTitle": "申請が送信されました！",
+    "submittedText": "情報を確認し、承認後にあなたの投票が公開されます。",
+    "intro": "候補者として、投票を公開することができます。",
+    "showPublic": "投票を公開する",
+    "formIntro": "詳細を入力してください。承認後、投票が公開されます。",
+    "nameLabel": "氏名",
+    "namePlaceholder": "フルネーム",
+    "partyLabel": "政党",
+    "partyPlaceholder": "政党名",
+    "constituencyLabel": "選挙区",
+    "constituencyPlaceholder": "あなたの選挙区",
+    "submit": "申請を送信",
+    "skip": "スキップ",
+    "networkError": "ネットワークエラーです。もう一度お試しください。"
+  },
+  "countryCode": {
+    "label": "国コード"
+  },
+  "map": {
+    "title": "候補者を探す",
+    "selectRegion": "地域を選択",
+    "noCandidates": "この地域にはまだ候補者がいません"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

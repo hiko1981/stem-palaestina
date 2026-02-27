@@ -1,92 +1,79 @@
 import Card from "@/components/ui/Card";
+import { getTranslations } from "next-intl/server";
 
-export default function OmPage() {
+export default async function OmPage() {
+  const t = await getTranslations("about");
+  const d = await getTranslations("demands");
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="mb-8 text-center text-3xl font-bold">Om Stem Palæstina</h1>
+      <h1 className="mb-8 text-center text-3xl font-bold">{t("title")}</h1>
 
       <div className="space-y-8">
         <Card>
-          <h2 className="text-xl font-bold mb-3">Hvad er Stem Palæstina?</h2>
+          <h2 className="text-xl font-bold mb-3">{t("whatTitle")}</h2>
           <p className="text-gray-600 leading-relaxed">
-            Stem Palæstina er en borgerplatform hvor danskere anonymt kan vise deres
-            støtte til tre konkrete krav til den danske regering: anerkendelse af
-            staten Palæstina, stop for våbensalg til Israel og stop for ulovlige
-            investeringer i besættelsen.
+            {t("whatText")}
           </p>
         </Card>
 
         <Card>
-          <h2 className="text-xl font-bold mb-3">Hvordan fungerer anonymiteten?</h2>
+          <h2 className="text-xl font-bold mb-3">{t("howTitle")}</h2>
           <div className="text-gray-600 leading-relaxed space-y-3">
-            <p>
-              Vi tager din anonymitet meget alvorligt. Sådan fungerer det:
-            </p>
+            <p>{t("howIntro")}</p>
             <ol className="list-decimal list-inside space-y-2 text-sm">
               <li>
-                <strong>Verifikation:</strong> Dit telefonnummer bruges til at sende en
-                engangskode via SMS. Vi gemmer kun en kryptografisk hash (envejs) af
-                nummeret for at forhindre duplikater.
+                <strong>{t("howStep1Title")}</strong>{" "}
+                {t("howStep1Text")}
               </li>
               <li>
-                <strong>Adskillelse:</strong> Efter verifikation genereres et tilfældigt,
-                anonymt token. Der er ingen teknisk forbindelse mellem dit nummer og
-                din stemme i databasen.
+                <strong>{t("howStep2Title")}</strong>{" "}
+                {t("howStep2Text")}
               </li>
               <li>
-                <strong>Stemmeafgivelse:</strong> Din stemme registreres kun med det
-                anonyme token. Selv med fuld adgang til databasen er det umuligt at
-                spore en stemme tilbage til et telefonnummer.
+                <strong>{t("howStep3Title")}</strong>{" "}
+                {t("howStep3Text")}
               </li>
             </ol>
             <p className="text-sm font-medium">
-              Vi gemmer ingen IP-adresser, ingen cookies og ingen persondata i
-              forbindelse med stemmer.
+              {t("howPrivacy")}
             </p>
           </div>
         </Card>
 
         <Card>
-          <h2 className="text-xl font-bold mb-3">Bundling af stemmer</h2>
+          <h2 className="text-xl font-bold mb-3">{t("bundleTitle")}</h2>
           <p className="text-gray-600 leading-relaxed">
-            For at beskytte tidlige stemmere vises det samlede antal stemmer først
-            når der er mindst 50. Indtil da vises kun at indsamlingen er i gang.
+            {t("bundleText")}
           </p>
         </Card>
 
         <Card>
-          <h2 className="text-xl font-bold mb-3">De tre krav</h2>
+          <h2 className="text-xl font-bold mb-3">{t("demandsTitle")}</h2>
           <div className="text-gray-600 leading-relaxed space-y-3">
             <div>
-              <h3 className="font-semibold text-gray-800">1. Anerkend Palæstina</h3>
-              <p className="text-sm">
-                Danmark skal officielt anerkende staten Palæstina som en suveræn stat.
-              </p>
+              <h3 className="font-semibold text-gray-800">1. {d("d1Title")}</h3>
+              <p className="text-sm">{d("d1Long")}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-800">2. Stop våbensalg til Israel</h3>
-              <p className="text-sm">
-                Alt salg og eksport af våben og militærudstyr til Israel skal stoppes.
-              </p>
+              <h3 className="font-semibold text-gray-800">2. {d("d2Title")}</h3>
+              <p className="text-sm">{d("d2Long")}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-800">3. Stop ulovlige investeringer</h3>
-              <p className="text-sm">
-                Danske pensionskasser og offentlige fonde skal trække investeringer ud
-                af virksomheder der profiterer på den ulovlige besættelse.
-              </p>
+              <h3 className="font-semibold text-gray-800">3. {d("d3Title")}</h3>
+              <p className="text-sm">{d("d3Long")}</p>
             </div>
           </div>
         </Card>
 
         <Card>
-          <h2 className="text-xl font-bold mb-3">Teknisk sikkerhed</h2>
+          <h2 className="text-xl font-bold mb-3">{t("securityTitle")}</h2>
           <ul className="text-gray-600 text-sm space-y-1 list-disc list-inside">
-            <li>SHA-256 hashing af telefonnumre med server-side salt</li>
-            <li>JWT-tokens med 15 minutters udløb</li>
-            <li>Cloudflare Turnstile captcha mod bots</li>
-            <li>Rate limiting på alle endpoints</li>
-            <li>Ingen tredjepartstracking eller analytics</li>
+            <li>{t("security1")}</li>
+            <li>{t("security2")}</li>
+            <li>{t("security3")}</li>
+            <li>{t("security4")}</li>
+            <li>{t("security5")}</li>
           </ul>
         </Card>
       </div>

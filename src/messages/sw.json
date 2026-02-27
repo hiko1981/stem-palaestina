@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Pigia Kura kwa Palestina",
+    "description": "Onyesha msaada wako kwa Palestina. Tambua dola ya Palestina, simamisha uuzaji wa silaha, simamisha uwekezaji haramu."
+  },
+  "nav": {
+    "vote": "Kura",
+    "candidates": "Wagombea",
+    "results": "Matokeo",
+    "map": "Ramani",
+    "about": "Kuhusu"
+  },
+  "footer": {
+    "anonymous": "100% siri. Hakuna data binafsi inayohifadhiwa."
+  },
+  "home": {
+    "heroTitle": "Pigia kura kwa",
+    "heroHighlight": "Palestina",
+    "heroSubtitle": "Dai hatua. Kwa siri, kwa usalama, na chini ya dakika moja.",
+    "cta": "Pigia kura yako",
+    "demandsHeading": "Madai matatu ya hatua",
+    "anonTitle": "100% siri",
+    "anonText": "Nambari yako ya simu imefichwa kwa hashing ya njia moja. Hakuna mtu anayeweza kuona ni nani aliyepigia kura.",
+    "readMore": "Soma zaidi",
+    "yourVote": "Ulipiga kura",
+    "yourVoteYes": "Ndiyo, kwa madai matatu",
+    "yourVoteNo": "Hapana",
+    "missingCandidate": "Hupati mgombea wako?"
+  },
+  "candidates": {
+    "title": "Wagombea",
+    "subtitle": "Kuwa mgombea wa kwanza kusimama kwa madai matatu.",
+    "register": "Jiandikishe kama mgombea",
+    "emptyTitle": "Hakuna wagombea bado",
+    "emptyText": "Kuwa mgombea wa kwanza kuunga mkono madai matatu hadharani."
+  },
+  "about": {
+    "title": "Kuhusu Pigia Kura kwa Palestina",
+    "whatTitle": "Pigia Kura kwa Palestina ni nini?",
+    "whatText": "Pigia Kura kwa Palestina ni jukwaa la kiraia ambapo unaweza kuonyesha msaada wako kwa siri kwa madai matatu mahususi: kutambuliwa kwa dola ya Palestina, kusimamishwa kwa uuzaji wa silaha kwa Israel, na kukomesha uwekezaji haramu katika uvamizi.",
+    "howTitle": "Inafanyaje kazi?",
+    "howIntro": "Tunachukulia usiri wako kwa uzito mkubwa. Hivi ndivyo inavyofanya kazi:",
+    "howStep1Title": "Ombi:",
+    "howStep1Text": "Ingiza nambari yako ya simu na upokee karatasi ya kura kupitia SMS yenye kiungo cha kipekee.",
+    "howStep2Title": "Kupiga kura:",
+    "howStep2Text": "Fungua kiungo na pigia kura ndio au hapana kwa madai matatu. Nambari yako ya simu imefichwa kwa algorithm ya njia moja ili isiweze kurudishwa.",
+    "howStep3Title": "Kura moja kwa nambari:",
+    "howStep3Text": "Kila nambari ya simu inaweza kupigia kura mara moja tu. Karatasi ya kura inaisha baada ya saa 24.",
+    "howPrivacy": "Hatuhifadhi anwani za IP, vidakuzi, wala data yoyote binafsi inayohusiana na kura.",
+    "bundleTitle": "Ujumuishaji wa kura",
+    "bundleText": "Ili kulinda wapiga kura wa mapema, jumla ya kura inaonyeshwa tu baada ya kufikia angalau 50. Kabla ya hapo, hali ya ukusanyaji tu ndio inayoonyeshwa.",
+    "demandsTitle": "Madai matatu",
+    "securityTitle": "Usalama wa kiufundi",
+    "security1": "Hashing ya SHA-256 ya nambari za simu na chumvi ya upande wa seva",
+    "security2": "Tokeni za karatasi ya kura zenye muda wa kuisha wa saa 24",
+    "security3": "Kikomo cha kasi kwenye vituo vyote",
+    "security4": "Upeo wa karatasi 3 zinazosubiri kwa kifaa",
+    "security5": "Hakuna ufuatiliaji au uchambuzi wa wahusika wengine"
+  },
+  "demands": {
+    "d1Title": "Tambua Palestina",
+    "d1Short": "Denmark lazima itambue rasmi dola ya Palestina.",
+    "d1Long": "Denmark lazima itambue rasmi dola ya Palestina kama dola huru.",
+    "d2Title": "Simamisha uuzaji wa silaha kwa Israel",
+    "d2Short": "Denmark lazima isimamishe uuzaji na usafirishaji wote wa silaha na vifaa vya kijeshi kwa Israel.",
+    "d2Long": "Uuzaji na usafirishaji wote wa silaha na vifaa vya kijeshi kwa Israel lazima usimamishwe.",
+    "d3Title": "Simamisha uwekezaji haramu",
+    "d3Short": "Mifuko ya pensheni na mifuko ya umma ya Denmark lazima iondoe uwekezaji kutoka kwa makampuni yanayofaidika na uvamizi haramu.",
+    "d3Long": "Mifuko ya pensheni na mifuko ya umma ya Denmark lazima iondoe uwekezaji kutoka kwa makampuni yanayofaidika na uvamizi haramu."
+  },
+  "vote": {
+    "thanksTitle": "Asante kwa kura yako!",
+    "thanksText": "Kura yako imesajiliwa. Waalike marafiki wako na ulete mabadiliko.",
+    "title": "Pigia Kura kwa Palestina",
+    "chooseRole": "Chagua jukumu lako kuanza.",
+    "voterTitle": "Mimi ni mpiga kura",
+    "voterText": "Pigia kura yako kwa siri kupitia kiungo cha SMS.",
+    "candidateTitle": "Mimi ni mgombea",
+    "candidateText": "Pigia kura na uonyeshe msimamo wako hadharani.",
+    "back": "Rudi",
+    "castTitle": "Pigia kura yako",
+    "castSubtitle": "Ingiza nambari yako ya simu na upokee karatasi ya kura kupitia SMS.",
+    "candidateNote": "Baada ya kupigia kura, unaweza kuonyesha kura yako hadharani kama mgombea.",
+    "next": "Ifuatayo",
+    "privacyNote": "Nambari yako ya simu imefichwa kwa algorithm ya njia moja na haiwezi kufuatiliwa kurudi kwako. Soma zaidi kwenye",
+    "privacyLink": "Ukurasa wa Kuhusu"
+  },
+  "results": {
+    "title": "Denmark inapigaje kura",
+    "subtitle": "Tazama jinsi wapiga kura na wagombea wanavyopigia kura.",
+    "cta": "Pigia kura yako"
+  },
+  "ballot": {
+    "sentTitle": "Karatasi ya kura imetumwa!",
+    "sentText": "Angalia SMS yako na ubonyeze kiungo ili kupigia kura. Kiungo kinaisha baada ya saa 24.",
+    "phoneLabel": "Nambari ya simu",
+    "send": "Tuma karatasi ya kura",
+    "networkError": "Hitilafu ya mtandao. Tafadhali jaribu tena.",
+    "loading": "Inapakia karatasi ya kura...",
+    "thanksTitle": "Asante kwa kura yako!",
+    "thanksVoted": "Kura yako imesajiliwa. Waalike marafiki wako na ulete mabadiliko.",
+    "thanksCandidate": "Kura yako imesajiliwa. Sasa unaweza kuionyesha hadharani.",
+    "alreadyVotedTitle": "Umeshapiga kura",
+    "alreadyVotedText": "Waalike marafiki wako na ulete mabadiliko.",
+    "expiredTitle": "Karatasi ya kura imeisha muda",
+    "expiredText": "Karatasi hii ya kura imeisha muda. Nenda kwenye {link} kuomba mpya.",
+    "expiredLink": "ukurasa wa kura",
+    "invalidTitle": "Karatasi ya kura si halali",
+    "invalidText": "Karatasi hii ya kura haipo. Nenda kwenye {link} kuomba mpya.",
+    "invalidLink": "ukurasa wa kura",
+    "yourBallot": "Karatasi yako ya kura",
+    "question": "Je, unaunga mkono madai matatu?",
+    "yes": "Ndio, ninapigia kura kuunga mkono",
+    "no": "Hapana",
+    "anonNote": "Kura yako ni ya siri na haiwezi kufuatiliwa kurudi kwenye nambari yako ya simu.",
+    "autoSubmitting": "Inasajili kura yako...",
+    "viewResults": "Tazama matokeo"
+  },
+  "voteCounter": {
+    "singular": "kura",
+    "plural": "kura",
+    "yes": "Ndio",
+    "no": "Hapana"
+  },
+  "invite": {
+    "title": "Waalike marafiki",
+    "copied": "Kiungo kimenakiliwa!",
+    "share": "Shiriki na rafiki",
+    "sendBallot": "Tuma karatasi ya kura kwa rafiki ({count} zimebaki)",
+    "friendPhone": "Ingiza nambari ya simu ya rafiki yako na tutatuma karatasi ya kura.",
+    "phoneLabel": "Nambari ya simu",
+    "send": "Tuma karatasi ya kura",
+    "sent": "Karatasi ya kura imetumwa!",
+    "sendAnother": "Tuma kwa rafiki mwingine ({count} zimebaki)",
+    "allUsed": "Umetumia mialiko yote 3.",
+    "shareTitle": "Pigia Kura kwa Palestina",
+    "shareText": "Pigia kura yako kwa madai matatu.",
+    "networkError": "Hitilafu ya mtandao. Tafadhali jaribu tena."
+  },
+  "inviteCandidate": {
+    "button": "Mwalike mgombea wako",
+    "ready": "Mwaliko uko tayari!",
+    "another": "Mwalike mgombea mwingine",
+    "how": "Ungependa kumwalika vipi?",
+    "sms": "SMS",
+    "email": "Barua pepe",
+    "cancel": "Ghairi",
+    "phoneLabel": "Nambari ya simu",
+    "emailLabel": "Anwani ya barua pepe",
+    "send": "Tuma mwaliko",
+    "back": "Rudi",
+    "message": "Habari! Ningependa kukualika usimame kwa madai matatu kwenye Pigia Kura kwa Palestina. Jiandikishe kama mgombea hapa:",
+    "emailSubject": "Mwaliko: Simama kwa madai kwenye Pigia Kura kwa Palestina"
+  },
+  "candidateVotes": {
+    "title": "Wagombea walipigiaje kura?",
+    "yes": "Ndio",
+    "no": "Hapana",
+    "notVoted": "Hajapigia kura"
+  },
+  "mobileGate": {
+    "title": "Fungua kwenye simu yako",
+    "text": "Karatasi ya kura lazima ifunguliwe kwenye simu iliyopokea SMS. Hii inahakikisha kila kura inatoka kwenye kifaa halisi.",
+    "hint": "Angalia SMS yako na ubonyeze kiungo kutoka kwenye simu yako."
+  },
+  "candidateForm": {
+    "submittedTitle": "Maombi yako yametumwa!",
+    "submittedText": "Tutahakiki taarifa zako na kura yako itaonyeshwa hadharani baada ya kuidhinishwa.",
+    "intro": "Kama mgombea, unaweza kuonyesha kura yako hadharani.",
+    "showPublic": "Onyesha kura yako hadharani",
+    "formIntro": "Jaza taarifa zako. Kura yako itaonyeshwa hadharani baada ya kuidhinishwa.",
+    "nameLabel": "Jina kamili",
+    "namePlaceholder": "Jina lako kamili",
+    "partyLabel": "Chama",
+    "partyPlaceholder": "Jina la chama",
+    "constituencyLabel": "Jimbo",
+    "constituencyPlaceholder": "Jimbo lako",
+    "submit": "Tuma maombi",
+    "skip": "Ruka",
+    "networkError": "Hitilafu ya mtandao. Tafadhali jaribu tena."
+  },
+  "countryCode": {
+    "label": "Msimbo wa nchi"
+  },
+  "map": {
+    "title": "Tafuta mgombea wako",
+    "selectRegion": "Chagua eneo",
+    "noCandidates": "Bado hakuna wagombea katika eneo hili"
+  },
+  "storkredse": {
+    "copenhagen": "København",
+    "copenhagen-suburbs": "Københavns Omegn",
+    "north-zealand": "Nordsjælland",
+    "zealand": "Sjælland",
+    "funen": "Fyn",
+    "south-jutland": "Sydjylland",
+    "east-jutland": "Østjylland",
+    "west-jutland": "Vestjylland",
+    "north-jutland": "Nordjylland",
+    "bornholm": "Bornholm"
+  }
+}

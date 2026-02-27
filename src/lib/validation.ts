@@ -1,34 +1,19 @@
 import { z } from "zod/v4";
 
-// Dansk mobilnummer: +45 efterfulgt af 8 cifre
-const phoneRegex = /^\+45\d{8}$/;
-
-export const phoneSchema = z.object({
-  phone: z
-    .string()
-    .regex(phoneRegex, "Ugyldigt dansk telefonnummer (format: +45XXXXXXXX)"),
-  turnstileToken: z.string().min(1, "Captcha-verifikation mangler"),
+export const ballotRequestSchema = z.object({
+  phone: z.string().min(1, "Telefonnummer mangler"),
+  dialCode: z.string().min(1, "Landekode mangler"),
+  deviceId: z.string().optional(),
 });
 
-export const verifyCodeSchema = z.object({
-  phone: z
-    .string()
-    .regex(phoneRegex, "Ugyldigt dansk telefonnummer"),
-  code: z
-    .string()
-    .length(6, "Koden skal være 6 cifre")
-    .regex(/^\d{6}$/, "Koden skal kun indeholde cifre"),
+export const ballotVoteSchema = z.object({
+  token: z.string().uuid("Ugyldig stemmeseddel-token"),
+  voteValue: z.boolean({ message: "Stemmeværdi mangler (ja/nej)" }),
 });
 
-export const voteSchema = z.object({
-  token: z.string().min(1, "Token mangler"),
+export const candidateRegisterSchema = z.object({
+  name: z.string().min(2, "Navn skal være mindst 2 tegn").max(100),
+  party: z.string().min(1, "Parti mangler").max(100),
+  constituency: z.string().min(1, "Valgkreds mangler").max(100),
+  token: z.string().uuid("Ugyldig stemmeseddel-token"),
 });
-
-export function normalizePhone(phone: string): string {
-  // Fjern mellemrum og sikr +45 prefix
-  const cleaned = phone.replace(/\s/g, "");
-  if (cleaned.startsWith("+45")) return cleaned;
-  if (cleaned.startsWith("45") && cleaned.length === 10) return `+${cleaned}`;
-  if (cleaned.length === 8 && /^\d{8}$/.test(cleaned)) return `+45${cleaned}`;
-  return cleaned; // Lad validering fange det
-}

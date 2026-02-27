@@ -1,13 +1,10 @@
-export const SMS_CODE_LENGTH = 6;
-export const SMS_CODE_EXPIRY_MINUTES = 5;
-export const SMS_MAX_ATTEMPTS = 3;
-export const JWT_EXPIRY_MINUTES = 15;
+export const BALLOT_EXPIRY_HOURS = 24;
+export const MAX_DEVICE_SLOTS = 3;
 export const VOTE_BUNDLE_THRESHOLD = 50;
 
 export const RATE_LIMITS = {
-  smsPerPhone: { max: 3, windowMs: 60 * 60 * 1000 },       // 3/time per telefon
-  smsGlobal: { max: 100, windowMs: 60 * 60 * 1000 },       // 100/time globalt
-  verifyPerPhone: { max: 5, windowMs: 15 * 60 * 1000 },     // 5/15min per telefon
+  ballotPerPhone: { max: 3, windowMs: 60 * 60 * 1000 },     // 3/time per telefon
+  ballotGlobal: { max: 100, windowMs: 60 * 60 * 1000 },     // 100/time globalt
   votePerIp: { max: 10, windowMs: 60 * 60 * 1000 },         // 10/time per IP
 } as const;
 

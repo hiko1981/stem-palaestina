@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-palestine-black: #000000;
-  --color-palestine-white: #ffffff;
-  --color-palestine-green: #009736;
-  --color-palestine-red: #ce1126;
-  --color-palestine-green-dark: #007a2d;
-  --color-palestine-red-dark: #a50e1f;
+  /* Vandmelon / Watermelon palette */
+  --color-melon-green: #2d8c3c;
+  --color-melon-green-dark: #1e6b2b;
+  --color-melon-green-light: #e8f5e9;
+  --color-melon-red: #e53935;
+  --color-melon-red-dark: #c62828;
+  --color-melon-red-light: #ffebee;
+  --color-melon-pink: #ff6f6f;
+  --color-melon-rind: #a5d6a7;
+  --color-melon-seed: #1a1a1a;
+  --color-melon-flesh: #fef7f7;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -22,5 +27,44 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   color: var(--color-gray-900);
-  background: var(--color-palestine-white);
+  background: var(--color-melon-flesh);
+}
+
+/* Premium gradient for hero */
+.hero-gradient {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    var(--color-melon-green-light) 50%,
+    var(--color-melon-flesh) 100%
+  );
+}
+
+/* Subtle glass effect for cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Animated pulse ring for CTA */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+.cta-pulse::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: var(--color-melon-green);
+  animation: pulse-ring 2s ease-out infinite;
+  z-index: -1;
+}
+
+/* Safe-area padding for notched devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
