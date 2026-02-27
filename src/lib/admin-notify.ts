@@ -18,7 +18,7 @@ export function notifyAdminNewCandidate(name: string, party: string, constituenc
   const adminUrl = `${getBaseUrl()}/admin`;
   const msg = `Ny kandidatansøgning på Stem Palæstina:\n\n${name} (${party})\n${constituency}\n\nGodkend her: ${adminUrl}`;
 
-  sendSms(`+45${ADMIN_PHONE}`, msg).catch((err) => {
+  sendSms(ADMIN_PHONE, msg).catch((err) => {
     console.error("Admin SMS notification failed:", err);
   });
 }
