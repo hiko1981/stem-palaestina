@@ -108,6 +108,7 @@ export default function Home() {
   const [smsSent, setSmsSent] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>("vote");
   const [mapStorkreds, setMapStorkreds] = useState("");
+  const [notification, setNotification] = useState("");
 
   const t = useTranslations("vote");
   const b = useTranslations("ballot");
@@ -121,6 +122,29 @@ export default function Home() {
         localStorage.setItem("stem_device_id", crypto.randomUUID());
       }
       setHasVoted(localStorage.getItem("stem_palaestina_voted") === "true");
+
+      // Check for targeted one-time notifications
+      const deviceId = localStorage.getItem("stem_device_id");
+      if (deviceId) {
+        fetch("/api/notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ deviceId }),
+        })
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.message) {
+              setNotification(data.message);
+              // Reset vote state — user needs to re-vote
+              localStorage.removeItem("stem_palaestina_voted");
+              localStorage.removeItem("stem_palaestina_vote");
+              localStorage.removeItem("stem_palaestina_role");
+              localStorage.removeItem("stem_palaestina_candidate_id");
+              setHasVoted(false);
+            }
+          })
+          .catch(() => {});
+      }
     }
   }, []);
 
@@ -175,6 +199,22 @@ export default function Home() {
   // Wait for localStorage check
   if (hasVoted === null) return null;
 
+  // ───── ONE-TIME NOTIFICATION BANNER ─────
+  const notificationBanner = notification ? (
+    <div className="mx-auto max-w-xl px-4 pt-4">
+      <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 relative">
+        <button
+          onClick={() => setNotification("")}
+          className="absolute top-2 right-2 text-amber-400 hover:text-amber-600 text-lg leading-none"
+          aria-label="Luk"
+        >
+          &times;
+        </button>
+        <p className="text-sm text-amber-800 pr-6">{notification}</p>
+      </div>
+    </div>
+  ) : null;
+
   // ───── POST-VOTE STATE ─────
   if (hasVoted) {
     const storedVote = typeof window !== "undefined"
@@ -186,6 +226,7 @@ export default function Home() {
 
     return (
       <>
+        {notificationBanner}
         <div className="mx-auto max-w-xl px-4 py-6 pb-24">
           <PublicVoteBar />
           {postTab === "results" && (
@@ -288,6 +329,7 @@ export default function Home() {
 
   return (
     <>
+      {notificationBanner}
       <div className="mx-auto max-w-xl px-4 pt-6 pb-24">
         <PublicVoteBar />
         {activeTab === "vote" && (
