@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import CandidateSelect from "@/components/features/CandidateSelect";
+import InviteCandidateButton from "@/components/features/InviteCandidateButton";
 import SharePanel from "@/components/features/SharePanel";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
@@ -216,13 +217,7 @@ export default function Home() {
           {postTab === "map" && (
             <div className="space-y-5">
               <DenmarkMap />
-              <ResultsView candidatesOnly />
-              <div>
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                  {sp("title")}
-                </h3>
-                <SharePanel />
-              </div>
+              <InviteCandidateButton />
             </div>
           )}
 
@@ -447,13 +442,7 @@ export default function Home() {
         {activeTab === "map" && (
           <div className="space-y-5 py-2">
             <DenmarkMap />
-            <ResultsView candidatesOnly />
-            <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                {sp("title")}
-              </h3>
-              <SharePanel />
-            </div>
+            <InviteCandidateButton />
           </div>
         )}
 
