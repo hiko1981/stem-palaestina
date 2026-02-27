@@ -3,15 +3,6 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { STORKREDSE } from "@/lib/storkredse";
-import { VOTE_BUNDLE_THRESHOLD } from "@/lib/constants";
-
-interface VoteData {
-  total: number;
-  ja: number | null;
-  nej: number | null;
-  thresholdReached: boolean;
-  candidateCount: number;
-}
 
 interface CandidateVote {
   id: number;
@@ -19,10 +10,6 @@ interface CandidateVote {
   party: string;
   constituency: string;
   voteValue: boolean | null;
-}
-
-interface ResultsViewProps {
-  candidatesOnly?: boolean;
 }
 
 function PercentBar({
@@ -65,7 +52,7 @@ function PercentBar({
   );
 }
 
-function Initials({ name, color }: { name: string; color: "green" | "red" | "gray" }) {
+function Initials({ name, color }: { name: string; color: "green" | "red" }) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
@@ -75,9 +62,7 @@ function Initials({ name, color }: { name: string; color: "green" | "red" | "gra
   const bg =
     color === "green"
       ? "bg-melon-green/15 text-melon-green"
-      : color === "red"
-        ? "bg-melon-red/15 text-melon-red"
-        : "bg-gray-100 text-gray-400";
+      : "bg-melon-red/15 text-melon-red";
   return (
     <div
       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${bg}`}
@@ -91,41 +76,26 @@ function partyLetter(party: string): string {
   return party.match(/\(([^)]+)\)/)?.[1] ?? party;
 }
 
-export default function ResultsView({ candidatesOnly = false }: ResultsViewProps) {
-  const [voteData, setVoteData] = useState<VoteData | null>(null);
+export default function ResultsView() {
   const [candidates, setCandidates] = useState<CandidateVote[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [storkreds, setStorkreds] = useState("");
   const [party, setParty] = useState("");
-  // candidateListOpen state removed — now always visible in two columns
 
   const t = useTranslations("results");
-  const vc = useTranslations("voteCounter");
   const st = useTranslations("storkredse");
   const cs = useTranslations("candidateSelect");
 
   useEffect(() => {
-    const fetches: Promise<unknown>[] = [
-      fetch("/api/votes/candidates").then((r) => r.json()),
-    ];
-    if (!candidatesOnly) {
-      fetches.unshift(fetch("/api/votes/count").then((r) => r.json()));
-    }
-
-    Promise.all(fetches)
-      .then((results) => {
-        if (candidatesOnly) {
-          if (Array.isArray(results[0])) setCandidates(results[0] as CandidateVote[]);
-        } else {
-          setVoteData(results[0] as VoteData);
-          if (Array.isArray(results[1])) setCandidates(results[1] as CandidateVote[]);
-        }
+    fetch("/api/votes/candidates")
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data)) setCandidates(data);
         setLoaded(true);
       })
       .catch(() => setLoaded(true));
-  }, [candidatesOnly]);
+  }, []);
 
-  // Reset party when storkreds changes
   useEffect(() => {
     setParty("");
   }, [storkreds]);
@@ -142,16 +112,11 @@ export default function ResultsView({ candidatesOnly = false }: ResultsViewProps
     ? kredsFiltered.filter((c) => c.party === party)
     : kredsFiltered;
 
-  // Candidate vote counts (only candidates who have voted)
   const votedCandidates = filtered.filter((c) => c.voteValue !== null);
-  const candidateJa = votedCandidates.filter(
-    (c) => c.voteValue === true,
-  ).length;
-  const candidateNej = votedCandidates.filter(
-    (c) => c.voteValue === false,
-  ).length;
+  const candidateJa = votedCandidates.filter((c) => c.voteValue === true).length;
+  const candidateNej = votedCandidates.filter((c) => c.voteValue === false).length;
 
-  const candidateSection = (
+  return (
     <div className="space-y-3">
       <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
         {t("candidateVotesTitle")}
@@ -245,42 +210,6 @@ export default function ResultsView({ candidatesOnly = false }: ResultsViewProps
           </div>
         </div>
       )}
-    </div>
-  );
-
-  if (candidatesOnly) {
-    return candidateSection;
-  }
-
-  return (
-    <div className="space-y-5">
-      {/* Public votes — compact */}
-      <div className="space-y-2">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          {t("publicVotesTitle")}
-        </h3>
-
-        {voteData && voteData.total > 0 ? (
-          voteData.thresholdReached &&
-          voteData.ja !== null &&
-          voteData.nej !== null ? (
-            <PercentBar ja={voteData.ja} nej={voteData.nej} t={t} />
-          ) : (
-            <p className="text-sm text-gray-500">
-              {voteData.total} {voteData.total === 1 ? vc("singular") : vc("plural")}.{" "}
-              {t("belowThreshold", {
-                count: voteData.total,
-                threshold: VOTE_BUNDLE_THRESHOLD,
-              })}
-            </p>
-          )
-        ) : (
-          <p className="text-sm text-gray-400">{t("noVotesYet")}</p>
-        )}
-      </div>
-
-      {/* Candidate votes */}
-      {candidateSection}
     </div>
   );
 }

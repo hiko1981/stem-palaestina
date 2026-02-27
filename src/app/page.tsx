@@ -10,6 +10,7 @@ import SharePanel from "@/components/features/SharePanel";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
 import ResultsView from "@/components/features/ResultsView";
+import PublicVoteBar from "@/components/features/PublicVoteBar";
 import { useTranslations } from "next-intl";
 
 type ActivePanel = "voter" | "candidate" | "invite" | null;
@@ -184,6 +185,7 @@ export default function Home() {
     return (
       <>
         <div className="mx-auto max-w-xl px-4 py-6 pb-24">
+          <PublicVoteBar />
           {postTab === "results" && (
             <div className="space-y-5">
               {/* Your vote + 3 demands */}
@@ -284,6 +286,7 @@ export default function Home() {
   return (
     <>
       <div className="mx-auto max-w-xl px-4 pt-6 pb-24">
+        <PublicVoteBar />
         {activeTab === "vote" && (
           <>
             {/* Compact hero */}
