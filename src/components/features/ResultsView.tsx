@@ -21,6 +21,10 @@ interface CandidateVote {
   voteValue: boolean | null;
 }
 
+interface ResultsViewProps {
+  candidatesOnly?: boolean;
+}
+
 function PercentBar({
   ja,
   nej,
@@ -75,7 +79,7 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export default function ResultsView() {
+export default function ResultsView({ candidatesOnly = false }: ResultsViewProps) {
   const [voteData, setVoteData] = useState<VoteData | null>(null);
   const [candidates, setCandidates] = useState<CandidateVote[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -84,22 +88,30 @@ export default function ResultsView() {
   const [candidateListOpen, setCandidateListOpen] = useState(false);
 
   const t = useTranslations("results");
+  const vc = useTranslations("voteCounter");
   const st = useTranslations("storkredse");
-  const ct = useTranslations("constituency");
   const cs = useTranslations("candidateSelect");
 
   useEffect(() => {
-    Promise.all([
-      fetch("/api/votes/count").then((r) => r.json()),
+    const fetches: Promise<unknown>[] = [
       fetch("/api/votes/candidates").then((r) => r.json()),
-    ])
-      .then(([votes, cands]) => {
-        setVoteData(votes);
-        if (Array.isArray(cands)) setCandidates(cands);
+    ];
+    if (!candidatesOnly) {
+      fetches.unshift(fetch("/api/votes/count").then((r) => r.json()));
+    }
+
+    Promise.all(fetches)
+      .then((results) => {
+        if (candidatesOnly) {
+          if (Array.isArray(results[0])) setCandidates(results[0] as CandidateVote[]);
+        } else {
+          setVoteData(results[0] as VoteData);
+          if (Array.isArray(results[1])) setCandidates(results[1] as CandidateVote[]);
+        }
         setLoaded(true);
       })
       .catch(() => setLoaded(true));
-  }, []);
+  }, [candidatesOnly]);
 
   // Reset party when storkreds changes
   useEffect(() => {
@@ -127,24 +139,111 @@ export default function ResultsView() {
     (c) => c.voteValue === false,
   ).length;
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-xl font-bold">{t("title")}</h2>
-        <p className="text-xs text-gray-400 mt-1">
-          {t("bundleNote", { threshold: VOTE_BUNDLE_THRESHOLD })}
-        </p>
+  const candidateSection = (
+    <div className="space-y-3">
+      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        {t("candidateVotesTitle")}
+      </h3>
+
+      {/* Filters */}
+      <div className="space-y-2">
+        <select
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+          value={storkreds}
+          onChange={(e) => setStorkreds(e.target.value)}
+        >
+          <option value="">{t("allDenmark")}</option>
+          {STORKREDSE.map((sk) => (
+            <option key={sk.id} value={sk.id}>
+              {st(sk.id)}
+            </option>
+          ))}
+        </select>
+
+        {parties.length > 1 && (
+          <select
+            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+            value={party}
+            onChange={(e) => setParty(e.target.value)}
+          >
+            <option value="">{cs("selectParty")}</option>
+            {parties.map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
-      {/* Public votes */}
-      <div className="space-y-3">
+      {/* Candidate percent bar */}
+      {votedCandidates.length > 0 ? (
+        <PercentBar ja={candidateJa} nej={candidateNej} t={t} />
+      ) : (
+        <p className="text-sm text-gray-400">{t("noCandidatesYet")}</p>
+      )}
+
+      {/* Candidate list (collapsible) */}
+      {filtered.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            {t("publicVotesTitle")}
-          </h3>
-          <p className="text-xs text-gray-400">{t("publicVotesSubtitle")}</p>
+          <button
+            onClick={() => setCandidateListOpen(!candidateListOpen)}
+            className="flex w-full items-center justify-between rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            <span>
+              {t("candidateVotesTitle")} ({filtered.length})
+            </span>
+            <ChevronIcon open={candidateListOpen} />
+          </button>
+
+          {candidateListOpen && (
+            <div className="mt-2 space-y-1.5">
+              {filtered.map((c) => (
+                <div
+                  key={c.id}
+                  className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium truncate">{c.name}</p>
+                    <p className="text-xs text-gray-500 truncate">
+                      {c.party} &middot; {c.constituency}
+                    </p>
+                  </div>
+                  <span
+                    className={`shrink-0 ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                      c.voteValue === true
+                        ? "bg-melon-green/10 text-melon-green"
+                        : c.voteValue === false
+                          ? "bg-melon-red/10 text-melon-red"
+                          : "bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    {c.voteValue === true
+                      ? t("yes")
+                      : c.voteValue === false
+                        ? t("no")
+                        : "—"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+      )}
+    </div>
+  );
+
+  if (candidatesOnly) {
+    return candidateSection;
+  }
+
+  return (
+    <div className="space-y-5">
+      {/* Public votes — compact */}
+      <div className="space-y-2">
+        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+          {t("publicVotesTitle")}
+        </h3>
 
         {voteData && voteData.total > 0 ? (
           voteData.thresholdReached &&
@@ -153,6 +252,7 @@ export default function ResultsView() {
             <PercentBar ja={voteData.ja} nej={voteData.nej} t={t} />
           ) : (
             <p className="text-sm text-gray-500">
+              {voteData.total} {voteData.total === 1 ? vc("singular") : vc("plural")}.{" "}
               {t("belowThreshold", {
                 count: voteData.total,
                 threshold: VOTE_BUNDLE_THRESHOLD,
@@ -165,97 +265,7 @@ export default function ResultsView() {
       </div>
 
       {/* Candidate votes */}
-      <div className="space-y-3">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          {t("candidateVotesTitle")}
-        </h3>
-
-        {/* Filters */}
-        <div className="space-y-2">
-          <select
-            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
-            value={storkreds}
-            onChange={(e) => setStorkreds(e.target.value)}
-          >
-            <option value="">{t("allDenmark")}</option>
-            {STORKREDSE.map((sk) => (
-              <option key={sk.id} value={sk.id}>
-                {st(sk.id)}
-              </option>
-            ))}
-          </select>
-
-          {parties.length > 1 && (
-            <select
-              className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
-              value={party}
-              onChange={(e) => setParty(e.target.value)}
-            >
-              <option value="">{cs("selectParty")}</option>
-              {parties.map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-
-        {/* Candidate percent bar */}
-        {votedCandidates.length > 0 ? (
-          <PercentBar ja={candidateJa} nej={candidateNej} t={t} />
-        ) : (
-          <p className="text-sm text-gray-400">{t("noCandidatesYet")}</p>
-        )}
-
-        {/* Candidate list (collapsible) */}
-        {filtered.length > 0 && (
-          <div>
-            <button
-              onClick={() => setCandidateListOpen(!candidateListOpen)}
-              className="flex w-full items-center justify-between rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              <span>
-                {t("candidateVotesTitle")} ({filtered.length})
-              </span>
-              <ChevronIcon open={candidateListOpen} />
-            </button>
-
-            {candidateListOpen && (
-              <div className="mt-2 space-y-1.5">
-                {filtered.map((c) => (
-                  <div
-                    key={c.id}
-                    className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium truncate">{c.name}</p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {c.party} &middot; {c.constituency}
-                      </p>
-                    </div>
-                    <span
-                      className={`shrink-0 ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                        c.voteValue === true
-                          ? "bg-melon-green/10 text-melon-green"
-                          : c.voteValue === false
-                            ? "bg-melon-red/10 text-melon-red"
-                            : "bg-gray-100 text-gray-500"
-                      }`}
-                    >
-                      {c.voteValue === true
-                        ? t("yes")
-                        : c.voteValue === false
-                          ? t("no")
-                          : "—"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      {candidateSection}
     </div>
   );
 }

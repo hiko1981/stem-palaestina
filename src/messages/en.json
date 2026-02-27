@@ -97,7 +97,7 @@
     "votes": "votes",
     "noVotesYet": "No votes yet.",
     "noCandidatesYet": "No candidates have voted yet.",
-    "belowThreshold": "{count} votes so far. Breakdown shown after {threshold} votes.",
+    "belowThreshold": "Yes/no breakdown shown after {threshold} votes.",
     "cta": "Cast your vote"
   },
   "ballot": {

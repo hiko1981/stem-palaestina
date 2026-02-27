@@ -97,7 +97,7 @@
     "votes": "표",
     "noVotesYet": "아직 투표가 없습니다.",
     "noCandidatesYet": "아직 투표한 후보자가 없습니다.",
-    "belowThreshold": "현재까지 {count}표. {threshold}표 이후에 비율이 표시됩니다.",
+    "belowThreshold": "찬반 비율은 {threshold}표 이후에 표시됩니다.",
     "cta": "투표하기"
   },
   "ballot": {

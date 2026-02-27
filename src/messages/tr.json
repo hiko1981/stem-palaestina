@@ -97,7 +97,7 @@
     "votes": "oy",
     "noVotesYet": "Henüz oy yok.",
     "noCandidatesYet": "Henüz hiçbir aday oy kullanmadı.",
-    "belowThreshold": "Şu ana kadar {count} oy. Dağılım {threshold} oydan sonra gösterilecek.",
+    "belowThreshold": "Evet/hayır dağılımı {threshold} oydan sonra gösterilecek.",
     "cta": "Oyunuzu kullanın"
   },
   "ballot": {

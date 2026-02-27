@@ -97,7 +97,7 @@
     "votes": "phiếu",
     "noVotesYet": "Chưa có phiếu bầu nào.",
     "noCandidatesYet": "Chưa có ứng viên nào bỏ phiếu.",
-    "belowThreshold": "{count} phiếu cho đến nay. Tỷ lệ sẽ hiển thị sau {threshold} phiếu.",
+    "belowThreshold": "Tỷ lệ có/không sẽ hiển thị sau {threshold} phiếu.",
     "cta": "Bỏ phiếu"
   },
   "ballot": {

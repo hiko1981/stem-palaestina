@@ -97,7 +97,7 @@
     "votes": "stemmer",
     "noVotesYet": "Ingen stemmer endnu.",
     "noCandidatesYet": "Ingen kandidater har stemt endnu.",
-    "belowThreshold": "{count} stemmer indtil videre. Fordeling vises efter {threshold} stemmer.",
+    "belowThreshold": "Ja/nej-fordeling vises efter {threshold} stemmer.",
     "cta": "Afgiv din stemme"
   },
   "ballot": {

@@ -97,7 +97,7 @@
     "votes": "votos",
     "noVotesYet": "Nenhum voto ainda.",
     "noCandidatesYet": "Nenhum candidato votou ainda.",
-    "belowThreshold": "{count} votos até agora. A distribuição será exibida após {threshold} votos.",
+    "belowThreshold": "A distribuição sim/não será exibida após {threshold} votos.",
     "cta": "Vote agora"
   },
   "ballot": {

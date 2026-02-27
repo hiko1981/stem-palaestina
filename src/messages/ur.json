@@ -97,7 +97,7 @@
     "votes": "ووٹ",
     "noVotesYet": "ابھی تک کوئی ووٹ نہیں۔",
     "noCandidatesYet": "ابھی تک کسی امیدوار نے ووٹ نہیں دیا۔",
-    "belowThreshold": "اب تک {count} ووٹ۔ تقسیم {threshold} ووٹوں کے بعد دکھائی جائے گی۔",
+    "belowThreshold": "ہاں/نہیں کی تقسیم {threshold} ووٹوں کے بعد دکھائی جائے گی۔",
     "cta": "اپنا ووٹ ڈالیں"
   },
   "ballot": {

@@ -97,7 +97,7 @@
     "votes": "ভোট",
     "noVotesYet": "এখনো কোনো ভোট নেই।",
     "noCandidatesYet": "এখনো কোনো প্রার্থী ভোট দেননি।",
-    "belowThreshold": "এখন পর্যন্ত {count} ভোট। {threshold} ভোটের পর বিভাজন দেখানো হবে।",
+    "belowThreshold": "হ্যাঁ/না বিভাজন {threshold} ভোটের পর দেখা যাবে।",
     "cta": "আপনার ভোট দিন"
   },
   "ballot": {

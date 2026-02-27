@@ -97,7 +97,7 @@
     "votes": "أصوات",
     "noVotesYet": "لا توجد أصوات بعد.",
     "noCandidatesYet": "لم يصوّت أي مرشح بعد.",
-    "belowThreshold": "{count} صوتاً حتى الآن. يُعرض التوزيع بعد {threshold} صوتاً.",
+    "belowThreshold": "يظهر توزيع نعم/لا بعد {threshold} صوتاً.",
     "cta": "أدلِ بصوتك"
   },
   "ballot": {

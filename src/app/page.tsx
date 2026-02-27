@@ -4,8 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
-import InviteSection from "@/components/features/InviteSection";
-import InviteCandidateButton from "@/components/features/InviteCandidateButton";
 import CandidateSelect from "@/components/features/CandidateSelect";
 import SharePanel from "@/components/features/SharePanel";
 import DenmarkMap from "@/components/features/DenmarkMap";
@@ -178,40 +176,53 @@ export default function Home() {
     const storedVote = typeof window !== "undefined"
       ? localStorage.getItem("stem_palaestina_vote")
       : null;
+    const votedYes = storedVote !== "false";
     // Post-vote: default to results if still on "vote"
     const postTab = activeTab === "vote" ? "results" : activeTab;
 
     return (
       <>
-        <div className="mx-auto max-w-xl px-4 py-8">
+        <div className="mx-auto max-w-xl px-4 py-6 pb-24">
           {postTab === "results" && (
-            <div className="space-y-8">
-              {/* Your vote */}
-              <div className="text-center">
-                <p className="text-sm text-gray-500 mb-1">{h("yourVote")}</p>
-                <p className={`text-lg font-bold ${storedVote === "false" ? "text-melon-red" : "text-melon-green"}`}>
-                  {storedVote === "false" ? h("yourVoteNo") : h("yourVoteYes")}
-                </p>
+            <div className="space-y-5">
+              {/* Your vote + 3 demands */}
+              <div>
+                <p className="text-xs text-gray-400 mb-1">{h("yourVote")}</p>
+                <ul className="space-y-1">
+                  {[d("d1Title"), d("d2Title"), d("d3Title")].map((demand, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm">
+                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold ${votedYes ? "bg-melon-green/10 text-melon-green" : "bg-melon-red/10 text-melon-red"}`}>
+                        {votedYes ? "✓" : "✗"}
+                      </span>
+                      <span className="text-gray-700">{demand}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Results */}
-              <Card>
-                <ResultsView />
-              </Card>
+              {/* Results (public + candidate) */}
+              <ResultsView />
 
-              {/* Invite */}
-              <Card>
-                <InviteSection />
-              </Card>
+              {/* Share */}
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                  {sp("title")}
+                </h3>
+                <SharePanel />
+              </div>
             </div>
           )}
 
           {postTab === "map" && (
-            <div className="space-y-8">
+            <div className="space-y-5">
               <DenmarkMap />
-              <Card>
-                <InviteCandidateButton />
-              </Card>
+              <ResultsView candidatesOnly />
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                  {sp("title")}
+                </h3>
+                <SharePanel />
+              </div>
             </div>
           )}
 
@@ -428,19 +439,21 @@ export default function Home() {
         )}
 
         {activeTab === "results" && (
-          <div className="space-y-8 py-2">
-            <Card>
-              <ResultsView />
-            </Card>
+          <div className="space-y-5 py-2">
+            <ResultsView />
           </div>
         )}
 
         {activeTab === "map" && (
-          <div className="space-y-8 py-2">
+          <div className="space-y-5 py-2">
             <DenmarkMap />
-            <Card>
-              <InviteCandidateButton />
-            </Card>
+            <ResultsView candidatesOnly />
+            <div>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                {sp("title")}
+              </h3>
+              <SharePanel />
+            </div>
           </div>
         )}
 

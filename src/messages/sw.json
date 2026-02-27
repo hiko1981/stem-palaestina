@@ -97,7 +97,7 @@
     "votes": "kura",
     "noVotesYet": "Hakuna kura bado.",
     "noCandidatesYet": "Hakuna mgombea aliyepiga kura bado.",
-    "belowThreshold": "Kura {count} hadi sasa. Mgawanyo utaonyeshwa baada ya kura {threshold}.",
+    "belowThreshold": "Mgawanyo wa ndiyo/hapana utaonyeshwa baada ya kura {threshold}.",
     "cta": "Piga kura yako"
   },
   "ballot": {

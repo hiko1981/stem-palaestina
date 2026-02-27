@@ -97,7 +97,7 @@
     "votes": "Stimmen",
     "noVotesYet": "Noch keine Stimmen.",
     "noCandidatesYet": "Noch keine Kandidaten haben abgestimmt.",
-    "belowThreshold": "{count} Stimmen bisher. Verteilung wird nach {threshold} Stimmen angezeigt.",
+    "belowThreshold": "Ja/Nein-Verteilung wird nach {threshold} Stimmen angezeigt.",
     "cta": "Jetzt abstimmen"
   },
   "ballot": {

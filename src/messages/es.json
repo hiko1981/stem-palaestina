@@ -97,7 +97,7 @@
     "votes": "votos",
     "noVotesYet": "Aún no hay votos.",
     "noCandidatesYet": "Ningún candidato ha votado todavía.",
-    "belowThreshold": "{count} votos hasta ahora. El desglose se muestra después de {threshold} votos.",
+    "belowThreshold": "El desglose sí/no se muestra después de {threshold} votos.",
     "cta": "Emite tu voto"
   },
   "ballot": {

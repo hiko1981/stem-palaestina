@@ -97,7 +97,7 @@
     "votes": "เสียง",
     "noVotesYet": "ยังไม่มีคะแนนเสียง",
     "noCandidatesYet": "ยังไม่มีผู้สมัครลงคะแนนเสียง",
-    "belowThreshold": "{count} เสียงจนถึงตอนนี้ สัดส่วนจะแสดงหลังจาก {threshold} เสียง",
+    "belowThreshold": "สัดส่วนใช่/ไม่จะแสดงหลังจาก {threshold} เสียง",
     "cta": "ลงคะแนนเสียง"
   },
   "ballot": {

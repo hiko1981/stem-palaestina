@@ -97,7 +97,7 @@
     "votes": "votes",
     "noVotesYet": "Aucun vote pour le moment.",
     "noCandidatesYet": "Aucun candidat n'a encore voté.",
-    "belowThreshold": "{count} votes jusqu'à présent. La répartition sera affichée après {threshold} votes.",
+    "belowThreshold": "La répartition oui/non apparaît après {threshold} votes.",
     "cta": "Votez maintenant"
   },
   "ballot": {

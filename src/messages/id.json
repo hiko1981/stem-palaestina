@@ -97,7 +97,7 @@
     "votes": "suara",
     "noVotesYet": "Belum ada suara.",
     "noCandidatesYet": "Belum ada kandidat yang memberikan suara.",
-    "belowThreshold": "{count} suara sejauh ini. Rincian ditampilkan setelah {threshold} suara.",
+    "belowThreshold": "Rincian ya/tidak ditampilkan setelah {threshold} suara.",
     "cta": "Berikan suara Anda"
   },
   "ballot": {

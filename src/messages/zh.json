@@ -97,7 +97,7 @@
     "votes": "票",
     "noVotesYet": "暂无投票。",
     "noCandidatesYet": "暂无候选人投票。",
-    "belowThreshold": "目前{count}票。{threshold}票后显示比例。",
+    "belowThreshold": "赞成/反对比例在{threshold}票后显示。",
     "cta": "投票"
   },
   "ballot": {

@@ -97,7 +97,7 @@
     "votes": "票",
     "noVotesYet": "まだ投票はありません。",
     "noCandidatesYet": "まだ候補者の投票はありません。",
-    "belowThreshold": "現在{count}票。{threshold}票後に内訳が表示されます。",
+    "belowThreshold": "賛否の内訳は{threshold}票後に表示されます。",
     "cta": "投票する"
   },
   "ballot": {
