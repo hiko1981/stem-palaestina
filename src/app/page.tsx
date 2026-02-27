@@ -246,19 +246,18 @@ export default function Home() {
 
   // Phone input shared by voter & candidate panels
   const phoneInput = (
-    <div className="space-y-3">
+    <div className="space-y-2">
+      <label className="block text-xs font-medium text-gray-500">{b("phoneLabel")}</label>
       <div className="flex gap-2">
         <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
-        <div className="flex-1">
-          <Input
-            id="phone"
-            label={b("phoneLabel")}
-            type="tel"
-            placeholder="12345678"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
+        <input
+          id="phone"
+          type="tel"
+          placeholder="12345678"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+        />
       </div>
       <Button
         onClick={handleSendBallot}
@@ -331,34 +330,34 @@ export default function Home() {
         </div>
 
         {/* ── Accordion panels ── */}
-        <div className="space-y-3 mb-4">
+        <div className="space-y-2 mb-4">
           {/* Panel 1: Jeg er vælger */}
-          <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
+          <div className="rounded-lg border border-gray-200 overflow-hidden">
             <button
               onClick={() => togglePanel("voter")}
-              className="flex w-full items-center justify-between px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
+              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
             >
               {t("voterTitle")}
               <ChevronIcon open={activePanel === "voter"} />
             </button>
             {activePanel === "voter" && (
-              <div className="px-4 pb-4 animate-in slide-in-from-top-2">
+              <div className="px-3 pb-3 animate-in slide-in-from-top-2">
                 {phoneInput}
               </div>
             )}
           </div>
 
           {/* Panel 2: Jeg er kandidat */}
-          <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
+          <div className="rounded-lg border border-gray-200 overflow-hidden">
             <button
               onClick={() => togglePanel("candidate")}
-              className="flex w-full items-center justify-between px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
+              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
             >
               {t("candidateTitle")}
               <ChevronIcon open={activePanel === "candidate"} />
             </button>
             {activePanel === "candidate" && (
-              <div className="px-4 pb-4 space-y-3 animate-in slide-in-from-top-2">
+              <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
                 <CandidateSelect
                   onSelect={(value) => {
                     if (typeof window !== "undefined") {
@@ -371,17 +370,17 @@ export default function Home() {
             )}
           </div>
 
-          {/* Panel 3: Kandidater */}
-          <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
+          {/* Panel 3: Inviter din lokale kandidat */}
+          <div className="rounded-lg border border-gray-200 overflow-hidden">
             <button
               onClick={() => togglePanel("invite")}
-              className="flex w-full items-center justify-between px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
+              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
             >
               {cl("title")}
               <ChevronIcon open={activePanel === "invite"} />
             </button>
             {activePanel === "invite" && (
-              <div className="px-4 pb-4 animate-in slide-in-from-top-2">
+              <div className="px-3 pb-3 animate-in slide-in-from-top-2">
                 <InviteCandidateButton inline />
               </div>
             )}

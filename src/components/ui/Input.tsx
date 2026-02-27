@@ -21,7 +21,7 @@ export default function Input({
       </label>
       <input
         id={id}
-        className={`w-full rounded-lg border px-4 py-3 text-lg focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none ${
+        className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none ${
           error ? "border-melon-red" : "border-gray-300"
         } ${className}`}
         {...props}
