@@ -65,18 +65,30 @@ function PercentBar({
   );
 }
 
-function ChevronIcon({ open }: { open: boolean }) {
+function Initials({ name, color }: { name: string; color: "green" | "red" | "gray" }) {
+  const initials = name
+    .split(" ")
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  const bg =
+    color === "green"
+      ? "bg-melon-green/15 text-melon-green"
+      : color === "red"
+        ? "bg-melon-red/15 text-melon-red"
+        : "bg-gray-100 text-gray-400";
   return (
-    <svg
-      className={`h-4 w-4 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
+    <div
+      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${bg}`}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-    </svg>
+      {initials}
+    </div>
   );
+}
+
+function partyLetter(party: string): string {
+  return party.match(/\(([^)]+)\)/)?.[1] ?? party;
 }
 
 export default function ResultsView({ candidatesOnly = false }: ResultsViewProps) {
@@ -85,7 +97,7 @@ export default function ResultsView({ candidatesOnly = false }: ResultsViewProps
   const [loaded, setLoaded] = useState(false);
   const [storkreds, setStorkreds] = useState("");
   const [party, setParty] = useState("");
-  const [candidateListOpen, setCandidateListOpen] = useState(false);
+  // candidateListOpen state removed — now always visible in two columns
 
   const t = useTranslations("results");
   const vc = useTranslations("voteCounter");
@@ -183,51 +195,54 @@ export default function ResultsView({ candidatesOnly = false }: ResultsViewProps
         <p className="text-sm text-gray-400">{t("noCandidatesYet")}</p>
       )}
 
-      {/* Candidate list (collapsible) */}
-      {filtered.length > 0 && (
-        <div>
-          <button
-            onClick={() => setCandidateListOpen(!candidateListOpen)}
-            className="flex w-full items-center justify-between rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            <span>
-              {t("candidateVotesTitle")} ({filtered.length})
-            </span>
-            <ChevronIcon open={candidateListOpen} />
-          </button>
-
-          {candidateListOpen && (
-            <div className="mt-2 space-y-1.5">
-              {filtered.map((c) => (
-                <div
-                  key={c.id}
-                  className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2"
-                >
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium truncate">{c.name}</p>
-                    <p className="text-xs text-gray-500 truncate">
-                      {c.party} &middot; {c.constituency}
-                    </p>
-                  </div>
-                  <span
-                    className={`shrink-0 ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                      c.voteValue === true
-                        ? "bg-melon-green/10 text-melon-green"
-                        : c.voteValue === false
-                          ? "bg-melon-red/10 text-melon-red"
-                          : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    {c.voteValue === true
-                      ? t("yes")
-                      : c.voteValue === false
-                        ? t("no")
-                        : "—"}
-                  </span>
-                </div>
-              ))}
+      {/* Candidate list — two columns: Ja / Nej */}
+      {votedCandidates.length > 0 && (
+        <div className="grid grid-cols-2 gap-2">
+          {/* Ja column */}
+          <div>
+            <div className="flex items-center gap-1.5 mb-2">
+              <div className="h-2 w-2 rounded-full bg-melon-green" />
+              <span className="text-xs font-semibold text-melon-green">
+                {t("yes")} ({candidateJa})
+              </span>
             </div>
-          )}
+            <div className="space-y-1">
+              {filtered
+                .filter((c) => c.voteValue === true)
+                .map((c) => (
+                  <div key={c.id} className="flex items-center gap-1.5 rounded-lg px-1.5 py-1">
+                    <Initials name={c.name} color="green" />
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium truncate leading-tight">{c.name}</p>
+                      <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {/* Nej column */}
+          <div>
+            <div className="flex items-center gap-1.5 mb-2">
+              <div className="h-2 w-2 rounded-full bg-melon-red" />
+              <span className="text-xs font-semibold text-melon-red">
+                {t("no")} ({candidateNej})
+              </span>
+            </div>
+            <div className="space-y-1">
+              {filtered
+                .filter((c) => c.voteValue === false)
+                .map((c) => (
+                  <div key={c.id} className="flex items-center gap-1.5 rounded-lg px-1.5 py-1">
+                    <Initials name={c.name} color="red" />
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium truncate leading-tight">{c.name}</p>
+                      <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
