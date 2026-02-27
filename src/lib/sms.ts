@@ -1,7 +1,7 @@
 export async function sendSms(phone: string, message: string): Promise<void> {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const from = process.env.TWILIO_FROM_NUMBER || process.env.TWILIO_FROM;
+  const accountSid = process.env.TWILIO_ACCOUNT_SID?.replace(/\\n/g, "").trim();
+  const authToken = process.env.TWILIO_AUTH_TOKEN?.replace(/\\n/g, "").trim();
+  const from = (process.env.TWILIO_FROM_NUMBER || process.env.TWILIO_FROM)?.replace(/\\n/g, "").trim();
 
   if (!accountSid || !authToken || !from) {
     // Dev mode: log til konsollen
