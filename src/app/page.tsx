@@ -277,16 +277,16 @@ export default function Home() {
     <>
       <div className="mx-auto max-w-xl px-4 pt-6 pb-8">
         {/* Compact hero */}
-        <div className="text-center mb-4">
-          <p className="text-4xl mb-2" role="img" aria-label="vandmelon">&#127817;</p>
-          <h1 className="text-2xl font-extrabold tracking-tight">
+        <div className="text-center mb-3">
+          <p className="text-3xl mb-1" role="img" aria-label="vandmelon">&#127817;</p>
+          <h1 className="text-xl font-extrabold tracking-tight">
             {h("heroTitle")}{" "}
             <span className="text-melon-green">{h("heroHighlight")}</span>
           </h1>
         </div>
 
         {/* 3 demands — compact numbered list */}
-        <ul className="text-left text-sm text-gray-700 space-y-2 mb-5">
+        <ul className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
           <li className="flex items-start gap-2">
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">1</span>
             <span>{d("d1Title")}</span>
@@ -302,7 +302,7 @@ export default function Home() {
         </ul>
 
         {/* Ja/Nej radio toggle */}
-        <div className="flex gap-3 mb-5">
+        <div className="flex gap-2 mb-4">
           <label className="flex-1 cursor-pointer">
             <input
               type="radio"
@@ -311,7 +311,7 @@ export default function Home() {
               onChange={() => setVoteValue(true)}
               className="sr-only peer"
             />
-            <div className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 p-2.5 text-center font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
+            <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
               {b("yes")}
             </div>
           </label>
@@ -323,7 +323,7 @@ export default function Home() {
               onChange={() => setVoteValue(false)}
               className="sr-only peer"
             />
-            <div className="flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 p-2.5 text-center font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
+            <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
               {b("no")}
             </div>
           </label>
