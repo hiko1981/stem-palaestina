@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { candidateRegisterSchema } from "@/lib/validation";
+import { notifyAdminNewCandidate } from "@/lib/admin-notify";
 
 export async function POST(req: Request) {
   try {
@@ -55,6 +56,9 @@ export async function POST(req: Request) {
         phoneHash: ballotToken.phoneHash,
       },
     });
+
+    // Fire-and-forget admin notification
+    notifyAdminNewCandidate(parsed.data.name, parsed.data.party, parsed.data.constituency);
 
     return NextResponse.json({ ok: true });
   } catch (error) {
