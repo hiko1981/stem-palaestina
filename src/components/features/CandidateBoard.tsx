@@ -42,10 +42,21 @@ function partyLetter(party: string): string {
   return party.match(/\(([^)]+)\)/)?.[1] ?? party;
 }
 
-export default function CandidateBoard() {
+interface CandidateBoardProps {
+  storkreds?: string;
+  onStorkredsChange?: (id: string) => void;
+}
+
+export default function CandidateBoard({ storkreds: controlledStorkreds, onStorkredsChange }: CandidateBoardProps) {
   const [candidates, setCandidates] = useState<CandidateWithStatus[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [storkreds, setStorkreds] = useState("");
+  const [internalStorkreds, setInternalStorkreds] = useState("");
+
+  const storkreds = controlledStorkreds ?? internalStorkreds;
+  function setStorkreds(val: string) {
+    if (onStorkredsChange) onStorkredsChange(val);
+    else setInternalStorkreds(val);
+  }
 
   // Invite state
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -81,17 +92,6 @@ export default function CandidateBoard() {
       })
       .catch(() => setLoaded(true));
   }, []);
-
-  // Auto-detect constituency
-  useEffect(() => {
-    if (storkreds) return;
-    fetch("/api/geo/country")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.storkreds) setStorkreds(data.storkreds);
-      })
-      .catch(() => {});
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function toggleExpand(id: number) {
     if (expandedId === id) {

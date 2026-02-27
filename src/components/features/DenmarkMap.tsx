@@ -12,22 +12,28 @@ interface CandidateInfo {
   voteValue: boolean | null;
 }
 
-export default function DenmarkMap() {
-  const [selected, setSelected] = useState<StorkredsId | null>(null);
+interface DenmarkMapProps {
+  selected?: string;
+  onSelect?: (id: string) => void;
+}
+
+export default function DenmarkMap({ selected: controlledSelected, onSelect }: DenmarkMapProps) {
+  const [internalSelected, setInternalSelected] = useState<StorkredsId | null>(null);
   const [hovered, setHovered] = useState<StorkredsId | null>(null);
   const [candidates, setCandidates] = useState<CandidateInfo[]>([]);
-  const [loaded, setLoaded] = useState(false);
   const t = useTranslations("map");
   const st = useTranslations("storkredse");
+
+  // Use controlled value if provided
+  const selected = (controlledSelected || internalSelected || null) as StorkredsId | null;
 
   useEffect(() => {
     fetch("/api/votes/candidates")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) setCandidates(data);
-        setLoaded(true);
       })
-      .catch(() => setLoaded(true));
+      .catch(() => {});
   }, []);
 
   function candidatesInRegion(id: StorkredsId) {
@@ -46,10 +52,17 @@ export default function DenmarkMap() {
     return "#4ade80"; // green-400
   }
 
-  const selectedCandidates = selected ? candidatesInRegion(selected) : [];
+  function handleClick(id: StorkredsId) {
+    const newVal = selected === id ? "" : id;
+    if (onSelect) {
+      onSelect(newVal);
+    } else {
+      setInternalSelected(newVal ? id : null);
+    }
+  }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <h3 className="text-center text-lg font-bold">{t("title")}</h3>
       <p className="text-center text-sm text-gray-500">{t("selectRegion")}</p>
 
@@ -68,7 +81,7 @@ export default function DenmarkMap() {
               stroke="#fff"
               strokeWidth="2"
               className="cursor-pointer transition-colors duration-150"
-              onClick={() => setSelected(selected === s.id ? null : s.id)}
+              onClick={() => handleClick(s.id)}
               onMouseEnter={() => setHovered(s.id)}
               onMouseLeave={() => setHovered(null)}
             >
@@ -77,48 +90,6 @@ export default function DenmarkMap() {
           ))}
         </svg>
       </div>
-
-      {selected && loaded && (
-        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 space-y-3">
-          <h4 className="font-bold text-sm">{st(selected)}</h4>
-          {selectedCandidates.length === 0 ? (
-            <p className="text-sm text-gray-500">{t("noCandidates")}</p>
-          ) : (
-            <div className="space-y-2">
-              {selectedCandidates.map((c) => (
-                <div
-                  key={c.name}
-                  className="flex items-center justify-between rounded-lg bg-white px-3 py-2"
-                >
-                  <div>
-                    <p className="text-sm font-medium">{c.name}</p>
-                    <p className="text-xs text-gray-500">{c.party}</p>
-                  </div>
-                  <span
-                    className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                      !c.verified && c.voteValue === null
-                        ? "bg-amber-100 text-amber-700"
-                        : c.voteValue === true
-                          ? "bg-melon-green/10 text-melon-green"
-                          : c.voteValue === false
-                            ? "bg-melon-red/10 text-melon-red"
-                            : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    {!c.verified && c.voteValue === null
-                      ? t("unclaimed")
-                      : c.voteValue === true
-                        ? "Ja ✓"
-                        : c.voteValue === false
-                          ? "Nej ✗"
-                          : "—"}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

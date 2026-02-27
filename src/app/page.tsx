@@ -106,6 +106,7 @@ export default function Home() {
   const [phoneLoading, setPhoneLoading] = useState(false);
   const [smsSent, setSmsSent] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>("vote");
+  const [mapStorkreds, setMapStorkreds] = useState("");
 
   const t = useTranslations("vote");
   const b = useTranslations("ballot");
@@ -218,8 +219,8 @@ export default function Home() {
 
           {postTab === "map" && (
             <div className="space-y-5">
-              <DenmarkMap />
-              <CandidateBoard />
+              <DenmarkMap selected={mapStorkreds} onSelect={setMapStorkreds} />
+              <CandidateBoard storkreds={mapStorkreds} onStorkredsChange={setMapStorkreds} />
             </div>
           )}
 
@@ -449,8 +450,8 @@ export default function Home() {
 
         {activeTab === "map" && (
           <div className="space-y-5 py-2">
-            <DenmarkMap />
-            <CandidateBoard />
+            <DenmarkMap selected={mapStorkreds} onSelect={setMapStorkreds} />
+            <CandidateBoard storkreds={mapStorkreds} onStorkredsChange={setMapStorkreds} />
           </div>
         )}
 
