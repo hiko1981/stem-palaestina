@@ -55,7 +55,7 @@ export default function DenmarkMap() {
 
       <div className="flex justify-center">
         <svg
-          viewBox="20 85 290 260"
+          viewBox="-10 150 1050 1120"
           className="w-full max-w-xs"
           role="img"
           aria-label="Danmark storkredskort"
