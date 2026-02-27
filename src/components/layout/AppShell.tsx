@@ -1,5 +1,3 @@
-"use client";
-
 import Footer from "./Footer";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
