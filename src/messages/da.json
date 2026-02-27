@@ -257,5 +257,21 @@
     "west-jutland": "Vestjyllands Storkreds",
     "north-jutland": "Nordjyllands Storkreds",
     "bornholm": "Bornholms Storkreds"
+  },
+  "support": {
+    "title": "Support",
+    "subtitle": "Fortæl os, hvis noget ikke virker, eller du har et forslag.",
+    "categoryLabel": "Emne",
+    "categoryPlaceholder": "Vælg emne...",
+    "cat_bug": "Fejl / bug",
+    "cat_suggestion": "Forslag",
+    "cat_candidate": "Kandidatproblem",
+    "cat_translation": "Oversættelsesfejl",
+    "cat_other": "Andet",
+    "messageLabel": "Besked",
+    "messagePlaceholder": "Beskriv dit problem...",
+    "send": "Send",
+    "success": "Tak! Din besked er modtaget.",
+    "error": "Kunne ikke sende. Prøv igen."
   }
 }

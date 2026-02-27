@@ -60,3 +60,13 @@ model Candidate {
 
   @@map("candidates")
 }
+
+model SupportMessage {
+  id        Int      @id @default(autoincrement())
+  category  String
+  message   String
+  deviceId  String?  @map("device_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("support_messages")
+}

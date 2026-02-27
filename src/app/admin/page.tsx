@@ -28,11 +28,20 @@ interface CandidateRecord {
   createdAt: string;
 }
 
+interface SupportRecord {
+  id: number;
+  category: string;
+  message: string;
+  deviceId: string | null;
+  createdAt: string;
+}
+
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
+  const [supportMessages, setSupportMessages] = useState<SupportRecord[]>([]);
   const [langMisses, setLangMisses] = useState<LangMissRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -52,6 +61,7 @@ export default function AdminPage() {
       const data = await res.json();
       setVotes(data.votes);
       setCandidates(data.candidates || []);
+      setSupportMessages(data.supportMessages || []);
       setAuthed(true);
       // Fetch language misses
       fetch("/api/admin/lang-miss", {
@@ -75,6 +85,7 @@ export default function AdminPage() {
       const data = await res.json();
       setVotes(data.votes);
       setCandidates(data.candidates || []);
+      setSupportMessages(data.supportMessages || []);
     }
     fetch("/api/admin/lang-miss", {
       headers: { Authorization: `Bearer ${password}` },
@@ -86,6 +97,7 @@ export default function AdminPage() {
 
   async function deleteVote(phoneHash: string) {
     setMessage("");
+    if (!confirm("Er du sikker på, at du vil slette denne stemme?")) return;
     const res = await fetch("/api/admin/votes", {
       method: "DELETE",
       headers: {
@@ -102,7 +114,12 @@ export default function AdminPage() {
 
   async function deleteAll() {
     setMessage("");
-    if (!confirm("Er du sikker? Alle stemmer slettes.")) return;
+    if (!confirm("Er du sikker? ALLE stemmer slettes permanent.")) return;
+    const typed = prompt("Skriv SLET ALLE for at bekræfte:");
+    if (typed !== "SLET ALLE") {
+      setMessage("Sletning annulleret.");
+      return;
+    }
     const res = await fetch("/api/admin/votes", {
       method: "DELETE",
       headers: {
@@ -135,6 +152,7 @@ export default function AdminPage() {
 
   async function deleteCandidate(id: number) {
     setMessage("");
+    if (!confirm("Er du sikker på, at du vil slette denne kandidat?")) return;
     const res = await fetch("/api/admin/votes", {
       method: "PATCH",
       headers: {
@@ -145,6 +163,23 @@ export default function AdminPage() {
     });
     if (res.ok) {
       setMessage("Kandidat slettet");
+      await fetchData();
+    }
+  }
+
+  async function deleteSupportMessage(id: number) {
+    setMessage("");
+    if (!confirm("Slet denne supportbesked?")) return;
+    const res = await fetch("/api/admin/votes", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${password}`,
+      },
+      body: JSON.stringify({ deleteSupportId: id }),
+    });
+    if (res.ok) {
+      setMessage("Supportbesked slettet");
       await fetchData();
     }
   }
@@ -309,6 +344,50 @@ export default function AdminPage() {
                 );
               })}
             </div>
+          </div>
+        )}
+      </section>
+
+      {/* Supportbeskeder */}
+      <section>
+        <h2 className="text-xl font-bold mb-4">
+          Supportbeskeder
+          {supportMessages.length > 0 && (
+            <span className="ml-2 inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
+              {supportMessages.length}
+            </span>
+          )}
+        </h2>
+        {supportMessages.length === 0 ? (
+          <Card className="text-center py-8">
+            <p className="text-gray-500 text-sm">Ingen supportbeskeder.</p>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {supportMessages.map((s) => (
+              <Card key={s.id}>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
+                      {s.category}
+                    </span>
+                    <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
+                      {s.message}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {new Date(s.createdAt).toLocaleString("da-DK")}
+                      {s.deviceId && ` · ${s.deviceId.slice(0, 8)}...`}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => deleteSupportMessage(s.id)}
+                    className="text-xs text-melon-red hover:underline shrink-0"
+                  >
+                    Slet
+                  </button>
+                </div>
+              </Card>
+            ))}
           </div>
         )}
       </section>

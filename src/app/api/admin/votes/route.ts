@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [votes, tokens, candidates] = await Promise.all([
+    const [votes, tokens, candidates, supportMessages] = await Promise.all([
       prisma.vote.findMany({
         orderBy: { votedAt: "desc" },
       }),
@@ -32,9 +32,12 @@ export async function GET(req: NextRequest) {
       prisma.candidate.findMany({
         orderBy: { createdAt: "desc" },
       }),
+      prisma.supportMessage.findMany({
+        orderBy: { createdAt: "desc" },
+      }),
     ]);
 
-    return NextResponse.json({ votes, tokens, candidates });
+    return NextResponse.json({ votes, tokens, candidates, supportMessages });
   } catch (error) {
     console.error("admin/votes GET error:", error);
     return NextResponse.json(
@@ -107,6 +110,13 @@ export async function PATCH(req: NextRequest) {
     if (body.deleteCandidateId) {
       await prisma.candidate.delete({
         where: { id: body.deleteCandidateId },
+      });
+      return NextResponse.json({ ok: true });
+    }
+
+    if (body.deleteSupportId) {
+      await prisma.supportMessage.delete({
+        where: { id: body.deleteSupportId },
       });
       return NextResponse.json({ ok: true });
     }

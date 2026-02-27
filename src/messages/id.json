@@ -257,5 +257,21 @@
     "send": "Kirim",
     "sent": "Terkirim!",
     "networkError": "Kesalahan jaringan. Coba lagi."
+  },
+  "support": {
+    "title": "Dukungan",
+    "subtitle": "Beri tahu kami jika ada yang tidak berfungsi atau Anda punya saran.",
+    "categoryLabel": "Kategori",
+    "categoryPlaceholder": "Pilih kategori...",
+    "cat_bug": "Bug / Kesalahan",
+    "cat_suggestion": "Saran",
+    "cat_candidate": "Masalah kandidat",
+    "cat_translation": "Kesalahan terjemahan",
+    "cat_other": "Lainnya",
+    "messageLabel": "Pesan",
+    "messagePlaceholder": "Jelaskan masalah Anda...",
+    "send": "Kirim",
+    "success": "Terima kasih! Pesan Anda telah diterima.",
+    "error": "Gagal mengirim. Coba lagi."
   }
 }

@@ -257,5 +257,21 @@
     "send": "إرسال",
     "sent": "تم الإرسال!",
     "networkError": "خطأ في الشبكة. حاول مرة أخرى."
+  },
+  "support": {
+    "title": "الدعم",
+    "subtitle": "أخبرنا إذا كان هناك شيء لا يعمل أو لديك اقتراح.",
+    "categoryLabel": "الفئة",
+    "categoryPlaceholder": "اختر فئة...",
+    "cat_bug": "خطأ تقني",
+    "cat_suggestion": "اقتراح",
+    "cat_candidate": "مشكلة في المرشح",
+    "cat_translation": "خطأ في الترجمة",
+    "cat_other": "أخرى",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "صف مشكلتك...",
+    "send": "إرسال",
+    "success": "شكرًا! تم استلام رسالتك.",
+    "error": "تعذر الإرسال. حاول مرة أخرى."
   }
 }

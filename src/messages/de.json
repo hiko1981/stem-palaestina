@@ -257,5 +257,21 @@
     "send": "Senden",
     "sent": "Gesendet!",
     "networkError": "Netzwerkfehler. Bitte versuche es erneut."
+  },
+  "support": {
+    "title": "Support",
+    "subtitle": "Sag uns Bescheid, wenn etwas nicht funktioniert oder du einen Vorschlag hast.",
+    "categoryLabel": "Kategorie",
+    "categoryPlaceholder": "Kategorie wählen...",
+    "cat_bug": "Fehler / Bug",
+    "cat_suggestion": "Vorschlag",
+    "cat_candidate": "Kandidatenproblem",
+    "cat_translation": "Übersetzungsfehler",
+    "cat_other": "Sonstiges",
+    "messageLabel": "Nachricht",
+    "messagePlaceholder": "Beschreibe dein Problem...",
+    "send": "Senden",
+    "success": "Danke! Deine Nachricht ist eingegangen.",
+    "error": "Konnte nicht gesendet werden. Versuche es erneut."
   }
 }

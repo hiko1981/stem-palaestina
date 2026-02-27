@@ -257,5 +257,21 @@
     "send": "بھیجیں",
     "sent": "بھیج دیا!",
     "networkError": "نیٹ ورک خرابی۔ دوبارہ کوشش کریں۔"
+  },
+  "support": {
+    "title": "سپورٹ",
+    "subtitle": "اگر کچھ کام نہیں کر رہا یا آپ کے پاس تجویز ہے تو ہمیں بتائیں۔",
+    "categoryLabel": "زمرہ",
+    "categoryPlaceholder": "زمرہ منتخب کریں...",
+    "cat_bug": "خرابی / بگ",
+    "cat_suggestion": "تجویز",
+    "cat_candidate": "امیدوار کا مسئلہ",
+    "cat_translation": "ترجمے کی غلطی",
+    "cat_other": "دیگر",
+    "messageLabel": "پیغام",
+    "messagePlaceholder": "اپنا مسئلہ بیان کریں...",
+    "send": "بھیجیں",
+    "success": "شکریہ! آپ کا پیغام موصول ہوا۔",
+    "error": "بھیج نہیں سکے۔ دوبارہ کوشش کریں۔"
   }
 }

@@ -257,5 +257,21 @@
     "send": "Gửi",
     "sent": "Đã gửi!",
     "networkError": "Lỗi mạng. Vui lòng thử lại."
+  },
+  "support": {
+    "title": "Hỗ trợ",
+    "subtitle": "Cho chúng tôi biết nếu có vấn đề hoặc bạn có đề xuất.",
+    "categoryLabel": "Danh mục",
+    "categoryPlaceholder": "Chọn danh mục...",
+    "cat_bug": "Lỗi / Bug",
+    "cat_suggestion": "Đề xuất",
+    "cat_candidate": "Vấn đề ứng viên",
+    "cat_translation": "Lỗi dịch thuật",
+    "cat_other": "Khác",
+    "messageLabel": "Tin nhắn",
+    "messagePlaceholder": "Mô tả vấn đề của bạn...",
+    "send": "Gửi",
+    "success": "Cảm ơn! Tin nhắn của bạn đã được nhận.",
+    "error": "Không thể gửi. Hãy thử lại."
   }
 }

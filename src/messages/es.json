@@ -257,5 +257,21 @@
     "send": "Enviar",
     "sent": "¡Enviado!",
     "networkError": "Error de red. Inténtalo de nuevo."
+  },
+  "support": {
+    "title": "Soporte",
+    "subtitle": "Cuéntanos si algo no funciona o tienes una sugerencia.",
+    "categoryLabel": "Categoría",
+    "categoryPlaceholder": "Elige categoría...",
+    "cat_bug": "Error / Bug",
+    "cat_suggestion": "Sugerencia",
+    "cat_candidate": "Problema con candidato",
+    "cat_translation": "Error de traducción",
+    "cat_other": "Otro",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Describe tu problema...",
+    "send": "Enviar",
+    "success": "¡Gracias! Tu mensaje ha sido recibido.",
+    "error": "No se pudo enviar. Inténtalo de nuevo."
   }
 }

@@ -8,6 +8,7 @@ import CandidateSelect from "@/components/features/CandidateSelect";
 import CandidateBoard from "@/components/features/CandidateBoard";
 import PhoneNote from "@/components/ui/PhoneNote";
 import SharePanel from "@/components/features/SharePanel";
+import SupportForm from "@/components/features/SupportForm";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
 import ResultsView from "@/components/features/ResultsView";
@@ -19,6 +20,7 @@ type ActivePanel = "voter" | "candidate" | "invite" | null;
 function AboutContent() {
   const t = useTranslations("about");
   const d = useTranslations("demands");
+  const s = useTranslations("support");
 
   return (
     <div className="space-y-6">
@@ -78,6 +80,11 @@ function AboutContent() {
           <li>{t("security4")}</li>
           <li>{t("security5")}</li>
         </ul>
+      </Card>
+
+      <Card>
+        <h2 className="text-xl font-bold mb-3">{s("title")}</h2>
+        <SupportForm />
       </Card>
     </div>
   );

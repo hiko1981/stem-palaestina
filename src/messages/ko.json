@@ -257,5 +257,21 @@
     "send": "보내기",
     "sent": "전송됨!",
     "networkError": "네트워크 오류. 다시 시도하세요."
+  },
+  "support": {
+    "title": "지원",
+    "subtitle": "문제가 있거나 제안이 있으면 알려주세요.",
+    "categoryLabel": "카테고리",
+    "categoryPlaceholder": "카테고리 선택...",
+    "cat_bug": "버그 / 오류",
+    "cat_suggestion": "제안",
+    "cat_candidate": "후보자 문제",
+    "cat_translation": "번역 오류",
+    "cat_other": "기타",
+    "messageLabel": "메시지",
+    "messagePlaceholder": "문제를 설명해주세요...",
+    "send": "보내기",
+    "success": "감사합니다! 메시지가 접수되었습니다.",
+    "error": "전송할 수 없습니다. 다시 시도해주세요."
   }
 }

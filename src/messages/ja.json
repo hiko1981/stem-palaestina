@@ -257,5 +257,21 @@
     "send": "送信",
     "sent": "送信しました！",
     "networkError": "ネットワークエラー。もう一度お試しください。"
+  },
+  "support": {
+    "title": "サポート",
+    "subtitle": "不具合やご提案があればお知らせください。",
+    "categoryLabel": "カテゴリ",
+    "categoryPlaceholder": "カテゴリを選択...",
+    "cat_bug": "バグ / エラー",
+    "cat_suggestion": "提案",
+    "cat_candidate": "候補者の問題",
+    "cat_translation": "翻訳エラー",
+    "cat_other": "その他",
+    "messageLabel": "メッセージ",
+    "messagePlaceholder": "問題を説明してください...",
+    "send": "送信",
+    "success": "ありがとうございます！メッセージを受け取りました。",
+    "error": "送信できませんでした。もう一度お試しください。"
   }
 }

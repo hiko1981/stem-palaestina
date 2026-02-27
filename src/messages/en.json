@@ -257,5 +257,21 @@
     "send": "Send",
     "sent": "Sent!",
     "networkError": "Network error. Please try again."
+  },
+  "support": {
+    "title": "Support",
+    "subtitle": "Let us know if something isn't working or you have a suggestion.",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Choose category...",
+    "cat_bug": "Bug / Error",
+    "cat_suggestion": "Suggestion",
+    "cat_candidate": "Candidate issue",
+    "cat_translation": "Translation error",
+    "cat_other": "Other",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Describe your issue...",
+    "send": "Send",
+    "success": "Thank you! Your message has been received.",
+    "error": "Could not send. Try again."
   }
 }

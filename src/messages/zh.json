@@ -257,5 +257,21 @@
     "send": "发送",
     "sent": "已发送！",
     "networkError": "网络错误。请重试。"
+  },
+  "support": {
+    "title": "支持",
+    "subtitle": "如果有问题或建议，请告诉我们。",
+    "categoryLabel": "类别",
+    "categoryPlaceholder": "选择类别...",
+    "cat_bug": "错误 / Bug",
+    "cat_suggestion": "建议",
+    "cat_candidate": "候选人问题",
+    "cat_translation": "翻译错误",
+    "cat_other": "其他",
+    "messageLabel": "消息",
+    "messagePlaceholder": "描述您的问题...",
+    "send": "发送",
+    "success": "谢谢！您的消息已收到。",
+    "error": "无法发送。请重试。"
   }
 }

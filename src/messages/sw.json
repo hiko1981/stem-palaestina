@@ -257,5 +257,21 @@
     "send": "Tuma",
     "sent": "Imetumwa!",
     "networkError": "Hitilafu ya mtandao. Jaribu tena."
+  },
+  "support": {
+    "title": "Msaada",
+    "subtitle": "Tuambie ikiwa kuna tatizo au una pendekezo.",
+    "categoryLabel": "Aina",
+    "categoryPlaceholder": "Chagua aina...",
+    "cat_bug": "Hitilafu",
+    "cat_suggestion": "Pendekezo",
+    "cat_candidate": "Tatizo la mgombea",
+    "cat_translation": "Hitilafu ya tafsiri",
+    "cat_other": "Nyingine",
+    "messageLabel": "Ujumbe",
+    "messagePlaceholder": "Eleza tatizo lako...",
+    "send": "Tuma",
+    "success": "Asante! Ujumbe wako umepokelewa.",
+    "error": "Haikuweza kutuma. Jaribu tena."
   }
 }

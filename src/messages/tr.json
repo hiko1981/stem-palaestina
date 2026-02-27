@@ -257,5 +257,21 @@
     "send": "Gönder",
     "sent": "Gönderildi!",
     "networkError": "Ağ hatası. Tekrar deneyin."
+  },
+  "support": {
+    "title": "Destek",
+    "subtitle": "Bir şey çalışmıyorsa veya öneriniz varsa bize bildirin.",
+    "categoryLabel": "Kategori",
+    "categoryPlaceholder": "Kategori seçin...",
+    "cat_bug": "Hata / Bug",
+    "cat_suggestion": "Öneri",
+    "cat_candidate": "Aday sorunu",
+    "cat_translation": "Çeviri hatası",
+    "cat_other": "Diğer",
+    "messageLabel": "Mesaj",
+    "messagePlaceholder": "Sorununuzu açıklayın...",
+    "send": "Gönder",
+    "success": "Teşekkürler! Mesajınız alındı.",
+    "error": "Gönderilemedi. Tekrar deneyin."
   }
 }
