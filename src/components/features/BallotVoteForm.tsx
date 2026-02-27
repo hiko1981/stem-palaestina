@@ -159,6 +159,40 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
     );
   }
 
+  if ((status === "used" || status === "already_voted") && isCandidate) {
+    // Candidate already voted — show registration form (they may not have registered yet)
+    return (
+      <div className="space-y-8">
+        <div className="text-center py-8">
+          <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-melon-green/10 mb-4">
+            <svg
+              className="h-8 w-8 text-melon-green"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold mb-2">{t("thanksTitle")}</h2>
+          <p className="text-gray-600">{t("thanksCandidate")}</p>
+        </div>
+        <CandidatePublicForm token={token} />
+        <a
+          href="/"
+          className="block text-center text-sm text-melon-green hover:underline"
+        >
+          {t("viewResults")}
+        </a>
+      </div>
+    );
+  }
+
   if (status === "used" || status === "already_voted") {
     return (
       <div className="space-y-8">

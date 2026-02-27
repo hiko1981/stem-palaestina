@@ -11,7 +11,7 @@ interface CandidatePublicFormProps {
 }
 
 export default function CandidatePublicForm({ token }: CandidatePublicFormProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [name, setName] = useState("");
   const [party, setParty] = useState("");
   const [constituency, setConstituency] = useState("");
