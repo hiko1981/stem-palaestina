@@ -86,8 +86,18 @@
     "privacyLink": "소개 페이지"
   },
   "results": {
-    "title": "덴마크의 투표 현황",
-    "subtitle": "유권자와 후보자들이 어떻게 투표하고 있는지 확인하세요.",
+    "title": "결과",
+    "bundleNote": "투표는 익명으로 표시됩니다. 찬반 비율은 {threshold}표 이후에 표시됩니다.",
+    "publicVotesTitle": "공개 투표",
+    "publicVotesSubtitle": "덴마크가 세 가지 요구에 어떻게 투표하는지.",
+    "candidateVotesTitle": "후보자 투표",
+    "allDenmark": "덴마크 전체",
+    "yes": "예",
+    "no": "아니요",
+    "votes": "표",
+    "noVotesYet": "아직 투표가 없습니다.",
+    "noCandidatesYet": "아직 투표한 후보자가 없습니다.",
+    "belowThreshold": "현재까지 {count}표. {threshold}표 이후에 비율이 표시됩니다.",
     "cta": "투표하기"
   },
   "ballot": {
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "친구와 후보자에게 공유",
+    "sendSms": "SMS로 투표용지 보내기",
+    "sendSmsDesc": "수신자는 투표를 위한 인증 링크를 받습니다.",
+    "sendEmail": "이메일로 초대 보내기",
+    "sendEmailDesc": "Vote Palestine 링크를 보냅니다.",
+    "emailSubject": "Vote Palestine – 지지를 보여주세요",
+    "emailBody": "안녕하세요! Vote Palestine에서 투표했습니다. 여기서 지지를 보여줄 수 있습니다:",
+    "shareLink": "링크로 공유",
+    "shareLinkDesc": "링크를 복사해서 원하는 방식으로 공유하세요.",
+    "copied": "복사됨!",
+    "phoneLabel": "휴대폰 번호",
+    "emailLabel": "이메일 주소",
+    "send": "보내기",
+    "sent": "전송됨!",
+    "networkError": "네트워크 오류. 다시 시도하세요."
   }
 }

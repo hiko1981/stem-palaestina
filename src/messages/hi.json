@@ -86,8 +86,18 @@
     "privacyLink": "परिचय पृष्ठ"
   },
   "results": {
-    "title": "Denmark कैसे वोट करता है",
-    "subtitle": "देखें कि मतदाता और उम्मीदवार कैसे वोट कर रहे हैं।",
+    "title": "परिणाम",
+    "bundleNote": "वोट गुमनाम रूप से दिखाए जाते हैं। हाँ/नहीं का विभाजन {threshold} वोटों के बाद दिखेगा।",
+    "publicVotesTitle": "सार्वजनिक वोट",
+    "publicVotesSubtitle": "डेनमार्क तीन मांगों पर कैसे वोट करता है।",
+    "candidateVotesTitle": "उम्मीदवारों के वोट",
+    "allDenmark": "पूरा डेनमार्क",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "votes": "वोट",
+    "noVotesYet": "अभी तक कोई वोट नहीं।",
+    "noCandidatesYet": "अभी तक किसी उम्मीदवार ने वोट नहीं दिया।",
+    "belowThreshold": "अब तक {count} वोट। {threshold} वोटों के बाद विभाजन दिखाया जाएगा।",
     "cta": "अपना वोट डालें"
   },
   "ballot": {
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "दोस्तों और उम्मीदवारों के साथ साझा करें",
+    "sendSms": "SMS से बैलट भेजें",
+    "sendSmsDesc": "प्राप्तकर्ता को वोट देने के लिए एक सत्यापन लिंक मिलेगा।",
+    "sendEmail": "ईमेल से आमंत्रण भेजें",
+    "sendEmailDesc": "वोट पैलेस्टाइन का लिंक भेजता है।",
+    "emailSubject": "वोट पैलेस्टाइन – अपना समर्थन दिखाएं",
+    "emailBody": "नमस्ते! मैंने वोट पैलेस्टाइन पर वोट किया। आप भी यहां अपना समर्थन दिखा सकते हैं:",
+    "shareLink": "लिंक से साझा करें",
+    "shareLinkDesc": "लिंक कॉपी करें और जैसे चाहें साझा करें।",
+    "copied": "कॉपी हो गया!",
+    "phoneLabel": "मोबाइल नंबर",
+    "emailLabel": "ईमेल पता",
+    "send": "भेजें",
+    "sent": "भेज दिया!",
+    "networkError": "नेटवर्क त्रुटि। पुनः प्रयास करें।"
   }
 }

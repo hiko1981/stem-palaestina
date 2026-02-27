@@ -7,10 +7,10 @@ import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import InviteSection from "@/components/features/InviteSection";
 import InviteCandidateButton from "@/components/features/InviteCandidateButton";
 import CandidateSelect from "@/components/features/CandidateSelect";
-import VoteCounter from "@/components/features/VoteCounter";
+import SharePanel from "@/components/features/SharePanel";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
-import CandidateVotes from "@/components/features/CandidateVotes";
+import ResultsView from "@/components/features/ResultsView";
 import { useTranslations } from "next-intl";
 
 type ActivePanel = "voter" | "candidate" | "invite" | null;
@@ -111,7 +111,7 @@ export default function Home() {
   const b = useTranslations("ballot");
   const d = useTranslations("demands");
   const h = useTranslations("home");
-  const cl = useTranslations("candidateList");
+  const sp = useTranslations("sharePanel");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -194,9 +194,9 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* National aggregate */}
+              {/* Results */}
               <Card>
-                <VoteCounter variant="full" />
+                <ResultsView />
               </Card>
 
               {/* Invite */}
@@ -305,34 +305,6 @@ export default function Home() {
               </li>
             </ul>
 
-            {/* Ja/Nej radio toggle */}
-            <div className="flex gap-2 mb-4">
-              <label className="flex-1 cursor-pointer">
-                <input
-                  type="radio"
-                  name="vote"
-                  checked={voteValue === true}
-                  onChange={() => setVoteValue(true)}
-                  className="sr-only peer"
-                />
-                <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
-                  {b("yes")}
-                </div>
-              </label>
-              <label className="flex-1 cursor-pointer">
-                <input
-                  type="radio"
-                  name="vote"
-                  checked={voteValue === false}
-                  onChange={() => setVoteValue(false)}
-                  className="sr-only peer"
-                />
-                <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
-                  {b("no")}
-                </div>
-              </label>
-            </div>
-
             {/* ── Accordion panels ── */}
             <div className="space-y-2 mb-4">
               {/* Panel 1: Jeg er vælger */}
@@ -345,7 +317,34 @@ export default function Home() {
                   <ChevronIcon open={activePanel === "voter"} />
                 </button>
                 {activePanel === "voter" && (
-                  <div className="px-3 pb-3 animate-in slide-in-from-top-2">
+                  <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
+                    {/* Ja/Nej toggle */}
+                    <div className="flex gap-2">
+                      <label className="flex-1 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="vote"
+                          checked={voteValue === true}
+                          onChange={() => setVoteValue(true)}
+                          className="sr-only peer"
+                        />
+                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
+                          {b("yes")}
+                        </div>
+                      </label>
+                      <label className="flex-1 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="vote"
+                          checked={voteValue === false}
+                          onChange={() => setVoteValue(false)}
+                          className="sr-only peer"
+                        />
+                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
+                          {b("no")}
+                        </div>
+                      </label>
+                    </div>
                     {phoneInput}
                   </div>
                 )}
@@ -362,6 +361,33 @@ export default function Home() {
                 </button>
                 {activePanel === "candidate" && (
                   <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
+                    {/* Ja/Nej toggle */}
+                    <div className="flex gap-2">
+                      <label className="flex-1 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="vote-candidate"
+                          checked={voteValue === true}
+                          onChange={() => setVoteValue(true)}
+                          className="sr-only peer"
+                        />
+                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
+                          {b("yes")}
+                        </div>
+                      </label>
+                      <label className="flex-1 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="vote-candidate"
+                          checked={voteValue === false}
+                          onChange={() => setVoteValue(false)}
+                          className="sr-only peer"
+                        />
+                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
+                          {b("no")}
+                        </div>
+                      </label>
+                    </div>
                     <CandidateSelect
                       onSelect={(value) => {
                         if (typeof window !== "undefined") {
@@ -374,18 +400,18 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Panel 3: Inviter din lokale kandidat */}
+              {/* Panel 3: Del med venner og kandidater */}
               <div className="rounded-lg border border-gray-200 overflow-hidden">
                 <button
                   onClick={() => togglePanel("invite")}
                   className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
                 >
-                  {cl("title")}
+                  {sp("title")}
                   <ChevronIcon open={activePanel === "invite"} />
                 </button>
                 {activePanel === "invite" && (
                   <div className="px-3 pb-3 animate-in slide-in-from-top-2">
-                    <InviteCandidateButton inline />
+                    <SharePanel />
                   </div>
                 )}
               </div>
@@ -404,10 +430,7 @@ export default function Home() {
         {activeTab === "results" && (
           <div className="space-y-8 py-2">
             <Card>
-              <VoteCounter variant="full" />
-            </Card>
-            <Card>
-              <CandidateVotes />
+              <ResultsView />
             </Card>
           </div>
         )}

@@ -86,9 +86,19 @@
     "privacyLink": "trang Giới thiệu"
   },
   "results": {
-    "title": "Đan Mạch bỏ phiếu như thế nào",
-    "subtitle": "Xem cách cử tri và ứng viên đang bỏ phiếu.",
-    "cta": "Bỏ phiếu ngay"
+    "title": "Kết quả",
+    "bundleNote": "Phiếu bầu được hiển thị ẩn danh. Tỷ lệ có/không xuất hiện sau {threshold} phiếu.",
+    "publicVotesTitle": "Phiếu bầu công khai",
+    "publicVotesSubtitle": "Đan Mạch bỏ phiếu thế nào về ba yêu cầu.",
+    "candidateVotesTitle": "Phiếu bầu ứng viên",
+    "allDenmark": "Toàn Đan Mạch",
+    "yes": "Có",
+    "no": "Không",
+    "votes": "phiếu",
+    "noVotesYet": "Chưa có phiếu bầu nào.",
+    "noCandidatesYet": "Chưa có ứng viên nào bỏ phiếu.",
+    "belowThreshold": "{count} phiếu cho đến nay. Tỷ lệ sẽ hiển thị sau {threshold} phiếu.",
+    "cta": "Bỏ phiếu"
   },
   "ballot": {
     "sentTitle": "Phiếu bầu đã được gửi!",
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Chia sẻ với bạn bè và ứng viên",
+    "sendSms": "Gửi phiếu bầu qua SMS",
+    "sendSmsDesc": "Người nhận sẽ nhận được liên kết xác minh để bỏ phiếu.",
+    "sendEmail": "Gửi lời mời qua email",
+    "sendEmailDesc": "Gửi liên kết đến Vote Palestine.",
+    "emailSubject": "Vote Palestine – thể hiện sự ủng hộ của bạn",
+    "emailBody": "Xin chào! Tôi đã bỏ phiếu trên Vote Palestine. Bạn cũng có thể thể hiện sự ủng hộ tại đây:",
+    "shareLink": "Chia sẻ qua liên kết",
+    "shareLinkDesc": "Sao chép liên kết và chia sẻ theo cách bạn muốn.",
+    "copied": "Đã sao chép!",
+    "phoneLabel": "Số điện thoại",
+    "emailLabel": "Địa chỉ email",
+    "send": "Gửi",
+    "sent": "Đã gửi!",
+    "networkError": "Lỗi mạng. Vui lòng thử lại."
   }
 }

@@ -86,9 +86,19 @@
     "privacyLink": "странице «О проекте»"
   },
   "results": {
-    "title": "Как голосует Дания",
-    "subtitle": "Посмотрите, как голосуют избиратели и кандидаты.",
-    "cta": "Отдать свой голос"
+    "title": "Результаты",
+    "bundleNote": "Голоса отображаются анонимно. Распределение да/нет появится после {threshold} голосов.",
+    "publicVotesTitle": "Публичные голоса",
+    "publicVotesSubtitle": "Как Дания голосует по трём требованиям.",
+    "candidateVotesTitle": "Голоса кандидатов",
+    "allDenmark": "Вся Дания",
+    "yes": "Да",
+    "no": "Нет",
+    "votes": "голосов",
+    "noVotesYet": "Голосов пока нет.",
+    "noCandidatesYet": "Ни один кандидат ещё не проголосовал.",
+    "belowThreshold": "{count} голосов на данный момент. Распределение появится после {threshold} голосов.",
+    "cta": "Проголосовать"
   },
   "ballot": {
     "sentTitle": "Бюллетень отправлен!",
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Поделиться с друзьями и кандидатами",
+    "sendSms": "Отправить бюллетень по SMS",
+    "sendSmsDesc": "Получатель получит ссылку для верификации и голосования.",
+    "sendEmail": "Отправить приглашение по email",
+    "sendEmailDesc": "Отправляет ссылку на Vote Palestine.",
+    "emailSubject": "Vote Palestine – покажи свою поддержку",
+    "emailBody": "Привет! Я проголосовал на Vote Palestine. Ты тоже можешь показать поддержку здесь:",
+    "shareLink": "Поделиться ссылкой",
+    "shareLinkDesc": "Скопируй ссылку и поделись ею.",
+    "copied": "Скопировано!",
+    "phoneLabel": "Номер телефона",
+    "emailLabel": "Электронная почта",
+    "send": "Отправить",
+    "sent": "Отправлено!",
+    "networkError": "Ошибка сети. Попробуй снова."
   }
 }

@@ -86,9 +86,19 @@
     "privacyLink": "Hakkında sayfası"
   },
   "results": {
-    "title": "İnsanlar nasıl oy veriyor",
-    "subtitle": "Seçmenlerin ve adayların nasıl oy verdiğini gör.",
-    "cta": "Oyunu kullan"
+    "title": "Sonuçlar",
+    "bundleNote": "Oylar anonim olarak gösterilir. Evet/hayır dağılımı {threshold} oydan sonra görünür.",
+    "publicVotesTitle": "Halk oyları",
+    "publicVotesSubtitle": "Danimarka üç talep hakkında nasıl oy veriyor.",
+    "candidateVotesTitle": "Aday oyları",
+    "allDenmark": "Tüm Danimarka",
+    "yes": "Evet",
+    "no": "Hayır",
+    "votes": "oy",
+    "noVotesYet": "Henüz oy yok.",
+    "noCandidatesYet": "Henüz hiçbir aday oy kullanmadı.",
+    "belowThreshold": "Şu ana kadar {count} oy. Dağılım {threshold} oydan sonra gösterilecek.",
+    "cta": "Oyunuzu kullanın"
   },
   "ballot": {
     "sentTitle": "Oy pusulası gönderildi!",
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Arkadaşlarla ve adaylarla paylaş",
+    "sendSms": "SMS ile oy pusulası gönder",
+    "sendSmsDesc": "Alıcı oy kullanmak için bir doğrulama bağlantısı alır.",
+    "sendEmail": "E-posta ile davet gönder",
+    "sendEmailDesc": "Vote Palestine bağlantısı gönderir.",
+    "emailSubject": "Vote Palestine – desteğini göster",
+    "emailBody": "Merhaba! Vote Palestine'da oy kullandım. Sen de desteğini burada gösterebilirsin:",
+    "shareLink": "Bağlantıyla paylaş",
+    "shareLinkDesc": "Bağlantıyı kopyala ve istediğin gibi paylaş.",
+    "copied": "Kopyalandı!",
+    "phoneLabel": "Cep telefonu numarası",
+    "emailLabel": "E-posta adresi",
+    "send": "Gönder",
+    "sent": "Gönderildi!",
+    "networkError": "Ağ hatası. Tekrar deneyin."
   }
 }

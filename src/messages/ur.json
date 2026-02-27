@@ -86,8 +86,18 @@
     "privacyLink": "تعارف صفحہ"
   },
   "results": {
-    "title": "Denmark کیسے ووٹ کرتا ہے",
-    "subtitle": "دیکھیں کہ ووٹرز اور امیدوار کیسے ووٹ دے رہے ہیں۔",
+    "title": "نتائج",
+    "bundleNote": "ووٹ گمنام طور پر دکھائے جاتے ہیں۔ ہاں/نہیں کی تقسیم {threshold} ووٹوں کے بعد ظاہر ہوگی۔",
+    "publicVotesTitle": "عوامی ووٹ",
+    "publicVotesSubtitle": "ڈنمارک تین مطالبات پر کیسے ووٹ کرتا ہے۔",
+    "candidateVotesTitle": "امیدواروں کے ووٹ",
+    "allDenmark": "پورا ڈنمارک",
+    "yes": "ہاں",
+    "no": "نہیں",
+    "votes": "ووٹ",
+    "noVotesYet": "ابھی تک کوئی ووٹ نہیں۔",
+    "noCandidatesYet": "ابھی تک کسی امیدوار نے ووٹ نہیں دیا۔",
+    "belowThreshold": "اب تک {count} ووٹ۔ تقسیم {threshold} ووٹوں کے بعد دکھائی جائے گی۔",
     "cta": "اپنا ووٹ ڈالیں"
   },
   "ballot": {
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "دوستوں اور امیدواروں کے ساتھ شیئر کریں",
+    "sendSms": "SMS کے ذریعے بیلٹ بھیجیں",
+    "sendSmsDesc": "وصول کنندہ کو ووٹ دینے کے لیے تصدیقی لنک ملے گا۔",
+    "sendEmail": "ای میل کے ذریعے دعوت بھیجیں",
+    "sendEmailDesc": "Vote Palestine کا لنک بھیجتا ہے۔",
+    "emailSubject": "Vote Palestine – اپنا تعاون دکھائیں",
+    "emailBody": "السلام علیکم! میں نے Vote Palestine پر ووٹ دیا۔ آپ بھی یہاں اپنا تعاون دکھا سکتے ہیں:",
+    "shareLink": "لنک سے شیئر کریں",
+    "shareLinkDesc": "لنک کاپی کریں اور جیسے چاہیں شیئر کریں۔",
+    "copied": "کاپی ہو گیا!",
+    "phoneLabel": "موبائل نمبر",
+    "emailLabel": "ای میل ایڈریس",
+    "send": "بھیجیں",
+    "sent": "بھیج دیا!",
+    "networkError": "نیٹ ورک خرابی۔ دوبارہ کوشش کریں۔"
   }
 }

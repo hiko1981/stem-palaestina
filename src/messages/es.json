@@ -86,8 +86,18 @@
     "privacyLink": "página Acerca de"
   },
   "results": {
-    "title": "Cómo vota Denmark",
-    "subtitle": "Mira cómo votan los votantes y candidatos.",
+    "title": "Resultados",
+    "bundleNote": "Los votos se muestran de forma anónima. El desglose sí/no aparece después de {threshold} votos.",
+    "publicVotesTitle": "Votos públicos",
+    "publicVotesSubtitle": "Cómo vota Dinamarca sobre las tres demandas.",
+    "candidateVotesTitle": "Votos de candidatos",
+    "allDenmark": "Toda Dinamarca",
+    "yes": "Sí",
+    "no": "No",
+    "votes": "votos",
+    "noVotesYet": "Aún no hay votos.",
+    "noCandidatesYet": "Ningún candidato ha votado todavía.",
+    "belowThreshold": "{count} votos hasta ahora. El desglose se muestra después de {threshold} votos.",
     "cta": "Emite tu voto"
   },
   "ballot": {
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Comparte con amigos y candidatos",
+    "sendSms": "Enviar papeleta por SMS",
+    "sendSmsDesc": "El destinatario recibe un enlace de verificación para votar.",
+    "sendEmail": "Enviar invitación por email",
+    "sendEmailDesc": "Envía un enlace a Vote Palestine.",
+    "emailSubject": "Vote Palestine – muestra tu apoyo",
+    "emailBody": "¡Hola! Voté en Vote Palestine. Tú también puedes mostrar tu apoyo aquí:",
+    "shareLink": "Compartir por enlace",
+    "shareLinkDesc": "Copia el enlace y compártelo como quieras.",
+    "copied": "¡Copiado!",
+    "phoneLabel": "Número de móvil",
+    "emailLabel": "Correo electrónico",
+    "send": "Enviar",
+    "sent": "¡Enviado!",
+    "networkError": "Error de red. Inténtalo de nuevo."
   }
 }

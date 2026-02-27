@@ -86,8 +86,18 @@
     "privacyLink": "About page"
   },
   "results": {
-    "title": "How Denmark votes",
-    "subtitle": "See how voters and candidates are voting.",
+    "title": "Results",
+    "bundleNote": "Votes are shown anonymously. Yes/no breakdown appears after {threshold} votes.",
+    "publicVotesTitle": "Public votes",
+    "publicVotesSubtitle": "How Denmark votes on the three demands.",
+    "candidateVotesTitle": "Candidate votes",
+    "allDenmark": "All of Denmark",
+    "yes": "Yes",
+    "no": "No",
+    "votes": "votes",
+    "noVotesYet": "No votes yet.",
+    "noCandidatesYet": "No candidates have voted yet.",
+    "belowThreshold": "{count} votes so far. Breakdown shown after {threshold} votes.",
     "cta": "Cast your vote"
   },
   "ballot": {
@@ -227,5 +237,22 @@
     "west-jutland": "West Jutland",
     "north-jutland": "North Jutland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Share with friends and candidates",
+    "sendSms": "Send ballot via SMS",
+    "sendSmsDesc": "The recipient gets a verification link to vote.",
+    "sendEmail": "Send invitation via email",
+    "sendEmailDesc": "Sends a link to Vote Palestine.",
+    "emailSubject": "Vote Palestine – show your support",
+    "emailBody": "Hi! I voted on Vote Palestine. You can also show your support here:",
+    "shareLink": "Share via link",
+    "shareLinkDesc": "Copy the link and share it however you like.",
+    "copied": "Copied!",
+    "phoneLabel": "Mobile number",
+    "emailLabel": "Email address",
+    "send": "Send",
+    "sent": "Sent!",
+    "networkError": "Network error. Please try again."
   }
 }

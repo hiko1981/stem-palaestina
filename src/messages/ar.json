@@ -86,8 +86,18 @@
     "privacyLink": "صفحة حول"
   },
   "results": {
-    "title": "كيف يصوّت الناس",
-    "subtitle": "شاهد كيف يصوّت الناخبون والمرشحون.",
+    "title": "النتائج",
+    "bundleNote": "تُعرض الأصوات بشكل مجهول. يظهر توزيع نعم/لا بعد {threshold} صوتاً.",
+    "publicVotesTitle": "الأصوات العامة",
+    "publicVotesSubtitle": "كيف تصوّت الدنمارك على المطالب الثلاثة.",
+    "candidateVotesTitle": "أصوات المرشحين",
+    "allDenmark": "كل الدنمارك",
+    "yes": "نعم",
+    "no": "لا",
+    "votes": "أصوات",
+    "noVotesYet": "لا توجد أصوات بعد.",
+    "noCandidatesYet": "لم يصوّت أي مرشح بعد.",
+    "belowThreshold": "{count} صوتاً حتى الآن. يُعرض التوزيع بعد {threshold} صوتاً.",
     "cta": "أدلِ بصوتك"
   },
   "ballot": {
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "شارك مع الأصدقاء والمرشحين",
+    "sendSms": "إرسال ورقة اقتراع عبر SMS",
+    "sendSmsDesc": "يحصل المستلم على رابط تحقق للتصويت.",
+    "sendEmail": "إرسال دعوة عبر البريد الإلكتروني",
+    "sendEmailDesc": "يرسل رابطًا إلى صوّت فلسطين.",
+    "emailSubject": "صوّت فلسطين – أظهر دعمك",
+    "emailBody": "مرحبًا! لقد صوّتت على صوّت فلسطين. يمكنك أيضًا إظهار دعمك هنا:",
+    "shareLink": "مشاركة عبر رابط",
+    "shareLinkDesc": "انسخ الرابط وشاركه كما تشاء.",
+    "copied": "تم النسخ!",
+    "phoneLabel": "رقم الهاتف",
+    "emailLabel": "البريد الإلكتروني",
+    "send": "إرسال",
+    "sent": "تم الإرسال!",
+    "networkError": "خطأ في الشبكة. حاول مرة أخرى."
   }
 }

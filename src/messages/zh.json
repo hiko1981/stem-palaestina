@@ -86,9 +86,19 @@
     "privacyLink": "关于页面"
   },
   "results": {
-    "title": "丹麦如何投票",
-    "subtitle": "查看投票人和候选人的投票情况。",
-    "cta": "投出您的一票"
+    "title": "结果",
+    "bundleNote": "投票以匿名方式显示。赞成/反对的比例在{threshold}票后显示。",
+    "publicVotesTitle": "公众投票",
+    "publicVotesSubtitle": "丹麦如何就三项要求投票。",
+    "candidateVotesTitle": "候选人投票",
+    "allDenmark": "全丹麦",
+    "yes": "是",
+    "no": "否",
+    "votes": "票",
+    "noVotesYet": "暂无投票。",
+    "noCandidatesYet": "暂无候选人投票。",
+    "belowThreshold": "目前{count}票。{threshold}票后显示比例。",
+    "cta": "投票"
   },
   "ballot": {
     "sentTitle": "选票已发送！",
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "与朋友和候选人分享",
+    "sendSms": "通过短信发送选票",
+    "sendSmsDesc": "收件人将收到验证链接以进行投票。",
+    "sendEmail": "通过电子邮件发送邀请",
+    "sendEmailDesc": "发送Vote Palestine的链接。",
+    "emailSubject": "Vote Palestine – 表达你的支持",
+    "emailBody": "你好！我在Vote Palestine上投了票。你也可以在这里表达支持：",
+    "shareLink": "通过链接分享",
+    "shareLinkDesc": "复制链接并按你喜欢的方式分享。",
+    "copied": "已复制！",
+    "phoneLabel": "手机号码",
+    "emailLabel": "电子邮件地址",
+    "send": "发送",
+    "sent": "已发送！",
+    "networkError": "网络错误。请重试。"
   }
 }

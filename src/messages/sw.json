@@ -86,9 +86,19 @@
     "privacyLink": "Ukurasa wa Kuhusu"
   },
   "results": {
-    "title": "Denmark inapigaje kura",
-    "subtitle": "Tazama jinsi wapiga kura na wagombea wanavyopigia kura.",
-    "cta": "Pigia kura yako"
+    "title": "Matokeo",
+    "bundleNote": "Kura zinaonyeshwa bila kutajwa. Mgawanyo wa ndiyo/hapana unaonekana baada ya kura {threshold}.",
+    "publicVotesTitle": "Kura za umma",
+    "publicVotesSubtitle": "Jinsi Denmark inavyopiga kura kuhusu madai matatu.",
+    "candidateVotesTitle": "Kura za wagombea",
+    "allDenmark": "Denmark yote",
+    "yes": "Ndiyo",
+    "no": "Hapana",
+    "votes": "kura",
+    "noVotesYet": "Hakuna kura bado.",
+    "noCandidatesYet": "Hakuna mgombea aliyepiga kura bado.",
+    "belowThreshold": "Kura {count} hadi sasa. Mgawanyo utaonyeshwa baada ya kura {threshold}.",
+    "cta": "Piga kura yako"
   },
   "ballot": {
     "sentTitle": "Karatasi ya kura imetumwa!",
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Shiriki na marafiki na wagombea",
+    "sendSms": "Tuma kura kwa SMS",
+    "sendSmsDesc": "Mpokeaji atapata kiungo cha uthibitisho wa kupiga kura.",
+    "sendEmail": "Tuma mwaliko kwa barua pepe",
+    "sendEmailDesc": "Inatuma kiungo cha Vote Palestine.",
+    "emailSubject": "Vote Palestine – onyesha msaada wako",
+    "emailBody": "Habari! Nimepiga kura kwenye Vote Palestine. Unaweza pia kuonyesha msaada wako hapa:",
+    "shareLink": "Shiriki kwa kiungo",
+    "shareLinkDesc": "Nakili kiungo na ushiriki unavyopenda.",
+    "copied": "Imenakiliwa!",
+    "phoneLabel": "Nambari ya simu",
+    "emailLabel": "Anwani ya barua pepe",
+    "send": "Tuma",
+    "sent": "Imetumwa!",
+    "networkError": "Hitilafu ya mtandao. Jaribu tena."
   }
 }

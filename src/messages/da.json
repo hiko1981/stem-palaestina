@@ -86,8 +86,18 @@
     "privacyLink": "Om-siden"
   },
   "results": {
-    "title": "Det stemmer Danmark",
-    "subtitle": "Sådan stemmer vælgerne og kandidaterne.",
+    "title": "Resultater",
+    "bundleNote": "Stemmer vises anonymt. Ja/nej-fordeling vises først efter {threshold} stemmer.",
+    "publicVotesTitle": "Offentlige stemmer",
+    "publicVotesSubtitle": "Sådan stemmer Danmark om de tre krav.",
+    "candidateVotesTitle": "Kandidatstemmer",
+    "allDenmark": "Hele Danmark",
+    "yes": "Ja",
+    "no": "Nej",
+    "votes": "stemmer",
+    "noVotesYet": "Ingen stemmer endnu.",
+    "noCandidatesYet": "Ingen kandidater har stemt endnu.",
+    "belowThreshold": "{count} stemmer indtil videre. Fordeling vises efter {threshold} stemmer.",
     "cta": "Afgiv din stemme"
   },
   "ballot": {
@@ -191,6 +201,23 @@
     "andFor": "og kandidat for",
     "selectConstituency": "Vælg storkreds...",
     "selectParty": "Vælg parti..."
+  },
+  "sharePanel": {
+    "title": "Del med venner og kandidater",
+    "sendSms": "Send stemmeseddel via SMS",
+    "sendSmsDesc": "Modtageren får et verifikationslink til at stemme.",
+    "sendEmail": "Send invitation via e-mail",
+    "sendEmailDesc": "Sender et link til Stem Palæstina.",
+    "emailSubject": "Stem Palæstina – vis din støtte",
+    "emailBody": "Hej! Jeg har stemt på Stem Palæstina. Du kan også vise din støtte her:",
+    "shareLink": "Del via link",
+    "shareLinkDesc": "Kopiér linket og del det, som du vil.",
+    "copied": "Kopieret!",
+    "phoneLabel": "Mobilnummer",
+    "emailLabel": "E-mailadresse",
+    "send": "Send",
+    "sent": "Sendt!",
+    "networkError": "Netværksfejl. Prøv igen."
   },
   "candidateList": {
     "title": "Inviter din lokale kandidat",

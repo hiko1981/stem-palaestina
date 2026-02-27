@@ -86,9 +86,19 @@
     "privacyLink": "Halaman Tentang"
   },
   "results": {
-    "title": "Bagaimana Denmark memberikan suara",
-    "subtitle": "Lihat bagaimana pemilih dan kandidat memberikan suara.",
-    "cta": "Berikan suaramu"
+    "title": "Hasil",
+    "bundleNote": "Suara ditampilkan secara anonim. Rincian ya/tidak muncul setelah {threshold} suara.",
+    "publicVotesTitle": "Suara publik",
+    "publicVotesSubtitle": "Bagaimana Denmark memberikan suara pada tiga tuntutan.",
+    "candidateVotesTitle": "Suara kandidat",
+    "allDenmark": "Seluruh Denmark",
+    "yes": "Ya",
+    "no": "Tidak",
+    "votes": "suara",
+    "noVotesYet": "Belum ada suara.",
+    "noCandidatesYet": "Belum ada kandidat yang memberikan suara.",
+    "belowThreshold": "{count} suara sejauh ini. Rincian ditampilkan setelah {threshold} suara.",
+    "cta": "Berikan suara Anda"
   },
   "ballot": {
     "sentTitle": "Surat suara terkirim!",
@@ -229,5 +239,22 @@
     "west-jutland": "Vestjylland",
     "north-jutland": "Nordjylland",
     "bornholm": "Bornholm"
+  },
+  "sharePanel": {
+    "title": "Bagikan dengan teman dan kandidat",
+    "sendSms": "Kirim surat suara via SMS",
+    "sendSmsDesc": "Penerima mendapat tautan verifikasi untuk memberikan suara.",
+    "sendEmail": "Kirim undangan via email",
+    "sendEmailDesc": "Mengirim tautan ke Vote Palestine.",
+    "emailSubject": "Vote Palestine – tunjukkan dukunganmu",
+    "emailBody": "Halo! Saya sudah memberikan suara di Vote Palestine. Kamu juga bisa menunjukkan dukunganmu di sini:",
+    "shareLink": "Bagikan via tautan",
+    "shareLinkDesc": "Salin tautan dan bagikan sesukamu.",
+    "copied": "Disalin!",
+    "phoneLabel": "Nomor ponsel",
+    "emailLabel": "Alamat email",
+    "send": "Kirim",
+    "sent": "Terkirim!",
+    "networkError": "Kesalahan jaringan. Coba lagi."
   }
 }
