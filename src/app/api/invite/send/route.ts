@@ -4,12 +4,20 @@ import { sendEmail } from "@/lib/email";
 import { sendSms } from "@/lib/sms";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
+import { prisma } from "@/lib/prisma";
 
-const inviteSchema = z.object({
-  method: z.enum(["email", "sms"]),
-  to: z.string().min(1, "Modtager mangler"),
-  candidateName: z.string().min(1, "Kandidatnavn mangler"),
-});
+const inviteSchema = z.discriminatedUnion("method", [
+  z.object({
+    method: z.literal("email"),
+    candidateId: z.number().int().positive(),
+    deviceId: z.string().optional(),
+  }),
+  z.object({
+    method: z.literal("sms"),
+    to: z.string().min(1, "Modtager mangler"),
+    candidateName: z.string().min(1, "Kandidatnavn mangler"),
+  }),
+]);
 
 function getBaseUrl() {
   const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
@@ -44,15 +52,46 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { method, to, candidateName } = parsed.data;
     const link = `${getBaseUrl()}/stem`;
 
-    if (method === "email") {
-      const subject = `Invitation: Tag stilling på Stem Palæstina`;
-      const emailBody = `Hej ${candidateName},\n\nDu er blevet inviteret til at tage stilling til de tre krav på Stem Palæstina.\n\nRegistrer dig som kandidat her: ${link}\n\nDe tre krav:\n1. Anerkend Palæstina\n2. Stop våbensalg til Israel\n3. Stop ulovlige investeringer\n\nMed venlig hilsen\nStem Palæstina`;
+    if (parsed.data.method === "email") {
+      // Server-side email: look up candidate's contactEmail
+      const { candidateId, deviceId } = parsed.data;
 
-      await sendEmail(to, subject, emailBody);
+      // Rate limit: 1 email per candidate per device per hour
+      const deviceKey = deviceId || ip;
+      const perCandidateLimit = checkRateLimit(
+        "invite-candidate",
+        `${deviceKey}:${candidateId}`,
+        1,
+        60 * 60 * 1000
+      );
+      if (!perCandidateLimit.ok) {
+        return NextResponse.json(
+          { error: "Du har allerede inviteret denne kandidat. Prøv igen senere." },
+          { status: 429 }
+        );
+      }
+
+      const candidate = await prisma.candidate.findUnique({
+        where: { id: candidateId },
+        select: { name: true, contactEmail: true },
+      });
+
+      if (!candidate || !candidate.contactEmail) {
+        return NextResponse.json(
+          { error: "Kandidaten har ingen offentlig e-mail." },
+          { status: 400 }
+        );
+      }
+
+      const subject = `Invitation: Tag stilling på Stem Palæstina`;
+      const emailBody = `Hej ${candidate.name},\n\nEn vælger har inviteret dig til at tage stilling til de tre krav på Stem Palæstina.\n\nRegistrer dig som kandidat her: ${link}\n\nDe tre krav:\n1. Anerkend Palæstina\n2. Stop våbensalg til Israel\n3. Stop ulovlige investeringer\n\nMed venlig hilsen\nStem Palæstina`;
+
+      await sendEmail(candidate.contactEmail, subject, emailBody);
     } else {
+      // SMS invite: user provides phone number + candidate name
+      const { to, candidateName } = parsed.data;
       const smsBody = `Hej ${candidateName}! Du er inviteret til at tage stilling på Stem Palæstina. Registrer dig her: ${link}`;
       await sendSms(to, smsBody);
     }

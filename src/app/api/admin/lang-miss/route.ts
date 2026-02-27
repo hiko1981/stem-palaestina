@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { timingSafeEqual } from "crypto";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 if (!ADMIN_PASSWORD) throw new Error("ADMIN_PASSWORD not set");
@@ -28,8 +29,11 @@ export async function POST(req: NextRequest) {
 
 // GET: read all misses (admin auth required)
 export async function GET(req: NextRequest) {
-  const auth = req.headers.get("authorization");
-  if (auth !== `Bearer ${ADMIN_PASSWORD}`) {
+  const auth = req.headers.get("authorization") || "";
+  const expected = `Bearer ${ADMIN_PASSWORD}`;
+  const authed = auth.length === expected.length &&
+    timingSafeEqual(Buffer.from(auth), Buffer.from(expected));
+  if (!authed) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 

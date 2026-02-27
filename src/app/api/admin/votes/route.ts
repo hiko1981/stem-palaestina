@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { timingSafeEqual } from "crypto";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 if (!ADMIN_PASSWORD) throw new Error("ADMIN_PASSWORD not set");
 
 function checkAuth(req: NextRequest): boolean {
-  const auth = req.headers.get("authorization");
-  return auth === `Bearer ${ADMIN_PASSWORD}`;
+  const auth = req.headers.get("authorization") || "";
+  const expected = `Bearer ${ADMIN_PASSWORD}`;
+  if (auth.length !== expected.length) return false;
+  return timingSafeEqual(Buffer.from(auth), Buffer.from(expected));
 }
 
 export async function GET(req: NextRequest) {

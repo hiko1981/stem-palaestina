@@ -9,7 +9,7 @@ interface CandidateWithStatus {
   name: string;
   party: string;
   constituency: string;
-  contactEmail: string | null;
+  hasEmail: boolean;
   verified: boolean;
   voteValue: boolean | null;
 }
@@ -118,41 +118,50 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
     setInviteSending(false);
   }
 
-  async function handleSendInvite(candidateName: string) {
-    if (!inviteMode || !inviteInput.trim() || !expandedId) return;
+  async function handleSendEmailInvite(candidateId: number) {
+    setInviteSending(true);
+    setInviteResult(null);
+    const deviceId = typeof window !== "undefined" ? localStorage.getItem("stem_device_id") || undefined : undefined;
+    try {
+      const res = await fetch("/api/invite/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ method: "email", candidateId, deviceId }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setInviteResult({ id: candidateId, ok: true, msg: t("sent") });
+        setTimeout(() => setInviteResult(null), 2500);
+      } else {
+        setInviteResult({ id: candidateId, ok: false, msg: data.error || t("sendError") });
+      }
+    } catch {
+      setInviteResult({ id: candidateId, ok: false, msg: t("sendError") });
+    } finally {
+      setInviteSending(false);
+    }
+  }
+
+  async function handleSendSmsInvite(candidateName: string) {
+    if (!inviteInput.trim() || !expandedId) return;
     setInviteSending(true);
     setInviteResult(null);
     try {
       const res = await fetch("/api/invite/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          method: inviteMode,
-          to: inviteInput.trim(),
-          candidateName,
-        }),
+        body: JSON.stringify({ method: "sms", to: inviteInput.trim(), candidateName }),
       });
       const data = await res.json();
       if (res.ok) {
         setInviteResult({ id: expandedId, ok: true, msg: t("sent") });
         setInviteInput("");
-        setTimeout(() => {
-          closeInvite();
-          setInviteResult(null);
-        }, 2500);
+        setTimeout(() => { closeInvite(); setInviteResult(null); }, 2500);
       } else {
-        setInviteResult({
-          id: expandedId,
-          ok: false,
-          msg: data.error || t("sendError"),
-        });
+        setInviteResult({ id: expandedId, ok: false, msg: data.error || t("sendError") });
       }
     } catch {
-      setInviteResult({
-        id: expandedId!,
-        ok: false,
-        msg: t("sendError"),
-      });
+      setInviteResult({ id: expandedId!, ok: false, msg: t("sendError") });
     } finally {
       setInviteSending(false);
     }
@@ -200,16 +209,13 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
       <div className="mt-1.5 space-y-1.5">
         {/* Contact buttons */}
         <div className="flex gap-1 flex-wrap">
-          {c.contactEmail && (
+          {c.hasEmail && (
             <button
-              onClick={(e) => { e.stopPropagation(); openInvite(c.id, "email"); }}
-              className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium transition-colors ${
-                inviteMode === "email"
-                  ? "bg-melon-green/10 border-melon-green text-melon-green"
-                  : "bg-white border-gray-200 text-gray-600"
-              }`}
+              onClick={(e) => { e.stopPropagation(); handleSendEmailInvite(c.id); }}
+              disabled={inviteSending}
+              className="inline-flex items-center rounded-full border bg-white border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-600 transition-colors hover:bg-melon-green/10 hover:border-melon-green hover:text-melon-green disabled:opacity-50"
             >
-              {sh("email")}
+              {inviteSending ? "..." : sh("email")}
             </button>
           )}
           <button
@@ -230,23 +236,19 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
           </button>
         </div>
 
-        {/* Inline input */}
-        {inviteMode && (
+        {/* SMS inline input (only for SMS mode) */}
+        {inviteMode === "sms" && (
           <div className="flex gap-1 items-center min-w-0" onClick={(e) => e.stopPropagation()}>
             <input
-              type={inviteMode === "email" ? "email" : "tel"}
-              placeholder={
-                inviteMode === "email"
-                  ? c.contactEmail || t("emailLabel")
-                  : t("phoneLabel")
-              }
+              type="tel"
+              placeholder={t("phoneLabel")}
               value={inviteInput}
               onChange={(e) => setInviteInput(e.target.value)}
               className="min-w-0 flex-1 rounded-lg border border-gray-200 px-2 py-1 text-[11px] focus:border-melon-green focus:outline-none"
               autoFocus
             />
             <button
-              onClick={() => handleSendInvite(c.name)}
+              onClick={() => handleSendSmsInvite(c.name)}
               disabled={!inviteInput.trim() || inviteSending}
               className="rounded-lg bg-melon-green px-2 py-1 text-[11px] font-semibold text-white disabled:opacity-50"
             >

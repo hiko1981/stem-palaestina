@@ -7,6 +7,8 @@ export const RATE_LIMITS = {
   ballotGlobal: { max: 100, windowMs: 60 * 60 * 1000 },     // 100/time globalt
   votePerIp: { max: 10, windowMs: 60 * 60 * 1000 },         // 10/time per IP
   invitePerIp: { max: 5, windowMs: 60 * 60 * 1000 },       // 5/time per IP
+  supportPerIp: { max: 5, windowMs: 60 * 60 * 1000 },     // 5/time per IP
+  ballotCheckPerIp: { max: 30, windowMs: 60 * 60 * 1000 }, // 30/time per IP
 } as const;
 
 export const DEMANDS = [

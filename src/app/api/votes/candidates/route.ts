@@ -32,7 +32,7 @@ export async function GET() {
       name: c.name,
       party: c.party,
       constituency: c.constituency,
-      contactEmail: c.contactEmail,
+      hasEmail: !!c.contactEmail,
       verified: c.verified,
       voteValue: c.phoneHash ? (voteMap.get(c.phoneHash) ?? null) : null,
     }));

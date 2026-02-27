@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { RATE_LIMITS } from "@/lib/constants";
 
 export async function GET(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const limit = checkRateLimit("ballot-check-ip", ip, RATE_LIMITS.ballotCheckPerIp.max, RATE_LIMITS.ballotCheckPerIp.windowMs);
+    if (!limit.ok) {
+      return NextResponse.json({ error: "For mange forespørgsler." }, { status: 429 });
+    }
+
     const token = req.nextUrl.searchParams.get("token");
     if (!token) {
       return NextResponse.json(
