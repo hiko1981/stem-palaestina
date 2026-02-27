@@ -150,7 +150,9 @@
     "send": "Tuma mwaliko",
     "back": "Rudi",
     "message": "Habari! Ningependa kukualika usimame kwa madai matatu kwenye Pigia Kura kwa Palestina. Jiandikishe kama mgombea hapa:",
-    "emailSubject": "Mwaliko: Simama kwa madai kwenye Pigia Kura kwa Palestina"
+    "emailSubject": "Mwaliko: Simama kwa madai kwenye Pigia Kura kwa Palestina",
+    "sent": "Mwaliko umetumwa!",
+    "sendError": "Imeshindwa kutuma. Jaribu tena."
   },
   "candidateVotes": {
     "title": "Wagombea walipigiaje kura?",
@@ -186,10 +188,14 @@
     "title": "Chagua mgombea wako",
     "placeholder": "Chagua mgombea...",
     "missingOption": "Siko kwenye orodha",
-    "loading": "Inapakia wagombea..."
+    "loading": "Inapakia wagombea...",
+    "iAmCandidate": "Mimi ni mgombea katika",
+    "andFor": "na mgombea wa",
+    "selectConstituency": "Chagua mkoa...",
+    "selectParty": "Chagua chama..."
   },
   "candidateList": {
-    "title": "Wagombea",
+    "title": "Mwalike mgombea wako wa eneo",
     "unclaimed": "Hakupiga kura",
     "inviteTitle": "Alika mgombea"
   },

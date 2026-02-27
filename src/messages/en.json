@@ -148,7 +148,9 @@
     "send": "Send invitation",
     "back": "Back",
     "message": "Hi! I'd like to invite you to take a stand on the three demands on Vote Palestine. Register as a candidate here:",
-    "emailSubject": "Invitation: Take a stand on Vote Palestine"
+    "emailSubject": "Invitation: Take a stand on Vote Palestine",
+    "sent": "Invitation sent!",
+    "sendError": "Could not send. Please try again."
   },
   "candidateVotes": {
     "title": "How did the candidates vote?",
@@ -184,10 +186,14 @@
     "title": "Select your candidate",
     "placeholder": "Choose candidate...",
     "missingOption": "I'm not on the list",
-    "loading": "Loading candidates..."
+    "loading": "Loading candidates...",
+    "iAmCandidate": "I am a candidate in",
+    "andFor": "and running for",
+    "selectConstituency": "Select constituency...",
+    "selectParty": "Select party..."
   },
   "candidateList": {
-    "title": "Candidates",
+    "title": "Invite your local candidate",
     "unclaimed": "Missing vote",
     "inviteTitle": "Invite a candidate"
   },

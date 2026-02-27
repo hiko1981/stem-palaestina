@@ -150,7 +150,9 @@
     "send": "Envoyer l'invitation",
     "back": "Retour",
     "message": "Bonjour ! Je vous invite à prendre position sur les trois exigences sur Vote Palestine. Inscrivez-vous comme candidat ici :",
-    "emailSubject": "Invitation : Prenez position sur Vote Palestine"
+    "emailSubject": "Invitation : Prenez position sur Vote Palestine",
+    "sent": "Invitation envoyée !",
+    "sendError": "Échec de l envoi. Réessayez."
   },
   "candidateVotes": {
     "title": "Comment les candidats ont-ils voté ?",
@@ -186,10 +188,14 @@
     "title": "Choisissez votre candidat",
     "placeholder": "Choisir un candidat...",
     "missingOption": "Je ne suis pas sur la liste",
-    "loading": "Chargement des candidats..."
+    "loading": "Chargement des candidats...",
+    "iAmCandidate": "Je suis candidat(e) dans",
+    "andFor": "et candidat(e) pour",
+    "selectConstituency": "Choisir la circonscription...",
+    "selectParty": "Choisir le parti..."
   },
   "candidateList": {
-    "title": "Candidats",
+    "title": "Invitez votre candidat local",
     "unclaimed": "Vote manquant",
     "inviteTitle": "Inviter un candidat"
   },

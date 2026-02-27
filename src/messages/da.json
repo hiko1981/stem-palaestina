@@ -148,7 +148,9 @@
     "send": "Send invitation",
     "back": "Tilbage",
     "message": "Hej! Jeg vil gerne invitere dig til at tage stilling til de tre krav på Stem Palæstina. Registrer dig som kandidat her:",
-    "emailSubject": "Inviter: Tag stilling på Stem Palæstina"
+    "emailSubject": "Inviter: Tag stilling på Stem Palæstina",
+    "sent": "Invitation sendt!",
+    "sendError": "Kunne ikke sende. Prøv igen."
   },
   "candidateVotes": {
     "title": "Hvordan stemte kandidaterne?",
@@ -184,10 +186,14 @@
     "title": "Vælg din kandidat",
     "placeholder": "Vælg kandidat...",
     "missingOption": "Jeg mangler på listen",
-    "loading": "Henter kandidater..."
+    "loading": "Henter kandidater...",
+    "iAmCandidate": "Jeg er kandidat i",
+    "andFor": "og kandidat for",
+    "selectConstituency": "Vælg storkreds...",
+    "selectParty": "Vælg parti..."
   },
   "candidateList": {
-    "title": "Kandidater",
+    "title": "Inviter din lokale kandidat",
     "unclaimed": "Mangler stemme",
     "inviteTitle": "Inviter en kandidat"
   },

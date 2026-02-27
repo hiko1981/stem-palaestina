@@ -150,7 +150,9 @@
     "send": "发送邀请",
     "back": "返回",
     "message": "您好！我想邀请您在「为巴勒斯坦投票」平台上就三项诉求表明立场。请在此注册成为候选人：",
-    "emailSubject": "邀请：在「为巴勒斯坦投票」上表明立场"
+    "emailSubject": "邀请：在「为巴勒斯坦投票」上表明立场",
+    "sent": "邀请已发送！",
+    "sendError": "发送失败，请重试。"
   },
   "candidateVotes": {
     "title": "候选人如何投票？",
@@ -186,10 +188,14 @@
     "title": "选择你的候选人",
     "placeholder": "选择候选人...",
     "missingOption": "我不在列表上",
-    "loading": "正在加载候选人..."
+    "loading": "正在加载候选人...",
+    "iAmCandidate": "我是候选人，选区",
+    "andFor": "所属政党",
+    "selectConstituency": "选择选区...",
+    "selectParty": "选择政党..."
   },
   "candidateList": {
-    "title": "候选人",
+    "title": "邀请您的本地候选人",
     "unclaimed": "缺少投票",
     "inviteTitle": "邀请候选人"
   },

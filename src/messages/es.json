@@ -150,7 +150,9 @@
     "send": "Enviar invitación",
     "back": "Atrás",
     "message": "¡Hola! Me gustaría invitarte a posicionarte sobre las tres demandas en Vota Palestina. Regístrate como candidato aquí:",
-    "emailSubject": "Invitación: Posiciónate en Vota Palestina"
+    "emailSubject": "Invitación: Posiciónate en Vota Palestina",
+    "sent": "¡Invitación enviada!",
+    "sendError": "No se pudo enviar. Inténtalo de nuevo."
   },
   "candidateVotes": {
     "title": "¿Cómo votaron los candidatos?",
@@ -186,10 +188,14 @@
     "title": "Selecciona tu candidato",
     "placeholder": "Elegir candidato...",
     "missingOption": "No estoy en la lista",
-    "loading": "Cargando candidatos..."
+    "loading": "Cargando candidatos...",
+    "iAmCandidate": "Soy candidato en",
+    "andFor": "y candidato por",
+    "selectConstituency": "Seleccionar circunscripción...",
+    "selectParty": "Seleccionar partido..."
   },
   "candidateList": {
-    "title": "Candidatos",
+    "title": "Invita a tu candidato local",
     "unclaimed": "Falta voto",
     "inviteTitle": "Invitar a un candidato"
   },

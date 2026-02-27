@@ -150,7 +150,9 @@
     "send": "Enviar convite",
     "back": "Voltar",
     "message": "Olá! Gostaria de te convidar a tomar posição sobre as três exigências no Vote Palestina. Regista-te como candidato aqui:",
-    "emailSubject": "Convite: Tome posição no Vote Palestina"
+    "emailSubject": "Convite: Tome posição no Vote Palestina",
+    "sent": "Convite enviado!",
+    "sendError": "Não foi possível enviar. Tente novamente."
   },
   "candidateVotes": {
     "title": "Como votaram os candidatos?",
@@ -186,10 +188,14 @@
     "title": "Escolha o seu candidato",
     "placeholder": "Escolher candidato...",
     "missingOption": "Não estou na lista",
-    "loading": "A carregar candidatos..."
+    "loading": "A carregar candidatos...",
+    "iAmCandidate": "Sou candidato(a) em",
+    "andFor": "e candidato(a) por",
+    "selectConstituency": "Selecionar círculo eleitoral...",
+    "selectParty": "Selecionar partido..."
   },
   "candidateList": {
-    "title": "Candidatos",
+    "title": "Convide o seu candidato local",
     "unclaimed": "Voto em falta",
     "inviteTitle": "Convidar um candidato"
   },

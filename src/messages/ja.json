@@ -150,7 +150,9 @@
     "send": "招待を送信",
     "back": "戻る",
     "message": "こんにちは！「パレスチナに投票を」で3つの要求に対する立場を表明しませんか。こちらから候補者として登録できます：",
-    "emailSubject": "招待：「パレスチナに投票を」で立場を表明しましょう"
+    "emailSubject": "招待：「パレスチナに投票を」で立場を表明しましょう",
+    "sent": "招待を送信しました！",
+    "sendError": "送信できませんでした。もう一度お試しください。"
   },
   "candidateVotes": {
     "title": "候補者はどう投票した？",
@@ -186,10 +188,14 @@
     "title": "候補者を選択",
     "placeholder": "候補者を選択...",
     "missingOption": "リストにいません",
-    "loading": "候補者を読み込み中..."
+    "loading": "候補者を読み込み中...",
+    "iAmCandidate": "私は候補者です",
+    "andFor": "所属政党",
+    "selectConstituency": "選挙区を選択...",
+    "selectParty": "政党を選択..."
   },
   "candidateList": {
-    "title": "候補者",
+    "title": "地元の候補者を招待する",
     "unclaimed": "未投票",
     "inviteTitle": "候補者を招待"
   },

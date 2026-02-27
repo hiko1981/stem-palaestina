@@ -150,7 +150,9 @@
     "send": "Davet gönder",
     "back": "Geri",
     "message": "Merhaba! Seni Filistin'e Oy Ver platformunda üç talep hakkında tavır almaya davet etmek istiyorum. Buradan aday olarak kaydol:",
-    "emailSubject": "Davet: Filistin'e Oy Ver'de tavır al"
+    "emailSubject": "Davet: Filistin'e Oy Ver'de tavır al",
+    "sent": "Davet gönderildi!",
+    "sendError": "Gönderilemedi. Tekrar deneyin."
   },
   "candidateVotes": {
     "title": "Adaylar nasıl oy kullandı?",
@@ -186,10 +188,14 @@
     "title": "Adayınızı seçin",
     "placeholder": "Aday seçin...",
     "missingOption": "Listede değilim",
-    "loading": "Adaylar yükleniyor..."
+    "loading": "Adaylar yükleniyor...",
+    "iAmCandidate": "Adayım",
+    "andFor": "ve partim",
+    "selectConstituency": "Seçim bölgesi seçin...",
+    "selectParty": "Parti seçin..."
   },
   "candidateList": {
-    "title": "Adaylar",
+    "title": "Yerel adayınızı davet edin",
     "unclaimed": "Oy kullanmadı",
     "inviteTitle": "Aday davet et"
   },

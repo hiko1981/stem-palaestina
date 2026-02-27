@@ -150,7 +150,9 @@
     "send": "Einladung senden",
     "back": "Zurück",
     "message": "Hallo! Ich möchte dich einladen, zu den drei Forderungen auf Stimme für Palästina Stellung zu beziehen. Registriere dich hier als Kandidat:",
-    "emailSubject": "Einladung: Beziehe Stellung auf Stimme für Palästina"
+    "emailSubject": "Einladung: Beziehe Stellung auf Stimme für Palästina",
+    "sent": "Einladung gesendet!",
+    "sendError": "Konnte nicht gesendet werden. Versuche es erneut."
   },
   "candidateVotes": {
     "title": "Wie haben die Kandidaten abgestimmt?",
@@ -186,10 +188,14 @@
     "title": "Wählen Sie Ihren Kandidaten",
     "placeholder": "Kandidat wählen...",
     "missingOption": "Ich bin nicht auf der Liste",
-    "loading": "Kandidaten werden geladen..."
+    "loading": "Kandidaten werden geladen...",
+    "iAmCandidate": "Ich bin Kandidat in",
+    "andFor": "und kandidiere für",
+    "selectConstituency": "Wahlkreis wählen...",
+    "selectParty": "Partei wählen..."
   },
   "candidateList": {
-    "title": "Kandidaten",
+    "title": "Lade deinen lokalen Kandidaten ein",
     "unclaimed": "Stimme fehlt",
     "inviteTitle": "Kandidaten einladen"
   },

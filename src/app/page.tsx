@@ -105,7 +105,6 @@ export default function Home() {
   const [phoneError, setPhoneError] = useState("");
   const [phoneLoading, setPhoneLoading] = useState(false);
   const [smsSent, setSmsSent] = useState(false);
-  const [candidateSelected, setCandidateSelected] = useState(false);
   const [activeTab, setActiveTab] = useState<PostVoteTab>("results");
 
   const t = useTranslations("vote");
@@ -135,21 +134,11 @@ export default function Home() {
       setSmsSent(false);
       setPhoneError("");
       setPhone("");
-      setCandidateSelected(false);
     }
-  }
-
-  function handleCandidateSelect(value: string) {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("stem_palaestina_candidate_id", value);
-      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
-      localStorage.setItem("stem_palaestina_role", "candidate");
-    }
-    setCandidateSelected(true);
   }
 
   async function handleSendBallot() {
-    if (typeof window !== "undefined" && !candidateSelected) {
+    if (typeof window !== "undefined") {
       localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
       localStorage.setItem("stem_palaestina_role", "voter");
     }
@@ -370,11 +359,14 @@ export default function Home() {
             </button>
             {activePanel === "candidate" && (
               <div className="px-4 pb-4 space-y-3 animate-in slide-in-from-top-2">
-                {!candidateSelected ? (
-                  <CandidateSelect onSelect={handleCandidateSelect} />
-                ) : (
-                  phoneInput
-                )}
+                <CandidateSelect
+                  onSelect={(value) => {
+                    if (typeof window !== "undefined") {
+                      localStorage.setItem("stem_palaestina_candidate_id", value);
+                    }
+                  }}
+                  voteValue={voteValue}
+                />
               </div>
             )}
           </div>

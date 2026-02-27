@@ -6,6 +6,7 @@ export const RATE_LIMITS = {
   ballotPerPhone: { max: 3, windowMs: 60 * 60 * 1000 },     // 3/time per telefon
   ballotGlobal: { max: 100, windowMs: 60 * 60 * 1000 },     // 100/time globalt
   votePerIp: { max: 10, windowMs: 60 * 60 * 1000 },         // 10/time per IP
+  invitePerIp: { max: 5, windowMs: 60 * 60 * 1000 },       // 5/time per IP
 } as const;
 
 export const DEMANDS = [

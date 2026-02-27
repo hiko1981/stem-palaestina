@@ -150,7 +150,9 @@
     "send": "Kirim undangan",
     "back": "Kembali",
     "message": "Halo! Saya ingin mengundangmu untuk mengambil sikap terhadap tiga tuntutan di Suarakan Palestina. Daftar sebagai kandidat di sini:",
-    "emailSubject": "Undangan: Ambil sikap di Suarakan Palestina"
+    "emailSubject": "Undangan: Ambil sikap di Suarakan Palestina",
+    "sent": "Undangan terkirim!",
+    "sendError": "Gagal mengirim. Coba lagi."
   },
   "candidateVotes": {
     "title": "Bagaimana kandidat memberikan suara?",
@@ -186,10 +188,14 @@
     "title": "Pilih kandidat Anda",
     "placeholder": "Pilih kandidat...",
     "missingOption": "Saya tidak ada di daftar",
-    "loading": "Memuat kandidat..."
+    "loading": "Memuat kandidat...",
+    "iAmCandidate": "Saya adalah kandidat di",
+    "andFor": "dan kandidat untuk",
+    "selectConstituency": "Pilih daerah pemilihan...",
+    "selectParty": "Pilih partai..."
   },
   "candidateList": {
-    "title": "Kandidat",
+    "title": "Undang kandidat lokal Anda",
     "unclaimed": "Belum memilih",
     "inviteTitle": "Undang kandidat"
   },

@@ -150,7 +150,9 @@
     "send": "Gửi lời mời",
     "back": "Quay lại",
     "message": "Xin chào! Tôi muốn mời bạn lên tiếng về ba yêu cầu trên Vote Palestine. Đăng ký làm ứng viên tại đây:",
-    "emailSubject": "Lời mời: Hãy lên tiếng trên Vote Palestine"
+    "emailSubject": "Lời mời: Hãy lên tiếng trên Vote Palestine",
+    "sent": "Đã gửi lời mời!",
+    "sendError": "Không thể gửi. Vui lòng thử lại."
   },
   "candidateVotes": {
     "title": "Các ứng viên đã bỏ phiếu như thế nào?",
@@ -186,10 +188,14 @@
     "title": "Chọn ứng cử viên",
     "placeholder": "Chọn ứng cử viên...",
     "missingOption": "Tôi không có trong danh sách",
-    "loading": "Đang tải ứng cử viên..."
+    "loading": "Đang tải ứng cử viên...",
+    "iAmCandidate": "Tôi là ứng cử viên ở",
+    "andFor": "và ứng cử cho",
+    "selectConstituency": "Chọn khu vực bầu cử...",
+    "selectParty": "Chọn đảng..."
   },
   "candidateList": {
-    "title": "Ứng cử viên",
+    "title": "Mời ứng cử viên địa phương",
     "unclaimed": "Chưa bỏ phiếu",
     "inviteTitle": "Mời ứng cử viên"
   },
