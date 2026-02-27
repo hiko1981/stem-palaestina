@@ -123,7 +123,8 @@
     "no": "Nein",
     "anonNote": "Deine Stimme ist anonym und kann nicht zu deiner Telefonnummer zurückverfolgt werden.",
     "autoSubmitting": "Deine Stimme wird registriert...",
-    "viewResults": "Ergebnisse ansehen"
+    "viewResults": "Ergebnisse ansehen",
+    "phoneNote": "Ihre Telefonnummer wird verschlüsselt und nicht gespeichert. Nur eine Stimme pro Telefon."
   },
   "voteCounter": {
     "singular": "Stimme",

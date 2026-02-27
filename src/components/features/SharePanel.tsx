@@ -18,6 +18,7 @@ export default function SharePanel() {
   const [copied, setCopied] = useState(false);
 
   const t = useTranslations("sharePanel");
+  const b = useTranslations("ballot");
 
   const handleDialCode = useCallback((code: string) => {
     setDialCode(code);
@@ -103,14 +104,14 @@ export default function SharePanel() {
             </p>
           ) : (
             <>
-              <div className="flex gap-2">
+              <div className="flex gap-2 min-w-0">
                 <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
                 <input
                   type="tel"
                   placeholder="12345678"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+                  className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
                   autoFocus
                 />
               </div>
@@ -122,6 +123,7 @@ export default function SharePanel() {
               >
                 {t("send")}
               </Button>
+              <p className="text-center text-[11px] text-gray-400">{b("phoneNote")}</p>
               {error && (
                 <p className="text-center text-xs text-melon-red">{error}</p>
               )}

@@ -232,7 +232,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
 
         {/* Inline input */}
         {inviteMode && (
-          <div className="flex gap-1 items-center" onClick={(e) => e.stopPropagation()}>
+          <div className="flex gap-1 items-center min-w-0" onClick={(e) => e.stopPropagation()}>
             <input
               type={inviteMode === "email" ? "email" : "tel"}
               placeholder={
@@ -242,7 +242,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
               }
               value={inviteInput}
               onChange={(e) => setInviteInput(e.target.value)}
-              className="flex-1 rounded-lg border border-gray-200 px-2 py-1 text-[11px] focus:border-melon-green focus:outline-none"
+              className="min-w-0 flex-1 rounded-lg border border-gray-200 px-2 py-1 text-[11px] focus:border-melon-green focus:outline-none"
               autoFocus
             />
             <button

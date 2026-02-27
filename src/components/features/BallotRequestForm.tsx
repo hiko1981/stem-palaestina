@@ -75,9 +75,9 @@ export default function BallotRequestForm() {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2">
+      <div className="flex gap-2 min-w-0">
         <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
-        <div className="flex-1">
+        <div className="min-w-0 flex-1">
           <Input
             id="phone"
             label={t("phoneLabel")}
@@ -96,6 +96,7 @@ export default function BallotRequestForm() {
       >
         {t("send")}
       </Button>
+      <p className="text-center text-[11px] text-gray-400">{t("phoneNote")}</p>
       {error && (
         <p className="text-center text-sm text-melon-red">{error}</p>
       )}

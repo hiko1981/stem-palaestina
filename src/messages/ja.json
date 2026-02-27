@@ -123,7 +123,8 @@
     "no": "いいえ",
     "anonNote": "あなたの投票は匿名であり、電話番号に追跡されることはありません。",
     "autoSubmitting": "投票を登録しています...",
-    "viewResults": "結果を見る"
+    "viewResults": "結果を見る",
+    "phoneNote": "電話番号は暗号化され、保存されません。1つの電話番号につき1票のみ。"
   },
   "voteCounter": {
     "singular": "票",

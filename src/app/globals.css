@@ -24,10 +24,20 @@
   --color-gray-900: #111827;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   color: var(--color-gray-900);
   background: var(--color-melon-flesh);
+}
+
+/* Prevent iOS zoom on input focus (triggers at < 16px) */
+input, select, textarea {
+  font-size: 16px !important;
 }
 
 /* Premium gradient for hero */

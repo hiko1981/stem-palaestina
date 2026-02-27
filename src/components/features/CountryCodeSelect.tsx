@@ -35,7 +35,7 @@ export default function CountryCodeSelect({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+      className="shrink-0 rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
       aria-label={t("label")}
     >
       {dialCodes.map(({ country, code }) => (

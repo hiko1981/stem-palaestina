@@ -123,7 +123,8 @@
     "no": "Hapana",
     "anonNote": "Kura yako ni ya siri na haiwezi kufuatiliwa kurudi kwenye nambari yako ya simu.",
     "autoSubmitting": "Inasajili kura yako...",
-    "viewResults": "Tazama matokeo"
+    "viewResults": "Tazama matokeo",
+    "phoneNote": "Nambari yako ya simu inasimbwa kwa njia fiche na haihifadhiwi. Kura moja tu kwa kila simu."
   },
   "voteCounter": {
     "singular": "kura",

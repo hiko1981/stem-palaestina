@@ -123,7 +123,8 @@
     "no": "No",
     "anonNote": "Your vote is anonymous and cannot be traced back to your phone number.",
     "autoSubmitting": "Registering your vote...",
-    "viewResults": "View results"
+    "viewResults": "View results",
+    "phoneNote": "Your phone number is encrypted and not stored. Only one vote per phone."
   },
   "voteCounter": {
     "singular": "vote",

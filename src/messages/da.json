@@ -123,7 +123,8 @@
     "no": "Nej",
     "anonNote": "Din stemme er anonym og kan ikke spores tilbage til dit telefonnummer.",
     "autoSubmitting": "Registrerer din stemme...",
-    "viewResults": "Se resultater"
+    "viewResults": "Se resultater",
+    "phoneNote": "Dit telefonnummer krypteres og gemmes ikke. Kun én stemme per telefon."
   },
   "voteCounter": {
     "singular": "stemme",

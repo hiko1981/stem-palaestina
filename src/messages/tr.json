@@ -123,7 +123,8 @@
     "no": "Hayır",
     "anonNote": "Oyun anonimdir ve telefon numarana geri izlenemez.",
     "autoSubmitting": "Oyunuz kaydediliyor...",
-    "viewResults": "Sonuçları gör"
+    "viewResults": "Sonuçları gör",
+    "phoneNote": "Telefon numaranız şifrelenir ve saklanmaz. Her telefon için yalnızca bir oy."
   },
   "voteCounter": {
     "singular": "oy",

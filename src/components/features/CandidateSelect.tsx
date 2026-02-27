@@ -214,14 +214,14 @@ export default function CandidateSelect({
           <label className="block text-xs font-medium text-gray-500">
             {b("phoneLabel")}
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-2 min-w-0">
             <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
             <input
               type="tel"
               placeholder="12345678"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+              className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
             />
           </div>
           <Button
@@ -232,6 +232,7 @@ export default function CandidateSelect({
           >
             {b("send")}
           </Button>
+          <p className="text-center text-[11px] text-gray-400">{b("phoneNote")}</p>
           {phoneError && (
             <p className="text-center text-xs text-melon-red">{phoneError}</p>
           )}
