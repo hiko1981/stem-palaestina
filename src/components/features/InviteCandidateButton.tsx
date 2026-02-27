@@ -326,18 +326,18 @@ export default function InviteCandidateButton({
             })}
 
             {/* "Min kandidat er ikke på listen" — generic share */}
-            <div className="rounded-lg px-3 py-2">
-              <p className="text-xs text-gray-400 mb-1.5">{cl("missingCandidate")}</p>
+            <div className="rounded-lg border border-dashed border-gray-300 px-3 py-2.5">
+              <p className="text-sm font-medium text-gray-600 mb-2">{cl("missingCandidate")}</p>
               <div className="flex gap-1.5 flex-wrap">
                 <a
                   href={`fb-messenger://share?link=${encodeURIComponent(`${baseUrl}/stem`)}`}
-                  className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
                 >
                   {sh("messenger")}
                 </a>
                 <button
                   onClick={handleCopyGenericLink}
-                  className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
                 >
                   {copiedGeneric ? sh("copied") : sh("copyLink")}
                 </button>

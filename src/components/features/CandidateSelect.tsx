@@ -197,10 +197,10 @@ export default function CandidateSelect({
           ))}
           <button
             onClick={() => handleSelect("new")}
-            className={`w-full text-left rounded-lg px-3 py-2 text-sm transition-colors ${
+            className={`w-full text-left rounded-lg border border-dashed px-3 py-2 text-sm font-medium transition-colors ${
               selectedId === "new"
-                ? "bg-melon-green/10 text-melon-green font-medium"
-                : "text-gray-400 hover:text-gray-600"
+                ? "border-melon-green bg-melon-green/10 text-melon-green"
+                : "border-gray-300 text-gray-600 hover:border-gray-400 hover:bg-gray-50"
             }`}
           >
             {t("missingOption")}

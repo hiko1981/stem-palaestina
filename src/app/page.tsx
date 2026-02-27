@@ -3,14 +3,14 @@
 import { useState, useEffect, useCallback } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import InviteSection from "@/components/features/InviteSection";
 import InviteCandidateButton from "@/components/features/InviteCandidateButton";
 import CandidateSelect from "@/components/features/CandidateSelect";
 import VoteCounter from "@/components/features/VoteCounter";
 import DenmarkMap from "@/components/features/DenmarkMap";
-import BottomTabBar, { type PostVoteTab } from "@/components/layout/BottomTabBar";
+import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
+import CandidateVotes from "@/components/features/CandidateVotes";
 import { useTranslations } from "next-intl";
 
 type ActivePanel = "voter" | "candidate" | "invite" | null;
@@ -105,7 +105,7 @@ export default function Home() {
   const [phoneError, setPhoneError] = useState("");
   const [phoneLoading, setPhoneLoading] = useState(false);
   const [smsSent, setSmsSent] = useState(false);
-  const [activeTab, setActiveTab] = useState<PostVoteTab>("results");
+  const [activeTab, setActiveTab] = useState<TabKey>("vote");
 
   const t = useTranslations("vote");
   const b = useTranslations("ballot");
@@ -178,11 +178,13 @@ export default function Home() {
     const storedVote = typeof window !== "undefined"
       ? localStorage.getItem("stem_palaestina_vote")
       : null;
+    // Post-vote: default to results if still on "vote"
+    const postTab = activeTab === "vote" ? "results" : activeTab;
 
     return (
       <>
         <div className="mx-auto max-w-xl px-4 py-8">
-          {activeTab === "results" && (
+          {postTab === "results" && (
             <div className="space-y-8">
               {/* Your vote */}
               <div className="text-center">
@@ -204,7 +206,7 @@ export default function Home() {
             </div>
           )}
 
-          {activeTab === "map" && (
+          {postTab === "map" && (
             <div className="space-y-8">
               <DenmarkMap />
               <Card>
@@ -213,9 +215,9 @@ export default function Home() {
             </div>
           )}
 
-          {activeTab === "about" && <AboutContent />}
+          {postTab === "about" && <AboutContent />}
         </div>
-        <BottomTabBar activeTab={activeTab} onTabChange={setActiveTab} />
+        <BottomTabBar activeTab={postTab} onTabChange={setActiveTab} />
       </>
     );
   }
@@ -223,7 +225,7 @@ export default function Home() {
   // ───── PRE-VOTE STATE ─────
 
   // SMS sent confirmation
-  if (smsSent) {
+  if (smsSent && activeTab === "vote") {
     return (
       <>
         <div className="mx-auto max-w-xl px-4 py-16">
@@ -239,7 +241,7 @@ export default function Home() {
             </div>
           </Card>
         </div>
-        <BottomTabBar />
+        <BottomTabBar activeTab="vote" onTabChange={setActiveTab} />
       </>
     );
   }
@@ -275,127 +277,157 @@ export default function Home() {
 
   return (
     <>
-      <div className="mx-auto max-w-xl px-4 pt-6 pb-8">
-        {/* Compact hero */}
-        <div className="text-center mb-3">
-          <p className="text-3xl mb-1" role="img" aria-label="vandmelon">&#127817;</p>
-          <h1 className="text-xl font-extrabold tracking-tight">
-            {h("heroTitle")}{" "}
-            <span className="text-melon-green">{h("heroHighlight")}</span>
-          </h1>
-        </div>
-
-        {/* 3 demands — compact numbered list */}
-        <ul className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
-          <li className="flex items-start gap-2">
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">1</span>
-            <span>{d("d1Title")}</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">2</span>
-            <span>{d("d2Title")}</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">3</span>
-            <span>{d("d3Title")}</span>
-          </li>
-        </ul>
-
-        {/* Ja/Nej radio toggle */}
-        <div className="flex gap-2 mb-4">
-          <label className="flex-1 cursor-pointer">
-            <input
-              type="radio"
-              name="vote"
-              checked={voteValue === true}
-              onChange={() => setVoteValue(true)}
-              className="sr-only peer"
-            />
-            <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
-              {b("yes")}
+      <div className="mx-auto max-w-xl px-4 pt-6 pb-24">
+        {activeTab === "vote" && (
+          <>
+            {/* Compact hero */}
+            <div className="text-center mb-3">
+              <p className="text-3xl mb-1" role="img" aria-label="vandmelon">&#127817;</p>
+              <h1 className="text-xl font-extrabold tracking-tight">
+                {h("heroTitle")}{" "}
+                <span className="text-melon-green">{h("heroHighlight")}</span>
+              </h1>
             </div>
-          </label>
-          <label className="flex-1 cursor-pointer">
-            <input
-              type="radio"
-              name="vote"
-              checked={voteValue === false}
-              onChange={() => setVoteValue(false)}
-              className="sr-only peer"
-            />
-            <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
-              {b("no")}
-            </div>
-          </label>
-        </div>
 
-        {/* ── Accordion panels ── */}
-        <div className="space-y-2 mb-4">
-          {/* Panel 1: Jeg er vælger */}
-          <div className="rounded-lg border border-gray-200 overflow-hidden">
-            <button
-              onClick={() => togglePanel("voter")}
-              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
-            >
-              {t("voterTitle")}
-              <ChevronIcon open={activePanel === "voter"} />
-            </button>
-            {activePanel === "voter" && (
-              <div className="px-3 pb-3 animate-in slide-in-from-top-2">
-                {phoneInput}
-              </div>
-            )}
-          </div>
+            {/* 3 demands — compact numbered list */}
+            <ul className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
+              <li className="flex items-start gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">1</span>
+                <span>{d("d1Title")}</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">2</span>
+                <span>{d("d2Title")}</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">3</span>
+                <span>{d("d3Title")}</span>
+              </li>
+            </ul>
 
-          {/* Panel 2: Jeg er kandidat */}
-          <div className="rounded-lg border border-gray-200 overflow-hidden">
-            <button
-              onClick={() => togglePanel("candidate")}
-              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
-            >
-              {t("candidateTitle")}
-              <ChevronIcon open={activePanel === "candidate"} />
-            </button>
-            {activePanel === "candidate" && (
-              <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
-                <CandidateSelect
-                  onSelect={(value) => {
-                    if (typeof window !== "undefined") {
-                      localStorage.setItem("stem_palaestina_candidate_id", value);
-                    }
-                  }}
-                  voteValue={voteValue}
+            {/* Ja/Nej radio toggle */}
+            <div className="flex gap-2 mb-4">
+              <label className="flex-1 cursor-pointer">
+                <input
+                  type="radio"
+                  name="vote"
+                  checked={voteValue === true}
+                  onChange={() => setVoteValue(true)}
+                  className="sr-only peer"
                 />
-              </div>
-            )}
-          </div>
+                <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
+                  {b("yes")}
+                </div>
+              </label>
+              <label className="flex-1 cursor-pointer">
+                <input
+                  type="radio"
+                  name="vote"
+                  checked={voteValue === false}
+                  onChange={() => setVoteValue(false)}
+                  className="sr-only peer"
+                />
+                <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
+                  {b("no")}
+                </div>
+              </label>
+            </div>
 
-          {/* Panel 3: Inviter din lokale kandidat */}
-          <div className="rounded-lg border border-gray-200 overflow-hidden">
-            <button
-              onClick={() => togglePanel("invite")}
-              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
-            >
-              {cl("title")}
-              <ChevronIcon open={activePanel === "invite"} />
-            </button>
-            {activePanel === "invite" && (
-              <div className="px-3 pb-3 animate-in slide-in-from-top-2">
-                <InviteCandidateButton inline />
+            {/* ── Accordion panels ── */}
+            <div className="space-y-2 mb-4">
+              {/* Panel 1: Jeg er vælger */}
+              <div className="rounded-lg border border-gray-200 overflow-hidden">
+                <button
+                  onClick={() => togglePanel("voter")}
+                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
+                >
+                  {t("voterTitle")}
+                  <ChevronIcon open={activePanel === "voter"} />
+                </button>
+                {activePanel === "voter" && (
+                  <div className="px-3 pb-3 animate-in slide-in-from-top-2">
+                    {phoneInput}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
 
-        <p className="mt-4 text-center text-xs text-gray-400">
-          {t("privacyNote")}{" "}
-          <a href="/om" className="underline hover:text-melon-green">
-            {t("privacyLink")}
-          </a>
-          .
-        </p>
+              {/* Panel 2: Jeg er kandidat */}
+              <div className="rounded-lg border border-gray-200 overflow-hidden">
+                <button
+                  onClick={() => togglePanel("candidate")}
+                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
+                >
+                  {t("candidateTitle")}
+                  <ChevronIcon open={activePanel === "candidate"} />
+                </button>
+                {activePanel === "candidate" && (
+                  <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
+                    <CandidateSelect
+                      onSelect={(value) => {
+                        if (typeof window !== "undefined") {
+                          localStorage.setItem("stem_palaestina_candidate_id", value);
+                        }
+                      }}
+                      voteValue={voteValue}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Panel 3: Inviter din lokale kandidat */}
+              <div className="rounded-lg border border-gray-200 overflow-hidden">
+                <button
+                  onClick={() => togglePanel("invite")}
+                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
+                >
+                  {cl("title")}
+                  <ChevronIcon open={activePanel === "invite"} />
+                </button>
+                {activePanel === "invite" && (
+                  <div className="px-3 pb-3 animate-in slide-in-from-top-2">
+                    <InviteCandidateButton inline />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <p className="mt-4 text-center text-xs text-gray-400">
+              {t("privacyNote")}{" "}
+              <a href="/om" className="underline hover:text-melon-green">
+                {t("privacyLink")}
+              </a>
+              .
+            </p>
+          </>
+        )}
+
+        {activeTab === "results" && (
+          <div className="space-y-8 py-2">
+            <Card>
+              <VoteCounter variant="full" />
+            </Card>
+            <Card>
+              <CandidateVotes />
+            </Card>
+          </div>
+        )}
+
+        {activeTab === "map" && (
+          <div className="space-y-8 py-2">
+            <DenmarkMap />
+            <Card>
+              <InviteCandidateButton />
+            </Card>
+          </div>
+        )}
+
+        {activeTab === "about" && (
+          <div className="py-2">
+            <AboutContent />
+          </div>
+        )}
       </div>
-      <BottomTabBar />
+      <BottomTabBar activeTab={activeTab} onTabChange={setActiveTab} />
     </>
   );
 }
