@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "Invita a tu candidato local",
     "unclaimed": "Falta voto",
-    "inviteTitle": "Invitar a un candidato"
+    "inviteTitle": "Invitar a un candidato",
+    "missingCandidate": "Mi candidato no está en la lista"
   },
   "map": {
     "title": "Encuentra tu candidato",

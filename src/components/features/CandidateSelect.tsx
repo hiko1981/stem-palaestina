@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { STORKREDSE } from "@/lib/storkredse";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
-import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 
 interface UnclaimedCandidate {
@@ -28,7 +27,6 @@ export default function CandidateSelect({
   const [storkreds, setStorkreds] = useState("");
   const [party, setParty] = useState("");
   const [selectedId, setSelectedId] = useState("");
-  const [autoDetecting, setAutoDetecting] = useState(true);
 
   // Phone input state
   const [phone, setPhone] = useState("");
@@ -40,6 +38,7 @@ export default function CandidateSelect({
   const t = useTranslations("candidateSelect");
   const b = useTranslations("ballot");
   const st = useTranslations("storkredse");
+  const ct = useTranslations("constituency");
 
   const handleDialCode = useCallback((code: string) => {
     setDialCode(code);
@@ -61,15 +60,12 @@ export default function CandidateSelect({
     fetch("/api/geo/country")
       .then((res) => res.json())
       .then((data) => {
-        if (data.storkreds) {
-          setStorkreds(data.storkreds);
-        }
-        setAutoDetecting(false);
+        if (data.storkreds) setStorkreds(data.storkreds);
       })
-      .catch(() => setAutoDetecting(false));
+      .catch(() => {});
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset downstream selections when storkreds changes
+  // Reset downstream when storkreds changes
   useEffect(() => {
     setParty("");
     setSelectedId("");
@@ -80,53 +76,15 @@ export default function CandidateSelect({
     setSelectedId("");
   }, [party]);
 
-  // Auto-select candidate if only one match
-  useEffect(() => {
-    if (!storkreds || !party) return;
-    const storkredsName = STORKREDSE.find((s) => s.id === storkreds)?.name;
-    const matches = candidates.filter(
-      (c) => c.constituency === storkredsName && c.party === party
-    );
-    if (matches.length === 1) {
-      setSelectedId(String(matches[0].id));
-      onSelect(String(matches[0].id));
-    }
-  }, [storkreds, party, candidates, onSelect]);
-
-  if (loading) {
-    return (
-      <p className="text-center text-sm text-gray-500 py-2">{t("loading")}</p>
-    );
+  function handleSelect(id: string) {
+    setSelectedId(id);
+    onSelect(id);
   }
-
-  // Get candidates for selected storkreds
-  const storkredsName = STORKREDSE.find((s) => s.id === storkreds)?.name;
-  const kredsFiltered = storkreds
-    ? candidates.filter((c) => c.constituency === storkredsName)
-    : [];
-
-  // Unique parties in selected storkreds
-  const parties = [...new Set(kredsFiltered.map((c) => c.party))].sort();
-
-  // Candidates matching both storkreds + party
-  const partyFiltered = party
-    ? kredsFiltered.filter((c) => c.party === party)
-    : [];
-
-  const showNameDropdown = partyFiltered.length > 1;
-  const candidateReady =
-    selectedId && selectedId !== "" && selectedId !== "new";
 
   async function handleSendBallot() {
     if (typeof window !== "undefined") {
-      localStorage.setItem(
-        "stem_palaestina_candidate_id",
-        selectedId === "new" ? "new" : selectedId
-      );
-      localStorage.setItem(
-        "stem_palaestina_vote",
-        voteValue ? "true" : "false"
-      );
+      localStorage.setItem("stem_palaestina_candidate_id", selectedId);
+      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
       localStorage.setItem("stem_palaestina_role", "candidate");
     }
     setPhoneError("");
@@ -157,59 +115,59 @@ export default function CandidateSelect({
     }
   }
 
-  if (smsSent) {
+  if (loading) {
     return (
-      <div className="text-center py-4 space-y-2">
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-melon-green/10 mb-1">
-          <svg
-            className="h-6 w-6 text-melon-green"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            />
-          </svg>
-        </div>
-        <h3 className="text-lg font-bold">{b("sentTitle")}</h3>
-        <p className="text-sm text-gray-600">{b("sentText")}</p>
+      <div className="py-3 text-center">
+        <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-melon-green border-t-transparent" />
       </div>
     );
   }
 
+  if (smsSent) {
+    return (
+      <div className="text-center py-3 space-y-1">
+        <p className="text-sm font-semibold text-melon-green">{b("sentTitle")}</p>
+        <p className="text-xs text-gray-500">{b("sentText")}</p>
+      </div>
+    );
+  }
+
+  // Progressive filtering
+  const storkredsName = STORKREDSE.find((s) => s.id === storkreds)?.name;
+  const kredsFiltered = storkreds
+    ? candidates.filter((c) => c.constituency === storkredsName)
+    : [];
+  const parties = [...new Set(kredsFiltered.map((c) => c.party))].sort();
+  const partyFiltered = party
+    ? kredsFiltered.filter((c) => c.party === party)
+    : [];
+
+  const hasSelection = selectedId !== "";
+
   return (
-    <div className="space-y-4">
-      {/* Sentence: "Jeg er kandidat i [Kreds] og kandidat for [Parti]" */}
-      <div className="flex flex-wrap items-center gap-1.5 text-sm font-medium text-gray-700">
-        <span>{t("iAmCandidate")}</span>
-        <select
-          className="rounded-lg border-2 border-gray-200 bg-white px-2 py-1.5 text-sm font-semibold focus:border-melon-green focus:outline-none"
-          value={storkreds}
-          onChange={(e) => setStorkreds(e.target.value)}
-        >
-          <option value="" disabled>
-            {t("selectConstituency")}
+    <div className="space-y-2.5">
+      {/* Step 1: Kreds */}
+      <select
+        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+        value={storkreds}
+        onChange={(e) => setStorkreds(e.target.value)}
+      >
+        <option value="">{ct("placeholder")}</option>
+        {STORKREDSE.map((sk) => (
+          <option key={sk.id} value={sk.id}>
+            {st(sk.id)}
           </option>
-          {STORKREDSE.map((sk) => (
-            <option key={sk.id} value={sk.id}>
-              {st(sk.id)}
-            </option>
-          ))}
-        </select>
-        <span>{t("andFor")}</span>
+        ))}
+      </select>
+
+      {/* Step 2: Parti */}
+      {storkreds && parties.length > 0 && (
         <select
-          className="rounded-lg border-2 border-gray-200 bg-white px-2 py-1.5 text-sm font-semibold focus:border-melon-green focus:outline-none disabled:opacity-40"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
           value={party}
           onChange={(e) => setParty(e.target.value)}
-          disabled={!storkreds || parties.length === 0}
         >
-          <option value="" disabled>
-            {t("selectParty")}
-          </option>
+          <option value="">{t("selectParty")}</option>
           {parties.map((p) => {
             const letter = p.match(/\(([^)]+)\)/)?.[1] ?? p;
             return (
@@ -219,63 +177,52 @@ export default function CandidateSelect({
             );
           })}
         </select>
-      </div>
+      )}
 
-      {/* Name dropdown when multiple matches */}
-      {showNameDropdown && (
-        <div>
-          <select
-            className="w-full rounded-xl border-2 border-gray-200 bg-white px-3 py-2.5 text-sm focus:border-melon-green focus:outline-none"
-            value={selectedId}
-            onChange={(e) => {
-              setSelectedId(e.target.value);
-              onSelect(e.target.value);
-            }}
+      {/* Step 3: Candidate list */}
+      {party && partyFiltered.length > 0 && (
+        <div className="space-y-1">
+          {partyFiltered.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => handleSelect(String(c.id))}
+              className={`w-full text-left rounded-lg px-3 py-2 text-sm transition-colors ${
+                selectedId === String(c.id)
+                  ? "bg-melon-green/10 text-melon-green font-medium"
+                  : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              {c.name}
+            </button>
+          ))}
+          <button
+            onClick={() => handleSelect("new")}
+            className={`w-full text-left rounded-lg px-3 py-2 text-sm transition-colors ${
+              selectedId === "new"
+                ? "bg-melon-green/10 text-melon-green font-medium"
+                : "text-gray-400 hover:text-gray-600"
+            }`}
           >
-            <option value="" disabled>
-              {t("placeholder")}
-            </option>
-            {partyFiltered.map((c) => (
-              <option key={c.id} value={String(c.id)}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+            {t("missingOption")}
+          </button>
         </div>
       )}
 
-      {/* "Not on the list" option */}
-      {storkreds && party && (
-        <button
-          onClick={() => {
-            setSelectedId("new");
-            onSelect("new");
-          }}
-          className={`text-xs underline transition-colors ${
-            selectedId === "new"
-              ? "text-melon-green font-medium"
-              : "text-gray-400 hover:text-gray-600"
-          }`}
-        >
-          {t("missingOption")}
-        </button>
-      )}
-
-      {/* Phone input — always visible when candidate is selected, choices stay above */}
-      {(candidateReady || selectedId === "new") && (
-        <div className="space-y-3 border-t border-gray-100 pt-3">
+      {/* Step 4: Phone input */}
+      {hasSelection && (
+        <div className="space-y-2 border-t border-gray-100 pt-2.5">
+          <label className="block text-xs font-medium text-gray-500">
+            {b("phoneLabel")}
+          </label>
           <div className="flex gap-2">
             <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
-            <div className="flex-1">
-              <Input
-                id="candidate-phone"
-                label={b("phoneLabel")}
-                type="tel"
-                placeholder="12345678"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
+            <input
+              type="tel"
+              placeholder="12345678"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+            />
           </div>
           <Button
             onClick={handleSendBallot}
@@ -286,7 +233,7 @@ export default function CandidateSelect({
             {b("send")}
           </Button>
           {phoneError && (
-            <p className="text-center text-sm text-melon-red">{phoneError}</p>
+            <p className="text-center text-xs text-melon-red">{phoneError}</p>
           )}
         </div>
       )}

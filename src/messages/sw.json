@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "Mwalike mgombea wako wa eneo",
     "unclaimed": "Hakupiga kura",
-    "inviteTitle": "Alika mgombea"
+    "inviteTitle": "Alika mgombea",
+    "missingCandidate": "Mgombea wangu hayuko kwenye orodha"
   },
   "map": {
     "title": "Tafuta mgombea wako",

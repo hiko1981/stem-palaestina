@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "Yerel adayınızı davet edin",
     "unclaimed": "Oy kullanmadı",
-    "inviteTitle": "Aday davet et"
+    "inviteTitle": "Aday davet et",
+    "missingCandidate": "Adayım listede değil"
   },
   "map": {
     "title": "Adayınızı bulun",

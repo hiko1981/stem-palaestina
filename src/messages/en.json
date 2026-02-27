@@ -195,7 +195,8 @@
   "candidateList": {
     "title": "Invite your local candidate",
     "unclaimed": "Missing vote",
-    "inviteTitle": "Invite a candidate"
+    "inviteTitle": "Invite a candidate",
+    "missingCandidate": "My candidate is not on the list"
   },
   "map": {
     "title": "Find your candidate",

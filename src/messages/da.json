@@ -195,7 +195,8 @@
   "candidateList": {
     "title": "Inviter din lokale kandidat",
     "unclaimed": "Mangler stemme",
-    "inviteTitle": "Inviter en kandidat"
+    "inviteTitle": "Inviter en kandidat",
+    "missingCandidate": "Min kandidat er ikke på listen"
   },
   "map": {
     "title": "Find din kandidat",

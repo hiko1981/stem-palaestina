@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "Mời ứng cử viên địa phương",
     "unclaimed": "Chưa bỏ phiếu",
-    "inviteTitle": "Mời ứng cử viên"
+    "inviteTitle": "Mời ứng cử viên",
+    "missingCandidate": "Ứng cử viên của tôi không có trong danh sách"
   },
   "map": {
     "title": "Tìm ứng viên của bạn",

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { STORKREDSE } from "@/lib/storkredse";
-import ConstituencyPicker from "@/components/features/ConstituencyPicker";
 
 interface CandidateWithStatus {
   id: number;
@@ -28,9 +27,10 @@ export default function InviteCandidateButton({
   const [candidates, setCandidates] = useState<CandidateWithStatus[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [storkreds, setStorkreds] = useState("");
-  const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [party, setParty] = useState("");
+  const [copiedGeneric, setCopiedGeneric] = useState(false);
 
-  // Inline invite state per candidate
+  // Inline invite state
   const [inviteTarget, setInviteTarget] = useState<number | null>(null);
   const [inviteMode, setInviteMode] = useState<InviteMode>(null);
   const [inviteInput, setInviteInput] = useState("");
@@ -40,10 +40,14 @@ export default function InviteCandidateButton({
     ok: boolean;
     msg: string;
   } | null>(null);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const t = useTranslations("inviteCandidate");
   const cl = useTranslations("candidateList");
   const sh = useTranslations("share");
+  const st = useTranslations("storkredse");
+  const ct = useTranslations("constituency");
+  const cs = useTranslations("candidateSelect");
 
   const baseUrl =
     typeof window !== "undefined"
@@ -61,30 +65,39 @@ export default function InviteCandidateButton({
       .catch(() => setLoaded(true));
   }, [open]);
 
+  // Auto-detect constituency
+  useEffect(() => {
+    if (!open || storkreds) return;
+    fetch("/api/geo/country")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.storkreds) setStorkreds(data.storkreds);
+      })
+      .catch(() => {});
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reset party when storkreds changes
+  useEffect(() => {
+    setParty("");
+  }, [storkreds]);
+
   function getBadge(c: CandidateWithStatus) {
-    if (!c.verified && c.voteValue === null) {
-      return (
-        <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-          {cl("unclaimed")}
-        </span>
-      );
-    }
     if (c.voteValue === true) {
       return (
-        <span className="inline-flex items-center rounded-full bg-melon-green/10 px-2 py-0.5 text-xs font-medium text-melon-green">
-          {t("yes") || "Ja"} ✓
+        <span className="shrink-0 inline-flex items-center rounded-full bg-melon-green/10 px-1.5 py-0.5 text-[10px] font-medium text-melon-green">
+          Ja ✓
         </span>
       );
     }
     if (c.voteValue === false) {
       return (
-        <span className="inline-flex items-center rounded-full bg-melon-red/10 px-2 py-0.5 text-xs font-medium text-melon-red">
-          {t("no") || "Nej"} ✗
+        <span className="shrink-0 inline-flex items-center rounded-full bg-melon-red/10 px-1.5 py-0.5 text-[10px] font-medium text-melon-red">
+          Nej ✗
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+      <span className="shrink-0 inline-flex items-center rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
         {cl("unclaimed")}
       </span>
     );
@@ -94,6 +107,13 @@ export default function InviteCandidateButton({
     navigator.clipboard.writeText(`${baseUrl}/stem`).then(() => {
       setCopiedId(candidateId);
       setTimeout(() => setCopiedId(null), 2000);
+    });
+  }
+
+  function handleCopyGenericLink() {
+    navigator.clipboard.writeText(`${baseUrl}/stem`).then(() => {
+      setCopiedGeneric(true);
+      setTimeout(() => setCopiedGeneric(false), 2000);
     });
   }
 
@@ -151,88 +171,94 @@ export default function InviteCandidateButton({
     }
   }
 
-  // Filter by storkreds
+  // Progressive filtering
   const storkredsName = STORKREDSE.find((s) => s.id === storkreds)?.name;
-  const filtered = storkreds
+  const kredsFiltered = storkreds
     ? candidates.filter((c) => c.constituency === storkredsName)
-    : candidates;
+    : [];
+  const parties = [...new Set(kredsFiltered.map((c) => c.party))].sort();
+  const partyFiltered = party
+    ? kredsFiltered.filter((c) => c.party === party)
+    : [];
 
   function renderContent() {
     return (
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {!inline && (
           <button
             onClick={() => setOpen(false)}
             className="flex w-full items-center justify-between text-sm font-bold text-gray-700"
           >
             {cl("title")}
-            <svg
-              className="h-4 w-4 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 15l7-7 7 7"
-              />
+            <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
             </svg>
           </button>
         )}
 
-        <ConstituencyPicker value={storkreds} onChange={setStorkreds} />
+        {/* Step 1: Kreds */}
+        <select
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+          value={storkreds}
+          onChange={(e) => setStorkreds(e.target.value)}
+        >
+          <option value="">{ct("placeholder")}</option>
+          {STORKREDSE.map((sk) => (
+            <option key={sk.id} value={sk.id}>
+              {st(sk.id)}
+            </option>
+          ))}
+        </select>
 
-        {!loaded && (
-          <div className="py-4 text-center">
-            <div className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-melon-green border-t-transparent" />
+        {!loaded && storkreds && (
+          <div className="py-3 text-center">
+            <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-melon-green border-t-transparent" />
           </div>
         )}
 
-        {loaded && filtered.length > 0 && (
-          <div className="space-y-2">
-            {filtered.map((c) => {
-              const partyLetter =
-                c.party.match(/\(([^)]+)\)/)?.[1] ?? c.party;
-              const region = c.constituency.replace(" Storkreds", "");
+        {/* Step 2: Parti */}
+        {loaded && storkreds && parties.length > 0 && (
+          <select
+            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+            value={party}
+            onChange={(e) => setParty(e.target.value)}
+          >
+            <option value="">{cs("selectParty")}</option>
+            {parties.map((p) => {
+              const letter = p.match(/\(([^)]+)\)/)?.[1] ?? p;
+              return (
+                <option key={p} value={p}>
+                  {p.replace(/ \([^)]+\)/, "")} ({letter})
+                </option>
+              );
+            })}
+          </select>
+        )}
+
+        {/* Step 3: Candidate list with invite actions */}
+        {party && partyFiltered.length > 0 && (
+          <div className="space-y-1.5">
+            {partyFiltered.map((c) => {
               const isInviting = inviteTarget === c.id && inviteMode;
-              const result =
-                inviteResult?.id === c.id ? inviteResult : null;
+              const result = inviteResult?.id === c.id ? inviteResult : null;
 
               return (
-                <div
-                  key={c.id}
-                  className="rounded-lg bg-gray-50 px-3 py-2.5 space-y-1.5"
-                >
-                  {/* Candidate info row */}
-                  <div className="flex items-center justify-between">
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium truncate">
-                        {c.name} ({partyLetter})
-                        <span className="text-gray-400 font-normal">
-                          {" "}
-                          · {region}
-                        </span>
-                      </p>
-                      {c.contactEmail && (
-                        <p className="text-xs text-gray-400">
-                          {c.contactEmail}
-                        </p>
-                      )}
-                    </div>
+                <div key={c.id} className="rounded-lg bg-gray-50 px-3 py-2 space-y-1.5">
+                  {/* Name + badge */}
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-sm font-medium truncate">{c.name}</p>
                     {getBadge(c)}
                   </div>
 
-                  {/* Share buttons row */}
+                  {/* Share buttons */}
                   <div className="flex gap-1.5 flex-wrap">
                     {c.contactEmail && (
                       <button
                         onClick={() => openInvite(c.id, "email")}
-                        className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors ${
+                        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium transition-colors ${
                           isInviting && inviteMode === "email"
                             ? "bg-melon-green/10 border-melon-green text-melon-green"
-                            : "bg-white border-gray-200 text-gray-700 hover:bg-gray-100"
+                            : "bg-white border-gray-200 text-gray-600 hover:bg-gray-100"
                         }`}
                       >
                         {sh("email")}
@@ -240,23 +266,23 @@ export default function InviteCandidateButton({
                     )}
                     <button
                       onClick={() => openInvite(c.id, "sms")}
-                      className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors ${
+                      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium transition-colors ${
                         isInviting && inviteMode === "sms"
                           ? "bg-melon-green/10 border-melon-green text-melon-green"
-                          : "bg-white border-gray-200 text-gray-700 hover:bg-gray-100"
+                          : "bg-white border-gray-200 text-gray-600 hover:bg-gray-100"
                       }`}
                     >
                       {sh("sms")}
                     </button>
                     <a
                       href={`fb-messenger://share?link=${encodeURIComponent(`${baseUrl}/stem`)}`}
-                      className="inline-flex items-center gap-1 rounded-full bg-white border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                      className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
                     >
                       {sh("messenger")}
                     </a>
                     <button
                       onClick={() => handleCopyLink(c.id)}
-                      className="inline-flex items-center gap-1 rounded-full bg-white border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                      className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
                     >
                       {copiedId === c.id ? sh("copied") : sh("copyLink")}
                     </button>
@@ -264,7 +290,7 @@ export default function InviteCandidateButton({
 
                   {/* Inline invite input */}
                   {isInviting && (
-                    <div className="flex gap-2 items-center pt-1">
+                    <div className="flex gap-1.5 items-center pt-0.5">
                       <input
                         type={inviteMode === "email" ? "email" : "tel"}
                         placeholder={
@@ -274,45 +300,50 @@ export default function InviteCandidateButton({
                         }
                         value={inviteInput}
                         onChange={(e) => setInviteInput(e.target.value)}
-                        className="flex-1 rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:border-melon-green focus:outline-none"
+                        className="flex-1 rounded-lg border border-gray-200 px-2 py-1.5 text-xs focus:border-melon-green focus:outline-none"
                         autoFocus
                       />
                       <button
                         onClick={() => handleSendInvite(c.name)}
                         disabled={!inviteInput.trim() || inviteSending}
-                        className="rounded-lg bg-melon-green px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50 transition-colors"
+                        className="rounded-lg bg-melon-green px-2.5 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
                       >
                         {inviteSending ? "..." : t("send")}
                       </button>
-                      <button
-                        onClick={closeInvite}
-                        className="text-xs text-gray-400 hover:text-gray-600"
-                      >
+                      <button onClick={closeInvite} className="text-xs text-gray-400 hover:text-gray-600">
                         ✕
                       </button>
                     </div>
                   )}
 
-                  {/* Result feedback */}
                   {result && (
-                    <p
-                      className={`text-xs font-medium ${
-                        result.ok ? "text-melon-green" : "text-melon-red"
-                      }`}
-                    >
+                    <p className={`text-xs font-medium ${result.ok ? "text-melon-green" : "text-melon-red"}`}>
                       {result.msg}
                     </p>
                   )}
                 </div>
               );
             })}
-          </div>
-        )}
 
-        {loaded && filtered.length === 0 && storkreds && (
-          <p className="text-center text-sm text-gray-500 py-2">
-            {cl("inviteTitle")}
-          </p>
+            {/* "Min kandidat er ikke på listen" — generic share */}
+            <div className="rounded-lg px-3 py-2">
+              <p className="text-xs text-gray-400 mb-1.5">{cl("missingCandidate")}</p>
+              <div className="flex gap-1.5 flex-wrap">
+                <a
+                  href={`fb-messenger://share?link=${encodeURIComponent(`${baseUrl}/stem`)}`}
+                  className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                >
+                  {sh("messenger")}
+                </a>
+                <button
+                  onClick={handleCopyGenericLink}
+                  className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                >
+                  {copiedGeneric ? sh("copied") : sh("copyLink")}
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     );
@@ -326,21 +357,11 @@ export default function InviteCandidateButton({
     return (
       <button
         onClick={() => setOpen(true)}
-        className="flex w-full items-center justify-between rounded-xl border-2 border-gray-200 px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
+        className="flex w-full items-center justify-between rounded-lg border border-gray-200 px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
       >
         {cl("title")}
-        <svg
-          className="h-4 w-4 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19 9l-7 7-7-7"
-          />
+        <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
     );

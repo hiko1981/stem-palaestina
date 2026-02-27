@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "地元の候補者を招待する",
     "unclaimed": "未投票",
-    "inviteTitle": "候補者を招待"
+    "inviteTitle": "候補者を招待",
+    "missingCandidate": "候補者がリストにいません"
   },
   "map": {
     "title": "候補者を探す",

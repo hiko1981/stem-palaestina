@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "지역 후보자를 초대하세요",
     "unclaimed": "투표 없음",
-    "inviteTitle": "후보자 초대"
+    "inviteTitle": "후보자 초대",
+    "missingCandidate": "후보자가 목록에 없습니다"
   },
   "map": {
     "title": "후보자 찾기",

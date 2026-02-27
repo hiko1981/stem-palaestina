@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "邀请您的本地候选人",
     "unclaimed": "缺少投票",
-    "inviteTitle": "邀请候选人"
+    "inviteTitle": "邀请候选人",
+    "missingCandidate": "我的候选人不在列表中"
   },
   "map": {
     "title": "找到你的候选人",

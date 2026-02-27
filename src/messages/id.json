@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "Undang kandidat lokal Anda",
     "unclaimed": "Belum memilih",
-    "inviteTitle": "Undang kandidat"
+    "inviteTitle": "Undang kandidat",
+    "missingCandidate": "Kandidat saya tidak ada di daftar"
   },
   "map": {
     "title": "Temukan kandidat Anda",

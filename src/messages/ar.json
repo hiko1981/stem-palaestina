@@ -197,7 +197,8 @@
   "candidateList": {
     "title": "ادعُ مرشحك المحلي",
     "unclaimed": "لم يصوت",
-    "inviteTitle": "ادعُ مرشحاً"
+    "inviteTitle": "ادعُ مرشحاً",
+    "missingCandidate": "مرشحي ليس في القائمة"
   },
   "map": {
     "title": "ابحث عن مرشحك",
