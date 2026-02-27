@@ -1,5 +1,5 @@
 /**
- * Seed script: creates 60 anonymous voter votes for testing the public results display.
+ * Seed script: creates 133 anonymous voter votes for testing the public results display.
  * Roughly 70% Ja, 30% Nej.
  *
  * Run: npx tsx prisma/seed-test-voter-votes.ts
@@ -19,8 +19,8 @@ const adapter = new PrismaPg({ connectionString: url });
 const prisma = new PrismaClient({ adapter });
 
 const TEST_VOTER_PREFIX = "test_voter_";
-const TOTAL = 60;
-const JA_COUNT = 42; // ~70% Ja
+const TOTAL = 133;
+const JA_COUNT = 93; // ~70% Ja
 
 function fakeHash(index: number): string {
   return (
