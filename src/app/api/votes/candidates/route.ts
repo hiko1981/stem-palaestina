@@ -4,12 +4,14 @@ import { prisma } from "@/lib/prisma";
 export async function GET() {
   try {
     const candidates = await prisma.candidate.findMany({
-      where: { verified: true, phoneHash: { not: null } },
       select: {
+        id: true,
         name: true,
         party: true,
         constituency: true,
+        contactEmail: true,
         phoneHash: true,
+        verified: true,
       },
     });
 
@@ -26,9 +28,12 @@ export async function GET() {
     const voteMap = new Map(votes.map((v) => [v.phoneHash, v.voteValue]));
 
     const result = candidates.map((c) => ({
+      id: c.id,
       name: c.name,
       party: c.party,
       constituency: c.constituency,
+      contactEmail: c.contactEmail,
+      verified: c.verified,
       voteValue: c.phoneHash ? (voteMap.get(c.phoneHash) ?? null) : null,
     }));
 

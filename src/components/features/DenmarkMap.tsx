@@ -8,6 +8,7 @@ interface CandidateInfo {
   name: string;
   party: string;
   constituency: string;
+  verified: boolean;
   voteValue: boolean | null;
 }
 
@@ -95,18 +96,22 @@ export default function DenmarkMap() {
                   </div>
                   <span
                     className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                      c.voteValue === true
-                        ? "bg-melon-green/10 text-melon-green"
-                        : c.voteValue === false
-                          ? "bg-melon-red/10 text-melon-red"
-                          : "bg-gray-100 text-gray-500"
+                      !c.verified && c.voteValue === null
+                        ? "bg-amber-100 text-amber-700"
+                        : c.voteValue === true
+                          ? "bg-melon-green/10 text-melon-green"
+                          : c.voteValue === false
+                            ? "bg-melon-red/10 text-melon-red"
+                            : "bg-gray-100 text-gray-500"
                     }`}
                   >
-                    {c.voteValue === true
-                      ? "Ja"
-                      : c.voteValue === false
-                        ? "Nej"
-                        : "—"}
+                    {!c.verified && c.voteValue === null
+                      ? t("unclaimed")
+                      : c.voteValue === true
+                        ? "Ja ✓"
+                        : c.voteValue === false
+                          ? "Nej ✗"
+                          : "—"}
                   </span>
                 </div>
               ))}

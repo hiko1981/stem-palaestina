@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "رمز الدولة"
   },
+  "candidateSelect": {
+    "title": "اختر مرشحك",
+    "placeholder": "اختر مرشحاً...",
+    "missingOption": "لست في القائمة",
+    "loading": "جارٍ تحميل المرشحين..."
+  },
+  "candidateList": {
+    "title": "المرشحون",
+    "unclaimed": "لم يصوت",
+    "inviteTitle": "ادعُ مرشحاً"
+  },
   "map": {
     "title": "ابحث عن مرشحك",
     "selectRegion": "اختر المنطقة",
-    "noCandidates": "لا يوجد مرشحون في هذه المنطقة بعد"
+    "noCandidates": "لا يوجد مرشحون في هذه المنطقة بعد",
+    "unclaimed": "لم يصوت"
+  },
+  "constituency": {
+    "label": "الدائرة الانتخابية",
+    "placeholder": "جميع الدوائر",
+    "autoDetected": "(تلقائي)"
+  },
+  "share": {
+    "email": "بريد إلكتروني",
+    "sms": "رسالة نصية",
+    "messenger": "ماسنجر",
+    "copyLink": "نسخ الرابط",
+    "copied": "تم النسخ!"
   },
   "storkredse": {
     "copenhagen": "København",

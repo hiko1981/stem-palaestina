@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "국가 코드"
   },
+  "candidateSelect": {
+    "title": "후보자를 선택하세요",
+    "placeholder": "후보자 선택...",
+    "missingOption": "목록에 없습니다",
+    "loading": "후보자 로딩 중..."
+  },
+  "candidateList": {
+    "title": "후보자",
+    "unclaimed": "투표 없음",
+    "inviteTitle": "후보자 초대"
+  },
   "map": {
     "title": "후보자 찾기",
     "selectRegion": "지역 선택",
-    "noCandidates": "이 지역에는 아직 후보자가 없습니다"
+    "noCandidates": "이 지역에는 아직 후보자가 없습니다",
+    "unclaimed": "투표 없음"
+  },
+  "constituency": {
+    "label": "선거구",
+    "placeholder": "모든 선거구",
+    "autoDetected": "(자동)"
+  },
+  "share": {
+    "email": "이메일",
+    "sms": "SMS",
+    "messenger": "메신저",
+    "copyLink": "링크 복사",
+    "copied": "복사됨!"
   },
   "storkredse": {
     "copenhagen": "København",

@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Mã quốc gia"
   },
+  "candidateSelect": {
+    "title": "Chọn ứng cử viên",
+    "placeholder": "Chọn ứng cử viên...",
+    "missingOption": "Tôi không có trong danh sách",
+    "loading": "Đang tải ứng cử viên..."
+  },
+  "candidateList": {
+    "title": "Ứng cử viên",
+    "unclaimed": "Chưa bỏ phiếu",
+    "inviteTitle": "Mời ứng cử viên"
+  },
   "map": {
     "title": "Tìm ứng viên của bạn",
     "selectRegion": "Chọn khu vực",
-    "noCandidates": "Chưa có ứng viên trong khu vực này"
+    "noCandidates": "Chưa có ứng viên trong khu vực này",
+    "unclaimed": "Chưa bỏ phiếu"
+  },
+  "constituency": {
+    "label": "Khu vực bầu cử",
+    "placeholder": "Tất cả khu vực",
+    "autoDetected": "(tự động)"
+  },
+  "share": {
+    "email": "Email",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Sao chép liên kết",
+    "copied": "Đã sao chép!"
   },
   "storkredse": {
     "copenhagen": "København",

@@ -11,6 +11,11 @@ export const ballotVoteSchema = z.object({
   voteValue: z.boolean({ message: "Stemmeværdi mangler (ja/nej)" }),
 });
 
+export const candidateClaimSchema = z.object({
+  candidateId: z.number().int().positive(),
+  token: z.string().uuid("Ugyldig stemmeseddel-token"),
+});
+
 export const candidateRegisterSchema = z.object({
   name: z.string().min(2, "Navn skal være mindst 2 tegn").max(100),
   party: z.string().min(1, "Parti mangler").max(100),

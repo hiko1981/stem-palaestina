@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Ülke kodu"
   },
+  "candidateSelect": {
+    "title": "Adayınızı seçin",
+    "placeholder": "Aday seçin...",
+    "missingOption": "Listede değilim",
+    "loading": "Adaylar yükleniyor..."
+  },
+  "candidateList": {
+    "title": "Adaylar",
+    "unclaimed": "Oy kullanmadı",
+    "inviteTitle": "Aday davet et"
+  },
   "map": {
     "title": "Adayınızı bulun",
     "selectRegion": "Bölge seçin",
-    "noCandidates": "Bu bölgede henüz aday yok"
+    "noCandidates": "Bu bölgede henüz aday yok",
+    "unclaimed": "Oy kullanmadı"
+  },
+  "constituency": {
+    "label": "Seçim bölgesi",
+    "placeholder": "Tüm bölgeler",
+    "autoDetected": "(otomatik)"
+  },
+  "share": {
+    "email": "E-posta",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Bağlantıyı kopyala",
+    "copied": "Kopyalandı!"
   },
   "storkredse": {
     "copenhagen": "København",

@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "நாட்டின் குறியீடு"
   },
+  "candidateSelect": {
+    "title": "உங்கள் வேட்பாளரைத் தேர்ந்தெடுக்கவும்",
+    "placeholder": "வேட்பாளரைத் தேர்ந்தெடுக்கவும்...",
+    "missingOption": "நான் பட்டியலில் இல்லை",
+    "loading": "வேட்பாளர்கள் ஏற்றப்படுகிறது..."
+  },
+  "candidateList": {
+    "title": "வேட்பாளர்கள்",
+    "unclaimed": "வாக்களிக்கவில்லை",
+    "inviteTitle": "வேட்பாளரை அழைக்கவும்"
+  },
   "map": {
     "title": "உங்கள் வேட்பாளரைக் கண்டறியுங்கள்",
     "selectRegion": "பகுதியைத் தேர்ந்தெடுக்கவும்",
-    "noCandidates": "இந்த பகுதியில் இன்னும் வேட்பாளர்கள் இல்லை"
+    "noCandidates": "இந்த பகுதியில் இன்னும் வேட்பாளர்கள் இல்லை",
+    "unclaimed": "வாக்களிக்கவில்லை"
+  },
+  "constituency": {
+    "label": "தொகுதி",
+    "placeholder": "அனைத்து தொகுதிகள்",
+    "autoDetected": "(தானியங்கி)"
+  },
+  "share": {
+    "email": "மின்னஞ்சல்",
+    "sms": "SMS",
+    "messenger": "மெசஞ்சர்",
+    "copyLink": "இணைப்பை நகலெடு",
+    "copied": "நகலெடுக்கப்பட்டது!"
   },
   "storkredse": {
     "copenhagen": "København",

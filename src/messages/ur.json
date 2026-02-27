@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "ملکی کوڈ"
   },
+  "candidateSelect": {
+    "title": "اپنا امیدوار منتخب کریں",
+    "placeholder": "امیدوار منتخب کریں...",
+    "missingOption": "میں فہرست میں نہیں ہوں",
+    "loading": "امیدوار لوڈ ہو رہے ہیں..."
+  },
+  "candidateList": {
+    "title": "امیدوار",
+    "unclaimed": "ووٹ نہیں دیا",
+    "inviteTitle": "امیدوار کو مدعو کریں"
+  },
   "map": {
     "title": "اپنا امیدوار تلاش کریں",
     "selectRegion": "علاقہ منتخب کریں",
-    "noCandidates": "اس علاقے میں ابھی کوئی امیدوار نہیں"
+    "noCandidates": "اس علاقے میں ابھی کوئی امیدوار نہیں",
+    "unclaimed": "ووٹ نہیں دیا"
+  },
+  "constituency": {
+    "label": "حلقہ",
+    "placeholder": "تمام حلقے",
+    "autoDetected": "(خودکار)"
+  },
+  "share": {
+    "email": "ای میل",
+    "sms": "ایس ایم ایس",
+    "messenger": "میسنجر",
+    "copyLink": "لنک کاپی کریں",
+    "copied": "کاپی ہو گیا!"
   },
   "storkredse": {
     "copenhagen": "København",

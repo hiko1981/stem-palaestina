@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "国家代码"
   },
+  "candidateSelect": {
+    "title": "选择你的候选人",
+    "placeholder": "选择候选人...",
+    "missingOption": "我不在列表上",
+    "loading": "正在加载候选人..."
+  },
+  "candidateList": {
+    "title": "候选人",
+    "unclaimed": "缺少投票",
+    "inviteTitle": "邀请候选人"
+  },
   "map": {
     "title": "找到你的候选人",
     "selectRegion": "选择地区",
-    "noCandidates": "该地区暂无候选人"
+    "noCandidates": "该地区暂无候选人",
+    "unclaimed": "缺少投票"
+  },
+  "constituency": {
+    "label": "选区",
+    "placeholder": "所有选区",
+    "autoDetected": "(自动)"
+  },
+  "share": {
+    "email": "邮件",
+    "sms": "短信",
+    "messenger": "Messenger",
+    "copyLink": "复制链接",
+    "copied": "已复制！"
   },
   "storkredse": {
     "copenhagen": "København",

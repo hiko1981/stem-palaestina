@@ -180,10 +180,34 @@
   "countryCode": {
     "label": "Landekode"
   },
+  "candidateSelect": {
+    "title": "Vælg din kandidat",
+    "placeholder": "Vælg kandidat...",
+    "missingOption": "Jeg mangler på listen",
+    "loading": "Henter kandidater..."
+  },
+  "candidateList": {
+    "title": "Kandidater",
+    "unclaimed": "Mangler stemme",
+    "inviteTitle": "Inviter en kandidat"
+  },
   "map": {
     "title": "Find din kandidat",
     "selectRegion": "Vælg storkreds",
-    "noCandidates": "Ingen kandidater i denne storkreds endnu"
+    "noCandidates": "Ingen kandidater i denne storkreds endnu",
+    "unclaimed": "Mangler stemme"
+  },
+  "constituency": {
+    "label": "Storkreds",
+    "placeholder": "Alle storkredse",
+    "autoDetected": "(auto)"
+  },
+  "share": {
+    "email": "Email",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Kopiér link",
+    "copied": "Kopieret!"
   },
   "storkredse": {
     "copenhagen": "Københavns Storkreds",

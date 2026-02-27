@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Kode negara"
   },
+  "candidateSelect": {
+    "title": "Pilih kandidat Anda",
+    "placeholder": "Pilih kandidat...",
+    "missingOption": "Saya tidak ada di daftar",
+    "loading": "Memuat kandidat..."
+  },
+  "candidateList": {
+    "title": "Kandidat",
+    "unclaimed": "Belum memilih",
+    "inviteTitle": "Undang kandidat"
+  },
   "map": {
     "title": "Temukan kandidat Anda",
     "selectRegion": "Pilih wilayah",
-    "noCandidates": "Belum ada kandidat di wilayah ini"
+    "noCandidates": "Belum ada kandidat di wilayah ini",
+    "unclaimed": "Belum memilih"
+  },
+  "constituency": {
+    "label": "Daerah pemilihan",
+    "placeholder": "Semua daerah",
+    "autoDetected": "(otomatis)"
+  },
+  "share": {
+    "email": "Email",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Salin tautan",
+    "copied": "Disalin!"
   },
   "storkredse": {
     "copenhagen": "København",

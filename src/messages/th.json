@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "รหัสประเทศ"
   },
+  "candidateSelect": {
+    "title": "เลือกผู้สมัครของคุณ",
+    "placeholder": "เลือกผู้สมัคร...",
+    "missingOption": "ฉันไม่อยู่ในรายชื่อ",
+    "loading": "กำลังโหลดผู้สมัคร..."
+  },
+  "candidateList": {
+    "title": "ผู้สมัคร",
+    "unclaimed": "ยังไม่ลงคะแนน",
+    "inviteTitle": "เชิญผู้สมัคร"
+  },
   "map": {
     "title": "ค้นหาผู้สมัครของคุณ",
     "selectRegion": "เลือกภูมิภาค",
-    "noCandidates": "ยังไม่มีผู้สมัครในภูมิภาคนี้"
+    "noCandidates": "ยังไม่มีผู้สมัครในภูมิภาคนี้",
+    "unclaimed": "ยังไม่ลงคะแนน"
+  },
+  "constituency": {
+    "label": "เขตเลือกตั้ง",
+    "placeholder": "ทุกเขต",
+    "autoDetected": "(อัตโนมัติ)"
+  },
+  "share": {
+    "email": "อีเมล",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "คัดลอกลิงก์",
+    "copied": "คัดลอกแล้ว!"
   },
   "storkredse": {
     "copenhagen": "København",

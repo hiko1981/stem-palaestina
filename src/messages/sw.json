@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Msimbo wa nchi"
   },
+  "candidateSelect": {
+    "title": "Chagua mgombea wako",
+    "placeholder": "Chagua mgombea...",
+    "missingOption": "Siko kwenye orodha",
+    "loading": "Inapakia wagombea..."
+  },
+  "candidateList": {
+    "title": "Wagombea",
+    "unclaimed": "Hakupiga kura",
+    "inviteTitle": "Alika mgombea"
+  },
   "map": {
     "title": "Tafuta mgombea wako",
     "selectRegion": "Chagua eneo",
-    "noCandidates": "Bado hakuna wagombea katika eneo hili"
+    "noCandidates": "Bado hakuna wagombea katika eneo hili",
+    "unclaimed": "Hakupiga kura"
+  },
+  "constituency": {
+    "label": "Jimbo",
+    "placeholder": "Majimbo yote",
+    "autoDetected": "(moja kwa moja)"
+  },
+  "share": {
+    "email": "Barua pepe",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Nakili kiungo",
+    "copied": "Imenakiliwa!"
   },
   "storkredse": {
     "copenhagen": "København",

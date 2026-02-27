@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "দেশের কোড"
   },
+  "candidateSelect": {
+    "title": "আপনার প্রার্থী বাছুন",
+    "placeholder": "প্রার্থী বাছুন...",
+    "missingOption": "আমি তালিকায় নেই",
+    "loading": "প্রার্থী লোড হচ্ছে..."
+  },
+  "candidateList": {
+    "title": "প্রার্থীরা",
+    "unclaimed": "ভোট দেয়নি",
+    "inviteTitle": "প্রার্থীকে আমন্ত্রণ জানান"
+  },
   "map": {
     "title": "আপনার প্রার্থী খুঁজুন",
     "selectRegion": "অঞ্চল নির্বাচন করুন",
-    "noCandidates": "এই অঞ্চলে এখনও কোনো প্রার্থী নেই"
+    "noCandidates": "এই অঞ্চলে এখনও কোনো প্রার্থী নেই",
+    "unclaimed": "ভোট দেয়নি"
+  },
+  "constituency": {
+    "label": "নির্বাচনী এলাকা",
+    "placeholder": "সব এলাকা",
+    "autoDetected": "(স্বয়ংক্রিয়)"
+  },
+  "share": {
+    "email": "ইমেইল",
+    "sms": "এসএমএস",
+    "messenger": "মেসেঞ্জার",
+    "copyLink": "লিংক কপি",
+    "copied": "কপি হয়েছে!"
   },
   "storkredse": {
     "copenhagen": "København",

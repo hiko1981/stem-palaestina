@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Código de país"
   },
+  "candidateSelect": {
+    "title": "Selecciona tu candidato",
+    "placeholder": "Elegir candidato...",
+    "missingOption": "No estoy en la lista",
+    "loading": "Cargando candidatos..."
+  },
+  "candidateList": {
+    "title": "Candidatos",
+    "unclaimed": "Falta voto",
+    "inviteTitle": "Invitar a un candidato"
+  },
   "map": {
     "title": "Encuentra tu candidato",
     "selectRegion": "Selecciona región",
-    "noCandidates": "Aún no hay candidatos en esta región"
+    "noCandidates": "Aún no hay candidatos en esta región",
+    "unclaimed": "Falta voto"
+  },
+  "constituency": {
+    "label": "Circunscripción",
+    "placeholder": "Todas las circunscripciones",
+    "autoDetected": "(auto)"
+  },
+  "share": {
+    "email": "Email",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Copiar enlace",
+    "copied": "¡Copiado!"
   },
   "storkredse": {
     "copenhagen": "København",

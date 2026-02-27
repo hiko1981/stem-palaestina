@@ -180,10 +180,34 @@
   "countryCode": {
     "label": "Country code"
   },
+  "candidateSelect": {
+    "title": "Select your candidate",
+    "placeholder": "Choose candidate...",
+    "missingOption": "I'm not on the list",
+    "loading": "Loading candidates..."
+  },
+  "candidateList": {
+    "title": "Candidates",
+    "unclaimed": "Missing vote",
+    "inviteTitle": "Invite a candidate"
+  },
   "map": {
     "title": "Find your candidate",
     "selectRegion": "Select region",
-    "noCandidates": "No candidates in this region yet"
+    "noCandidates": "No candidates in this region yet",
+    "unclaimed": "Missing vote"
+  },
+  "constituency": {
+    "label": "Constituency",
+    "placeholder": "All constituencies",
+    "autoDetected": "(auto)"
+  },
+  "share": {
+    "email": "Email",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Copy link",
+    "copied": "Copied!"
   },
   "storkredse": {
     "copenhagen": "Copenhagen",

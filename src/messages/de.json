@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Landesvorwahl"
   },
+  "candidateSelect": {
+    "title": "Wählen Sie Ihren Kandidaten",
+    "placeholder": "Kandidat wählen...",
+    "missingOption": "Ich bin nicht auf der Liste",
+    "loading": "Kandidaten werden geladen..."
+  },
+  "candidateList": {
+    "title": "Kandidaten",
+    "unclaimed": "Stimme fehlt",
+    "inviteTitle": "Kandidaten einladen"
+  },
   "map": {
     "title": "Finde deinen Kandidaten",
     "selectRegion": "Region wählen",
-    "noCandidates": "Noch keine Kandidaten in dieser Region"
+    "noCandidates": "Noch keine Kandidaten in dieser Region",
+    "unclaimed": "Stimme fehlt"
+  },
+  "constituency": {
+    "label": "Wahlkreis",
+    "placeholder": "Alle Wahlkreise",
+    "autoDetected": "(auto)"
+  },
+  "share": {
+    "email": "E-Mail",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert!"
   },
   "storkredse": {
     "copenhagen": "København",

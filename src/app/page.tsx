@@ -7,12 +7,13 @@ import Input from "@/components/ui/Input";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import InviteSection from "@/components/features/InviteSection";
 import InviteCandidateButton from "@/components/features/InviteCandidateButton";
+import CandidateSelect from "@/components/features/CandidateSelect";
 import VoteCounter from "@/components/features/VoteCounter";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type PostVoteTab } from "@/components/layout/BottomTabBar";
 import { useTranslations } from "next-intl";
 
-type PhoneTarget = "voter" | "candidate" | null;
+type ActivePanel = "voter" | "candidate" | "invite" | null;
 
 function AboutContent() {
   const t = useTranslations("about");
@@ -81,21 +82,37 @@ function AboutContent() {
   );
 }
 
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      className={`h-4 w-4 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const [hasVoted, setHasVoted] = useState<boolean | null>(null);
   const [voteValue, setVoteValue] = useState(true);
-  const [phoneTarget, setPhoneTarget] = useState<PhoneTarget>(null);
+  const [activePanel, setActivePanel] = useState<ActivePanel>(null);
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("+45");
   const [phoneError, setPhoneError] = useState("");
   const [phoneLoading, setPhoneLoading] = useState(false);
   const [smsSent, setSmsSent] = useState(false);
+  const [candidateSelected, setCandidateSelected] = useState(false);
   const [activeTab, setActiveTab] = useState<PostVoteTab>("results");
 
   const t = useTranslations("vote");
   const b = useTranslations("ballot");
   const d = useTranslations("demands");
   const h = useTranslations("home");
+  const cl = useTranslations("candidateList");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -110,18 +127,32 @@ export default function Home() {
     setDialCode(code);
   }, []);
 
-  function selectRole(role: PhoneTarget) {
-    if (typeof window !== "undefined" && role) {
-      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
-      localStorage.setItem("stem_palaestina_role", role);
+  function togglePanel(panel: ActivePanel) {
+    if (activePanel === panel) {
+      setActivePanel(null);
+    } else {
+      setActivePanel(panel);
+      setSmsSent(false);
+      setPhoneError("");
+      setPhone("");
+      setCandidateSelected(false);
     }
-    setPhoneTarget(role);
-    setSmsSent(false);
-    setPhoneError("");
-    setPhone("");
+  }
+
+  function handleCandidateSelect(value: string) {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("stem_palaestina_candidate_id", value);
+      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
+      localStorage.setItem("stem_palaestina_role", "candidate");
+    }
+    setCandidateSelected(true);
   }
 
   async function handleSendBallot() {
+    if (typeof window !== "undefined" && !candidateSelected) {
+      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
+      localStorage.setItem("stem_palaestina_role", "voter");
+    }
     setPhoneError("");
     setPhoneLoading(true);
     try {
@@ -224,6 +255,36 @@ export default function Home() {
     );
   }
 
+  // Phone input shared by voter & candidate panels
+  const phoneInput = (
+    <div className="space-y-3">
+      <div className="flex gap-2">
+        <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
+        <div className="flex-1">
+          <Input
+            id="phone"
+            label={b("phoneLabel")}
+            type="tel"
+            placeholder="12345678"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+      </div>
+      <Button
+        onClick={handleSendBallot}
+        loading={phoneLoading}
+        disabled={!phone}
+        className="w-full"
+      >
+        {b("send")}
+      </Button>
+      {phoneError && (
+        <p className="text-center text-sm text-melon-red">{phoneError}</p>
+      )}
+    </div>
+  );
+
   return (
     <>
       <div className="mx-auto max-w-xl px-4 pt-6 pb-8">
@@ -280,52 +341,60 @@ export default function Home() {
           </label>
         </div>
 
-        {/* Two role buttons */}
+        {/* ── Accordion panels ── */}
         <div className="space-y-3 mb-4">
-          <Button
-            onClick={() => selectRole("voter")}
-            className="w-full"
-          >
-            {t("voterTitle")} &rarr;
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => selectRole("candidate")}
-            className="w-full"
-          >
-            {t("candidateTitle")} &rarr;
-          </Button>
-        </div>
-
-        {/* Phone input — slide down when role selected */}
-        {phoneTarget && (
-          <div className="mt-4 space-y-3 animate-in slide-in-from-top-2">
-            <div className="flex gap-2">
-              <CountryCodeSelect value={dialCode} onChange={handleDialCode} />
-              <div className="flex-1">
-                <Input
-                  id="phone"
-                  label={b("phoneLabel")}
-                  type="tel"
-                  placeholder="12345678"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
-            </div>
-            <Button
-              onClick={handleSendBallot}
-              loading={phoneLoading}
-              disabled={!phone}
-              className="w-full"
+          {/* Panel 1: Jeg er vælger */}
+          <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
+            <button
+              onClick={() => togglePanel("voter")}
+              className="flex w-full items-center justify-between px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
             >
-              {b("send")}
-            </Button>
-            {phoneError && (
-              <p className="text-center text-sm text-melon-red">{phoneError}</p>
+              {t("voterTitle")}
+              <ChevronIcon open={activePanel === "voter"} />
+            </button>
+            {activePanel === "voter" && (
+              <div className="px-4 pb-4 animate-in slide-in-from-top-2">
+                {phoneInput}
+              </div>
             )}
           </div>
-        )}
+
+          {/* Panel 2: Jeg er kandidat */}
+          <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
+            <button
+              onClick={() => togglePanel("candidate")}
+              className="flex w-full items-center justify-between px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
+            >
+              {t("candidateTitle")}
+              <ChevronIcon open={activePanel === "candidate"} />
+            </button>
+            {activePanel === "candidate" && (
+              <div className="px-4 pb-4 space-y-3 animate-in slide-in-from-top-2">
+                {!candidateSelected ? (
+                  <CandidateSelect onSelect={handleCandidateSelect} />
+                ) : (
+                  phoneInput
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Panel 3: Kandidater */}
+          <div className="rounded-xl border-2 border-gray-200 overflow-hidden">
+            <button
+              onClick={() => togglePanel("invite")}
+              className="flex w-full items-center justify-between px-4 py-3 text-left font-semibold transition-colors hover:bg-gray-50"
+            >
+              {cl("title")}
+              <ChevronIcon open={activePanel === "invite"} />
+            </button>
+            {activePanel === "invite" && (
+              <div className="px-4 pb-4 animate-in slide-in-from-top-2">
+                <InviteCandidateButton inline />
+              </div>
+            )}
+          </div>
+        </div>
 
         <p className="mt-4 text-center text-xs text-gray-400">
           {t("privacyNote")}{" "}

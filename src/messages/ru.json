@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "Код страны"
   },
+  "candidateSelect": {
+    "title": "Выберите кандидата",
+    "placeholder": "Выберите кандидата...",
+    "missingOption": "Меня нет в списке",
+    "loading": "Загрузка кандидатов..."
+  },
+  "candidateList": {
+    "title": "Кандидаты",
+    "unclaimed": "Нет голоса",
+    "inviteTitle": "Пригласить кандидата"
+  },
   "map": {
     "title": "Найдите своего кандидата",
     "selectRegion": "Выберите регион",
-    "noCandidates": "В этом регионе пока нет кандидатов"
+    "noCandidates": "В этом регионе пока нет кандидатов",
+    "unclaimed": "Нет голоса"
+  },
+  "constituency": {
+    "label": "Избирательный округ",
+    "placeholder": "Все округа",
+    "autoDetected": "(авто)"
+  },
+  "share": {
+    "email": "Эл. почта",
+    "sms": "СМС",
+    "messenger": "Мессенджер",
+    "copyLink": "Копировать ссылку",
+    "copied": "Скопировано!"
   },
   "storkredse": {
     "copenhagen": "København",

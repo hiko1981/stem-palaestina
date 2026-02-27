@@ -76,7 +76,31 @@ export default function BallotVoteForm({ token }: BallotVoteFormProps) {
         return;
       }
 
-      // Candidate → show registration form
+      // Candidate: try auto-claim if an on-list candidate was selected
+      const candidateId = localStorage.getItem("stem_palaestina_candidate_id");
+      if (candidateId && candidateId !== "new") {
+        try {
+          const claimRes = await fetch("/api/candidate/claim", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              candidateId: Number(candidateId),
+              token,
+            }),
+          });
+          if (claimRes.ok) {
+            localStorage.removeItem("stem_palaestina_candidate_id");
+            router.push("/");
+            return;
+          }
+          // Claim failed (already taken) → fall through to CandidatePublicForm
+        } catch {
+          // Network error → fall through to CandidatePublicForm
+        }
+      }
+
+      // Off-list or claim failed → show registration form
+      localStorage.removeItem("stem_palaestina_candidate_id");
       setStatus("voted");
     } catch {
       setError(t("networkError"));

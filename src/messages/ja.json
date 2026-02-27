@@ -182,10 +182,34 @@
   "countryCode": {
     "label": "国コード"
   },
+  "candidateSelect": {
+    "title": "候補者を選択",
+    "placeholder": "候補者を選択...",
+    "missingOption": "リストにいません",
+    "loading": "候補者を読み込み中..."
+  },
+  "candidateList": {
+    "title": "候補者",
+    "unclaimed": "未投票",
+    "inviteTitle": "候補者を招待"
+  },
   "map": {
     "title": "候補者を探す",
     "selectRegion": "地域を選択",
-    "noCandidates": "この地域にはまだ候補者がいません"
+    "noCandidates": "この地域にはまだ候補者がいません",
+    "unclaimed": "未投票"
+  },
+  "constituency": {
+    "label": "選挙区",
+    "placeholder": "すべての選挙区",
+    "autoDetected": "(自動)"
+  },
+  "share": {
+    "email": "メール",
+    "sms": "SMS",
+    "messenger": "Messenger",
+    "copyLink": "リンクをコピー",
+    "copied": "コピー済み！"
   },
   "storkredse": {
     "copenhagen": "København",
