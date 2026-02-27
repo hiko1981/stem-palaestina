@@ -124,10 +124,10 @@ export async function POST(req: NextRequest) {
     }
     const qs = params.toString();
     const ballotUrl = `${getBaseUrl()}/stem/${token}${qs ? `?${qs}` : ""}`;
-    await sendSms(
-      phone,
-      `Din stemmeseddel til Stem Palæstina: ${ballotUrl}\n\nLinket udløber om ${BALLOT_EXPIRY_HOURS} timer.`
-    );
+    const smsText = parsed.data.role === "candidate"
+      ? `Registrér dig som kandidat på Stem Palæstina: ${ballotUrl}\n\nStem og udfyld din kandidatprofil. Linket udløber om ${BALLOT_EXPIRY_HOURS} timer.`
+      : `Din stemmeseddel til Stem Palæstina: ${ballotUrl}\n\nLinket udløber om ${BALLOT_EXPIRY_HOURS} timer.`;
+    await sendSms(phone, smsText);
 
     return NextResponse.json({ ok: true });
   } catch (error) {
