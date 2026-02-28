@@ -218,7 +218,8 @@
     "inviteTitle": "후보자 초대",
     "missingCandidate": "후보자가 목록에 없습니다",
     "unverified": "미인증",
-    "optedOut": "탈퇴"
+    "optedOut": "탈퇴",
+    "noContact": "연락처 정보 없음"
   },
   "map": {
     "title": "후보자 찾기",

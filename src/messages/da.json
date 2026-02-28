@@ -235,7 +235,8 @@
     "inviteTitle": "Inviter en kandidat",
     "missingCandidate": "Min kandidat er ikke på listen",
     "unverified": "Ikke bekræftet",
-    "optedOut": "Frameldt"
+    "optedOut": "Frameldt",
+    "noContact": "Ingen kontaktoplysninger"
   },
   "map": {
     "title": "Find din kandidat",

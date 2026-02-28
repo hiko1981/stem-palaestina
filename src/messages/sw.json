@@ -218,7 +218,8 @@
     "inviteTitle": "Alika mgombea",
     "missingCandidate": "Mgombea wangu hayuko kwenye orodha",
     "unverified": "Haijathibitishwa",
-    "optedOut": "Amejiondoa"
+    "optedOut": "Amejiondoa",
+    "noContact": "Hakuna maelezo ya mawasiliano"
   },
   "map": {
     "title": "Tafuta mgombea wako",

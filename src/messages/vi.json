@@ -218,7 +218,8 @@
     "inviteTitle": "Mời ứng cử viên",
     "missingCandidate": "Ứng cử viên của tôi không có trong danh sách",
     "unverified": "Chưa xác minh",
-    "optedOut": "Đã rút"
+    "optedOut": "Đã rút",
+    "noContact": "Không có thông tin liên hệ"
   },
   "map": {
     "title": "Tìm ứng viên của bạn",

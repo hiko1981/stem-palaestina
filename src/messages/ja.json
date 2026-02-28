@@ -218,7 +218,8 @@
     "inviteTitle": "候補者を招待",
     "missingCandidate": "候補者がリストにいません",
     "unverified": "未認証",
-    "optedOut": "辞退"
+    "optedOut": "辞退",
+    "noContact": "連絡先情報なし"
   },
   "map": {
     "title": "候補者を探す",

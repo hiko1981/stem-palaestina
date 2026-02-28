@@ -218,7 +218,8 @@
     "inviteTitle": "ادعُ مرشحاً",
     "missingCandidate": "مرشحي ليس في القائمة",
     "unverified": "غير موثّق",
-    "optedOut": "انسحب"
+    "optedOut": "انسحب",
+    "noContact": "لا توجد معلومات اتصال"
   },
   "map": {
     "title": "ابحث عن مرشحك",

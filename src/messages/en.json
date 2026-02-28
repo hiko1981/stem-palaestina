@@ -218,7 +218,8 @@
     "inviteTitle": "Invite a candidate",
     "missingCandidate": "My candidate is not on the list",
     "unverified": "Not verified",
-    "optedOut": "Opted out"
+    "optedOut": "Opted out",
+    "noContact": "No contact info"
   },
   "map": {
     "title": "Find your candidate",

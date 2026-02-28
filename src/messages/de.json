@@ -218,7 +218,8 @@
     "inviteTitle": "Kandidaten einladen",
     "missingCandidate": "Mein Kandidat ist nicht auf der Liste",
     "unverified": "Nicht verifiziert",
-    "optedOut": "Abgemeldet"
+    "optedOut": "Abgemeldet",
+    "noContact": "Keine Kontaktdaten"
   },
   "map": {
     "title": "Finde deinen Kandidaten",

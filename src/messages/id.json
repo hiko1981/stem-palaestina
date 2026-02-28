@@ -218,7 +218,8 @@
     "inviteTitle": "Undang kandidat",
     "missingCandidate": "Kandidat saya tidak ada di daftar",
     "unverified": "Belum diverifikasi",
-    "optedOut": "Berhenti"
+    "optedOut": "Berhenti",
+    "noContact": "Tidak ada info kontak"
   },
   "map": {
     "title": "Temukan kandidat Anda",

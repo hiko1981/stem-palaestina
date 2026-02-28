@@ -218,7 +218,8 @@
     "inviteTitle": "Aday davet et",
     "missingCandidate": "Adayım listede değil",
     "unverified": "Doğrulanmamış",
-    "optedOut": "Ayrıldı"
+    "optedOut": "Ayrıldı",
+    "noContact": "İletişim bilgisi yok"
   },
   "map": {
     "title": "Adayınızı bulun",

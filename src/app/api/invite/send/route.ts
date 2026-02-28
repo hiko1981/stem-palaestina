@@ -5,8 +5,6 @@ import { sendSms } from "@/lib/sms";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
-import { hashPhone } from "@/lib/hash";
-import { normalizeToE164, isValidE164 } from "@/lib/phone";
 import { signOptout } from "@/lib/optout-sig";
 
 const inviteSchema = z.discriminatedUnion("method", [
@@ -17,9 +15,8 @@ const inviteSchema = z.discriminatedUnion("method", [
   }),
   z.object({
     method: z.literal("sms"),
-    to: z.string().min(1, "Modtager mangler"),
-    candidateName: z.string().min(1, "Kandidatnavn mangler"),
-    candidateId: z.number().int().positive().optional(),
+    candidateId: z.number().int().positive(),
+    deviceId: z.string().optional(),
   }),
 ]);
 
@@ -105,58 +102,50 @@ export async function POST(req: NextRequest) {
 
       await sendEmail(candidate.contactEmail, subject, emailBody);
     } else {
-      // SMS invite: user provides phone number + candidate name
-      const { to, candidateName, candidateId } = parsed.data;
+      // SMS invite: look up candidate's stored contactPhone
+      const { candidateId, deviceId } = parsed.data;
 
-      // Check candidate opted out (public error)
-      if (candidateId) {
-        const candidate = await prisma.candidate.findUnique({
-          where: { id: candidateId },
-          select: { optedOut: true },
-        });
-        if (candidate?.optedOut) {
-          return NextResponse.json(
-            { error: "Kandidaten har frabedt sig henvendelser." },
-            { status: 403 }
-          );
-        }
+      // Rate limit: 1 SMS per candidate per device per hour
+      const deviceKey = deviceId || ip;
+      const perCandidateSmsLimit = await checkRateLimit(
+        "invite-sms-candidate",
+        `${deviceKey}:${candidateId}`,
+        1,
+        60 * 60 * 1000
+      );
+      if (!perCandidateSmsLimit.ok) {
+        return NextResponse.json(
+          { error: "Du har allerede inviteret denne kandidat. Prøv igen senere." },
+          { status: 429 }
+        );
       }
 
-      // Silent suppression: normalize phone and check vote + suppression
-      // Accept E.164 if starts with +, else fallback to +45
-      const defaultDialCode = to.startsWith("+") ? "" : "+45";
-      const normalized = normalizeToE164(to, defaultDialCode);
-      if (normalized && isValidE164(normalized)) {
-        const recipientHash = hashPhone(normalized);
+      const candidate = await prisma.candidate.findUnique({
+        where: { id: candidateId },
+        select: { name: true, contactPhone: true, optedOut: true },
+      });
 
-        const alreadyVoted = await prisma.vote.findUnique({
-          where: { phoneHash: recipientHash },
-        });
-        if (alreadyVoted) {
-          return NextResponse.json({ ok: true });
-        }
-
-        const suppressed = await prisma.phoneSuppression.findUnique({
-          where: { phoneHash: recipientHash },
-        });
-        if (suppressed) {
-          return NextResponse.json({ ok: true });
-        }
-
-        // Track which phones received invites for which candidates
-        if (candidateId) {
-          prisma.candidateInvitePhone.upsert({
-            where: {
-              candidateId_phoneHash: { candidateId, phoneHash: recipientHash },
-            },
-            create: { candidateId, phoneHash: recipientHash },
-            update: {},
-          }).catch(() => {});
-        }
+      if (!candidate || !candidate.contactPhone) {
+        return NextResponse.json(
+          { error: "Kandidaten har intet offentligt telefonnummer." },
+          { status: 400 }
+        );
       }
 
-      const smsBody = `Hej ${candidateName}! Du er inviteret til at tage stilling på Stem Palæstina. Registrer dig her: ${link}`;
-      await sendSms(to, smsBody);
+      if (candidate.optedOut) {
+        return NextResponse.json(
+          { error: "Kandidaten har frabedt sig henvendelser." },
+          { status: 403 }
+        );
+      }
+
+      // Format phone as E.164 for Twilio (assume Danish +45 if no prefix)
+      const phone = candidate.contactPhone.startsWith("+")
+        ? candidate.contactPhone
+        : `+45${candidate.contactPhone.replace(/\s+/g, "")}`;
+
+      const smsBody = `Hej ${candidate.name}! En vælger har inviteret dig til at tage stilling på Stem Palæstina. Registrer dig her: ${link}`;
+      await sendSms(phone, smsBody);
     }
 
     return NextResponse.json({ ok: true });

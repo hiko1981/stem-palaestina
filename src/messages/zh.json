@@ -218,7 +218,8 @@
     "inviteTitle": "邀请候选人",
     "missingCandidate": "我的候选人不在列表中",
     "unverified": "未验证",
-    "optedOut": "已退出"
+    "optedOut": "已退出",
+    "noContact": "无联系方式"
   },
   "map": {
     "title": "找到你的候选人",

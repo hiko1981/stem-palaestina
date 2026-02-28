@@ -10,12 +10,11 @@ interface CandidateWithStatus {
   party: string;
   constituency: string;
   hasEmail: boolean;
+  hasPhone: boolean;
   verified: boolean;
   optedOut: boolean;
   voteValue: boolean | null;
 }
-
-type InviteMode = null | "email" | "sms";
 
 function Initials({ name, color }: { name: string; color: "green" | "red" | "gray" }) {
   const initials = name
@@ -62,8 +61,6 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
 
   // Invite state
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [inviteMode, setInviteMode] = useState<InviteMode>(null);
-  const [inviteInput, setInviteInput] = useState("");
   const [inviteSending, setInviteSending] = useState(false);
   const [inviteResult, setInviteResult] = useState<{
     id: number;
@@ -98,26 +95,10 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
   function toggleExpand(id: number) {
     if (expandedId === id) {
       setExpandedId(null);
-      setInviteMode(null);
     } else {
       setExpandedId(id);
-      setInviteMode(null);
-      setInviteInput("");
       setInviteResult(null);
     }
-  }
-
-  function openInvite(id: number, mode: InviteMode) {
-    setExpandedId(id);
-    setInviteMode(mode);
-    setInviteInput("");
-    setInviteResult(null);
-  }
-
-  function closeInvite() {
-    setInviteMode(null);
-    setInviteInput("");
-    setInviteSending(false);
   }
 
   async function handleSendEmailInvite(candidateId: number) {
@@ -144,26 +125,25 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
     }
   }
 
-  async function handleSendSmsInvite(candidateName: string) {
-    if (!inviteInput.trim() || !expandedId) return;
+  async function handleSendSmsInvite(candidateId: number) {
     setInviteSending(true);
     setInviteResult(null);
+    const deviceId = typeof window !== "undefined" ? localStorage.getItem("stem_device_id") || undefined : undefined;
     try {
       const res = await fetch("/api/invite/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ method: "sms", to: inviteInput.trim(), candidateName, candidateId: expandedId }),
+        body: JSON.stringify({ method: "sms", candidateId, deviceId }),
       });
       const data = await res.json();
       if (res.ok) {
-        setInviteResult({ id: expandedId, ok: true, msg: t("sent") });
-        setInviteInput("");
-        setTimeout(() => { closeInvite(); setInviteResult(null); }, 2500);
+        setInviteResult({ id: candidateId, ok: true, msg: t("sent") });
+        setTimeout(() => setInviteResult(null), 2500);
       } else {
-        setInviteResult({ id: expandedId, ok: false, msg: data.error || t("sendError") });
+        setInviteResult({ id: candidateId, ok: false, msg: data.error || t("sendError") });
       }
     } catch {
-      setInviteResult({ id: expandedId!, ok: false, msg: t("sendError") });
+      setInviteResult({ id: candidateId, ok: false, msg: t("sendError") });
     } finally {
       setInviteSending(false);
     }
@@ -216,59 +196,39 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
 
     if (!isExpanded) return null;
 
+    const canInvite = c.hasEmail || c.hasPhone;
+
     return (
       <div className="mt-1.5 space-y-1.5">
-        {/* Contact buttons */}
-        <div className="flex gap-1 flex-wrap">
-          {c.hasEmail && (
+        {canInvite ? (
+          <div className="flex gap-1 flex-wrap">
+            {c.hasEmail && (
+              <button
+                onClick={(e) => { e.stopPropagation(); handleSendEmailInvite(c.id); }}
+                disabled={inviteSending}
+                className="inline-flex items-center rounded-full border bg-white border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-600 transition-colors hover:bg-melon-green/10 hover:border-melon-green hover:text-melon-green disabled:opacity-50"
+              >
+                {inviteSending ? "..." : sh("email")}
+              </button>
+            )}
+            {c.hasPhone && (
+              <button
+                onClick={(e) => { e.stopPropagation(); handleSendSmsInvite(c.id); }}
+                disabled={inviteSending}
+                className="inline-flex items-center rounded-full border bg-white border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-600 transition-colors hover:bg-melon-green/10 hover:border-melon-green hover:text-melon-green disabled:opacity-50"
+              >
+                {inviteSending ? "..." : sh("sms")}
+              </button>
+            )}
             <button
-              onClick={(e) => { e.stopPropagation(); handleSendEmailInvite(c.id); }}
-              disabled={inviteSending}
-              className="inline-flex items-center rounded-full border bg-white border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-600 transition-colors hover:bg-melon-green/10 hover:border-melon-green hover:text-melon-green disabled:opacity-50"
+              onClick={(e) => { e.stopPropagation(); handleCopyLink(c.id); }}
+              className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-600"
             >
-              {inviteSending ? "..." : sh("email")}
-            </button>
-          )}
-          <button
-            onClick={(e) => { e.stopPropagation(); openInvite(c.id, "sms"); }}
-            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium transition-colors ${
-              inviteMode === "sms"
-                ? "bg-melon-green/10 border-melon-green text-melon-green"
-                : "bg-white border-gray-200 text-gray-600"
-            }`}
-          >
-            {sh("sms")}
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); handleCopyLink(c.id); }}
-            className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-600"
-          >
-            {copiedId === c.id ? sh("copied") : sh("copyLink")}
-          </button>
-        </div>
-
-        {/* SMS inline input (only for SMS mode) */}
-        {inviteMode === "sms" && (
-          <div className="flex gap-1 items-center min-w-0" onClick={(e) => e.stopPropagation()}>
-            <input
-              type="tel"
-              placeholder={t("phoneLabel")}
-              value={inviteInput}
-              onChange={(e) => setInviteInput(e.target.value)}
-              className="min-w-0 flex-1 rounded-lg border border-gray-200 px-2 py-1 text-[11px] focus:border-melon-green focus:outline-none"
-              autoFocus
-            />
-            <button
-              onClick={() => handleSendSmsInvite(c.name)}
-              disabled={!inviteInput.trim() || inviteSending}
-              className="rounded-lg bg-melon-green px-2 py-1 text-[11px] font-semibold text-white disabled:opacity-50"
-            >
-              {inviteSending ? "..." : t("send")}
-            </button>
-            <button onClick={closeInvite} className="text-[11px] text-gray-400">
-              ✕
+              {copiedId === c.id ? sh("copied") : sh("copyLink")}
             </button>
           </div>
+        ) : (
+          <p className="text-[10px] text-gray-400">{cl("noContact")}</p>
         )}
 
         {result && (
