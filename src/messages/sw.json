@@ -167,7 +167,13 @@
     "message": "Habari! Ningependa kukualika usimame kwa madai matatu kwenye Pigia Kura kwa Palestina. Jiandikishe kama mgombea hapa:",
     "emailSubject": "Mwaliko: Simama kwa madai kwenye Pigia Kura kwa Palestina",
     "sent": "Mwaliko umetumwa!",
-    "sendError": "Imeshindwa kutuma. Jaribu tena."
+    "sendError": "Imeshindwa kutuma. Jaribu tena.",
+    "rateLimited": "Mialiko mingi sana. Jaribu tena baada ya saa moja.",
+    "alreadyInvited": "Umeshammwalika mgombea huyu tayari.",
+    "noEmail": "Mgombea hana barua pepe ya umma.",
+    "candidateOptedOut": "Mgombea amekataa mialiko.",
+    "noPhone": "Mgombea hana nambari ya simu ya umma.",
+    "invalidPhone": "Nambari ya simu si sahihi."
   },
   "candidateVotes": {
     "title": "Wagombea walipigiaje kura?",
@@ -219,7 +225,9 @@
     "missingCandidate": "Mgombea wangu hayuko kwenye orodha",
     "unverified": "Haijathibitishwa",
     "optedOut": "Amejiondoa",
-    "noContact": "Hakuna maelezo ya mawasiliano"
+    "noContact": "Hakuna maelezo ya mawasiliano",
+    "votedYes": "Ndiyo \u2713",
+    "votedNo": "Hapana \u2717"
   },
   "map": {
     "title": "Tafuta mgombea wako",

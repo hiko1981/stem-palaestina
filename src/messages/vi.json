@@ -167,7 +167,13 @@
     "message": "Xin chào! Tôi muốn mời bạn lên tiếng về ba yêu cầu trên Vote Palestine. Đăng ký làm ứng viên tại đây:",
     "emailSubject": "Lời mời: Hãy lên tiếng trên Vote Palestine",
     "sent": "Đã gửi lời mời!",
-    "sendError": "Không thể gửi. Vui lòng thử lại."
+    "sendError": "Không thể gửi. Vui lòng thử lại.",
+    "rateLimited": "Quá nhiều lời mời. Thử lại sau một giờ.",
+    "alreadyInvited": "Bạn đã mời ứng viên này rồi.",
+    "noEmail": "Ứng viên không có email công khai.",
+    "candidateOptedOut": "Ứng viên đã từ chối lời mời.",
+    "noPhone": "Ứng viên không có số điện thoại công khai.",
+    "invalidPhone": "Số điện thoại không hợp lệ."
   },
   "candidateVotes": {
     "title": "Các ứng viên đã bỏ phiếu như thế nào?",
@@ -219,7 +225,9 @@
     "missingCandidate": "Ứng cử viên của tôi không có trong danh sách",
     "unverified": "Chưa xác minh",
     "optedOut": "Đã rút",
-    "noContact": "Không có thông tin liên hệ"
+    "noContact": "Không có thông tin liên hệ",
+    "votedYes": "Có \u2713",
+    "votedNo": "Không \u2717"
   },
   "map": {
     "title": "Tìm ứng viên của bạn",

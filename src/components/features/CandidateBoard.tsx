@@ -116,7 +116,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
         setInviteResult({ id: candidateId, ok: true, msg: t("sent") });
         setTimeout(() => setInviteResult(null), 2500);
       } else {
-        setInviteResult({ id: candidateId, ok: false, msg: data.error || t("sendError") });
+        setInviteResult({ id: candidateId, ok: false, msg: t(data.error || "sendError") });
       }
     } catch {
       setInviteResult({ id: candidateId, ok: false, msg: t("sendError") });
@@ -140,7 +140,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
         setInviteResult({ id: candidateId, ok: true, msg: t("sent") });
         setTimeout(() => setInviteResult(null), 2500);
       } else {
-        setInviteResult({ id: candidateId, ok: false, msg: data.error || t("sendError") });
+        setInviteResult({ id: candidateId, ok: false, msg: t(data.error || "sendError") });
       }
     } catch {
       setInviteResult({ id: candidateId, ok: false, msg: t("sendError") });

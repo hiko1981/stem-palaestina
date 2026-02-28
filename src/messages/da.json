@@ -167,7 +167,13 @@
     "message": "Hej! Jeg vil gerne invitere dig til at tage stilling til de tre krav på Stem Palæstina. Registrer dig som kandidat her:",
     "emailSubject": "Inviter: Tag stilling på Stem Palæstina",
     "sent": "Invitation sendt!",
-    "sendError": "Kunne ikke sende. Prøv igen."
+    "sendError": "Kunne ikke sende. Prøv igen.",
+    "rateLimited": "For mange invitationer. Prøv igen om en time.",
+    "alreadyInvited": "Du har allerede inviteret denne kandidat.",
+    "noEmail": "Kandidaten har ingen offentlig e-mail.",
+    "candidateOptedOut": "Kandidaten har frabedt sig henvendelser.",
+    "noPhone": "Kandidaten har intet offentligt telefonnummer.",
+    "invalidPhone": "Ugyldigt telefonnummer."
   },
   "candidateVotes": {
     "title": "Hvordan stemte kandidaterne?",
@@ -236,7 +242,9 @@
     "missingCandidate": "Min kandidat er ikke på listen",
     "unverified": "Ikke bekræftet",
     "optedOut": "Frameldt",
-    "noContact": "Ingen kontaktoplysninger"
+    "noContact": "Ingen kontaktoplysninger",
+    "votedYes": "Ja \u2713",
+    "votedNo": "Nej \u2717"
   },
   "map": {
     "title": "Find din kandidat",

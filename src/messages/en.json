@@ -167,7 +167,13 @@
     "message": "Hi! I'd like to invite you to take a stand on the three demands on Vote Palestine. Register as a candidate here:",
     "emailSubject": "Invitation: Take a stand on Vote Palestine",
     "sent": "Invitation sent!",
-    "sendError": "Could not send. Please try again."
+    "sendError": "Could not send. Please try again.",
+    "rateLimited": "Too many invitations. Try again in an hour.",
+    "alreadyInvited": "You have already invited this candidate.",
+    "noEmail": "The candidate has no public email.",
+    "candidateOptedOut": "The candidate has opted out of invitations.",
+    "noPhone": "The candidate has no public phone number.",
+    "invalidPhone": "Invalid phone number."
   },
   "candidateVotes": {
     "title": "How did the candidates vote?",
@@ -219,7 +225,9 @@
     "missingCandidate": "My candidate is not on the list",
     "unverified": "Not verified",
     "optedOut": "Opted out",
-    "noContact": "No contact info"
+    "noContact": "No contact info",
+    "votedYes": "Yes \u2713",
+    "votedNo": "No \u2717"
   },
   "map": {
     "title": "Find your candidate",

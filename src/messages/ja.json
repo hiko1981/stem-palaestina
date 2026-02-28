@@ -167,7 +167,13 @@
     "message": "こんにちは！「パレスチナに投票を」で3つの要求に対する立場を表明しませんか。こちらから候補者として登録できます：",
     "emailSubject": "招待：「パレスチナに投票を」で立場を表明しましょう",
     "sent": "招待を送信しました！",
-    "sendError": "送信できませんでした。もう一度お試しください。"
+    "sendError": "送信できませんでした。もう一度お試しください。",
+    "rateLimited": "招待が多すぎます。1時間後にもう一度お試しください。",
+    "alreadyInvited": "この候補者はすでに招待済みです。",
+    "noEmail": "候補者に公開メールアドレスがありません。",
+    "candidateOptedOut": "候補者は招待を辞退しました。",
+    "noPhone": "候補者に公開電話番号がありません。",
+    "invalidPhone": "無効な電話番号です。"
   },
   "candidateVotes": {
     "title": "候補者はどう投票した？",
@@ -219,7 +225,9 @@
     "missingCandidate": "候補者がリストにいません",
     "unverified": "未認証",
     "optedOut": "辞退",
-    "noContact": "連絡先情報なし"
+    "noContact": "連絡先情報なし",
+    "votedYes": "はい \u2713",
+    "votedNo": "いいえ \u2717"
   },
   "map": {
     "title": "候補者を探す",

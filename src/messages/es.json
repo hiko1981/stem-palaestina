@@ -167,7 +167,13 @@
     "message": "¡Hola! Me gustaría invitarte a posicionarte sobre las tres demandas en Vota Palestina. Regístrate como candidato aquí:",
     "emailSubject": "Invitación: Posiciónate en Vota Palestina",
     "sent": "¡Invitación enviada!",
-    "sendError": "No se pudo enviar. Inténtalo de nuevo."
+    "sendError": "No se pudo enviar. Inténtalo de nuevo.",
+    "rateLimited": "Demasiadas invitaciones. Inténtalo de nuevo en una hora.",
+    "alreadyInvited": "Ya has invitado a este candidato.",
+    "noEmail": "El candidato no tiene correo electrónico público.",
+    "candidateOptedOut": "El candidato ha rechazado las invitaciones.",
+    "noPhone": "El candidato no tiene número de teléfono público.",
+    "invalidPhone": "Número de teléfono no válido."
   },
   "candidateVotes": {
     "title": "¿Cómo votaron los candidatos?",
@@ -219,7 +225,9 @@
     "missingCandidate": "Mi candidato no está en la lista",
     "unverified": "No verificado",
     "optedOut": "Dado de baja",
-    "noContact": "Sin datos de contacto"
+    "noContact": "Sin datos de contacto",
+    "votedYes": "Sí \u2713",
+    "votedNo": "No \u2717"
   },
   "map": {
     "title": "Encuentra tu candidato",

@@ -167,7 +167,13 @@
     "message": "您好！我想邀请您在「为巴勒斯坦投票」平台上就三项诉求表明立场。请在此注册成为候选人：",
     "emailSubject": "邀请：在「为巴勒斯坦投票」上表明立场",
     "sent": "邀请已发送！",
-    "sendError": "发送失败，请重试。"
+    "sendError": "发送失败，请重试。",
+    "rateLimited": "邀请次数过多。请一小时后再试。",
+    "alreadyInvited": "您已经邀请过此候选人。",
+    "noEmail": "候选人没有公开电子邮件。",
+    "candidateOptedOut": "候选人已拒绝邀请。",
+    "noPhone": "候选人没有公开电话号码。",
+    "invalidPhone": "电话号码无效。"
   },
   "candidateVotes": {
     "title": "候选人如何投票？",
@@ -219,7 +225,9 @@
     "missingCandidate": "我的候选人不在列表中",
     "unverified": "未验证",
     "optedOut": "已退出",
-    "noContact": "无联系方式"
+    "noContact": "无联系方式",
+    "votedYes": "是 \u2713",
+    "votedNo": "否 \u2717"
   },
   "map": {
     "title": "找到你的候选人",

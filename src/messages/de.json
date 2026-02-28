@@ -167,7 +167,13 @@
     "message": "Hallo! Ich möchte dich einladen, zu den drei Forderungen auf Stimme für Palästina Stellung zu beziehen. Registriere dich hier als Kandidat:",
     "emailSubject": "Einladung: Beziehe Stellung auf Stimme für Palästina",
     "sent": "Einladung gesendet!",
-    "sendError": "Konnte nicht gesendet werden. Versuche es erneut."
+    "sendError": "Konnte nicht gesendet werden. Versuche es erneut.",
+    "rateLimited": "Zu viele Einladungen. Versuche es in einer Stunde erneut.",
+    "alreadyInvited": "Du hast diesen Kandidaten bereits eingeladen.",
+    "noEmail": "Der Kandidat hat keine öffentliche E-Mail.",
+    "candidateOptedOut": "Der Kandidat hat Einladungen abgelehnt.",
+    "noPhone": "Der Kandidat hat keine öffentliche Telefonnummer.",
+    "invalidPhone": "Ungültige Telefonnummer."
   },
   "candidateVotes": {
     "title": "Wie haben die Kandidaten abgestimmt?",
@@ -219,7 +225,9 @@
     "missingCandidate": "Mein Kandidat ist nicht auf der Liste",
     "unverified": "Nicht verifiziert",
     "optedOut": "Abgemeldet",
-    "noContact": "Keine Kontaktdaten"
+    "noContact": "Keine Kontaktdaten",
+    "votedYes": "Ja \u2713",
+    "votedNo": "Nein \u2717"
   },
   "map": {
     "title": "Finde deinen Kandidaten",

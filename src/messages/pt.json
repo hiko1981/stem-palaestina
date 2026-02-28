@@ -167,7 +167,13 @@
     "message": "Olá! Gostaria de te convidar a tomar posição sobre as três exigências no Vote Palestina. Regista-te como candidato aqui:",
     "emailSubject": "Convite: Tome posição no Vote Palestina",
     "sent": "Convite enviado!",
-    "sendError": "Não foi possível enviar. Tente novamente."
+    "sendError": "Não foi possível enviar. Tente novamente.",
+    "rateLimited": "Muitos convites. Tente novamente em uma hora.",
+    "alreadyInvited": "Você já convidou este candidato.",
+    "noEmail": "O candidato não tem e-mail público.",
+    "candidateOptedOut": "O candidato recusou convites.",
+    "noPhone": "O candidato não tem número de telefone público.",
+    "invalidPhone": "Número de telefone inválido."
   },
   "candidateVotes": {
     "title": "Como votaram os candidatos?",
@@ -219,7 +225,9 @@
     "missingCandidate": "O meu candidato não está na lista",
     "unverified": "Não verificado",
     "optedOut": "Cancelado",
-    "noContact": "Sem informações de contato"
+    "noContact": "Sem informações de contato",
+    "votedYes": "Sim \u2713",
+    "votedNo": "Não \u2717"
   },
   "map": {
     "title": "Encontre seu candidato",

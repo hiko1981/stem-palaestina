@@ -167,7 +167,13 @@
     "message": "Bonjour ! Je vous invite à prendre position sur les trois exigences sur Vote Palestine. Inscrivez-vous comme candidat ici :",
     "emailSubject": "Invitation : Prenez position sur Vote Palestine",
     "sent": "Invitation envoyée !",
-    "sendError": "Échec de l envoi. Réessayez."
+    "sendError": "Échec de l envoi. Réessayez.",
+    "rateLimited": "Trop d'invitations. Réessayez dans une heure.",
+    "alreadyInvited": "Vous avez déjà invité ce candidat.",
+    "noEmail": "Le candidat n'a pas d'e-mail public.",
+    "candidateOptedOut": "Le candidat a refusé les invitations.",
+    "noPhone": "Le candidat n'a pas de numéro de téléphone public.",
+    "invalidPhone": "Numéro de téléphone invalide."
   },
   "candidateVotes": {
     "title": "Comment les candidats ont-ils voté ?",
@@ -219,7 +225,9 @@
     "missingCandidate": "Mon candidat n est pas sur la liste",
     "unverified": "Non vérifié",
     "optedOut": "Désabonné",
-    "noContact": "Aucune information de contact"
+    "noContact": "Aucune information de contact",
+    "votedYes": "Oui \u2713",
+    "votedNo": "Non \u2717"
   },
   "map": {
     "title": "Trouvez votre candidat",

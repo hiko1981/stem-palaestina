@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     );
     if (!limit.ok) {
       return NextResponse.json(
-        { error: "For mange invitationer. Prøv igen om en time." },
+        { error: "rateLimited" },
         { status: 429 }
       );
     }
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       );
       if (!perCandidateLimit.ok) {
         return NextResponse.json(
-          { error: "Du har allerede inviteret denne kandidat. Prøv igen senere." },
+          { error: "alreadyInvited" },
           { status: 429 }
         );
       }
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
 
       if (!candidate || !candidate.contactEmail) {
         return NextResponse.json(
-          { error: "Kandidaten har ingen offentlig e-mail." },
+          { error: "noEmail" },
           { status: 400 }
         );
       }
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
       // Public error: candidate has opted out
       if (candidate.optedOut) {
         return NextResponse.json(
-          { error: "Kandidaten har frabedt sig henvendelser." },
+          { error: "candidateOptedOut" },
           { status: 403 }
         );
       }
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
       );
       if (!perCandidateSmsLimit.ok) {
         return NextResponse.json(
-          { error: "Du har allerede inviteret denne kandidat. Prøv igen senere." },
+          { error: "alreadyInvited" },
           { status: 429 }
         );
       }
@@ -127,14 +127,14 @@ export async function POST(req: NextRequest) {
 
       if (!candidate || !candidate.contactPhone) {
         return NextResponse.json(
-          { error: "Kandidaten har intet offentligt telefonnummer." },
+          { error: "noPhone" },
           { status: 400 }
         );
       }
 
       if (candidate.optedOut) {
         return NextResponse.json(
-          { error: "Kandidaten har frabedt sig henvendelser." },
+          { error: "candidateOptedOut" },
           { status: 403 }
         );
       }
@@ -155,13 +155,13 @@ export async function POST(req: NextRequest) {
 
     if (msg.includes("Invalid") && msg.includes("Phone Number")) {
       return NextResponse.json(
-        { error: "Ugyldigt telefonnummer." },
+        { error: "invalidPhone" },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { error: "Kunne ikke sende invitation. Prøv igen." },
+      { error: "sendError" },
       { status: 500 }
     );
   }
