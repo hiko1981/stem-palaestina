@@ -1,32 +1,33 @@
+import nodemailer from "nodemailer";
+
 export async function sendEmail(
   to: string,
   subject: string,
   body: string
 ): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM || "Stem Palæstina <noreply@stem-palaestina.dk>";
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const from = process.env.SMTP_FROM;
+  const fromName = process.env.SMTP_FROM_NAME || "Stem Palæstina";
+  const port = Number(process.env.SMTP_PORT || "587");
 
-  if (!apiKey) {
+  if (!host || !user || !pass || !from) {
     console.log(`[EMAIL DEV] Til ${to}: ${subject}\n${body}`);
     return;
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      from,
-      to,
-      subject,
-      text: body,
-    }),
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
   });
 
-  if (!res.ok) {
-    const data = await res.json();
-    throw new Error(`Resend fejl: ${res.status} ${data.message || JSON.stringify(data)}`);
-  }
+  await transporter.sendMail({
+    from: `${fromName} <${from}>`,
+    to,
+    subject,
+    text: body,
+  });
 }
