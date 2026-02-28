@@ -130,8 +130,8 @@ export async function POST(req: NextRequest) {
     const qs = params.toString();
     const ballotUrl = `${getBaseUrl()}/stem/${token}${qs ? `?${qs}` : ""}`;
     const smsText = parsed.data.role === "candidate"
-      ? `Registrér dig som kandidat på Stem Palæstina: ${ballotUrl}\n\nStem og udfyld din kandidatprofil. Linket udløber om ${BALLOT_EXPIRY_HOURS} timer.`
-      : `Din stemmeseddel til Stem Palæstina: ${ballotUrl}\n\nLinket udløber om ${BALLOT_EXPIRY_HOURS} timer.`;
+      ? `Stem Palæstina: Registrér dig som kandidat her: ${ballotUrl}`
+      : `Stem Palæstina: Afgiv din stemme her: ${ballotUrl}`;
     await sendSms(phone, smsText);
 
     return NextResponse.json({ ok: true });
