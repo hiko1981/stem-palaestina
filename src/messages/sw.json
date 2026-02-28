@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "Mwalike mgombea wako wa eneo",
+    "allParties": "Vyama vyote",
     "unclaimed": "Hakupiga kura",
     "inviteTitle": "Alika mgombea",
     "missingCandidate": "Mgombea wangu hayuko kwenye orodha",
@@ -223,6 +224,7 @@
     "title": "Tafuta mgombea wako",
     "selectRegion": "Chagua eneo",
     "noCandidates": "Bado hakuna wagombea katika eneo hili",
+    "allParties": "Vyama vyote",
     "unclaimed": "Hakupiga kura"
   },
   "constituency": {

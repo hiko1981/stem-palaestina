@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "Undang kandidat lokal Anda",
+    "allParties": "Semua partai",
     "unclaimed": "Belum memilih",
     "inviteTitle": "Undang kandidat",
     "missingCandidate": "Kandidat saya tidak ada di daftar",
@@ -223,6 +224,7 @@
     "title": "Temukan kandidat Anda",
     "selectRegion": "Pilih wilayah",
     "noCandidates": "Belum ada kandidat di wilayah ini",
+    "allParties": "Semua partai",
     "unclaimed": "Belum memilih"
   },
   "constituency": {

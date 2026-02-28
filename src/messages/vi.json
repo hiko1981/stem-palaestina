@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "Mời ứng cử viên địa phương",
+    "allParties": "Tất cả đảng",
     "unclaimed": "Chưa bỏ phiếu",
     "inviteTitle": "Mời ứng cử viên",
     "missingCandidate": "Ứng cử viên của tôi không có trong danh sách",
@@ -223,6 +224,7 @@
     "title": "Tìm ứng viên của bạn",
     "selectRegion": "Chọn khu vực",
     "noCandidates": "Chưa có ứng viên trong khu vực này",
+    "allParties": "Tất cả đảng",
     "unclaimed": "Chưa bỏ phiếu"
   },
   "constituency": {

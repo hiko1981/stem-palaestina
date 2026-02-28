@@ -230,6 +230,7 @@
   },
   "candidateList": {
     "title": "Inviter din lokale kandidat",
+    "allParties": "Alle partier",
     "unclaimed": "Mangler stemme",
     "inviteTitle": "Inviter en kandidat",
     "missingCandidate": "Min kandidat er ikke på listen",

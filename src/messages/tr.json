@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "Yerel adayınızı davet edin",
+    "allParties": "Tüm partiler",
     "unclaimed": "Oy kullanmadı",
     "inviteTitle": "Aday davet et",
     "missingCandidate": "Adayım listede değil",
@@ -223,6 +224,7 @@
     "title": "Adayınızı bulun",
     "selectRegion": "Bölge seçin",
     "noCandidates": "Bu bölgede henüz aday yok",
+    "allParties": "Tüm partiler",
     "unclaimed": "Oy kullanmadı"
   },
   "constituency": {

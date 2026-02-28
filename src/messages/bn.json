@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "আপনার স্থানীয় প্রার্থীকে আমন্ত্রণ জানান",
+    "allParties": "সব দল",
     "unclaimed": "ভোট দেয়নি",
     "inviteTitle": "প্রার্থীকে আমন্ত্রণ জানান",
     "missingCandidate": "আমার প্রার্থী তালিকায় নেই",
@@ -223,6 +224,7 @@
     "title": "আপনার প্রার্থী খুঁজুন",
     "selectRegion": "অঞ্চল নির্বাচন করুন",
     "noCandidates": "এই অঞ্চলে এখনও কোনো প্রার্থী নেই",
+    "allParties": "সব দল",
     "unclaimed": "ভোট দেয়নি"
   },
   "constituency": {

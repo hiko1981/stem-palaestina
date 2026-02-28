@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "Invitez votre candidat local",
+    "allParties": "Tous les partis",
     "unclaimed": "Vote manquant",
     "inviteTitle": "Inviter un candidat",
     "missingCandidate": "Mon candidat n est pas sur la liste",
@@ -223,6 +224,7 @@
     "title": "Trouvez votre candidat",
     "selectRegion": "Sélectionnez une région",
     "noCandidates": "Aucun candidat dans cette région pour le moment",
+    "allParties": "Tous les partis",
     "unclaimed": "Vote manquant"
   },
   "constituency": {

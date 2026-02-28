@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "ادعُ مرشحك المحلي",
+    "allParties": "جميع الأحزاب",
     "unclaimed": "لم يصوت",
     "inviteTitle": "ادعُ مرشحاً",
     "missingCandidate": "مرشحي ليس في القائمة",
@@ -223,6 +224,7 @@
     "title": "ابحث عن مرشحك",
     "selectRegion": "اختر المنطقة",
     "noCandidates": "لا يوجد مرشحون في هذه المنطقة بعد",
+    "allParties": "جميع الأحزاب",
     "unclaimed": "لم يصوت"
   },
   "constituency": {

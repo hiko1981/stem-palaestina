@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "Пригласите местного кандидата",
+    "allParties": "Все партии",
     "unclaimed": "Нет голоса",
     "inviteTitle": "Пригласить кандидата",
     "missingCandidate": "Моего кандидата нет в списке",
@@ -223,6 +224,7 @@
     "title": "Найдите своего кандидата",
     "selectRegion": "Выберите регион",
     "noCandidates": "В этом регионе пока нет кандидатов",
+    "allParties": "Все партии",
     "unclaimed": "Нет голоса"
   },
   "constituency": {

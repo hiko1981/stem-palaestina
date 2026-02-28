@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "اپنے مقامی امیدوار کو مدعو کریں",
+    "allParties": "تمام پارٹیاں",
     "unclaimed": "ووٹ نہیں دیا",
     "inviteTitle": "امیدوار کو مدعو کریں",
     "missingCandidate": "میرا امیدوار فہرست میں نہیں ہے",
@@ -223,6 +224,7 @@
     "title": "اپنا امیدوار تلاش کریں",
     "selectRegion": "علاقہ منتخب کریں",
     "noCandidates": "اس علاقے میں ابھی کوئی امیدوار نہیں",
+    "allParties": "تمام پارٹیاں",
     "unclaimed": "ووٹ نہیں دیا"
   },
   "constituency": {

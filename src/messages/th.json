@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "เชิญผู้สมัครในพื้นที่ของคุณ",
+    "allParties": "ทุกพรรค",
     "unclaimed": "ยังไม่ลงคะแนน",
     "inviteTitle": "เชิญผู้สมัคร",
     "missingCandidate": "ผู้สมัครของฉันไม่อยู่ในรายชื่อ",
@@ -223,6 +224,7 @@
     "title": "ค้นหาผู้สมัครของคุณ",
     "selectRegion": "เลือกภูมิภาค",
     "noCandidates": "ยังไม่มีผู้สมัครในภูมิภาคนี้",
+    "allParties": "ทุกพรรค",
     "unclaimed": "ยังไม่ลงคะแนน"
   },
   "constituency": {

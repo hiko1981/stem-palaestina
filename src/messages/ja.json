@@ -213,6 +213,7 @@
   },
   "candidateList": {
     "title": "地元の候補者を招待する",
+    "allParties": "全政党",
     "unclaimed": "未投票",
     "inviteTitle": "候補者を招待",
     "missingCandidate": "候補者がリストにいません",
@@ -223,6 +224,7 @@
     "title": "候補者を探す",
     "selectRegion": "地域を選択",
     "noCandidates": "この地域にはまだ候補者がいません",
+    "allParties": "全政党",
     "unclaimed": "未投票"
   },
   "constituency": {

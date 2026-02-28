@@ -52,6 +52,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
   const [candidates, setCandidates] = useState<CandidateWithStatus[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [internalStorkreds, setInternalStorkreds] = useState("");
+  const [partyFilter, setPartyFilter] = useState("");
 
   const storkreds = controlledStorkreds ?? internalStorkreds;
   function setStorkreds(val: string) {
@@ -190,11 +191,20 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
     );
   }
 
-  // Filter by storkreds
+  // Unique parties sorted by party letter
+  const parties = Array.from(new Set(candidates.map((c) => c.party))).sort((a, b) => {
+    const la = partyLetter(a);
+    const lb = partyLetter(b);
+    return la.localeCompare(lb, "da");
+  });
+
+  // Filter by storkreds and party
   const storkredsName = STORKREDSE.find((s) => s.id === storkreds)?.name;
-  const filtered = storkreds
-    ? candidates.filter((c) => c.constituency === storkredsName)
-    : candidates;
+  const filtered = candidates.filter((c) => {
+    if (storkreds && c.constituency !== storkredsName) return false;
+    if (partyFilter && c.party !== partyFilter) return false;
+    return true;
+  });
 
   const jaList = filtered.filter((c) => c.voteValue === true);
   const nejList = filtered.filter((c) => c.voteValue === false);
@@ -307,19 +317,33 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
 
   return (
     <div className="space-y-3">
-      {/* Storkreds filter */}
-      <select
-        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
-        value={storkreds}
-        onChange={(e) => setStorkreds(e.target.value)}
-      >
-        <option value="">{ct("placeholder")}</option>
-        {STORKREDSE.map((sk) => (
-          <option key={sk.id} value={sk.id}>
-            {st(sk.id)}
-          </option>
-        ))}
-      </select>
+      {/* Filters */}
+      <div className="flex gap-2">
+        <select
+          className="flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+          value={storkreds}
+          onChange={(e) => setStorkreds(e.target.value)}
+        >
+          <option value="">{ct("placeholder")}</option>
+          {STORKREDSE.map((sk) => (
+            <option key={sk.id} value={sk.id}>
+              {st(sk.id)}
+            </option>
+          ))}
+        </select>
+        <select
+          className="w-28 rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+          value={partyFilter}
+          onChange={(e) => setPartyFilter(e.target.value)}
+        >
+          <option value="">{cl("allParties")}</option>
+          {parties.map((p) => (
+            <option key={p} value={p}>
+              {partyLetter(p)}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Two columns: Ja / Nej */}
       {(jaList.length > 0 || nejList.length > 0) && (
