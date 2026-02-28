@@ -40,13 +40,34 @@ export async function POST(req: NextRequest) {
     }
 
     const phoneHash = hashPhone(phone);
+    const deviceId = parsed.data.deviceId;
 
-    // Silent suppression: if phone already voted, return ok without sending SMS
+    // If phone already voted: link this device, return vote state, skip SMS
     const existingVote = await prisma.vote.findUnique({
       where: { phoneHash },
     });
     if (existingVote) {
-      return NextResponse.json({ ok: true });
+      // Link new device to this phone hash (best-effort)
+      if (deviceId) {
+        prisma.deviceParticipation.upsert({
+          where: { deviceId },
+          create: { deviceId, phoneHash },
+          update: { phoneHash },
+        }).catch(() => {});
+      }
+
+      const response = NextResponse.json({
+        ok: true,
+        alreadyVoted: true,
+        voteValue: existingVote.voteValue,
+      });
+      const cookieOpts = "Path=/; Max-Age=31536000; SameSite=Lax; Secure";
+      response.headers.append("Set-Cookie", `stem_voted=1; ${cookieOpts}`);
+      response.headers.append("Set-Cookie", `stem_vote_value=${existingVote.voteValue}; ${cookieOpts}`);
+      if (deviceId) {
+        response.headers.append("Set-Cookie", `stem_device_id=${deviceId}; ${cookieOpts}`);
+      }
+      return response;
     }
 
     // Silent suppression: if phone opted out, return ok without sending SMS
@@ -101,7 +122,6 @@ export async function POST(req: NextRequest) {
     );
 
     // Check device slots (if deviceId provided). Use token as slot id so it can be freed on vote.
-    const deviceId = parsed.data.deviceId;
     if (deviceId) {
       const slotResult = await checkAndReserveSlot(deviceId, token, phoneHash);
       if (!slotResult.ok) {

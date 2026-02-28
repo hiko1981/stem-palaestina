@@ -224,6 +224,14 @@ export default function Home() {
         setPhoneError(data.error);
         return;
       }
+      // Phone already voted — reclaim vote state for this context
+      if (data.alreadyVoted) {
+        const val = data.voteValue ?? true;
+        setDeviceVoted(val);
+        setVotedYes(val);
+        setHasVoted(true);
+        return;
+      }
       setSmsSent(true);
     } catch {
       setPhoneError(b("networkError"));
@@ -467,6 +475,7 @@ export default function Home() {
 
         {activeTab === "results" && (
           <div className="space-y-5 py-2">
+            <PublicVoteBar />
             <ResultsView />
           </div>
         )}
