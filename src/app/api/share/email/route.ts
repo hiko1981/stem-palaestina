@@ -5,9 +5,14 @@ import { checkRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({
   email: z.string().email(),
-  subject: z.string().min(1).max(200),
-  body: z.string().min(1).max(2000),
 });
+
+function getBaseUrl() {
+  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercelUrl) return `https://${vercelUrl}`;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  return "https://stem-palaestina.vercel.app";
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,7 +36,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await sendEmail(parsed.data.email, parsed.data.subject, parsed.data.body);
+    const url = getBaseUrl();
+
+    const subject = "En vælger har delt Stem Palæstina med dig";
+    const body = `Hej,
+
+En vælger på Stem Palæstina har valgt at dele appen med dig.
+
+Stem Palæstina er en uafhængig afstemning hvor danske vælgere kan tage stilling til tre krav:
+
+1. Anerkend Palæstina
+2. Stop våbensalg til Israel
+3. Stop ulovlige investeringer
+
+Brug din stemme her:
+${url}
+
+Med venlig hilsen
+Stem Palæstina`;
+
+    await sendEmail(parsed.data.email, subject, body);
 
     return NextResponse.json({ ok: true });
   } catch (error) {

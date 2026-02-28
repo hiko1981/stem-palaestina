@@ -59,11 +59,7 @@ export default function SharePanel() {
       const res = await fetch("/api/share/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          subject: t("emailSubject"),
-          body: `${t("emailBody")}\n\n${baseUrl}`,
-        }),
+        body: JSON.stringify({ email }),
       });
       const data = await res.json();
       if (!res.ok) {
