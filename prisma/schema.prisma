@@ -52,6 +52,7 @@ model Candidate {
   party           String
   constituency    String
   contactEmail    String?   @map("contact_email")
+  contactPhone    String?   @map("contact_phone")
   phoneHash       String?   @map("phone_hash")
   pledged         Boolean   @default(false)
   publicStatement String?   @map("public_statement")
