@@ -17,9 +17,6 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: "/apple-touch-icon.png",
     },
     manifest: "/site.webmanifest",
-    openGraph: {
-      images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-    },
   };
 }
 
