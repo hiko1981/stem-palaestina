@@ -9,6 +9,8 @@ interface CandidateVote {
   name: string;
   party: string;
   constituency: string;
+  verified: boolean;
+  optedOut: boolean;
   voteValue: boolean | null;
 }
 
@@ -107,10 +109,11 @@ export default function ResultsView() {
   const kredsFiltered = storkreds
     ? candidates.filter((c) => c.constituency === storkredsName)
     : candidates;
-  const parties = [...new Set(kredsFiltered.map((c) => c.party))].sort();
+  const verifiedOnly = kredsFiltered.filter((c) => c.verified && !c.optedOut);
+  const parties = [...new Set(verifiedOnly.map((c) => c.party))].sort();
   const filtered = party
-    ? kredsFiltered.filter((c) => c.party === party)
-    : kredsFiltered;
+    ? verifiedOnly.filter((c) => c.party === party)
+    : verifiedOnly;
 
   const votedCandidates = filtered.filter((c) => c.voteValue !== null);
   const candidateJa = votedCandidates.filter((c) => c.voteValue === true).length;

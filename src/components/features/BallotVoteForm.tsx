@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import InviteSection from "@/components/features/InviteSection";
 import CandidatePublicForm from "@/components/features/CandidatePublicForm";
@@ -12,19 +12,20 @@ interface BallotVoteFormProps {
   candidateId?: string;
 }
 
-type Status = "loading" | "submitting" | "voted" | "used" | "expired" | "not_found" | "already_voted" | "error";
+type Status = "loading" | "ready" | "submitting" | "voted" | "used" | "expired" | "not_found" | "already_voted" | "error";
 
 export default function BallotVoteForm({ token, role, candidateId }: BallotVoteFormProps) {
   const [status, setStatus] = useState<Status>("loading");
   const [error, setError] = useState("");
+  const [voteValue, setVoteValue] = useState(true);
   const [isCandidate, setIsCandidate] = useState(false);
-  const submitted = useRef(false);
+  const [optingOut, setOptingOut] = useState(false);
+  const [optedOut, setOptedOut] = useState(false);
   const router = useRouter();
   const t = useTranslations("ballot");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // URL param (r=c) is primary source — survives cross-browser SMS opens
       const fromUrl = role === "c";
       const fromStorage = localStorage.getItem("stem_palaestina_role") === "candidate";
       setIsCandidate(fromUrl || fromStorage);
@@ -32,13 +33,13 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
   }, [role]);
 
   useEffect(() => {
-    // Check ballot validity then auto-submit
+    // Check ballot validity
     fetch(`/api/ballot/check?token=${token}`)
       .then((res) => res.json())
       .then((data) => {
         const s = data.status as string;
         if (s === "valid") {
-          autoSubmit();
+          setStatus("ready");
         } else {
           setStatus(s as Status);
         }
@@ -46,25 +47,21 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
       .catch(() => {
         setStatus("error");
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
-  async function autoSubmit() {
-    if (submitted.current) return;
-    submitted.current = true;
+  async function handleSubmitVote() {
     setStatus("submitting");
+    setError("");
 
-    // Read vote from localStorage (default: true)
-    const storedVote = typeof window !== "undefined"
-      ? localStorage.getItem("stem_palaestina_vote")
-      : null;
-    const voteValue = storedVote === "false" ? false : true;
+    const deviceId = typeof window !== "undefined"
+      ? localStorage.getItem("stem_device_id") || undefined
+      : undefined;
 
     try {
       const res = await fetch("/api/vote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, voteValue }),
+        body: JSON.stringify({ token, voteValue, deviceId }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -72,18 +69,23 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
         setStatus("error");
         return;
       }
-      localStorage.setItem("stem_palaestina_voted", "true");
+
+      // Mark device as voted locally
+      if (typeof window !== "undefined") {
+        localStorage.setItem("stem_palaestina_voted", "true");
+        localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
+      }
 
       // Voter → redirect to results
       const fromUrl = role === "c";
-      const fromStorage = localStorage.getItem("stem_palaestina_role") === "candidate";
+      const fromStorage = typeof window !== "undefined" && localStorage.getItem("stem_palaestina_role") === "candidate";
       if (!fromUrl && !fromStorage) {
         router.push("/");
         return;
       }
 
       // Candidate: try auto-claim if an on-list candidate was selected
-      const cid = candidateId || localStorage.getItem("stem_palaestina_candidate_id");
+      const cid = candidateId || (typeof window !== "undefined" ? localStorage.getItem("stem_palaestina_candidate_id") : null);
       if (cid && cid !== "new") {
         try {
           const claimRes = await fetch("/api/candidate/claim", {
@@ -95,18 +97,21 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
             }),
           });
           if (claimRes.ok) {
-            localStorage.removeItem("stem_palaestina_candidate_id");
+            if (typeof window !== "undefined") {
+              localStorage.removeItem("stem_palaestina_candidate_id");
+            }
             router.push("/");
             return;
           }
-          // Claim failed (already taken) → fall through to CandidatePublicForm
         } catch {
           // Network error → fall through to CandidatePublicForm
         }
       }
 
       // Off-list or claim failed → show registration form
-      localStorage.removeItem("stem_palaestina_candidate_id");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("stem_palaestina_candidate_id");
+      }
       setStatus("voted");
     } catch {
       setError(t("networkError"));
@@ -114,13 +119,108 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
     }
   }
 
-  if (status === "loading" || status === "submitting") {
+  async function handleOptout() {
+    setOptingOut(true);
+    try {
+      const res = await fetch("/api/optout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      if (res.ok) {
+        setOptedOut(true);
+      }
+    } catch {
+      // Silent fail
+    } finally {
+      setOptingOut(false);
+    }
+  }
+
+  function renderOptoutLink() {
+    if (optedOut) {
+      return (
+        <p className="text-center text-xs text-gray-400">
+          {t("optedOutConfirm")}
+        </p>
+      );
+    }
+    return (
+      <button
+        onClick={handleOptout}
+        disabled={optingOut}
+        className="block w-full text-center text-xs text-gray-400 hover:text-gray-600 underline disabled:opacity-50"
+      >
+        {t("optoutLink")}
+      </button>
+    );
+  }
+
+  if (status === "loading") {
     return (
       <div className="text-center py-12">
         <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-melon-green border-t-transparent" />
-        <p className="mt-4 text-gray-600">
-          {status === "submitting" ? t("autoSubmitting") : t("loading")}
-        </p>
+        <p className="mt-4 text-gray-600">{t("loading")}</p>
+      </div>
+    );
+  }
+
+  if (status === "submitting") {
+    return (
+      <div className="text-center py-12">
+        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-melon-green border-t-transparent" />
+        <p className="mt-4 text-gray-600">{t("autoSubmitting")}</p>
+      </div>
+    );
+  }
+
+  // ── Vote choice screen ──
+  if (status === "ready") {
+    return (
+      <div className="space-y-6 py-4">
+        <div className="text-center">
+          <h2 className="text-xl font-bold mb-2">{t("yourBallot")}</h2>
+          <p className="text-gray-600 text-sm">{t("question")}</p>
+        </div>
+
+        {/* Ja/Nej toggle */}
+        <div className="flex gap-3">
+          <label className="flex-1 cursor-pointer">
+            <input
+              type="radio"
+              name="vote"
+              checked={voteValue === true}
+              onChange={() => setVoteValue(true)}
+              className="sr-only peer"
+            />
+            <div className="flex items-center justify-center rounded-lg border-2 border-gray-200 py-4 text-base font-bold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
+              {t("yes")}
+            </div>
+          </label>
+          <label className="flex-1 cursor-pointer">
+            <input
+              type="radio"
+              name="vote"
+              checked={voteValue === false}
+              onChange={() => setVoteValue(false)}
+              className="sr-only peer"
+            />
+            <div className="flex items-center justify-center rounded-lg border-2 border-gray-200 py-4 text-base font-bold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
+              {t("no")}
+            </div>
+          </label>
+        </div>
+
+        <p className="text-xs text-gray-400 text-center">{t("anonNote")}</p>
+
+        <button
+          onClick={handleSubmitVote}
+          className="w-full rounded-lg bg-melon-green py-3 text-sm font-bold text-white transition-colors hover:bg-melon-green/90"
+        >
+          {t("send")}
+        </button>
+
+        {renderOptoutLink()}
       </div>
     );
   }
@@ -160,7 +260,6 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
   }
 
   if ((status === "used" || status === "already_voted") && isCandidate) {
-    // Candidate already voted — show registration form (they may not have registered yet)
     return (
       <div className="space-y-8">
         <div className="text-center py-8">
@@ -216,6 +315,7 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
           <p className="text-gray-600">{t("alreadyVotedText")}</p>
         </div>
         <InviteSection />
+        {renderOptoutLink()}
       </div>
     );
   }

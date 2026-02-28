@@ -11,6 +11,7 @@ interface CandidateWithStatus {
   constituency: string;
   hasEmail: boolean;
   verified: boolean;
+  optedOut: boolean;
   voteValue: boolean | null;
 }
 
@@ -150,7 +151,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
       const res = await fetch("/api/invite/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ method: "sms", to: inviteInput.trim(), candidateName }),
+        body: JSON.stringify({ method: "sms", to: inviteInput.trim(), candidateName, candidateId: expandedId }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -277,19 +278,29 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
     return (
       <div
         key={c.id}
-        onClick={isUnvoted ? () => toggleExpand(c.id) : undefined}
+        onClick={isUnvoted && !c.optedOut ? () => toggleExpand(c.id) : undefined}
         className={`rounded-lg px-2 py-1.5 ${
-          isUnvoted ? "cursor-pointer hover:bg-gray-100" : ""
+          isUnvoted && !c.optedOut ? "cursor-pointer hover:bg-gray-100" : ""
         } ${expandedId === c.id ? "bg-gray-50 ring-1 ring-gray-200" : ""}`}
       >
         <div className="flex items-center gap-2">
           <Initials name={c.name} color={color} />
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
             <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
           </div>
+          {c.optedOut && (
+            <span className="shrink-0 inline-flex items-center rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+              {cl("optedOut")}
+            </span>
+          )}
+          {!c.optedOut && !c.verified && c.voteValue !== null && (
+            <span className="shrink-0 inline-flex items-center rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
+              {cl("unverified")}
+            </span>
+          )}
         </div>
-        {isUnvoted && renderInviteActions(c)}
+        {isUnvoted && !c.optedOut && renderInviteActions(c)}
       </div>
     );
   }

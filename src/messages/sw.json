@@ -125,7 +125,9 @@
     "autoSubmitting": "Inasajili kura yako...",
     "viewResults": "Tazama matokeo",
     "phoneNote": "Nambari yako ya simu inasimbwa kwa njia fiche na haihifadhiwi. Kura moja tu kwa kila simu. {link}",
-    "phoneNoteLink": "Soma zaidi"
+    "phoneNoteLink": "Soma zaidi",
+    "optoutLink": "Acha kupokea ujumbe",
+    "optedOutConfirm": "Hutapokea ujumbe tena kutoka kwetu."
   },
   "voteCounter": {
     "singular": "kura",
@@ -210,7 +212,9 @@
     "title": "Mwalike mgombea wako wa eneo",
     "unclaimed": "Hakupiga kura",
     "inviteTitle": "Alika mgombea",
-    "missingCandidate": "Mgombea wangu hayuko kwenye orodha"
+    "missingCandidate": "Mgombea wangu hayuko kwenye orodha",
+    "unverified": "Haijathibitishwa",
+    "optedOut": "Amejiondoa"
   },
   "map": {
     "title": "Tafuta mgombea wako",

@@ -125,7 +125,9 @@
     "autoSubmitting": "正在登记您的投票...",
     "viewResults": "查看结果",
     "phoneNote": "您的手机号码经过加密且不会被存储。每个手机号只能投一票。{link}",
-    "phoneNoteLink": "了解更多"
+    "phoneNoteLink": "了解更多",
+    "optoutLink": "停止接收消息",
+    "optedOutConfirm": "您将不再收到我们的消息。"
   },
   "voteCounter": {
     "singular": "票",
@@ -210,7 +212,9 @@
     "title": "邀请您的本地候选人",
     "unclaimed": "缺少投票",
     "inviteTitle": "邀请候选人",
-    "missingCandidate": "我的候选人不在列表中"
+    "missingCandidate": "我的候选人不在列表中",
+    "unverified": "未验证",
+    "optedOut": "已退出"
   },
   "map": {
     "title": "找到你的候选人",

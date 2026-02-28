@@ -125,7 +125,9 @@
     "autoSubmitting": "Registrerer din stemme...",
     "viewResults": "Se resultater",
     "phoneNote": "Dit telefonnummer krypteres og gemmes ikke. Kun én stemme per telefon. {link}",
-    "phoneNoteLink": "Læs mere"
+    "phoneNoteLink": "Læs mere",
+    "optoutLink": "Modtag ikke flere SMS'er",
+    "optedOutConfirm": "Du modtager ikke flere SMS'er fra os."
   },
   "voteCounter": {
     "singular": "stemme",
@@ -227,7 +229,9 @@
     "title": "Inviter din lokale kandidat",
     "unclaimed": "Mangler stemme",
     "inviteTitle": "Inviter en kandidat",
-    "missingCandidate": "Min kandidat er ikke på listen"
+    "missingCandidate": "Min kandidat er ikke på listen",
+    "unverified": "Ikke bekræftet",
+    "optedOut": "Frameldt"
   },
   "map": {
     "title": "Find din kandidat",

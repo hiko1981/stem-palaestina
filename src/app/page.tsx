@@ -106,7 +106,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 
 export default function Home() {
   const [hasVoted, setHasVoted] = useState<boolean | null>(null);
-  const [voteValue, setVoteValue] = useState(true);
+  const [votedYes, setVotedYes] = useState(true);
   const [activePanel, setActivePanel] = useState<ActivePanel>("voter");
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("+45");
@@ -128,10 +128,50 @@ export default function Home() {
       if (!localStorage.getItem("stem_device_id")) {
         localStorage.setItem("stem_device_id", crypto.randomUUID());
       }
-      setHasVoted(localStorage.getItem("stem_palaestina_voted") === "true");
+
+      // Deep linking: ?panel=candidate or ?panel=invite
+      const params = new URLSearchParams(window.location.search);
+      const panel = params.get("panel");
+      if (panel === "candidate") setActivePanel("candidate");
+      else if (panel === "invite") setActivePanel("invite");
+
+      const deviceId = localStorage.getItem("stem_device_id");
+
+      // Check participation server-side, fall back to localStorage
+      if (deviceId) {
+        fetch(`/api/participation?deviceId=${encodeURIComponent(deviceId)}`)
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.participated) {
+              localStorage.setItem("stem_palaestina_voted", "true");
+              if (data.voteValue !== null && data.voteValue !== undefined) {
+                setVotedYes(data.voteValue);
+              }
+              setHasVoted(true);
+            } else {
+              // Fall back to localStorage (for users who voted before this feature)
+              const localVoted = localStorage.getItem("stem_palaestina_voted") === "true";
+              if (localVoted) {
+                const storedVote = localStorage.getItem("stem_palaestina_vote");
+                setVotedYes(storedVote !== "false");
+              }
+              setHasVoted(localVoted);
+            }
+          })
+          .catch(() => {
+            // Network error → fall back to localStorage
+            const localVoted = localStorage.getItem("stem_palaestina_voted") === "true";
+            if (localVoted) {
+              const storedVote = localStorage.getItem("stem_palaestina_vote");
+              setVotedYes(storedVote !== "false");
+            }
+            setHasVoted(localVoted);
+          });
+      } else {
+        setHasVoted(localStorage.getItem("stem_palaestina_voted") === "true");
+      }
 
       // Check for targeted one-time notifications
-      const deviceId = localStorage.getItem("stem_device_id");
       if (deviceId) {
         fetch("/api/notify", {
           method: "POST",
@@ -172,7 +212,6 @@ export default function Home() {
 
   async function handleSendBallot() {
     if (typeof window !== "undefined") {
-      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
       localStorage.setItem("stem_palaestina_role", "voter");
     }
     setPhoneError("");
@@ -224,10 +263,6 @@ export default function Home() {
 
   // ───── POST-VOTE STATE ─────
   if (hasVoted) {
-    const storedVote = typeof window !== "undefined"
-      ? localStorage.getItem("stem_palaestina_vote")
-      : null;
-    const votedYes = storedVote !== "false";
     // Post-vote: default to results if still on "vote"
     const postTab = activeTab === "vote" ? "results" : activeTab;
 
@@ -383,33 +418,6 @@ export default function Home() {
                 </button>
                 {activePanel === "voter" && (
                   <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
-                    {/* Ja/Nej toggle */}
-                    <div className="flex gap-2">
-                      <label className="flex-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="vote"
-                          checked={voteValue === true}
-                          onChange={() => setVoteValue(true)}
-                          className="sr-only peer"
-                        />
-                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
-                          {b("yes")}
-                        </div>
-                      </label>
-                      <label className="flex-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="vote"
-                          checked={voteValue === false}
-                          onChange={() => setVoteValue(false)}
-                          className="sr-only peer"
-                        />
-                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
-                          {b("no")}
-                        </div>
-                      </label>
-                    </div>
                     {phoneInput}
                   </div>
                 )}
@@ -426,40 +434,12 @@ export default function Home() {
                 </button>
                 {activePanel === "candidate" && (
                   <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
-                    {/* Ja/Nej toggle */}
-                    <div className="flex gap-2">
-                      <label className="flex-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="vote-candidate"
-                          checked={voteValue === true}
-                          onChange={() => setVoteValue(true)}
-                          className="sr-only peer"
-                        />
-                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-green peer-checked:bg-melon-green/5 peer-checked:text-melon-green">
-                          {b("yes")}
-                        </div>
-                      </label>
-                      <label className="flex-1 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="vote-candidate"
-                          checked={voteValue === false}
-                          onChange={() => setVoteValue(false)}
-                          className="sr-only peer"
-                        />
-                        <div className="flex items-center justify-center rounded-lg border border-gray-200 py-2 text-sm font-semibold transition-colors peer-checked:border-melon-red peer-checked:bg-red-50 peer-checked:text-melon-red">
-                          {b("no")}
-                        </div>
-                      </label>
-                    </div>
                     <CandidateSelect
                       onSelect={(value) => {
                         if (typeof window !== "undefined") {
                           localStorage.setItem("stem_palaestina_candidate_id", value);
                         }
                       }}
-                      voteValue={voteValue}
                     />
                   </div>
                 )}

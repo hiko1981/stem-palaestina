@@ -125,7 +125,9 @@
     "autoSubmitting": "투표를 등록하는 중...",
     "viewResults": "결과 보기",
     "phoneNote": "전화번호는 암호화되며 저장되지 않습니다. 전화번호당 한 표만 가능합니다. {link}",
-    "phoneNoteLink": "자세히 보기"
+    "phoneNoteLink": "자세히 보기",
+    "optoutLink": "메시지 수신 중지",
+    "optedOutConfirm": "더 이상 메시지를 받지 않습니다."
   },
   "voteCounter": {
     "singular": "표",
@@ -210,7 +212,9 @@
     "title": "지역 후보자를 초대하세요",
     "unclaimed": "투표 없음",
     "inviteTitle": "후보자 초대",
-    "missingCandidate": "후보자가 목록에 없습니다"
+    "missingCandidate": "후보자가 목록에 없습니다",
+    "unverified": "미인증",
+    "optedOut": "탈퇴"
   },
   "map": {
     "title": "후보자 찾기",

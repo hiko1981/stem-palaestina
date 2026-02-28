@@ -125,7 +125,9 @@
     "autoSubmitting": "Mendaftarkan suara Anda...",
     "viewResults": "Lihat hasil",
     "phoneNote": "Nomor telepon Anda dienkripsi dan tidak disimpan. Hanya satu suara per telepon. {link}",
-    "phoneNoteLink": "Baca selengkapnya"
+    "phoneNoteLink": "Baca selengkapnya",
+    "optoutLink": "Berhenti menerima pesan",
+    "optedOutConfirm": "Anda tidak akan menerima pesan lagi dari kami."
   },
   "voteCounter": {
     "singular": "suara",
@@ -210,7 +212,9 @@
     "title": "Undang kandidat lokal Anda",
     "unclaimed": "Belum memilih",
     "inviteTitle": "Undang kandidat",
-    "missingCandidate": "Kandidat saya tidak ada di daftar"
+    "missingCandidate": "Kandidat saya tidak ada di daftar",
+    "unverified": "Belum diverifikasi",
+    "optedOut": "Berhenti"
   },
   "map": {
     "title": "Temukan kandidat Anda",

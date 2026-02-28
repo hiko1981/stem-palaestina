@@ -125,7 +125,9 @@
     "autoSubmitting": "Đang ghi nhận phiếu bầu của bạn...",
     "viewResults": "Xem kết quả",
     "phoneNote": "Số điện thoại của bạn được mã hóa và không được lưu trữ. Chỉ một phiếu bầu cho mỗi số điện thoại. {link}",
-    "phoneNoteLink": "Đọc thêm"
+    "phoneNoteLink": "Đọc thêm",
+    "optoutLink": "Ngừng nhận tin nhắn",
+    "optedOutConfirm": "Bạn sẽ không nhận thêm tin nhắn từ chúng tôi."
   },
   "voteCounter": {
     "singular": "phiếu",
@@ -210,7 +212,9 @@
     "title": "Mời ứng cử viên địa phương",
     "unclaimed": "Chưa bỏ phiếu",
     "inviteTitle": "Mời ứng cử viên",
-    "missingCandidate": "Ứng cử viên của tôi không có trong danh sách"
+    "missingCandidate": "Ứng cử viên của tôi không có trong danh sách",
+    "unverified": "Chưa xác minh",
+    "optedOut": "Đã rút"
   },
   "map": {
     "title": "Tìm ứng viên của bạn",

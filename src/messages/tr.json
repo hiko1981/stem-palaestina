@@ -125,7 +125,9 @@
     "autoSubmitting": "Oyunuz kaydediliyor...",
     "viewResults": "Sonuçları gör",
     "phoneNote": "Telefon numaranız şifrelenir ve saklanmaz. Her telefon için yalnızca bir oy. {link}",
-    "phoneNoteLink": "Daha fazla bilgi"
+    "phoneNoteLink": "Daha fazla bilgi",
+    "optoutLink": "Mesaj almayı durdur",
+    "optedOutConfirm": "Artık bizden mesaj almayacaksınız."
   },
   "voteCounter": {
     "singular": "oy",
@@ -210,7 +212,9 @@
     "title": "Yerel adayınızı davet edin",
     "unclaimed": "Oy kullanmadı",
     "inviteTitle": "Aday davet et",
-    "missingCandidate": "Adayım listede değil"
+    "missingCandidate": "Adayım listede değil",
+    "unverified": "Doğrulanmamış",
+    "optedOut": "Ayrıldı"
   },
   "map": {
     "title": "Adayınızı bulun",

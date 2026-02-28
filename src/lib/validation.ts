@@ -11,6 +11,7 @@ export const ballotRequestSchema = z.object({
 export const ballotVoteSchema = z.object({
   token: z.string().uuid("Ugyldig stemmeseddel-token"),
   voteValue: z.boolean({ message: "Stemmeværdi mangler (ja/nej)" }),
+  deviceId: z.string().optional(),
 });
 
 export const candidateClaimSchema = z.object({

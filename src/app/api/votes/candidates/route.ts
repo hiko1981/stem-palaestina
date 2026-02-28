@@ -12,6 +12,7 @@ export async function GET() {
         contactEmail: true,
         phoneHash: true,
         verified: true,
+        optedOut: true,
       },
     });
 
@@ -34,6 +35,7 @@ export async function GET() {
       constituency: c.constituency,
       hasEmail: !!c.contactEmail,
       verified: c.verified,
+      optedOut: c.optedOut,
       voteValue: c.phoneHash ? (voteMap.get(c.phoneHash) ?? null) : null,
     }));
 

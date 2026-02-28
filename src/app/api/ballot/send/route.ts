@@ -41,15 +41,20 @@ export async function POST(req: NextRequest) {
 
     const phoneHash = hashPhone(phone);
 
-    // Check if already voted
+    // Silent suppression: if phone already voted, return ok without sending SMS
     const existingVote = await prisma.vote.findUnique({
       where: { phoneHash },
     });
     if (existingVote) {
-      return NextResponse.json(
-        { error: "Stemmeseddel er allerede afsendt til dette nummer." },
-        { status: 409 }
-      );
+      return NextResponse.json({ ok: true });
+    }
+
+    // Silent suppression: if phone opted out, return ok without sending SMS
+    const suppressed = await prisma.phoneSuppression.findUnique({
+      where: { phoneHash },
+    });
+    if (suppressed) {
+      return NextResponse.json({ ok: true });
     }
 
     // Rate limit: per phone

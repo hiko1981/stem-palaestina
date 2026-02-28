@@ -11,6 +11,7 @@ interface CandidateWithStatus {
   constituency: string;
   hasEmail: boolean;
   verified: boolean;
+  optedOut: boolean;
   voteValue: boolean | null;
 }
 
@@ -82,17 +83,38 @@ export default function InviteCandidateButton({
   }, [storkreds]);
 
   function getBadge(c: CandidateWithStatus) {
+    if (c.optedOut) {
+      return (
+        <span className="shrink-0 inline-flex items-center rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+          {cl("optedOut")}
+        </span>
+      );
+    }
     if (c.voteValue === true) {
       return (
-        <span className="shrink-0 inline-flex items-center rounded-full bg-melon-green/10 px-1.5 py-0.5 text-[10px] font-medium text-melon-green">
-          Ja ✓
+        <span className="shrink-0 inline-flex items-center gap-1">
+          <span className="inline-flex items-center rounded-full bg-melon-green/10 px-1.5 py-0.5 text-[10px] font-medium text-melon-green">
+            Ja ✓
+          </span>
+          {!c.verified && (
+            <span className="inline-flex items-center rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
+              {cl("unverified")}
+            </span>
+          )}
         </span>
       );
     }
     if (c.voteValue === false) {
       return (
-        <span className="shrink-0 inline-flex items-center rounded-full bg-melon-red/10 px-1.5 py-0.5 text-[10px] font-medium text-melon-red">
-          Nej ✗
+        <span className="shrink-0 inline-flex items-center gap-1">
+          <span className="inline-flex items-center rounded-full bg-melon-red/10 px-1.5 py-0.5 text-[10px] font-medium text-melon-red">
+            Nej ✗
+          </span>
+          {!c.verified && (
+            <span className="inline-flex items-center rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
+              {cl("unverified")}
+            </span>
+          )}
         </span>
       );
     }
@@ -163,7 +185,7 @@ export default function InviteCandidateButton({
       const res = await fetch("/api/invite/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ method: "sms", to: inviteInput.trim(), candidateName }),
+        body: JSON.stringify({ method: "sms", to: inviteInput.trim(), candidateName, candidateId: inviteTarget }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -259,8 +281,8 @@ export default function InviteCandidateButton({
                     {getBadge(c)}
                   </div>
 
-                  {/* Share buttons */}
-                  <div className="flex gap-1.5 flex-wrap">
+                  {/* Share buttons — hidden for opted-out candidates */}
+                  {!c.optedOut && <div className="flex gap-1.5 flex-wrap">
                     {c.hasEmail && (
                       <button
                         onClick={() => handleSendEmailInvite(c.id)}
@@ -292,10 +314,10 @@ export default function InviteCandidateButton({
                     >
                       {copiedId === c.id ? sh("copied") : sh("copyLink")}
                     </button>
-                  </div>
+                  </div>}
 
                   {/* SMS inline input */}
-                  {isInviting && inviteMode === "sms" && (
+                  {!c.optedOut && isInviting && inviteMode === "sms" && (
                     <div className="flex gap-1.5 items-center pt-0.5">
                       <input
                         type="tel"

@@ -84,8 +84,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Cast vote and mark ballot as used in a transaction
-    await prisma.$transaction([
+    // Cast vote, mark ballot as used, and record device participation
+    const deviceId = parsed.data.deviceId || ballot.deviceId;
+
+    const txOps = [
       prisma.vote.create({
         data: {
           phoneHash: ballot.phoneHash,
@@ -96,11 +98,20 @@ export async function POST(req: NextRequest) {
         where: { id: ballot.id },
         data: { used: true },
       }),
-    ]);
+    ];
 
-    // Free the device slot (best-effort)
-    if (ballot.deviceId) {
-      freeSlot(ballot.deviceId, ballot.token).catch(() => {});
+    await prisma.$transaction(txOps);
+
+    // Record device participation (best-effort, outside transaction)
+    if (deviceId) {
+      prisma.deviceParticipation.upsert({
+        where: { deviceId },
+        create: { deviceId, phoneHash: ballot.phoneHash },
+        update: { phoneHash: ballot.phoneHash },
+      }).catch(() => {});
+
+      // Free the device slot (best-effort)
+      freeSlot(deviceId, ballot.token).catch(() => {});
     }
 
     return NextResponse.json({ ok: true });

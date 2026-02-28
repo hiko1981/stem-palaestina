@@ -16,12 +16,10 @@ interface UnclaimedCandidate {
 
 interface CandidateSelectProps {
   onSelect: (value: string) => void;
-  voteValue: boolean;
 }
 
 export default function CandidateSelect({
   onSelect,
-  voteValue,
 }: CandidateSelectProps) {
   const [candidates, setCandidates] = useState<UnclaimedCandidate[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,7 +83,6 @@ export default function CandidateSelect({
   async function handleSendBallot() {
     if (typeof window !== "undefined") {
       localStorage.setItem("stem_palaestina_candidate_id", selectedId);
-      localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
       localStorage.setItem("stem_palaestina_role", "candidate");
     }
     setPhoneError("");

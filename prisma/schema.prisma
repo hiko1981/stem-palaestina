@@ -47,18 +47,53 @@ model LanguageMiss {
 }
 
 model Candidate {
-  id              Int      @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   name            String
   party           String
   constituency    String
-  contactEmail    String?  @map("contact_email")
-  phoneHash       String?  @map("phone_hash")
-  pledged         Boolean  @default(false)
-  publicStatement String?  @map("public_statement")
-  verified        Boolean  @default(false)
-  createdAt       DateTime @default(now()) @map("created_at")
+  contactEmail    String?   @map("contact_email")
+  phoneHash       String?   @map("phone_hash")
+  pledged         Boolean   @default(false)
+  publicStatement String?   @map("public_statement")
+  verified        Boolean   @default(false)
+  optedOut        Boolean   @default(false) @map("opted_out")
+  optedOutAt      DateTime? @map("opted_out_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  invitePhones CandidateInvitePhone[]
 
   @@map("candidates")
+}
+
+model PhoneSuppression {
+  id        Int      @id @default(autoincrement())
+  phoneHash String   @unique @map("phone_hash")
+  scope     String   @default("all")
+  reason    String   @default("user_request")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("phone_suppressions")
+}
+
+model CandidateInvitePhone {
+  id          Int       @id @default(autoincrement())
+  candidateId Int       @map("candidate_id")
+  phoneHash   String    @map("phone_hash")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  candidate Candidate @relation(fields: [candidateId], references: [id])
+
+  @@unique([candidateId, phoneHash])
+  @@map("candidate_invite_phones")
+}
+
+model DeviceParticipation {
+  id        Int      @id @default(autoincrement())
+  deviceId  String   @unique @map("device_id")
+  phoneHash String   @map("phone_hash")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("device_participations")
 }
 
 model SupportMessage {

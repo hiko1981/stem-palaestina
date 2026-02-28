@@ -125,7 +125,9 @@
     "autoSubmitting": "Registering your vote...",
     "viewResults": "View results",
     "phoneNote": "Your phone number is encrypted and not stored. Only one vote per phone. {link}",
-    "phoneNoteLink": "Read more"
+    "phoneNoteLink": "Read more",
+    "optoutLink": "Stop receiving messages",
+    "optedOutConfirm": "You will no longer receive messages from us."
   },
   "voteCounter": {
     "singular": "vote",
@@ -210,7 +212,9 @@
     "title": "Invite your local candidate",
     "unclaimed": "Missing vote",
     "inviteTitle": "Invite a candidate",
-    "missingCandidate": "My candidate is not on the list"
+    "missingCandidate": "My candidate is not on the list",
+    "unverified": "Not verified",
+    "optedOut": "Opted out"
   },
   "map": {
     "title": "Find your candidate",

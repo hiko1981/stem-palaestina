@@ -5,6 +5,9 @@ import { sendSms } from "@/lib/sms";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
+import { hashPhone } from "@/lib/hash";
+import { normalizeToE164, isValidE164 } from "@/lib/phone";
+import { signOptout } from "@/lib/optout-sig";
 
 const inviteSchema = z.discriminatedUnion("method", [
   z.object({
@@ -16,6 +19,7 @@ const inviteSchema = z.discriminatedUnion("method", [
     method: z.literal("sms"),
     to: z.string().min(1, "Modtager mangler"),
     candidateName: z.string().min(1, "Kandidatnavn mangler"),
+    candidateId: z.number().int().positive().optional(),
   }),
 ]);
 
@@ -75,7 +79,7 @@ export async function POST(req: NextRequest) {
 
       const candidate = await prisma.candidate.findUnique({
         where: { id: candidateId },
-        select: { name: true, contactEmail: true },
+        select: { name: true, contactEmail: true, optedOut: true },
       });
 
       if (!candidate || !candidate.contactEmail) {
@@ -85,13 +89,70 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      // Public error: candidate has opted out
+      if (candidate.optedOut) {
+        return NextResponse.json(
+          { error: "Kandidaten har frabedt sig henvendelser." },
+          { status: 403 }
+        );
+      }
+
+      const optoutSig = signOptout(candidateId);
+      const optoutUrl = `${getBaseUrl()}/afmeld/kandidat?cid=${candidateId}&sig=${optoutSig}`;
+
       const subject = `Invitation: Tag stilling på Stem Palæstina`;
-      const emailBody = `Hej ${candidate.name},\n\nEn vælger har inviteret dig til at tage stilling til de tre krav på Stem Palæstina.\n\nRegistrer dig som kandidat her: ${link}\n\nDe tre krav:\n1. Anerkend Palæstina\n2. Stop våbensalg til Israel\n3. Stop ulovlige investeringer\n\nMed venlig hilsen\nStem Palæstina`;
+      const emailBody = `Hej ${candidate.name},\n\nEn vælger har inviteret dig til at tage stilling til de tre krav på Stem Palæstina.\n\nRegistrer dig som kandidat her: ${link}\n\nDe tre krav:\n1. Anerkend Palæstina\n2. Stop våbensalg til Israel\n3. Stop ulovlige investeringer\n\nMed venlig hilsen\nStem Palæstina\n\n---\nØnsker du ikke flere henvendelser? Afmeld dig her: ${optoutUrl}`;
 
       await sendEmail(candidate.contactEmail, subject, emailBody);
     } else {
       // SMS invite: user provides phone number + candidate name
-      const { to, candidateName } = parsed.data;
+      const { to, candidateName, candidateId } = parsed.data;
+
+      // Check candidate opted out (public error)
+      if (candidateId) {
+        const candidate = await prisma.candidate.findUnique({
+          where: { id: candidateId },
+          select: { optedOut: true },
+        });
+        if (candidate?.optedOut) {
+          return NextResponse.json(
+            { error: "Kandidaten har frabedt sig henvendelser." },
+            { status: 403 }
+          );
+        }
+      }
+
+      // Silent suppression: normalize phone and check vote + suppression
+      const normalized = normalizeToE164(to, "+45");
+      if (normalized && isValidE164(normalized)) {
+        const recipientHash = hashPhone(normalized);
+
+        const alreadyVoted = await prisma.vote.findUnique({
+          where: { phoneHash: recipientHash },
+        });
+        if (alreadyVoted) {
+          return NextResponse.json({ ok: true });
+        }
+
+        const suppressed = await prisma.phoneSuppression.findUnique({
+          where: { phoneHash: recipientHash },
+        });
+        if (suppressed) {
+          return NextResponse.json({ ok: true });
+        }
+
+        // Track which phones received invites for which candidates
+        if (candidateId) {
+          prisma.candidateInvitePhone.upsert({
+            where: {
+              candidateId_phoneHash: { candidateId, phoneHash: recipientHash },
+            },
+            create: { candidateId, phoneHash: recipientHash },
+            update: {},
+          }).catch(() => {});
+        }
+      }
+
       const smsBody = `Hej ${candidateName}! Du er inviteret til at tage stilling på Stem Palæstina. Registrer dig her: ${link}`;
       await sendSms(to, smsBody);
     }
