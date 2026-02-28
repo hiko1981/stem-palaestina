@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendSms } from "@/lib/sms";
 
 export async function POST(req: NextRequest) {
-  const { phone, secret } = await req.json();
+  const { phone, secret, message } = await req.json();
   if (secret !== process.env.ADMIN_PASSWORD) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   try {
-    await sendSms(phone, "Test fra Stem Palæstina. Denne besked er kun en test.");
+    await sendSms(phone, message || "Test fra Stem Palæstina.");
     return NextResponse.json({ ok: true });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
