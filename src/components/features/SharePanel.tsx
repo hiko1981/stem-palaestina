@@ -52,12 +52,31 @@ export default function SharePanel() {
     }
   }
 
-  function handleSendEmail() {
-    const subject = encodeURIComponent(t("emailSubject"));
-    const body = encodeURIComponent(`${t("emailBody")}\n\n${baseUrl}`);
-    window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_self");
-    setSent(true);
-    setEmail("");
+  async function handleSendEmail() {
+    setError("");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/share/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          subject: t("emailSubject"),
+          body: `${t("emailBody")}\n\n${baseUrl}`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error);
+        return;
+      }
+      setSent(true);
+      setEmail("");
+    } catch {
+      setError(t("networkError"));
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleCopyLink() {
@@ -165,11 +184,15 @@ export default function SharePanel() {
               />
               <Button
                 onClick={handleSendEmail}
+                loading={loading}
                 disabled={!email}
                 className="w-full"
               >
                 {t("send")}
               </Button>
+              {error && (
+                <p className="text-center text-xs text-melon-red">{error}</p>
+              )}
             </>
           )}
         </div>
