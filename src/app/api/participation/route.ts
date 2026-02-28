@@ -30,10 +30,18 @@ export async function GET(req: NextRequest) {
       select: { voteValue: true },
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       participated: true,
       voteValue: vote?.voteValue ?? null,
     });
+    // Set cookies so vote state persists across browser contexts
+    const cookieOpts = "Path=/; Max-Age=31536000; SameSite=Lax; Secure";
+    response.headers.append("Set-Cookie", `stem_voted=1; ${cookieOpts}`);
+    if (vote?.voteValue !== undefined) {
+      response.headers.append("Set-Cookie", `stem_vote_value=${vote.voteValue}; ${cookieOpts}`);
+    }
+    response.headers.append("Set-Cookie", `stem_device_id=${deviceId}; ${cookieOpts}`);
+    return response;
   } catch (error) {
     console.error("participation check error:", error);
     return NextResponse.json(

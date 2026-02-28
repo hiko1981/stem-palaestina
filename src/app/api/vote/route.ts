@@ -114,7 +114,15 @@ export async function POST(req: NextRequest) {
       freeSlot(deviceId, ballot.token).catch(() => {});
     }
 
-    return NextResponse.json({ ok: true });
+    const response = NextResponse.json({ ok: true });
+    // Set cookies so vote state persists across browser contexts (Safari/PWA/iMessage)
+    const cookieOpts = "Path=/; Max-Age=31536000; SameSite=Lax; Secure";
+    response.headers.append("Set-Cookie", `stem_voted=1; ${cookieOpts}`);
+    response.headers.append("Set-Cookie", `stem_vote_value=${parsed.data.voteValue}; ${cookieOpts}`);
+    if (deviceId) {
+      response.headers.append("Set-Cookie", `stem_device_id=${deviceId}; ${cookieOpts}`);
+    }
+    return response;
   } catch (error: unknown) {
     // Handle unique constraint violation (race condition)
     if (

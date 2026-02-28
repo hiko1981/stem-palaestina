@@ -11,6 +11,7 @@ import SharePanel from "@/components/features/SharePanel";
 import SupportForm from "@/components/features/SupportForm";
 import DenmarkMap from "@/components/features/DenmarkMap";
 import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
+import { getDeviceId, setDeviceVoted, getDeviceVoted } from "@/lib/device-cookie";
 import ResultsView from "@/components/features/ResultsView";
 import PublicVoteBar from "@/components/features/PublicVoteBar";
 import { useTranslations } from "next-intl";
@@ -126,9 +127,8 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (!localStorage.getItem("stem_device_id")) {
-        localStorage.setItem("stem_device_id", crypto.randomUUID());
-      }
+      // Get or create device ID (synced to both localStorage and cookie)
+      const deviceId = getDeviceId();
 
       // Deep linking: ?panel=candidate or ?panel=invite
       const params = new URLSearchParams(window.location.search);
@@ -137,44 +137,29 @@ export default function Home() {
       else if (panel === "invite") setActivePanel("invite");
       else if (panel === "voter") setActivePanel("voter");
 
-      const deviceId = localStorage.getItem("stem_device_id");
-
-      // Check participation server-side, fall back to localStorage
-      if (deviceId) {
-        fetch(`/api/participation?deviceId=${encodeURIComponent(deviceId)}`)
-          .then((r) => r.json())
-          .then((data) => {
-            if (data.participated) {
-              localStorage.setItem("stem_palaestina_voted", "true");
-              if (data.voteValue !== null && data.voteValue !== undefined) {
-                setVotedYes(data.voteValue);
-              }
-              setHasVoted(true);
-            } else {
-              // Fall back to localStorage (for users who voted before this feature)
-              const localVoted = localStorage.getItem("stem_palaestina_voted") === "true";
-              if (localVoted) {
-                const storedVote = localStorage.getItem("stem_palaestina_vote");
-                setVotedYes(storedVote !== "false");
-              }
-              setHasVoted(localVoted);
-            }
-            setParticipationLoaded(true);
-          })
-          .catch(() => {
-            // Network error → fall back to localStorage
-            const localVoted = localStorage.getItem("stem_palaestina_voted") === "true";
-            if (localVoted) {
-              const storedVote = localStorage.getItem("stem_palaestina_vote");
-              setVotedYes(storedVote !== "false");
-            }
-            setHasVoted(localVoted);
-            setParticipationLoaded(true);
-          });
-      } else {
-        setHasVoted(localStorage.getItem("stem_palaestina_voted") === "true");
-        setParticipationLoaded(true);
-      }
+      // Check participation server-side, fall back to localStorage/cookie
+      fetch(`/api/participation?deviceId=${encodeURIComponent(deviceId)}`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.participated) {
+            const val = data.voteValue !== null && data.voteValue !== undefined ? data.voteValue : true;
+            setDeviceVoted(val);
+            setVotedYes(val);
+            setHasVoted(true);
+          } else {
+            // Fall back to localStorage/cookie
+            const { voted, voteValue } = getDeviceVoted();
+            if (voted) setVotedYes(voteValue);
+            setHasVoted(voted);
+          }
+          setParticipationLoaded(true);
+        })
+        .catch(() => {
+          const { voted, voteValue } = getDeviceVoted();
+          if (voted) setVotedYes(voteValue);
+          setHasVoted(voted);
+          setParticipationLoaded(true);
+        });
 
       // Check for targeted one-time notifications
       if (deviceId) {

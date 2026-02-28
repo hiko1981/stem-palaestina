@@ -6,6 +6,7 @@ import Link from "next/link";
 import InviteSection from "@/components/features/InviteSection";
 import CandidatePublicForm from "@/components/features/CandidatePublicForm";
 import { useTranslations } from "next-intl";
+import { getDeviceId, setDeviceVoted } from "@/lib/device-cookie";
 
 interface BallotVoteFormProps {
   token: string;
@@ -55,7 +56,7 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
     setError("");
 
     const deviceId = typeof window !== "undefined"
-      ? localStorage.getItem("stem_device_id") || undefined
+      ? getDeviceId()
       : undefined;
 
     try {
@@ -71,10 +72,9 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
         return;
       }
 
-      // Mark device as voted locally
+      // Mark device as voted (localStorage + cookie)
       if (typeof window !== "undefined") {
-        localStorage.setItem("stem_palaestina_voted", "true");
-        localStorage.setItem("stem_palaestina_vote", voteValue ? "true" : "false");
+        setDeviceVoted(voteValue);
       }
 
       // Voter → redirect to results
