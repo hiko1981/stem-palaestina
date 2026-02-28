@@ -95,12 +95,27 @@ export default function SharePanel() {
     }
   }
 
+  function getBaseUrl() {
+    return typeof window !== "undefined"
+      ? window.location.origin
+      : "https://stem-palaestina.vercel.app";
+  }
+
+  async function handleShare() {
+    const url = getBaseUrl();
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Stem Palæstina", url });
+      } catch {
+        // User cancelled share — ignore
+      }
+    } else {
+      handleCopyLink();
+    }
+  }
+
   function handleCopyLink() {
-    const baseUrl =
-      typeof window !== "undefined"
-        ? window.location.origin
-        : "https://stem-palaestina.vercel.app";
-    navigator.clipboard.writeText(baseUrl).then(() => {
+    navigator.clipboard.writeText(getBaseUrl()).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
@@ -222,18 +237,26 @@ export default function SharePanel() {
         </div>
       )}
 
-      {/* Copy link option */}
-      <button
-        onClick={handleCopyLink}
-        className="w-full text-left rounded-lg border border-gray-200 px-3 py-2.5 text-sm transition-colors hover:bg-gray-50"
-      >
-        <span className="font-semibold">
-          {copied ? t("copied") : t("shareLink")}
-        </span>
-        <span className="block text-xs text-gray-500 mt-0.5">
-          {t("shareLinkDesc")}
-        </span>
-      </button>
+      {/* Share + Copy link */}
+      <div className="flex gap-2">
+        <button
+          onClick={handleShare}
+          className="flex-1 text-left rounded-lg border border-gray-200 px-3 py-2.5 text-sm transition-colors hover:bg-gray-50"
+        >
+          <span className="font-semibold">{t("shareLink")}</span>
+          <span className="block text-xs text-gray-500 mt-0.5">
+            {t("shareLinkDesc")}
+          </span>
+        </button>
+        <button
+          onClick={handleCopyLink}
+          className="shrink-0 rounded-lg border border-gray-200 px-3 py-2.5 text-sm transition-colors hover:bg-gray-50 flex items-center"
+        >
+          <span className="font-semibold">
+            {copied ? t("copied") : t("copyLink")}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
