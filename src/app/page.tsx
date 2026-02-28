@@ -220,16 +220,16 @@ export default function Home() {
         }),
       });
       const data = await res.json();
-      if (!res.ok) {
-        setPhoneError(data.error);
-        return;
-      }
       // Phone already voted — reclaim vote state for this context
       if (data.alreadyVoted) {
         const val = data.voteValue ?? true;
         setDeviceVoted(val);
         setVotedYes(val);
         setHasVoted(true);
+        return;
+      }
+      if (!res.ok) {
+        setPhoneError(data.error);
         return;
       }
       setSmsSent(true);

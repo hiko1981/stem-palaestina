@@ -56,11 +56,14 @@ export async function POST(req: NextRequest) {
         }).catch(() => {});
       }
 
-      const response = NextResponse.json({
-        ok: true,
-        alreadyVoted: true,
-        voteValue: existingVote.voteValue,
-      });
+      const response = NextResponse.json(
+        {
+          error: "Du har allerede stemt. Genindlæs siden for at se resultater.",
+          alreadyVoted: true,
+          voteValue: existingVote.voteValue,
+        },
+        { status: 409 }
+      );
       const cookieOpts = "Path=/; Max-Age=31536000; SameSite=Lax; Secure";
       response.headers.append("Set-Cookie", `stem_voted=1; ${cookieOpts}`);
       response.headers.append("Set-Cookie", `stem_vote_value=${existingVote.voteValue}; ${cookieOpts}`);
