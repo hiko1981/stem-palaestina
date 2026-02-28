@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
 
     // Rate limit per IP
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const limit = checkRateLimit("participation-ip", ip, 30, 60 * 1000);
+    const limit = await checkRateLimit("participation-ip", ip, 30, 60 * 1000);
     if (!limit.ok) {
       return NextResponse.json({ error: "For mange forespørgsler." }, { status: 429 });
     }

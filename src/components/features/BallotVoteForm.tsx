@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import InviteSection from "@/components/features/InviteSection";
 import CandidatePublicForm from "@/components/features/CandidatePublicForm";
 import { useTranslations } from "next-intl";
@@ -248,12 +249,12 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
           <p className="text-gray-600">{t("thanksCandidate")}</p>
         </div>
         <CandidatePublicForm token={token} />
-        <a
+        <Link
           href="/"
           className="block text-center text-sm text-melon-green hover:underline"
         >
           {t("viewResults")}
-        </a>
+        </Link>
         <InviteSection />
       </div>
     );
@@ -282,12 +283,12 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
           <p className="text-gray-600">{t("thanksCandidate")}</p>
         </div>
         <CandidatePublicForm token={token} />
-        <a
+        <Link
           href="/"
           className="block text-center text-sm text-melon-green hover:underline"
         >
           {t("viewResults")}
-        </a>
+        </Link>
       </div>
     );
   }
@@ -342,9 +343,9 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
         <p className="text-gray-600">
           {t.rich("expiredText", {
             link: (chunks) => (
-              <a href="/" className="text-melon-green hover:underline">
+              <Link href="/" className="text-melon-green hover:underline">
                 {chunks}
-              </a>
+              </Link>
             ),
           })}
         </p>
@@ -359,9 +360,9 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
       <p className="text-gray-600">
         {error || t.rich("invalidText", {
           link: (chunks) => (
-            <a href="/" className="text-melon-green hover:underline">
+            <Link href="/" className="text-melon-green hover:underline">
               {chunks}
-            </a>
+            </Link>
           ),
         })}
       </p>

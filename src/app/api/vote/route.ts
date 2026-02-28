@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     // Rate limit per IP
     const ip =
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const limit = checkRateLimit(
+    const limit = await checkRateLimit(
       "vote-ip",
       ip,
       RATE_LIMITS.votePerIp.max,

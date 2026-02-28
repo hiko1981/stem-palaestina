@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     // Rate limit per IP
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const limit = checkRateLimit(
+    const limit = await checkRateLimit(
       "invite-ip",
       ip,
       RATE_LIMITS.invitePerIp.max,
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
 
       // Rate limit: 1 email per candidate per device per hour
       const deviceKey = deviceId || ip;
-      const perCandidateLimit = checkRateLimit(
+      const perCandidateLimit = await checkRateLimit(
         "invite-candidate",
         `${deviceKey}:${candidateId}`,
         1,

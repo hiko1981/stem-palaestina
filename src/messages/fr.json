@@ -26,6 +26,7 @@
     "yourVoteYes": "Oui, pour les trois revendications",
     "yourVoteNo": "Non",
     "missingCandidate": "Votre candidat manque ?",
+    "voteOnPhoneHint": "Vous choisissez Oui/Non lorsque vous ouvrez le lien sur votre téléphone.",
     "intro": "Ici, les électeurs peuvent montrer aux politiciens ce qu'ils pensent — et les candidats peuvent montrer aux électeurs où ils se situent. Vous ne voyez pas la position de votre candidat ? Demandez-lui de s'exprimer ici."
   },
   "candidates": {

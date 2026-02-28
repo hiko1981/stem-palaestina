@@ -26,6 +26,7 @@
     "yourVoteYes": "Ndiyo, kwa madai matatu",
     "yourVoteNo": "Hapana",
     "missingCandidate": "Hupati mgombea wako?",
+    "voteOnPhoneHint": "Unachagua Ndiyo/Hapana unapofungua kiungo kwenye simu yako.",
     "intro": "Hapa wapiga kura wanaweza kuwaonyesha wanasiasa wanachokifikiri — na wagombea wanaweza kuwaonyesha wapiga kura msimamo wao. Huwezi kuona msimamo wa mgombea wako? Mwambie atoe maoni yake hapa."
   },
   "candidates": {

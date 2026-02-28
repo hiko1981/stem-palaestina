@@ -6,7 +6,7 @@ import { RATE_LIMITS } from "@/lib/constants";
 export async function GET(req: NextRequest) {
   try {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const limit = checkRateLimit("ballot-check-ip", ip, RATE_LIMITS.ballotCheckPerIp.max, RATE_LIMITS.ballotCheckPerIp.windowMs);
+    const limit = await checkRateLimit("ballot-check-ip", ip, RATE_LIMITS.ballotCheckPerIp.max, RATE_LIMITS.ballotCheckPerIp.windowMs);
     if (!limit.ok) {
       return NextResponse.json({ error: "For mange forespørgsler." }, { status: 429 });
     }

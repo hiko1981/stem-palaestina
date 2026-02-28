@@ -107,6 +107,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 export default function Home() {
   const [hasVoted, setHasVoted] = useState(false);
   const [votedYes, setVotedYes] = useState(true);
+  const [participationLoaded, setParticipationLoaded] = useState(false);
   const [activePanel, setActivePanel] = useState<ActivePanel>("voter");
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("+45");
@@ -134,6 +135,7 @@ export default function Home() {
       const panel = params.get("panel");
       if (panel === "candidate") setActivePanel("candidate");
       else if (panel === "invite") setActivePanel("invite");
+      else if (panel === "voter") setActivePanel("voter");
 
       const deviceId = localStorage.getItem("stem_device_id");
 
@@ -157,6 +159,7 @@ export default function Home() {
               }
               setHasVoted(localVoted);
             }
+            setParticipationLoaded(true);
           })
           .catch(() => {
             // Network error → fall back to localStorage
@@ -166,9 +169,11 @@ export default function Home() {
               setVotedYes(storedVote !== "false");
             }
             setHasVoted(localVoted);
+            setParticipationLoaded(true);
           });
       } else {
         setHasVoted(localStorage.getItem("stem_palaestina_voted") === "true");
+        setParticipationLoaded(true);
       }
 
       // Check for targeted one-time notifications
@@ -240,6 +245,14 @@ export default function Home() {
     } finally {
       setPhoneLoading(false);
     }
+  }
+
+  if (!participationLoaded) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-16 text-center">
+        <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-melon-green border-t-transparent" />
+      </div>
+    );
   }
 
   // ───── ONE-TIME NOTIFICATION BANNER ─────
@@ -416,6 +429,9 @@ export default function Home() {
                 </button>
                 {activePanel === "voter" && (
                   <div className="px-3 pb-3 space-y-3 animate-in slide-in-from-top-2">
+                    <p className="text-xs text-gray-500 text-center">
+                      {h("voteOnPhoneHint")}
+                    </p>
                     {phoneInput}
                   </div>
                 )}

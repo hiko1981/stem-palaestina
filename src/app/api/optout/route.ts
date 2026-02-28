@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     // Rate limit per IP
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const limit = checkRateLimit("optout-ip", ip, 10, 60 * 1000);
+    const limit = await checkRateLimit("optout-ip", ip, 10, 60 * 1000);
     if (!limit.ok) {
       return NextResponse.json(
         { error: "For mange forsøg. Prøv igen senere." },

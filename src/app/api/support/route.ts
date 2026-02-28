@@ -14,7 +14,7 @@ const supportSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const limit = checkRateLimit("support-ip", ip, RATE_LIMITS.supportPerIp.max, RATE_LIMITS.supportPerIp.windowMs);
+    const limit = await checkRateLimit("support-ip", ip, RATE_LIMITS.supportPerIp.max, RATE_LIMITS.supportPerIp.windowMs);
     if (!limit.ok) {
       return NextResponse.json({ error: "For mange beskeder. Prøv igen senere." }, { status: 429 });
     }

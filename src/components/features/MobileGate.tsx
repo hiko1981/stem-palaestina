@@ -29,11 +29,10 @@ interface MobileGateProps {
 }
 
 export default function MobileGate({ children }: MobileGateProps) {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => detectDesktop());
   const t = useTranslations("mobileGate");
 
   useEffect(() => {
-    setIsDesktop(detectDesktop());
     const update = () => setIsDesktop(detectDesktop());
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);

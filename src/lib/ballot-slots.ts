@@ -4,7 +4,6 @@
  * Uses Vercel KV for distributed state.
  */
 
-import crypto from "node:crypto";
 import { MAX_DEVICE_SLOTS, BALLOT_EXPIRY_HOURS } from "./constants";
 
 export interface BallotSlotRecord {
@@ -67,10 +66,11 @@ function activePendingCount(records: BallotSlotRecord[]): number {
 /** Reserve a ballot slot for a device. Returns ok or error. */
 export async function checkAndReserveSlot(
   deviceId: string,
+  slotId: string,
   phoneHash: string
-): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
+): Promise<{ ok: true } | { ok: false; error: string }> {
   if (!kvConfigured()) {
-    return { ok: true, id: crypto.randomUUID() };
+    return { ok: true };
   }
 
   const records = await kvGetRecords(deviceId);
@@ -83,7 +83,6 @@ export async function checkAndReserveSlot(
     };
   }
 
-  const id = crypto.randomUUID();
   const now = Math.floor(Date.now() / 1000);
   const expiresAt = now + BALLOT_EXPIRY_HOURS * 3600;
 
@@ -91,9 +90,9 @@ export async function checkAndReserveSlot(
   const cleaned = records.filter(
     (r) => !(r.status === "pending" && r.expiresAt <= now)
   );
-  cleaned.push({ id, phoneHash, expiresAt, status: "pending" });
+  cleaned.push({ id: slotId, phoneHash, expiresAt, status: "pending" });
   await kvSetRecords(deviceId, cleaned);
-  return { ok: true, id };
+  return { ok: true };
 }
 
 /** Mark a slot as used, freeing it for future ballots. */

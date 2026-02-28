@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Rate limit: per phone
-    const phoneLimit = checkRateLimit(
+    const phoneLimit = await checkRateLimit(
       "ballot-phone",
       phoneHash,
       RATE_LIMITS.ballotPerPhone.max,
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Rate limit: global
-    const globalLimit = checkRateLimit(
+    const globalLimit = await checkRateLimit(
       "ballot-global",
       "global",
       RATE_LIMITS.ballotGlobal.max,
@@ -94,10 +94,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check device slots (if deviceId provided)
+    // Create ballot token
+    const token = randomUUID();
+    const expiresAt = new Date(
+      Date.now() + BALLOT_EXPIRY_HOURS * 60 * 60 * 1000
+    );
+
+    // Check device slots (if deviceId provided). Use token as slot id so it can be freed on vote.
     const deviceId = parsed.data.deviceId;
     if (deviceId) {
-      const slotResult = await checkAndReserveSlot(deviceId, phoneHash);
+      const slotResult = await checkAndReserveSlot(deviceId, token, phoneHash);
       if (!slotResult.ok) {
         return NextResponse.json(
           { error: slotResult.error },
@@ -105,12 +111,6 @@ export async function POST(req: NextRequest) {
         );
       }
     }
-
-    // Create ballot token
-    const token = randomUUID();
-    const expiresAt = new Date(
-      Date.now() + BALLOT_EXPIRY_HOURS * 60 * 60 * 1000
-    );
 
     await prisma.ballotToken.create({
       data: {

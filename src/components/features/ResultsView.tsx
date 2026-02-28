@@ -98,10 +98,6 @@ export default function ResultsView() {
       .catch(() => setLoaded(true));
   }, []);
 
-  useEffect(() => {
-    setParty("");
-  }, [storkreds]);
-
   if (!loaded) return null;
 
   // --- Candidate filtering ---
@@ -130,7 +126,10 @@ export default function ResultsView() {
         <select
           className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
           value={storkreds}
-          onChange={(e) => setStorkreds(e.target.value)}
+          onChange={(e) => {
+            setStorkreds(e.target.value);
+            setParty("");
+          }}
         >
           <option value="">{t("allDenmark")}</option>
           {STORKREDSE.map((sk) => (

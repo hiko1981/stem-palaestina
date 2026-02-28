@@ -42,7 +42,9 @@ export default function InviteSection() {
   }, []);
 
   async function handleShare() {
-    const url = typeof window !== "undefined" ? window.location.origin + "/stem" : "https://stem-palaestina.vercel.app/stem";
+    const url = typeof window !== "undefined"
+      ? `${window.location.origin}/?panel=voter`
+      : "https://stem-palaestina.vercel.app/?panel=voter";
     const shareData = {
       title: t("shareTitle"),
       text: t("shareText"),

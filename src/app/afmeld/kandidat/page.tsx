@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { verifyOptout } from "@/lib/optout-sig";
+import Link from "next/link";
 
 interface Props {
   searchParams: Promise<{ cid?: string; sig?: string }>;
@@ -17,9 +18,9 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
           <h1 className="text-xl font-bold mb-2">Ugyldigt link</h1>
           <p className="text-gray-600 text-sm">
             Dette afmeldingslink er ugyldigt. Kontakt{" "}
-            <a href="/" className="text-melon-green hover:underline">
+            <Link href="/" className="text-melon-green hover:underline">
               Stem Palæstina
-            </a>{" "}
+            </Link>{" "}
             hvis du har brug for hjælp.
           </p>
         </div>
@@ -35,9 +36,9 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
           <h1 className="text-xl font-bold mb-2">Ugyldigt link</h1>
           <p className="text-gray-600 text-sm">
             Signaturen kunne ikke verificeres. Kontakt{" "}
-            <a href="/" className="text-melon-green hover:underline">
+            <Link href="/" className="text-melon-green hover:underline">
               Stem Palæstina
-            </a>{" "}
+            </Link>{" "}
             hvis du har brug for hjælp.
           </p>
         </div>

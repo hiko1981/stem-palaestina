@@ -57,6 +57,7 @@ export default function TopBar() {
   }, []);
 
   function switchLocale(loc: Locale) {
+    // eslint-disable-next-line react-hooks/immutability
     document.cookie = `locale=${loc};path=/;max-age=31536000;SameSite=Lax`;
     setOpen(false);
     window.location.reload();

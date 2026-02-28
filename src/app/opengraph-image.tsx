@@ -52,6 +52,7 @@ export default async function OgImage() {
         {/* Watermelon icon */}
         <img
           src={iconBase64}
+          alt=""
           width={180}
           height={180}
           style={{ marginBottom: 32, borderRadius: 36 }}
