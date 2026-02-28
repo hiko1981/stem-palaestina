@@ -203,7 +203,8 @@
     "iAmCandidate": "Saya adalah kandidat di",
     "andFor": "dan kandidat untuk",
     "selectConstituency": "Pilih daerah pemilihan...",
-    "selectParty": "Pilih partai..."
+    "selectParty": "Pilih partai...",
+    "backToSelection": "Kembali ke pilihan"
   },
   "candidateList": {
     "title": "Undang kandidat lokal Anda",

@@ -125,7 +125,7 @@ export default function ResultsView() {
       {/* Filters */}
       <div className="space-y-2">
         <select
-          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
           value={storkreds}
           onChange={(e) => setStorkreds(e.target.value)}
         >
@@ -139,7 +139,7 @@ export default function ResultsView() {
 
         {parties.length > 1 && (
           <select
-            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
             value={party}
             onChange={(e) => setParty(e.target.value)}
           >
@@ -178,7 +178,7 @@ export default function ResultsView() {
                   <div key={c.id} className="flex items-center gap-1.5 rounded-lg px-1.5 py-1">
                     <Initials name={c.name} color="green" />
                     <div className="min-w-0">
-                      <p className="text-xs font-medium truncate leading-tight">{c.name}</p>
+                      <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
                       <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
                     </div>
                   </div>
@@ -201,7 +201,7 @@ export default function ResultsView() {
                   <div key={c.id} className="flex items-center gap-1.5 rounded-lg px-1.5 py-1">
                     <Initials name={c.name} color="red" />
                     <div className="min-w-0">
-                      <p className="text-xs font-medium truncate leading-tight">{c.name}</p>
+                      <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
                       <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
                     </div>
                   </div>

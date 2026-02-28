@@ -128,9 +128,19 @@ export default function CandidateSelect({
 
   if (smsSent) {
     return (
-      <div className="text-center py-3 space-y-1">
+      <div className="text-center py-3 space-y-2">
         <p className="text-sm font-semibold text-melon-green">{b("sentTitle")}</p>
         <p className="text-xs text-gray-500">{b("sentText")}</p>
+        <button
+          onClick={() => {
+            setSmsSent(false);
+            setPhone("");
+            setPhoneError("");
+          }}
+          className="text-xs text-gray-400 hover:text-gray-600 underline"
+        >
+          {t("backToSelection")}
+        </button>
       </div>
     );
   }
@@ -151,7 +161,7 @@ export default function CandidateSelect({
     <div className="space-y-2.5">
       {/* Step 1: Kreds */}
       <select
-        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
         value={storkreds}
         onChange={(e) => setStorkreds(e.target.value)}
       >
@@ -166,7 +176,7 @@ export default function CandidateSelect({
       {/* Step 2: Parti */}
       {storkreds && parties.length > 0 && (
         <select
-          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
           value={party}
           onChange={(e) => setParty(e.target.value)}
         >

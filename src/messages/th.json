@@ -203,7 +203,8 @@
     "iAmCandidate": "ฉันเป็นผู้สมัครใน",
     "andFor": "และผู้สมัครของ",
     "selectConstituency": "เลือกเขตเลือกตั้ง...",
-    "selectParty": "เลือกพรรค..."
+    "selectParty": "เลือกพรรค...",
+    "backToSelection": "กลับไปเลือก"
   },
   "candidateList": {
     "title": "เชิญผู้สมัครในพื้นที่ของคุณ",

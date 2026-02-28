@@ -203,7 +203,8 @@
     "iAmCandidate": "Jeg er kandidat i",
     "andFor": "og kandidat for",
     "selectConstituency": "Vælg storkreds...",
-    "selectParty": "Vælg parti..."
+    "selectParty": "Vælg parti...",
+    "backToSelection": "Tilbage til valg"
   },
   "sharePanel": {
     "title": "Del med venner og kandidater",

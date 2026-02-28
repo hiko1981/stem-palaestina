@@ -203,7 +203,8 @@
     "iAmCandidate": "私は候補者です",
     "andFor": "所属政党",
     "selectConstituency": "選挙区を選択...",
-    "selectParty": "政党を選択..."
+    "selectParty": "政党を選択...",
+    "backToSelection": "選択に戻る"
   },
   "candidateList": {
     "title": "地元の候補者を招待する",

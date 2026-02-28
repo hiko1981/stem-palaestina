@@ -203,7 +203,8 @@
     "iAmCandidate": "আমি প্রার্থী",
     "andFor": "এবং প্রার্থী",
     "selectConstituency": "স্টোরক্রেডস বাছুন...",
-    "selectParty": "দল বাছুন..."
+    "selectParty": "দল বাছুন...",
+    "backToSelection": "নির্বাচনে ফিরুন"
   },
   "candidateList": {
     "title": "আপনার স্থানীয় প্রার্থীকে আমন্ত্রণ জানান",

@@ -203,7 +203,8 @@
     "iAmCandidate": "Sou candidato(a) em",
     "andFor": "e candidato(a) por",
     "selectConstituency": "Selecionar círculo eleitoral...",
-    "selectParty": "Selecionar partido..."
+    "selectParty": "Selecionar partido...",
+    "backToSelection": "Voltar à seleção"
   },
   "candidateList": {
     "title": "Convide o seu candidato local",

@@ -203,7 +203,8 @@
     "iAmCandidate": "저는 후보자입니다",
     "andFor": "소속 정당",
     "selectConstituency": "선거구 선택...",
-    "selectParty": "정당 선택..."
+    "selectParty": "정당 선택...",
+    "backToSelection": "선택으로 돌아가기"
   },
   "candidateList": {
     "title": "지역 후보자를 초대하세요",

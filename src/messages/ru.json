@@ -203,7 +203,8 @@
     "iAmCandidate": "Я кандидат в",
     "andFor": "и кандидат от",
     "selectConstituency": "Выберите округ...",
-    "selectParty": "Выберите партию..."
+    "selectParty": "Выберите партию...",
+    "backToSelection": "Вернуться к выбору"
   },
   "candidateList": {
     "title": "Пригласите местного кандидата",

@@ -48,7 +48,7 @@ export default function BottomTabBar({ activeTab = "vote", onTabChange }: Bottom
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-50 border-t border-gray-100 bg-white/95 backdrop-blur-md sm:hidden"
+      className="fixed bottom-0 inset-x-0 z-50 border-t border-gray-100 bg-white/95 backdrop-blur-md"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="flex items-center justify-around h-14">

@@ -80,8 +80,17 @@ export default function DenmarkMap({ selected: controlledSelected, onSelect }: D
               fill={getColor(s.id)}
               stroke="#fff"
               strokeWidth="2"
-              className="cursor-pointer transition-colors duration-150"
+              className="cursor-pointer transition-colors duration-150 focus:outline-none focus:stroke-[#15803d] focus:stroke-[3]"
+              role="button"
+              tabIndex={0}
+              aria-label={st(s.id)}
               onClick={() => handleClick(s.id)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleClick(s.id);
+                }
+              }}
               onMouseEnter={() => setHovered(s.id)}
               onMouseLeave={() => setHovered(null)}
             >

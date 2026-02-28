@@ -285,7 +285,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
         <div className="flex items-center gap-2">
           <Initials name={c.name} color={color} />
           <div className="min-w-0">
-            <p className="text-xs font-medium truncate leading-tight">{c.name}</p>
+            <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
             <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
     <div className="space-y-3">
       {/* Storkreds filter */}
       <select
-        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
         value={storkreds}
         onChange={(e) => setStorkreds(e.target.value)}
       >

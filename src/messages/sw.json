@@ -203,7 +203,8 @@
     "iAmCandidate": "Mimi ni mgombea katika",
     "andFor": "na mgombea wa",
     "selectConstituency": "Chagua mkoa...",
-    "selectParty": "Chagua chama..."
+    "selectParty": "Chagua chama...",
+    "backToSelection": "Rudi kwenye uchaguzi"
   },
   "candidateList": {
     "title": "Mwalike mgombea wako wa eneo",

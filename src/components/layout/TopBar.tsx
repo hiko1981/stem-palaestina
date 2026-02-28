@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { locales, localeNames, type Locale } from "@/i18n/config";
 import { useState, useRef, useEffect } from "react";
@@ -45,12 +43,7 @@ function HeaderCounter() {
   );
 }
 
-const navKeys = ["vote", "candidates", "results", "about"] as const;
-const navHrefs = ["/stem", "/kandidater", "/stem-danmark", "/om"];
-
 export default function TopBar() {
-  const pathname = usePathname();
-  const t = useTranslations("nav");
   const locale = useLocale();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -88,7 +81,7 @@ export default function TopBar() {
           </button>
 
           {open && (
-            <div className="absolute left-0 top-full mt-1 z-50 w-44 rounded-lg border border-gray-100 bg-white shadow-lg py-1 max-h-72 overflow-y-auto">
+            <div className="absolute start-0 top-full mt-1 z-[60] w-44 rounded-lg border border-gray-100 bg-white shadow-lg py-1 max-h-72 overflow-y-auto">
               {locales.map((loc) => (
                 <button
                   key={loc}
@@ -109,28 +102,6 @@ export default function TopBar() {
 
         {/* Header counter */}
         <HeaderCounter />
-
-        {/* Desktop: nav links (right-aligned) */}
-        <div className="hidden sm:flex gap-5 text-sm font-medium">
-          {navKeys.map((key, i) => {
-            const active =
-              pathname === navHrefs[i] ||
-              (navHrefs[i] === "/stem" && pathname.startsWith("/stem/"));
-            return (
-              <Link
-                key={key}
-                href={navHrefs[i]}
-                className={`transition-colors ${
-                  active
-                    ? "text-melon-green"
-                    : "text-gray-500 hover:text-melon-green"
-                }`}
-              >
-                {t(key)}
-              </Link>
-            );
-          })}
-        </div>
       </nav>
     </header>
   );

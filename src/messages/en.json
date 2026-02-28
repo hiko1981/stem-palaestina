@@ -203,7 +203,8 @@
     "iAmCandidate": "I am a candidate in",
     "andFor": "and running for",
     "selectConstituency": "Select constituency...",
-    "selectParty": "Select party..."
+    "selectParty": "Select party...",
+    "backToSelection": "Back to selection"
   },
   "candidateList": {
     "title": "Invite your local candidate",

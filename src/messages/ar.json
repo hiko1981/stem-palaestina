@@ -203,7 +203,8 @@
     "iAmCandidate": "أنا مرشح في",
     "andFor": "وأمثّل",
     "selectConstituency": "اختر الدائرة...",
-    "selectParty": "اختر الحزب..."
+    "selectParty": "اختر الحزب...",
+    "backToSelection": "العودة إلى الاختيار"
   },
   "candidateList": {
     "title": "ادعُ مرشحك المحلي",

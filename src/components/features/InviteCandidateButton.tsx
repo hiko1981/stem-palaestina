@@ -207,7 +207,7 @@ export default function InviteCandidateButton({
 
         {/* Step 1: Kreds */}
         <select
-          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
           value={storkreds}
           onChange={(e) => setStorkreds(e.target.value)}
         >
@@ -228,7 +228,7 @@ export default function InviteCandidateButton({
         {/* Step 2: Parti */}
         {loaded && storkreds && parties.length > 0 && (
           <select
-            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-melon-green focus:outline-none"
+            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
             value={party}
             onChange={(e) => setParty(e.target.value)}
           >
@@ -255,7 +255,7 @@ export default function InviteCandidateButton({
                 <div key={c.id} className="rounded-lg bg-gray-50 px-3 py-2 space-y-1.5">
                   {/* Name + badge */}
                   <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-medium truncate">{c.name}</p>
+                    <p className="text-sm font-medium truncate" title={c.name}>{c.name}</p>
                     {getBadge(c)}
                   </div>
 

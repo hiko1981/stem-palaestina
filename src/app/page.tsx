@@ -107,7 +107,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 export default function Home() {
   const [hasVoted, setHasVoted] = useState<boolean | null>(null);
   const [voteValue, setVoteValue] = useState(true);
-  const [activePanel, setActivePanel] = useState<ActivePanel>(null);
+  const [activePanel, setActivePanel] = useState<ActivePanel>("voter");
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("+45");
   const [phoneError, setPhoneError] = useState("");
@@ -212,12 +212,12 @@ export default function Home() {
       <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 relative">
         <button
           onClick={() => setNotification("")}
-          className="absolute top-2 right-2 text-amber-400 hover:text-amber-600 text-lg leading-none"
+          className="absolute top-2 end-2 text-amber-400 hover:text-amber-600 text-lg leading-none"
           aria-label="Luk"
         >
           &times;
         </button>
-        <p className="text-sm text-amber-800 pr-6">{notification}</p>
+        <p className="text-sm text-amber-800 pe-6">{notification}</p>
       </div>
     </div>
   ) : null;
@@ -338,7 +338,6 @@ export default function Home() {
     <>
       {notificationBanner}
       <div className="mx-auto max-w-xl px-4 pt-6 pb-24">
-        <PublicVoteBar />
         {activeTab === "vote" && (
           <>
             {/* Compact hero */}
@@ -374,10 +373,10 @@ export default function Home() {
             {/* ── Accordion panels ── */}
             <div className="space-y-2 mb-4">
               {/* Panel 1: Jeg er vælger */}
-              <div className="rounded-lg border border-gray-200 overflow-hidden">
+              <div className={`rounded-lg border overflow-hidden transition-colors ${activePanel === "voter" ? "border-melon-green" : "border-gray-200"}`}>
                 <button
                   onClick={() => togglePanel("voter")}
-                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
+                  className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors ${activePanel === "voter" ? "bg-melon-green/5 text-melon-green" : "hover:bg-gray-50"}`}
                 >
                   {t("voterTitle")}
                   <ChevronIcon open={activePanel === "voter"} />
@@ -417,10 +416,10 @@ export default function Home() {
               </div>
 
               {/* Panel 2: Jeg er kandidat */}
-              <div className="rounded-lg border border-gray-200 overflow-hidden">
+              <div className={`rounded-lg border overflow-hidden transition-colors ${activePanel === "candidate" ? "border-melon-green" : "border-gray-200"}`}>
                 <button
                   onClick={() => togglePanel("candidate")}
-                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
+                  className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors ${activePanel === "candidate" ? "bg-melon-green/5 text-melon-green" : "hover:bg-gray-50"}`}
                 >
                   {t("candidateTitle")}
                   <ChevronIcon open={activePanel === "candidate"} />
@@ -467,10 +466,10 @@ export default function Home() {
               </div>
 
               {/* Panel 3: Del med venner og kandidater */}
-              <div className="rounded-lg border border-gray-200 overflow-hidden">
+              <div className={`rounded-lg border overflow-hidden transition-colors ${activePanel === "invite" ? "border-melon-green" : "border-gray-200"}`}>
                 <button
                   onClick={() => togglePanel("invite")}
-                  className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-gray-50"
+                  className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-sm font-semibold transition-colors ${activePanel === "invite" ? "bg-melon-green/5 text-melon-green" : "hover:bg-gray-50"}`}
                 >
                   {sp("title")}
                   <ChevronIcon open={activePanel === "invite"} />

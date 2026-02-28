@@ -203,7 +203,8 @@
     "iAmCandidate": "میں امیدوار ہوں",
     "andFor": "اور پارٹی",
     "selectConstituency": "حلقہ منتخب کریں...",
-    "selectParty": "پارٹی منتخب کریں..."
+    "selectParty": "پارٹی منتخب کریں...",
+    "backToSelection": "انتخاب پر واپس جائیں"
   },
   "candidateList": {
     "title": "اپنے مقامی امیدوار کو مدعو کریں",

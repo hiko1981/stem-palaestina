@@ -203,7 +203,8 @@
     "iAmCandidate": "Adayım",
     "andFor": "ve partim",
     "selectConstituency": "Seçim bölgesi seçin...",
-    "selectParty": "Parti seçin..."
+    "selectParty": "Parti seçin...",
+    "backToSelection": "Seçime geri dön"
   },
   "candidateList": {
     "title": "Yerel adayınızı davet edin",

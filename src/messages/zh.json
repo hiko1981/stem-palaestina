@@ -203,7 +203,8 @@
     "iAmCandidate": "我是候选人，选区",
     "andFor": "所属政党",
     "selectConstituency": "选择选区...",
-    "selectParty": "选择政党..."
+    "selectParty": "选择政党...",
+    "backToSelection": "返回选择"
   },
   "candidateList": {
     "title": "邀请您的本地候选人",

@@ -203,7 +203,8 @@
     "iAmCandidate": "Ich bin Kandidat in",
     "andFor": "und kandidiere für",
     "selectConstituency": "Wahlkreis wählen...",
-    "selectParty": "Partei wählen..."
+    "selectParty": "Partei wählen...",
+    "backToSelection": "Zurück zur Auswahl"
   },
   "candidateList": {
     "title": "Lade deinen lokalen Kandidaten ein",

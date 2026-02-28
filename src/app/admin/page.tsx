@@ -287,13 +287,13 @@ export default function AdminPage() {
                     <div className="flex gap-2 shrink-0">
                       <Button
                         onClick={() => verifyCandidate(c.id, true)}
-                        className="text-xs px-3 py-1.5"
+                        className="text-xs px-3 py-2 min-h-[44px]"
                       >
                         Godkend
                       </Button>
                       <button
                         onClick={() => deleteCandidate(c.id)}
-                        className="text-xs text-melon-red hover:underline px-2"
+                        className="text-xs text-melon-red hover:underline px-3 py-2 min-h-[44px]"
                       >
                         Slet
                       </button>
@@ -329,13 +329,13 @@ export default function AdminPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => verifyCandidate(c.id, false)}
-                        className="text-xs text-gray-400 hover:underline"
+                        className="text-xs text-gray-400 hover:underline px-2 py-2 min-h-[44px]"
                       >
                         Fjern godkendelse
                       </button>
                       <button
                         onClick={() => deleteCandidate(c.id)}
-                        className="text-xs text-melon-red hover:underline"
+                        className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
                       >
                         Slet
                       </button>
@@ -381,7 +381,7 @@ export default function AdminPage() {
                   </div>
                   <button
                     onClick={() => deleteSupportMessage(s.id)}
-                    className="text-xs text-melon-red hover:underline shrink-0"
+                    className="text-xs text-melon-red hover:underline shrink-0 px-2 py-2 min-h-[44px]"
                   >
                     Slet
                   </button>
@@ -479,7 +479,7 @@ export default function AdminPage() {
                     <td className="py-2">
                       <button
                         onClick={() => deleteVote(v.phoneHash)}
-                        className="text-xs text-melon-red hover:underline"
+                        className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
                       >
                         Slet
                       </button>

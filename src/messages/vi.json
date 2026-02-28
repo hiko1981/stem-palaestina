@@ -203,7 +203,8 @@
     "iAmCandidate": "Tôi là ứng cử viên ở",
     "andFor": "và ứng cử cho",
     "selectConstituency": "Chọn khu vực bầu cử...",
-    "selectParty": "Chọn đảng..."
+    "selectParty": "Chọn đảng...",
+    "backToSelection": "Quay lại lựa chọn"
   },
   "candidateList": {
     "title": "Mời ứng cử viên địa phương",
