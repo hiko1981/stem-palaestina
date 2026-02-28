@@ -280,7 +280,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
       {/* Filters */}
       <div className="flex gap-2">
         <select
-          className="flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+          className="w-1/3 min-w-0 rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
           value={storkreds}
           onChange={(e) => setStorkreds(e.target.value)}
         >
@@ -292,14 +292,14 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
           ))}
         </select>
         <select
-          className="w-28 rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+          className="flex-1 min-w-0 rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
           value={partyFilter}
           onChange={(e) => setPartyFilter(e.target.value)}
         >
           <option value="">{cl("allParties")}</option>
           {parties.map((p) => (
             <option key={p} value={p}>
-              {partyLetter(p)}
+              {p}
             </option>
           ))}
         </select>
