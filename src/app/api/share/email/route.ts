@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod/v4";
 import { sendEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getShareEmail } from "@/lib/share-translations";
 
 const schema = z.object({
   email: z.string().email(),
+  locale: z.string().max(5).optional(),
 });
 
 function getBaseUrl() {
@@ -36,24 +38,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const url = getBaseUrl();
-
-    const subject = "En vælger har delt Stem Palæstina med dig";
-    const body = `Hej,
-
-En vælger på Stem Palæstina har valgt at dele appen med dig.
-
-Stem Palæstina er en uafhængig afstemning hvor danske vælgere kan tage stilling til tre krav:
-
-1. Anerkend Palæstina
-2. Stop våbensalg til Israel
-3. Stop ulovlige investeringer
-
-Brug din stemme her:
-${url}
-
-Med venlig hilsen
-Stem Palæstina`;
+    const locale = parsed.data.locale || "da";
+    const { subject, body } = getShareEmail(locale, getBaseUrl());
 
     await sendEmail(parsed.data.email, subject, body);
 

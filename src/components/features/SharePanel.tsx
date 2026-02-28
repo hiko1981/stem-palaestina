@@ -5,14 +5,39 @@ import { useTranslations } from "next-intl";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
 import Button from "@/components/ui/Button";
 import PhoneNote from "@/components/ui/PhoneNote";
+import { locales, localeNames, type Locale } from "@/i18n/config";
 
 type Mode = null | "sms" | "email";
+
+function LocaleSelect({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="rounded-lg border border-gray-300 px-2 py-2 text-sm bg-white focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+    >
+      {locales.map((loc) => (
+        <option key={loc} value={loc}>
+          {localeNames[loc]}
+        </option>
+      ))}
+    </select>
+  );
+}
 
 export default function SharePanel() {
   const [mode, setMode] = useState<Mode>(null);
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("+45");
   const [email, setEmail] = useState("");
+  const [smsLocale, setSmsLocale] = useState<string>("da");
+  const [emailLocale, setEmailLocale] = useState<string>("da");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -24,11 +49,6 @@ export default function SharePanel() {
     setDialCode(code);
   }, []);
 
-  const baseUrl =
-    typeof window !== "undefined"
-      ? window.location.origin
-      : "https://stem-palaestina.vercel.app";
-
   async function handleSendSms() {
     setError("");
     setLoading(true);
@@ -36,7 +56,7 @@ export default function SharePanel() {
       const res = await fetch("/api/ballot/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, dialCode }),
+        body: JSON.stringify({ phone, dialCode, locale: smsLocale }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -59,7 +79,7 @@ export default function SharePanel() {
       const res = await fetch("/api/share/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale: emailLocale }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -76,6 +96,10 @@ export default function SharePanel() {
   }
 
   function handleCopyLink() {
+    const baseUrl =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "https://stem-palaestina.vercel.app";
     navigator.clipboard.writeText(baseUrl).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -129,6 +153,7 @@ export default function SharePanel() {
                   className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
                   autoFocus
                 />
+                <LocaleSelect value={smsLocale} onChange={setSmsLocale} />
               </div>
               <Button
                 onClick={handleSendSms}
@@ -170,14 +195,17 @@ export default function SharePanel() {
             </p>
           ) : (
             <>
-              <input
-                type="email"
-                placeholder={t("emailLabel")}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
-                autoFocus
-              />
+              <div className="flex gap-2 min-w-0">
+                <input
+                  type="email"
+                  placeholder={t("emailLabel")}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-melon-green focus:border-transparent focus:outline-none"
+                  autoFocus
+                />
+                <LocaleSelect value={emailLocale} onChange={setEmailLocale} />
+              </div>
               <Button
                 onClick={handleSendEmail}
                 loading={loading}

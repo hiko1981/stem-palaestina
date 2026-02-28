@@ -6,6 +6,7 @@ export const ballotRequestSchema = z.object({
   deviceId: z.string().optional(),
   role: z.enum(["voter", "candidate"]).optional(),
   candidateId: z.string().optional(),
+  locale: z.string().max(5).optional(),
 });
 
 export const ballotVoteSchema = z.object({

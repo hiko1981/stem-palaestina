@@ -9,6 +9,7 @@ import { checkAndReserveSlot } from "@/lib/ballot-slots";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { checkPhoneType } from "@/lib/phone-lookup";
 import { RATE_LIMITS, BALLOT_EXPIRY_HOURS } from "@/lib/constants";
+import { getBallotSms, getBallotCandidateSms } from "@/lib/share-translations";
 
 function getBaseUrl() {
   // VERCEL_PROJECT_PRODUCTION_URL is auto-set by Vercel (no protocol)
@@ -152,9 +153,10 @@ export async function POST(req: NextRequest) {
     }
     const qs = params.toString();
     const ballotUrl = `${getBaseUrl()}/stem/${token}${qs ? `?${qs}` : ""}`;
+    const locale = parsed.data.locale || "da";
     const smsText = parsed.data.role === "candidate"
-      ? `Stem Palæstina: Registrér dig som kandidat her: ${ballotUrl}`
-      : `Stem Palæstina: Afgiv din stemme her: ${ballotUrl}`;
+      ? getBallotCandidateSms(locale, ballotUrl)
+      : getBallotSms(locale, ballotUrl);
     await sendSms(phone, smsText);
 
     return NextResponse.json({ ok: true });

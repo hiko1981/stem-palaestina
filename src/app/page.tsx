@@ -14,7 +14,7 @@ import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
 import { getDeviceId, setDeviceVoted, getDeviceVoted } from "@/lib/device-cookie";
 import ResultsView from "@/components/features/ResultsView";
 import PublicVoteBar from "@/components/features/PublicVoteBar";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 type ActivePanel = "voter" | "candidate" | "invite" | null;
 
@@ -119,6 +119,7 @@ export default function Home() {
   const [mapStorkreds, setMapStorkreds] = useState("");
   const [notification, setNotification] = useState("");
 
+  const locale = useLocale();
   const t = useTranslations("vote");
   const b = useTranslations("ballot");
   const d = useTranslations("demands");
@@ -213,6 +214,7 @@ export default function Home() {
         body: JSON.stringify({
           phone,
           dialCode,
+          locale,
           deviceId:
             typeof window !== "undefined"
               ? localStorage.getItem("stem_device_id") || undefined
