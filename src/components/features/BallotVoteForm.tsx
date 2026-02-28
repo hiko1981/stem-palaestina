@@ -169,7 +169,7 @@ export default function BallotVoteForm({ token, role, candidateId }: BallotVoteF
     return (
       <div className="text-center py-12">
         <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-melon-green border-t-transparent" />
-        <p className="mt-4 text-gray-600">{t("autoSubmitting")}</p>
+        <p className="mt-4 text-gray-600">{t("submitting")}</p>
       </div>
     );
   }

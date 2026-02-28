@@ -105,7 +105,7 @@ function ChevronIcon({ open }: { open: boolean }) {
 }
 
 export default function Home() {
-  const [hasVoted, setHasVoted] = useState<boolean | null>(null);
+  const [hasVoted, setHasVoted] = useState(false);
   const [votedYes, setVotedYes] = useState(true);
   const [activePanel, setActivePanel] = useState<ActivePanel>("voter");
   const [phone, setPhone] = useState("");
@@ -242,9 +242,6 @@ export default function Home() {
     }
   }
 
-  // Wait for localStorage check
-  if (hasVoted === null) return null;
-
   // ───── ONE-TIME NOTIFICATION BANNER ─────
   const notificationBanner = notification ? (
     <div className="mx-auto max-w-xl px-4 pt-4">
@@ -362,6 +359,7 @@ export default function Home() {
       >
         {b("send")}
       </Button>
+      <p className="text-center text-xs text-gray-400">{b("voteInSmsNote")}</p>
       <PhoneNote />
       {phoneError && (
         <p className="text-center text-sm text-melon-red">{phoneError}</p>

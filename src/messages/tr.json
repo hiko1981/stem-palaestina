@@ -122,7 +122,8 @@
     "yes": "Evet, lehte oy veriyorum",
     "no": "Hayır",
     "anonNote": "Oyun anonimdir ve telefon numarana geri izlenemez.",
-    "autoSubmitting": "Oyunuz kaydediliyor...",
+    "submitting": "Oyunuz kaydediliyor...",
+    "voteInSmsNote": "Telefonunuzda bağlantıyı açtığınızda Evet veya Hayır seçeceksiniz.",
     "viewResults": "Sonuçları gör",
     "phoneNote": "Telefon numaranız şifrelenir ve saklanmaz. Her telefon için yalnızca bir oy. {link}",
     "phoneNoteLink": "Daha fazla bilgi",
@@ -206,7 +207,8 @@
     "andFor": "ve partim",
     "selectConstituency": "Seçim bölgesi seçin...",
     "selectParty": "Parti seçin...",
-    "backToSelection": "Seçime geri dön"
+    "backToSelection": "Seçime geri dön",
+    "noCandidates": "Bu seçim çevresinde aday bulunamadı. Aşağıdan \"Listede değilim\" seçin."
   },
   "candidateList": {
     "title": "Yerel adayınızı davet edin",

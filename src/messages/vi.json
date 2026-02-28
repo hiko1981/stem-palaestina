@@ -122,7 +122,8 @@
     "yes": "Có, tôi bỏ phiếu đồng ý",
     "no": "Không",
     "anonNote": "Phiếu bầu của bạn là ẩn danh và không thể truy ngược về số điện thoại của bạn.",
-    "autoSubmitting": "Đang ghi nhận phiếu bầu của bạn...",
+    "submitting": "Đang ghi nhận phiếu bầu...",
+    "voteInSmsNote": "Bạn sẽ chọn Có hoặc Không khi mở liên kết trên điện thoại.",
     "viewResults": "Xem kết quả",
     "phoneNote": "Số điện thoại của bạn được mã hóa và không được lưu trữ. Chỉ một phiếu bầu cho mỗi số điện thoại. {link}",
     "phoneNoteLink": "Đọc thêm",
@@ -206,7 +207,8 @@
     "andFor": "và ứng cử cho",
     "selectConstituency": "Chọn khu vực bầu cử...",
     "selectParty": "Chọn đảng...",
-    "backToSelection": "Quay lại lựa chọn"
+    "backToSelection": "Quay lại lựa chọn",
+    "noCandidates": "Không tìm thấy ứng viên nào trong khu vực bầu cử này. Chọn \"Tôi không có trong danh sách\" bên dưới."
   },
   "candidateList": {
     "title": "Mời ứng cử viên địa phương",

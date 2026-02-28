@@ -122,7 +122,8 @@
     "yes": "是的，我投赞成票",
     "no": "否",
     "anonNote": "您的投票是匿名的，无法追溯到您的手机号码。",
-    "autoSubmitting": "正在登记您的投票...",
+    "submitting": "正在登记您的投票...",
+    "voteInSmsNote": "在手机上打开链接后选择是或否。",
     "viewResults": "查看结果",
     "phoneNote": "您的手机号码经过加密且不会被存储。每个手机号只能投一票。{link}",
     "phoneNoteLink": "了解更多",
@@ -206,7 +207,8 @@
     "andFor": "所属政党",
     "selectConstituency": "选择选区...",
     "selectParty": "选择政党...",
-    "backToSelection": "返回选择"
+    "backToSelection": "返回选择",
+    "noCandidates": "在此选区未找到候选人。请选择下方的\"我不在名单上\"。"
   },
   "candidateList": {
     "title": "邀请您的本地候选人",

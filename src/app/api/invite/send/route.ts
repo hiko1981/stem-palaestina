@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const link = `${getBaseUrl()}/stem`;
+    const link = `${getBaseUrl()}/?panel=candidate`;
 
     if (parsed.data.method === "email") {
       // Server-side email: look up candidate's contactEmail
@@ -123,7 +123,9 @@ export async function POST(req: NextRequest) {
       }
 
       // Silent suppression: normalize phone and check vote + suppression
-      const normalized = normalizeToE164(to, "+45");
+      // Accept E.164 if starts with +, else fallback to +45
+      const defaultDialCode = to.startsWith("+") ? "" : "+45";
+      const normalized = normalizeToE164(to, defaultDialCode);
       if (normalized && isValidE164(normalized)) {
         const recipientHash = hashPhone(normalized);
 

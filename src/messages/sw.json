@@ -122,7 +122,8 @@
     "yes": "Ndio, ninapigia kura kuunga mkono",
     "no": "Hapana",
     "anonNote": "Kura yako ni ya siri na haiwezi kufuatiliwa kurudi kwenye nambari yako ya simu.",
-    "autoSubmitting": "Inasajili kura yako...",
+    "submitting": "Kura yako inasajiliwa...",
+    "voteInSmsNote": "Utachagua Ndiyo au Hapana unapofungua kiungo kwenye simu yako.",
     "viewResults": "Tazama matokeo",
     "phoneNote": "Nambari yako ya simu inasimbwa kwa njia fiche na haihifadhiwi. Kura moja tu kwa kila simu. {link}",
     "phoneNoteLink": "Soma zaidi",
@@ -206,7 +207,8 @@
     "andFor": "na mgombea wa",
     "selectConstituency": "Chagua mkoa...",
     "selectParty": "Chagua chama...",
-    "backToSelection": "Rudi kwenye uchaguzi"
+    "backToSelection": "Rudi kwenye uchaguzi",
+    "noCandidates": "Hakuna wagombea waliopatikana katika jimbo hili. Chagua \"Siko kwenye orodha\" hapo chini."
   },
   "candidateList": {
     "title": "Mwalike mgombea wako wa eneo",

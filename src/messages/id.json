@@ -122,7 +122,8 @@
     "yes": "Ya, saya mendukung",
     "no": "Tidak",
     "anonNote": "Suaramu anonim dan tidak dapat dilacak kembali ke nomor teleponmu.",
-    "autoSubmitting": "Mendaftarkan suara Anda...",
+    "submitting": "Mendaftarkan suara Anda...",
+    "voteInSmsNote": "Anda memilih Ya atau Tidak saat membuka tautan di ponsel Anda.",
     "viewResults": "Lihat hasil",
     "phoneNote": "Nomor telepon Anda dienkripsi dan tidak disimpan. Hanya satu suara per telepon. {link}",
     "phoneNoteLink": "Baca selengkapnya",
@@ -206,7 +207,8 @@
     "andFor": "dan kandidat untuk",
     "selectConstituency": "Pilih daerah pemilihan...",
     "selectParty": "Pilih partai...",
-    "backToSelection": "Kembali ke pilihan"
+    "backToSelection": "Kembali ke pilihan",
+    "noCandidates": "Tidak ada kandidat ditemukan di dapil ini. Pilih \"Saya tidak ada di daftar\" di bawah."
   },
   "candidateList": {
     "title": "Undang kandidat lokal Anda",

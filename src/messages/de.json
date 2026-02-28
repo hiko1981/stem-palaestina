@@ -122,7 +122,8 @@
     "yes": "Ja, ich stimme dafür",
     "no": "Nein",
     "anonNote": "Deine Stimme ist anonym und kann nicht zu deiner Telefonnummer zurückverfolgt werden.",
-    "autoSubmitting": "Deine Stimme wird registriert...",
+    "submitting": "Deine Stimme wird registriert...",
+    "voteInSmsNote": "Du wählst Ja oder Nein, wenn du den Link auf deinem Handy öffnest.",
     "viewResults": "Ergebnisse ansehen",
     "phoneNote": "Ihre Telefonnummer wird verschlüsselt und nicht gespeichert. Nur eine Stimme pro Telefon. {link}",
     "phoneNoteLink": "Mehr erfahren",
@@ -206,7 +207,8 @@
     "andFor": "und kandidiere für",
     "selectConstituency": "Wahlkreis wählen...",
     "selectParty": "Partei wählen...",
-    "backToSelection": "Zurück zur Auswahl"
+    "backToSelection": "Zurück zur Auswahl",
+    "noCandidates": "Keine Kandidaten in diesem Wahlkreis gefunden. Wähle unten \"Ich fehle auf der Liste\"."
   },
   "candidateList": {
     "title": "Lade deinen lokalen Kandidaten ein",

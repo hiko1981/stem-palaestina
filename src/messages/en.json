@@ -122,7 +122,8 @@
     "yes": "Yes, I vote in favor",
     "no": "No",
     "anonNote": "Your vote is anonymous and cannot be traced back to your phone number.",
-    "autoSubmitting": "Registering your vote...",
+    "submitting": "Registering your vote...",
+    "voteInSmsNote": "You choose Yes or No when you open the link on your phone.",
     "viewResults": "View results",
     "phoneNote": "Your phone number is encrypted and not stored. Only one vote per phone. {link}",
     "phoneNoteLink": "Read more",
@@ -206,7 +207,8 @@
     "andFor": "and running for",
     "selectConstituency": "Select constituency...",
     "selectParty": "Select party...",
-    "backToSelection": "Back to selection"
+    "backToSelection": "Back to selection",
+    "noCandidates": "No candidates found in this constituency. Select \"I'm not on the list\" below."
   },
   "candidateList": {
     "title": "Invite your local candidate",

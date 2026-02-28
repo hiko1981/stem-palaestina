@@ -189,6 +189,13 @@ export default function CandidateSelect({
         </select>
       )}
 
+      {/* Empty state: kreds selected but no candidates */}
+      {storkreds && kredsFiltered.length === 0 && (
+        <p className="text-sm text-gray-500 text-center py-2">
+          {t("noCandidates")}
+        </p>
+      )}
+
       {/* Step 3: Candidate list */}
       {party && partyFiltered.length > 0 && (
         <div className="space-y-1">
@@ -216,6 +223,20 @@ export default function CandidateSelect({
             {t("missingOption")}
           </button>
         </div>
+      )}
+
+      {/* "Mangler" option always available when kreds is selected */}
+      {storkreds && !party && (
+        <button
+          onClick={() => handleSelect("new")}
+          className={`w-full text-left rounded-lg border border-dashed px-3 py-2 text-sm font-medium transition-colors ${
+            selectedId === "new"
+              ? "border-melon-green bg-melon-green/10 text-melon-green"
+              : "border-gray-300 text-gray-600 hover:border-gray-400 hover:bg-gray-50"
+          }`}
+        >
+          {t("missingOption")}
+        </button>
       )}
 
       {/* Step 4: Phone input */}

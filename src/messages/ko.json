@@ -122,7 +122,8 @@
     "yes": "예, 찬성합니다",
     "no": "아니요",
     "anonNote": "귀하의 투표는 익명이며 전화번호로 추적할 수 없습니다.",
-    "autoSubmitting": "투표를 등록하는 중...",
+    "submitting": "투표 등록 중...",
+    "voteInSmsNote": "휴대폰에서 링크를 열면 예 또는 아니오를 선택합니다.",
     "viewResults": "결과 보기",
     "phoneNote": "전화번호는 암호화되며 저장되지 않습니다. 전화번호당 한 표만 가능합니다. {link}",
     "phoneNoteLink": "자세히 보기",
@@ -206,7 +207,8 @@
     "andFor": "소속 정당",
     "selectConstituency": "선거구 선택...",
     "selectParty": "정당 선택...",
-    "backToSelection": "선택으로 돌아가기"
+    "backToSelection": "선택으로 돌아가기",
+    "noCandidates": "이 선거구에서 후보자를 찾을 수 없습니다. 아래에서 \"목록에 없습니다\"를 선택하세요."
   },
   "candidateList": {
     "title": "지역 후보자를 초대하세요",

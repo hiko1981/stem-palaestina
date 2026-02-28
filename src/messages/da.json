@@ -122,7 +122,8 @@
     "yes": "Ja, jeg stemmer for",
     "no": "Nej",
     "anonNote": "Din stemme er anonym og kan ikke spores tilbage til dit telefonnummer.",
-    "autoSubmitting": "Registrerer din stemme...",
+    "submitting": "Registrerer din stemme...",
+    "voteInSmsNote": "Du vælger Ja eller Nej når du åbner linket på din mobil.",
     "viewResults": "Se resultater",
     "phoneNote": "Dit telefonnummer krypteres og gemmes ikke. Kun én stemme per telefon. {link}",
     "phoneNoteLink": "Læs mere",
@@ -206,7 +207,8 @@
     "andFor": "og kandidat for",
     "selectConstituency": "Vælg storkreds...",
     "selectParty": "Vælg parti...",
-    "backToSelection": "Tilbage til valg"
+    "backToSelection": "Tilbage til valg",
+    "noCandidates": "Ingen kandidater fundet i denne storkreds. Vælg \"Jeg mangler på listen\" nedenfor."
   },
   "sharePanel": {
     "title": "Del med venner og kandidater",

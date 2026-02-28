@@ -169,14 +169,14 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
   }
 
   function handleCopyLink(candidateId: number) {
-    navigator.clipboard.writeText(`${baseUrl}/stem`).then(() => {
+    navigator.clipboard.writeText(`${baseUrl}/?panel=candidate`).then(() => {
       setCopiedId(candidateId);
       setTimeout(() => setCopiedId(null), 2000);
     });
   }
 
   function handleCopyGenericLink() {
-    navigator.clipboard.writeText(`${baseUrl}/stem`).then(() => {
+    navigator.clipboard.writeText(`${baseUrl}/?panel=candidate`).then(() => {
       setCopiedGeneric(true);
       setTimeout(() => setCopiedGeneric(false), 2000);
     });
@@ -372,7 +372,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
         <p className="text-sm font-medium text-gray-600 mb-2">{cl("missingCandidate")}</p>
         <div className="flex gap-1.5 flex-wrap">
           <a
-            href={`fb-messenger://share?link=${encodeURIComponent(`${baseUrl}/stem`)}`}
+            href={`fb-messenger://share?link=${encodeURIComponent(`${baseUrl}/?panel=candidate`)}`}
             className="inline-flex items-center rounded-full bg-white border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
           >
             {sh("messenger")}

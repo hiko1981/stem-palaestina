@@ -122,7 +122,8 @@
     "yes": "Sí, voto a favor",
     "no": "No",
     "anonNote": "Tu voto es anónimo y no puede rastrearse hasta tu número de teléfono.",
-    "autoSubmitting": "Registrando tu voto...",
+    "submitting": "Registrando tu voto...",
+    "voteInSmsNote": "Elige Sí o No al abrir el enlace en tu teléfono.",
     "viewResults": "Ver resultados",
     "phoneNote": "Tu número de teléfono se cifra y no se almacena. Solo un voto por teléfono. {link}",
     "phoneNoteLink": "Leer más",
@@ -206,7 +207,8 @@
     "andFor": "y candidato por",
     "selectConstituency": "Seleccionar circunscripción...",
     "selectParty": "Seleccionar partido...",
-    "backToSelection": "Volver a la selección"
+    "backToSelection": "Volver a la selección",
+    "noCandidates": "No se encontraron candidatos en esta circunscripción. Selecciona \"No estoy en la lista\" abajo."
   },
   "candidateList": {
     "title": "Invita a tu candidato local",

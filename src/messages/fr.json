@@ -122,7 +122,8 @@
     "yes": "Oui, je vote pour",
     "no": "Non",
     "anonNote": "Votre vote est anonyme et ne peut pas être retracé jusqu'à votre numéro de téléphone.",
-    "autoSubmitting": "Enregistrement de votre vote...",
+    "submitting": "Enregistrement de votre vote...",
+    "voteInSmsNote": "Vous choisirez Oui ou Non en ouvrant le lien sur votre téléphone.",
     "viewResults": "Voir les résultats",
     "phoneNote": "Votre numéro de téléphone est chiffré et non stocké. Un seul vote par téléphone. {link}",
     "phoneNoteLink": "En savoir plus",
@@ -206,7 +207,8 @@
     "andFor": "et candidat(e) pour",
     "selectConstituency": "Choisir la circonscription...",
     "selectParty": "Choisir le parti...",
-    "backToSelection": "Retour à la sélection"
+    "backToSelection": "Retour à la sélection",
+    "noCandidates": "Aucun candidat trouvé dans cette circonscription. Sélectionnez \"Je ne suis pas sur la liste\" ci-dessous."
   },
   "candidateList": {
     "title": "Invitez votre candidat local",

@@ -122,7 +122,8 @@
     "yes": "はい、賛成します",
     "no": "いいえ",
     "anonNote": "あなたの投票は匿名であり、電話番号に追跡されることはありません。",
-    "autoSubmitting": "投票を登録しています...",
+    "submitting": "投票を登録中...",
+    "voteInSmsNote": "スマホでリンクを開くと「はい」か「いいえ」を選択できます。",
     "viewResults": "結果を見る",
     "phoneNote": "電話番号は暗号化され、保存されません。1つの電話番号につき1票のみ。{link}",
     "phoneNoteLink": "詳細",
@@ -206,7 +207,8 @@
     "andFor": "所属政党",
     "selectConstituency": "選挙区を選択...",
     "selectParty": "政党を選択...",
-    "backToSelection": "選択に戻る"
+    "backToSelection": "選択に戻る",
+    "noCandidates": "この選挙区に候補者が見つかりません。下の「リストにいません」を選択してください。"
   },
   "candidateList": {
     "title": "地元の候補者を招待する",
