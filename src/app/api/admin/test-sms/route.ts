@@ -3,7 +3,7 @@ import { sendSms } from "@/lib/sms";
 
 export async function POST(req: NextRequest) {
   const { phone, secret } = await req.json();
-  if (secret !== process.env.ADMIN_SECRET) {
+  if (secret !== process.env.ADMIN_PASSWORD) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   try {
