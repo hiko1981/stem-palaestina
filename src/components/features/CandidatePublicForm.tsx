@@ -16,6 +16,7 @@ export default function CandidatePublicForm({ token }: CandidatePublicFormProps)
   const [name, setName] = useState("");
   const [party, setParty] = useState("");
   const [constituency, setConstituency] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -28,7 +29,7 @@ export default function CandidatePublicForm({ token }: CandidatePublicFormProps)
       const res = await fetch("/api/candidate/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, party, constituency, token }),
+        body: JSON.stringify({ name, party, constituency, email, token }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -111,10 +112,18 @@ export default function CandidatePublicForm({ token }: CandidatePublicFormProps)
           ))}
         </select>
       </div>
+      <Input
+        id="candidate-email"
+        type="email"
+        label={t("emailLabel")}
+        placeholder={t("emailPlaceholder")}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <Button
         onClick={handleSubmit}
         loading={loading}
-        disabled={!name || !party || !constituency}
+        disabled={!name || !party || !constituency || !email}
         className="w-full"
       >
         {t("submit")}

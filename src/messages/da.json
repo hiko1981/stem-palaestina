@@ -211,6 +211,8 @@
     "partyPlaceholder": "Partinavn",
     "constituencyLabel": "Valgkreds",
     "constituencyPlaceholder": "Din valgkreds",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Din email",
     "submit": "Send ansøgning",
     "skip": "Spring over",
     "networkError": "Netværksfejl. Prøv igen."

@@ -211,6 +211,8 @@
     "partyPlaceholder": "Party name",
     "constituencyLabel": "Constituency",
     "constituencyPlaceholder": "Your constituency",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Your email",
     "submit": "Submit application",
     "skip": "Skip",
     "networkError": "Network error. Please try again."

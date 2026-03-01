@@ -53,6 +53,7 @@ export async function POST(req: Request) {
         name: parsed.data.name,
         party: parsed.data.party,
         constituency: parsed.data.constituency,
+        contactEmail: parsed.data.email,
         phoneHash: ballotToken.phoneHash,
         ...(ballotToken.phone ? { contactPhone: ballotToken.phone } : {}),
       },
