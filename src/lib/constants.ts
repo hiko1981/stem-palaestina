@@ -11,7 +11,7 @@ export const RATE_LIMITS = {
   ballotCheckPerIp: { max: 30, windowMs: 60 * 60 * 1000 }, // 30/time per IP
 } as const;
 
-export const FT2026_LATEST_DATE = new Date("2026-10-20T00:00:00+02:00");
+export const FT2026_LATEST_DATE = new Date("2026-03-24T00:00:00+01:00");
 
 export const DEMANDS = [
   {
