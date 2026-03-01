@@ -11,24 +11,43 @@ interface CandidateWithStatus {
   constituency: string;
   hasEmail: boolean;
   hasPhone: boolean;
+  photoUrl: string | null;
   verified: boolean;
   optedOut: boolean;
   voteValue: boolean | null;
 }
 
-function Initials({ name, color }: { name: string; color: "green" | "red" | "gray" }) {
+function CandidateAvatar({ name, photoUrl, color }: { name: string; photoUrl?: string | null; color: "green" | "red" | "gray" }) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
     .slice(0, 2)
     .join("")
     .toUpperCase();
+  const ringColor =
+    color === "green"
+      ? "ring-melon-green/40"
+      : color === "red"
+        ? "ring-melon-red/40"
+        : "ring-gray-200";
   const bg =
     color === "green"
       ? "bg-melon-green/15 text-melon-green"
       : color === "red"
         ? "bg-melon-red/15 text-melon-red"
         : "bg-gray-100 text-gray-400";
+
+  if (photoUrl) {
+    return (
+      <img
+        src={photoUrl}
+        alt={name}
+        className={`h-8 w-8 shrink-0 rounded-full object-cover ring-2 ${ringColor}`}
+        loading="lazy"
+      />
+    );
+  }
+
   return (
     <div
       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${bg}`}
@@ -254,7 +273,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
         } ${expandedId === c.id ? "bg-gray-50 ring-1 ring-gray-200" : ""}`}
       >
         <div className="flex items-center gap-2">
-          <Initials name={c.name} color={color} />
+          <CandidateAvatar name={c.name} photoUrl={c.photoUrl} color={color} />
           <div className="min-w-0 flex-1">
             <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
             <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>

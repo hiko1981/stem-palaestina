@@ -39,6 +39,7 @@ interface CandidateRecord {
   contactEmail: string | null;
   contactPhone: string | null;
   publicStatement: string | null;
+  photoUrl: string | null;
   pledged: boolean;
   optedOut: boolean;
   verified: boolean;
@@ -327,11 +328,20 @@ export default function AdminPage() {
               return (
                 <Card key={c.id}>
                   <div className="flex items-start justify-between gap-4 mb-3">
-                    <div>
-                      <h3 className="font-bold">{c.name}</h3>
-                      <p className="text-sm text-gray-500">
-                        {c.party} &middot; {c.constituency}
-                      </p>
+                    <div className="flex items-center gap-3">
+                      {c.photoUrl ? (
+                        <img src={c.photoUrl} alt={c.name} className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-gray-200" />
+                      ) : (
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-400">
+                          {c.name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()}
+                        </div>
+                      )}
+                      <div>
+                        <h3 className="font-bold">{c.name}</h3>
+                        <p className="text-sm text-gray-500">
+                          {c.party} &middot; {c.constituency}
+                        </p>
+                      </div>
                     </div>
                     <div className="flex gap-2 shrink-0">
                       <Button
@@ -413,7 +423,15 @@ export default function AdminPage() {
                       onClick={() => setExpandedCandidate(isExpanded ? null : c.id)}
                       className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors"
                     >
-                      <div className="min-w-0">
+                      <div className="flex items-center gap-3 min-w-0">
+                        {c.photoUrl ? (
+                          <img src={c.photoUrl} alt={c.name} className="h-8 w-8 shrink-0 rounded-full object-cover ring-1 ring-gray-200" />
+                        ) : (
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-400">
+                            {c.name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()}
+                          </div>
+                        )}
+                        <div className="min-w-0">
                         <p className="text-sm font-medium">{c.name}</p>
                         <p className="text-xs text-gray-500">
                           {c.party} &middot; {c.constituency}
@@ -423,6 +441,7 @@ export default function AdminPage() {
                             </span>
                           )}
                         </p>
+                        </div>
                       </div>
                       <ChevronIcon open={isExpanded} />
                     </button>

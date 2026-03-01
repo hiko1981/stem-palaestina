@@ -56,6 +56,7 @@ model Candidate {
   phoneHash       String?   @map("phone_hash")
   pledged         Boolean   @default(false)
   publicStatement String?   @map("public_statement")
+  photoUrl        String?   @map("photo_url")
   verified        Boolean   @default(false)
   optedOut        Boolean   @default(false) @map("opted_out")
   optedOutAt      DateTime? @map("opted_out_at")
