@@ -9,6 +9,7 @@ interface CandidateVote {
   name: string;
   party: string;
   constituency: string;
+  photoUrl: string | null;
   verified: boolean;
   optedOut: boolean;
   voteValue: boolean | null;
@@ -54,17 +55,33 @@ function PercentBar({
   );
 }
 
-function Initials({ name, color }: { name: string; color: "green" | "red" }) {
+function CandidateAvatar({ name, photoUrl, color }: { name: string; photoUrl?: string | null; color: "green" | "red" }) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
     .slice(0, 2)
     .join("")
     .toUpperCase();
+  const ringColor =
+    color === "green"
+      ? "ring-melon-green/40"
+      : "ring-melon-red/40";
   const bg =
     color === "green"
       ? "bg-melon-green/15 text-melon-green"
       : "bg-melon-red/15 text-melon-red";
+
+  if (photoUrl) {
+    return (
+      <img
+        src={photoUrl}
+        alt={name}
+        className={`h-7 w-7 shrink-0 rounded-full object-cover ring-2 ${ringColor}`}
+        loading="lazy"
+      />
+    );
+  }
+
   return (
     <div
       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${bg}`}
@@ -178,7 +195,7 @@ export default function ResultsView() {
                 .filter((c) => c.voteValue === true)
                 .map((c) => (
                   <div key={c.id} className="flex items-center gap-1.5 rounded-lg px-1.5 py-1">
-                    <Initials name={c.name} color="green" />
+                    <CandidateAvatar name={c.name} photoUrl={c.photoUrl} color="green" />
                     <div className="min-w-0">
                       <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
                       <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
@@ -201,7 +218,7 @@ export default function ResultsView() {
                 .filter((c) => c.voteValue === false)
                 .map((c) => (
                   <div key={c.id} className="flex items-center gap-1.5 rounded-lg px-1.5 py-1">
-                    <Initials name={c.name} color="red" />
+                    <CandidateAvatar name={c.name} photoUrl={c.photoUrl} color="red" />
                     <div className="min-w-0">
                       <p className="text-xs font-medium truncate leading-tight" title={c.name}>{c.name}</p>
                       <p className="text-[10px] text-gray-400 truncate">{partyLetter(c.party)}</p>
