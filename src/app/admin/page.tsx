@@ -80,11 +80,16 @@ interface SuppressionRecord {
   createdAt: string;
 }
 
+// "mobile" = has touch + small screen (phone/tablet)
+function isMobileDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return navigator.maxTouchPoints > 0 && window.innerWidth < 1024;
+}
+
+type AuthGate = "checking" | "authed" | "qr" | "denied";
+
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [authChecking, setAuthChecking] = useState(true);
-  const [hasRegisteredDevice, setHasRegisteredDevice] = useState(false);
-  const [deviceLoginError, setDeviceLoginError] = useState("");
+  const [gate, setGate] = useState<AuthGate>("checking");
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [tokens, setTokens] = useState<BallotTokenRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
@@ -95,7 +100,6 @@ export default function AdminPage() {
   const [expandedCandidate, setExpandedCandidate] = useState<number | null>(null);
   const [votesOpen, setVotesOpen] = useState(false);
   const [ballotOpen, setBallotOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const loadDashboardData = useCallback(async () => {
@@ -118,10 +122,10 @@ export default function AdminPage() {
       .catch(() => {});
   }, []);
 
-  // On mount: try JWT cookie, then try device challenge-response login
+  // Auth flow on mount
   useEffect(() => {
     (async () => {
-      // 1. Try existing JWT cookie
+      // 1. Try existing JWT cookie (works for both phone + PC within TTL)
       const res = await fetch("/api/admin/votes");
       if (res.ok) {
         const data = await res.json();
@@ -130,7 +134,7 @@ export default function AdminPage() {
         setCandidates(data.candidates || []);
         setSupportMessages(data.supportMessages || []);
         setSuppressions(data.suppressions || []);
-        setAuthed(true);
+        setGate("authed");
         fetch("/api/admin/lang-miss")
           .then((r) => r.json())
           .then((d) => setLangMisses(d.misses || []))
@@ -139,107 +143,63 @@ export default function AdminPage() {
           .then((r) => r.json())
           .then((d) => setHitStats(d))
           .catch(() => {});
-        setAuthChecking(false);
         return;
       }
 
-      // 2. Try device challenge-response login (registered phone with keypair)
-      try {
-        const deviceId = getDeviceId();
-        const hasKey = await hasKeyPair();
-        if (hasKey) {
-          setHasRegisteredDevice(true);
-          // Step 1: get challenge
-          const challengeRes = await fetch("/api/admin/auth/device-login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ deviceId }),
-          });
-          const challengeData = await challengeRes.json();
-
-          if (challengeData.challenge) {
-            // Step 2: sign and verify
-            const signature = await signChallenge(challengeData.challenge);
-            const verifyRes = await fetch("/api/admin/auth/device-login", {
+      // 2. Mobile device: try keypair challenge-response auto-login
+      if (isMobileDevice()) {
+        try {
+          const hasKey = await hasKeyPair();
+          if (hasKey) {
+            const deviceId = getDeviceId();
+            // Get challenge
+            const cr = await fetch("/api/admin/auth/device-login", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                deviceId,
-                challenge: challengeData.challenge,
-                signature,
-              }),
+              body: JSON.stringify({ deviceId }),
             });
-            if (verifyRes.ok) {
-              setAuthed(true);
+            const cd = await cr.json();
+
+            if (cd.challenge) {
+              const signature = await signChallenge(cd.challenge);
+              const vr = await fetch("/api/admin/auth/device-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  deviceId,
+                  challenge: cd.challenge,
+                  signature,
+                }),
+              });
+              if (vr.ok) {
+                setGate("authed");
+                await loadDashboardData();
+                return;
+              }
+            } else if (cd.ok) {
+              // Legacy device
+              setGate("authed");
               await loadDashboardData();
-              setAuthChecking(false);
               return;
             }
-          } else if (challengeData.ok) {
-            // Legacy device without crypto — server issued JWT directly
-            setAuthed(true);
-            await loadDashboardData();
-            setAuthChecking(false);
-            return;
           }
-          setHasRegisteredDevice(false);
+        } catch {
+          // Crypto error
         }
-      } catch {
-        // No keypair or crypto error — show QR
+
+        // Mobile without valid keypair = denied
+        setGate("denied");
+        return;
       }
 
-      setAuthChecking(false);
+      // 3. PC/desktop = QR flow
+      setGate("qr");
     })();
   }, [loadDashboardData]);
 
   function handleQrAuthenticated() {
-    setAuthed(true);
+    setGate("authed");
     loadDashboardData();
-  }
-
-  async function handleDeviceLogin() {
-    setLoading(true);
-    setDeviceLoginError("");
-    try {
-      const deviceId = getDeviceId();
-
-      // Step 1: get challenge
-      const challengeRes = await fetch("/api/admin/auth/device-login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ deviceId }),
-      });
-      const challengeData = await challengeRes.json();
-
-      if (challengeData.challenge) {
-        // Step 2: sign and verify
-        const signature = await signChallenge(challengeData.challenge);
-        const verifyRes = await fetch("/api/admin/auth/device-login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            deviceId,
-            challenge: challengeData.challenge,
-            signature,
-          }),
-        });
-        if (!verifyRes.ok) {
-          const data = await verifyRes.json();
-          setDeviceLoginError(data.error || "Login fejlede");
-          return;
-        }
-      } else if (!challengeData.ok) {
-        setDeviceLoginError(challengeData.error || "Login fejlede");
-        return;
-      }
-
-      setAuthed(true);
-      await loadDashboardData();
-    } catch {
-      setDeviceLoginError("Netværksfejl");
-    } finally {
-      setLoading(false);
-    }
   }
 
   async function fetchData() {
@@ -275,7 +235,7 @@ export default function AdminPage() {
     return votes.find((v) => v.phoneHash === phoneHash);
   }
 
-  if (authChecking) {
+  if (gate === "checking") {
     return (
       <div className="mx-auto max-w-sm px-4 py-16 text-center">
         <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-melon-green border-t-transparent" />
@@ -283,34 +243,34 @@ export default function AdminPage() {
     );
   }
 
-  if (!authed) {
-    // Registered phone: show one-tap login
-    if (hasRegisteredDevice) {
-      return (
-        <div className="mx-auto max-w-sm px-4 py-16">
-          <h1 className="mb-8 text-center text-2xl font-bold">Admin</h1>
-          <Card>
-            <div className="space-y-4 text-center">
-              <p className="text-sm text-gray-500">
-                Denne enhed er registreret som admin-enhed.
-              </p>
-              <Button
-                onClick={handleDeviceLogin}
-                loading={loading}
-                className="w-full"
-              >
-                Log ind
-              </Button>
-              {deviceLoginError && (
-                <p className="text-sm text-melon-red">{deviceLoginError}</p>
-              )}
+  if (gate === "denied") {
+    return (
+      <div className="mx-auto max-w-sm px-4 py-16">
+        <h1 className="mb-8 text-center text-2xl font-bold">Admin</h1>
+        <Card>
+          <div className="space-y-4 text-center py-4">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-melon-red/10">
+              <svg className="h-8 w-8 text-melon-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
             </div>
-          </Card>
-        </div>
-      );
-    }
+            <p className="text-sm font-medium text-gray-700">Ingen adgang</p>
+            <p className="text-xs text-gray-500">
+              Denne enhed er ikke registreret som admin-enhed.
+            </p>
+            <a
+              href="/support"
+              className="inline-block text-xs text-melon-green hover:underline mt-2"
+            >
+              Kontakt administrator
+            </a>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
-    // PC / unknown device: QR flow
+  if (gate === "qr") {
     return <QrLoginFlow onAuthenticated={handleQrAuthenticated} />;
   }
 

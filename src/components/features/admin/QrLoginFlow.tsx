@@ -11,12 +11,19 @@ interface QrLoginFlowProps {
 
 type Step = 1 | 2 | 3 | "authenticated" | "failed";
 
+const TTL_OPTIONS = [
+  { label: "5 min", seconds: 5 * 60 },
+  { label: "15 min", seconds: 15 * 60 },
+  { label: "30 min", seconds: 30 * 60 },
+];
+
 export default function QrLoginFlow({ onAuthenticated }: QrLoginFlowProps) {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [step, setStep] = useState<Step>(1);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [ttl, setTtl] = useState(15 * 60); // default 15 min
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const doneRef = useRef(false);
 
@@ -74,11 +81,11 @@ export default function QrLoginFlow({ onAuthenticated }: QrLoginFlowProps) {
         if (data.step === "authenticated" && data.jwt) {
           doneRef.current = true;
           stopPolling();
-          // Set session-only cookie (no maxAge = deleted on browser close)
+          // Set cookie with chosen TTL (PC only)
           await fetch("/api/admin/auth/token", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ jwt: data.jwt, sessionOnly: true }),
+            body: JSON.stringify({ jwt: data.jwt, maxAge: ttl }),
           });
           onAuthenticated();
         }
@@ -142,6 +149,26 @@ export default function QrLoginFlow({ onAuthenticated }: QrLoginFlowProps) {
                   ? stepLabels[step]
                   : "Vent venligst..."}
               </p>
+              {step === 1 && (
+                <div className="pt-2">
+                  <p className="text-xs text-gray-400 mb-2">Session-varighed:</p>
+                  <div className="flex justify-center gap-2">
+                    {TTL_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.seconds}
+                        onClick={() => setTtl(opt.seconds)}
+                        className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                          ttl === opt.seconds
+                            ? "bg-melon-green text-white"
+                            : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="py-8">
