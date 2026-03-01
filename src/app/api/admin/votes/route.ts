@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { timingSafeEqual } from "crypto";
+import { sendVerificationEmail } from "@/lib/candidate-email";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 if (!ADMIN_PASSWORD) throw new Error("ADMIN_PASSWORD not set");
@@ -107,11 +108,23 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
 
     if (body.candidateId && typeof body.verified === "boolean") {
-      await prisma.candidate.update({
+      const candidate = await prisma.candidate.update({
         where: { id: body.candidateId },
         data: { verified: body.verified },
       });
-      return NextResponse.json({ ok: true });
+
+      // Send welcome email when verifying (not when un-verifying)
+      let emailSent = false;
+      if (body.verified && candidate.contactEmail) {
+        try {
+          await sendVerificationEmail(candidate);
+          emailSent = true;
+        } catch (e) {
+          console.error("Failed to send verification email:", e);
+        }
+      }
+
+      return NextResponse.json({ ok: true, emailSent });
     }
 
     if (body.deleteCandidateId) {

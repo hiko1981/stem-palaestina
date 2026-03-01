@@ -164,7 +164,14 @@ export default function AdminPage() {
       body: JSON.stringify({ candidateId: id, verified }),
     });
     if (res.ok) {
-      setMessage(verified ? "Kandidat godkendt" : "Kandidat afvist");
+      const data = await res.json();
+      if (verified && data.emailSent) {
+        setMessage("Kandidat godkendt — bekræftelsesmail sendt");
+      } else if (verified) {
+        setMessage("Kandidat godkendt (ingen email — mangler emailadresse)");
+      } else {
+        setMessage("Kandidat afvist");
+      }
       await fetchData();
     }
   }
