@@ -23,7 +23,6 @@ export async function sendVerificationEmail(candidate: CandidateForEmail): Promi
   const sig = signOptout(candidate.id);
   const photoUploadUrl = `${getBaseUrl()}/kandidat/foto?cid=${candidate.id}&sig=${sig}`;
   const siteUrl = getBaseUrl();
-
   const needsPhoto = !candidate.photoUrl;
 
   const subject = `Velkommen som kandidat på Stem Palæstina, ${candidate.name}`;
@@ -32,7 +31,7 @@ export async function sendVerificationEmail(candidate: CandidateForEmail): Promi
 
 Tak for din deltagelse og din stemme på Stem Palæstina! Det betyder meget.
 
-Du er nu godkendt som kandidat på platformen og synlig for vælgerne som støtter af kravene om Palæstina.
+Du er nu godkendt som kandidat på platformen og synlig for alle besøgende på resultatsiden.
 
 Din profil:
 - Navn: ${candidate.name}
@@ -48,7 +47,7 @@ ${photoUploadUrl}
   }
 
   body += `
-Del gerne din holdning med dine vælgere og vis at du støtter sagen. Du kan finde platformen her:
+Del gerne dit standpunkt med dine vælgere:
 ${siteUrl}
 
 Rigtig god valgkamp!
