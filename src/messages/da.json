@@ -103,9 +103,10 @@
   "results": {
     "title": "Resultater",
     "bundleNote": "Stemmer vises anonymt. Ja/nej-fordeling vises først efter {threshold} stemmer.",
-    "publicVotesTitle": "Offentlige stemmer",
+    "publicVotesTitle": "Det stemmer Danmark",
     "publicVotesSubtitle": "Sådan stemmer Danmark om de tre krav.",
-    "candidateVotesTitle": "Kandidatstemmer",
+    "candidateVotesTitle": "Det siger kandidaterne",
+    "notVoted": "Mangler stemme",
     "allDenmark": "Hele Danmark",
     "yes": "Ja",
     "no": "Nej",

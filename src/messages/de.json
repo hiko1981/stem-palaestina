@@ -113,7 +113,8 @@
     "noVotesYet": "Noch keine Stimmen.",
     "noCandidatesYet": "Noch keine Kandidaten haben abgestimmt.",
     "belowThreshold": "Ja/Nein-Verteilung wird nach {threshold} Stimmen angezeigt.",
-    "cta": "Jetzt abstimmen"
+    "cta": "Jetzt abstimmen",
+    "notVoted": "Nicht abgestimmt"
   },
   "ballot": {
     "sentTitle": "Stimmzettel gesendet!",
@@ -239,8 +240,8 @@
     "unverified": "Nicht verifiziert",
     "optedOut": "Abgemeldet",
     "noContact": "Keine Kontaktdaten",
-    "votedYes": "Ja \u2713",
-    "votedNo": "Nein \u2717"
+    "votedYes": "Ja ✓",
+    "votedNo": "Nein ✗"
   },
   "map": {
     "title": "Finde deinen Kandidaten",

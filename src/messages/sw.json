@@ -113,7 +113,8 @@
     "noVotesYet": "Hakuna kura bado.",
     "noCandidatesYet": "Hakuna mgombea aliyepiga kura bado.",
     "belowThreshold": "Mgawanyo wa ndiyo/hapana utaonyeshwa baada ya kura {threshold}.",
-    "cta": "Piga kura yako"
+    "cta": "Piga kura yako",
+    "notVoted": "Hajapigia kura"
   },
   "ballot": {
     "sentTitle": "Karatasi ya kura imetumwa!",
@@ -239,8 +240,8 @@
     "unverified": "Haijathibitishwa",
     "optedOut": "Amejiondoa",
     "noContact": "Hakuna maelezo ya mawasiliano",
-    "votedYes": "Ndiyo \u2713",
-    "votedNo": "Hapana \u2717"
+    "votedYes": "Ndiyo ✓",
+    "votedNo": "Hapana ✗"
   },
   "map": {
     "title": "Tafuta mgombea wako",

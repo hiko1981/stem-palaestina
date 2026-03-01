@@ -113,7 +113,8 @@
     "noVotesYet": "Još nema glasova.",
     "noCandidatesYet": "Još nijedan kandidat nije glasao.",
     "belowThreshold": "Raspodjela da/ne prikazuje se nakon {threshold} glasova.",
-    "cta": "Dajte svoj glas"
+    "cta": "Dajte svoj glas",
+    "notVoted": "Nije glasao/la"
   },
   "ballot": {
     "sentTitle": "Glasački listić je poslan!",
@@ -257,8 +258,8 @@
     "unverified": "Nije potvrđen",
     "optedOut": "Odjavljen/a",
     "noContact": "Nema kontakt podataka",
-    "votedYes": "Da \u2713",
-    "votedNo": "Ne \u2717"
+    "votedYes": "Da ✓",
+    "votedNo": "Ne ✗"
   },
   "map": {
     "title": "Pronađite svog kandidata",

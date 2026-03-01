@@ -113,7 +113,8 @@
     "noVotesYet": "まだ投票はありません。",
     "noCandidatesYet": "まだ候補者の投票はありません。",
     "belowThreshold": "賛否の内訳は{threshold}票後に表示されます。",
-    "cta": "投票する"
+    "cta": "投票する",
+    "notVoted": "未投票"
   },
   "ballot": {
     "sentTitle": "投票用紙を送信しました！",
@@ -239,8 +240,8 @@
     "unverified": "未認証",
     "optedOut": "辞退",
     "noContact": "連絡先情報なし",
-    "votedYes": "はい \u2713",
-    "votedNo": "いいえ \u2717"
+    "votedYes": "はい ✓",
+    "votedNo": "いいえ ✗"
   },
   "map": {
     "title": "候補者を探す",

@@ -113,7 +113,8 @@
     "noVotesYet": "Belum ada suara.",
     "noCandidatesYet": "Belum ada kandidat yang memberikan suara.",
     "belowThreshold": "Rincian ya/tidak ditampilkan setelah {threshold} suara.",
-    "cta": "Berikan suara Anda"
+    "cta": "Berikan suara Anda",
+    "notVoted": "Belum memberikan suara"
   },
   "ballot": {
     "sentTitle": "Surat suara terkirim!",
@@ -239,8 +240,8 @@
     "unverified": "Belum diverifikasi",
     "optedOut": "Berhenti",
     "noContact": "Tidak ada info kontak",
-    "votedYes": "Ya \u2713",
-    "votedNo": "Tidak \u2717"
+    "votedYes": "Ya ✓",
+    "votedNo": "Tidak ✗"
   },
   "map": {
     "title": "Temukan kandidat Anda",

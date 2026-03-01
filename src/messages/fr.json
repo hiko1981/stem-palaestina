@@ -113,7 +113,8 @@
     "noVotesYet": "Aucun vote pour le moment.",
     "noCandidatesYet": "Aucun candidat n'a encore voté.",
     "belowThreshold": "La répartition oui/non apparaît après {threshold} votes.",
-    "cta": "Votez maintenant"
+    "cta": "Votez maintenant",
+    "notVoted": "N'a pas voté"
   },
   "ballot": {
     "sentTitle": "Bulletin envoyé !",
@@ -239,8 +240,8 @@
     "unverified": "Non vérifié",
     "optedOut": "Désabonné",
     "noContact": "Aucune information de contact",
-    "votedYes": "Oui \u2713",
-    "votedNo": "Non \u2717"
+    "votedYes": "Oui ✓",
+    "votedNo": "Non ✗"
   },
   "map": {
     "title": "Trouvez votre candidat",

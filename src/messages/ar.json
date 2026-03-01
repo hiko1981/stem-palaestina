@@ -113,7 +113,8 @@
     "noVotesYet": "لا توجد أصوات بعد.",
     "noCandidatesYet": "لم يصوّت أي مرشح بعد.",
     "belowThreshold": "يظهر توزيع نعم/لا بعد {threshold} صوتاً.",
-    "cta": "أدلِ بصوتك"
+    "cta": "أدلِ بصوتك",
+    "notVoted": "لم يصوّت"
   },
   "ballot": {
     "sentTitle": "تم إرسال ورقة الاقتراع!",
@@ -239,8 +240,8 @@
     "unverified": "غير موثّق",
     "optedOut": "انسحب",
     "noContact": "لا توجد معلومات اتصال",
-    "votedYes": "نعم \u2713",
-    "votedNo": "لا \u2717"
+    "votedYes": "نعم ✓",
+    "votedNo": "لا ✗"
   },
   "map": {
     "title": "ابحث عن مرشحك",

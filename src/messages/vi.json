@@ -113,7 +113,8 @@
     "noVotesYet": "Chưa có phiếu bầu nào.",
     "noCandidatesYet": "Chưa có ứng viên nào bỏ phiếu.",
     "belowThreshold": "Tỷ lệ có/không sẽ hiển thị sau {threshold} phiếu.",
-    "cta": "Bỏ phiếu"
+    "cta": "Bỏ phiếu",
+    "notVoted": "Chưa bỏ phiếu"
   },
   "ballot": {
     "sentTitle": "Phiếu bầu đã được gửi!",
@@ -239,8 +240,8 @@
     "unverified": "Chưa xác minh",
     "optedOut": "Đã rút",
     "noContact": "Không có thông tin liên hệ",
-    "votedYes": "Có \u2713",
-    "votedNo": "Không \u2717"
+    "votedYes": "Có ✓",
+    "votedNo": "Không ✗"
   },
   "map": {
     "title": "Tìm ứng viên của bạn",

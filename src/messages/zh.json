@@ -113,7 +113,8 @@
     "noVotesYet": "暂无投票。",
     "noCandidatesYet": "暂无候选人投票。",
     "belowThreshold": "赞成/反对比例在{threshold}票后显示。",
-    "cta": "投票"
+    "cta": "投票",
+    "notVoted": "未投票"
   },
   "ballot": {
     "sentTitle": "选票已发送！",
@@ -239,8 +240,8 @@
     "unverified": "未验证",
     "optedOut": "已退出",
     "noContact": "无联系方式",
-    "votedYes": "是 \u2713",
-    "votedNo": "否 \u2717"
+    "votedYes": "是 ✓",
+    "votedNo": "否 ✗"
   },
   "map": {
     "title": "找到你的候选人",

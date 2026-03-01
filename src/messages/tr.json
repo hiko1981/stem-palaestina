@@ -113,7 +113,8 @@
     "noVotesYet": "Henüz oy yok.",
     "noCandidatesYet": "Henüz hiçbir aday oy kullanmadı.",
     "belowThreshold": "Evet/hayır dağılımı {threshold} oydan sonra gösterilecek.",
-    "cta": "Oyunuzu kullanın"
+    "cta": "Oyunuzu kullanın",
+    "notVoted": "Oy kullanmadı"
   },
   "ballot": {
     "sentTitle": "Oy pusulası gönderildi!",
@@ -239,8 +240,8 @@
     "unverified": "Doğrulanmamış",
     "optedOut": "Ayrıldı",
     "noContact": "İletişim bilgisi yok",
-    "votedYes": "Evet \u2713",
-    "votedNo": "Hayır \u2717"
+    "votedYes": "Evet ✓",
+    "votedNo": "Hayır ✗"
   },
   "map": {
     "title": "Adayınızı bulun",

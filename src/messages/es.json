@@ -113,7 +113,8 @@
     "noVotesYet": "Aún no hay votos.",
     "noCandidatesYet": "Ningún candidato ha votado todavía.",
     "belowThreshold": "El desglose sí/no se muestra después de {threshold} votos.",
-    "cta": "Emite tu voto"
+    "cta": "Emite tu voto",
+    "notVoted": "No ha votado"
   },
   "ballot": {
     "sentTitle": "¡Papeleta enviada!",
@@ -239,8 +240,8 @@
     "unverified": "No verificado",
     "optedOut": "Dado de baja",
     "noContact": "Sin datos de contacto",
-    "votedYes": "Sí \u2713",
-    "votedNo": "No \u2717"
+    "votedYes": "Sí ✓",
+    "votedNo": "No ✗"
   },
   "map": {
     "title": "Encuentra tu candidato",

@@ -103,9 +103,10 @@
   "results": {
     "title": "Results",
     "bundleNote": "Votes are shown anonymously. Yes/no breakdown appears after {threshold} votes.",
-    "publicVotesTitle": "Public votes",
+    "publicVotesTitle": "How Denmark votes",
     "publicVotesSubtitle": "How Denmark votes on the three demands.",
-    "candidateVotesTitle": "Candidate votes",
+    "candidateVotesTitle": "What candidates say",
+    "notVoted": "Not yet voted",
     "allDenmark": "All of Denmark",
     "yes": "Yes",
     "no": "No",

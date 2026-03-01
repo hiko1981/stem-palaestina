@@ -113,7 +113,8 @@
     "noVotesYet": "Nenhum voto ainda.",
     "noCandidatesYet": "Nenhum candidato votou ainda.",
     "belowThreshold": "A distribuição sim/não será exibida após {threshold} votos.",
-    "cta": "Vote agora"
+    "cta": "Vote agora",
+    "notVoted": "Não votou"
   },
   "ballot": {
     "sentTitle": "Boletim enviado!",
@@ -239,8 +240,8 @@
     "unverified": "Não verificado",
     "optedOut": "Cancelado",
     "noContact": "Sem informações de contato",
-    "votedYes": "Sim \u2713",
-    "votedNo": "Não \u2717"
+    "votedYes": "Sim ✓",
+    "votedNo": "Não ✗"
   },
   "map": {
     "title": "Encontre seu candidato",

@@ -113,7 +113,8 @@
     "noVotesYet": "아직 투표가 없습니다.",
     "noCandidatesYet": "아직 투표한 후보자가 없습니다.",
     "belowThreshold": "찬반 비율은 {threshold}표 이후에 표시됩니다.",
-    "cta": "투표하기"
+    "cta": "투표하기",
+    "notVoted": "미투표"
   },
   "ballot": {
     "sentTitle": "투표용지가 전송되었습니다!",
@@ -239,8 +240,8 @@
     "unverified": "미인증",
     "optedOut": "탈퇴",
     "noContact": "연락처 정보 없음",
-    "votedYes": "예 \u2713",
-    "votedNo": "아니오 \u2717"
+    "votedYes": "예 ✓",
+    "votedNo": "아니오 ✗"
   },
   "map": {
     "title": "후보자 찾기",

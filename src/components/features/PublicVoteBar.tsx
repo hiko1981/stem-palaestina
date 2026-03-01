@@ -50,31 +50,32 @@ export default function PublicVoteBar({ variant = "default" }: PublicVoteBarProp
   const pct = Math.round((data.ja / total) * 100);
 
   return (
-    <div className={`rounded-lg bg-gray-50 px-3 py-2.5 ${isHero ? "mb-0" : "mb-4"}`}>
-      <div className={`flex justify-between font-semibold mb-1 ${isHero ? "text-base" : "text-sm"}`}>
-        <span className="text-melon-green">
-          {pct}% {t("yes")}
-        </span>
-        <span className="text-melon-red">
-          {100 - pct}% {t("no")}
-        </span>
-      </div>
-      <div className={`${isHero ? "h-3.5" : "h-2.5"} rounded-full bg-gray-200 overflow-hidden flex`}>
-        <div
-          className="bg-melon-green transition-all"
-          style={{ width: `${pct}%` }}
-        />
-        <div
-          className="bg-melon-red transition-all"
-          style={{ width: `${100 - pct}%` }}
-        />
-      </div>
+    <div className={isHero ? "mb-0" : "mb-4"}>
       {!isHero && (
-        <p className="text-xs text-gray-400 mt-1">
-          {data.ja} {t("yes").toLowerCase()} &middot; {data.nej}{" "}
-          {t("no").toLowerCase()} &middot; {total} {vc("plural")}
-        </p>
+        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          {t("publicVotesTitle")}
+        </h3>
       )}
+      <div className="rounded-lg bg-gray-50 px-3 py-2.5">
+        <div className={`flex justify-between font-semibold mb-1 ${isHero ? "text-base" : "text-sm"}`}>
+          <span className="text-melon-green">
+            {pct}% {t("yes")}
+          </span>
+          <span className="text-melon-red">
+            {100 - pct}% {t("no")}
+          </span>
+        </div>
+        <div className={`${isHero ? "h-3.5" : "h-2.5"} rounded-full bg-gray-200 overflow-hidden flex`}>
+          <div
+            className="bg-melon-green transition-all"
+            style={{ width: `${pct}%` }}
+          />
+          <div
+            className="bg-melon-red transition-all"
+            style={{ width: `${100 - pct}%` }}
+          />
+        </div>
+      </div>
     </div>
   );
 }
