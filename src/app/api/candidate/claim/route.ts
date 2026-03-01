@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { candidateClaimSchema } from "@/lib/validation";
+import { notifyAdminNewCandidate } from "@/lib/admin-notify";
 
 export async function POST(req: Request) {
   try {
@@ -50,9 +51,10 @@ export async function POST(req: Request) {
     }
 
     // Atomic claim: only succeeds if phoneHash is still NULL (race-safe)
+    // verified stays false — admin must approve manually
     const result = await prisma.candidate.updateMany({
       where: { id: candidateId, phoneHash: null },
-      data: { phoneHash: ballotToken.phoneHash, verified: true },
+      data: { phoneHash: ballotToken.phoneHash },
     });
 
     if (result.count === 0) {
@@ -60,6 +62,15 @@ export async function POST(req: Request) {
         { error: "Kandidaten er allerede optaget" },
         { status: 409 }
       );
+    }
+
+    // Look up candidate name for admin notification
+    const candidate = await prisma.candidate.findUnique({
+      where: { id: candidateId },
+      select: { name: true, party: true, constituency: true },
+    });
+    if (candidate) {
+      notifyAdminNewCandidate(candidate.name, candidate.party, candidate.constituency);
     }
 
     return NextResponse.json({ ok: true });
