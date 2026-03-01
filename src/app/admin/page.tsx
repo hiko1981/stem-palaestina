@@ -49,6 +49,7 @@ interface CandidateRecord {
   contactPhone: string | null;
   publicStatement: string | null;
   photoUrl: string | null;
+  photoUpload: string | null;
   pledged: boolean;
   optedOut: boolean;
   optedOutAt: string | null;
@@ -506,6 +507,44 @@ export default function AdminPage() {
           </div>
         )}
       </section>
+
+      {/* Foto-uploads */}
+      {(() => {
+        const photoUploads = candidates.filter((c) => c.photoUpload);
+        if (photoUploads.length === 0) return null;
+        return (
+          <section>
+            <h2 className="text-xl font-bold mb-4">
+              Foto-uploads
+              <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+                {photoUploads.length} nye
+              </span>
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {photoUploads.map((c) => (
+                <Card key={c.id}>
+                  <div className="text-center space-y-2">
+                    <img
+                      src={c.photoUpload!}
+                      alt={c.name}
+                      className="h-24 w-24 rounded-full object-cover mx-auto ring-2 ring-blue-200"
+                    />
+                    <p className="text-sm font-medium">{c.name}</p>
+                    <p className="text-xs text-gray-500">{c.party}</p>
+                    <a
+                      href={c.photoUpload!}
+                      download={`${c.id}.jpg`}
+                      className="inline-block text-xs text-melon-green hover:underline"
+                    >
+                      Download
+                    </a>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Supportbeskeder */}
       <section>

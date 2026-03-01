@@ -58,6 +58,7 @@ model Candidate {
   pledged         Boolean   @default(false)
   publicStatement String?   @map("public_statement")
   photoUrl        String?   @map("photo_url")
+  photoUpload     String?   @map("photo_upload")
   verified        Boolean   @default(false)
   optedOut        Boolean   @default(false) @map("opted_out")
   optedOutAt      DateTime? @map("opted_out_at")
