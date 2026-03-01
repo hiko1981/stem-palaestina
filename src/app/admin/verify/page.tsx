@@ -13,23 +13,19 @@ function getDeviceId(): string {
   return id;
 }
 
-type Status =
-  | "verifying"
-  | "scanning"
-  | "step-done"
-  | "authenticated"
-  | "error"
-  | "no-token";
+type Status = "verifying" | "scanning" | "authenticated" | "error" | "no-token";
 
 export default function VerifyPage() {
   const [status, setStatus] = useState<Status>("verifying");
   const [currentStep, setCurrentStep] = useState(1);
   const [message, setMessage] = useState("");
+  const [stepFlash, setStepFlash] = useState(false);
   const scannerRef = useRef<HTMLDivElement>(null);
   const html5QrRef = useRef<unknown>(null);
   const lastScannedRef = useRef<string>("");
   const processingRef = useRef(false);
   const deviceIdRef = useRef<string>("");
+  const scannerStartedRef = useRef(false);
 
   const stopScanner = useCallback(async () => {
     if (html5QrRef.current) {
@@ -44,28 +40,17 @@ export default function VerifyPage() {
       }
       html5QrRef.current = null;
     }
+    scannerStartedRef.current = false;
   }, []);
 
-  const verifyToken = useCallback(
-    async (token: string): Promise<{ ok: boolean; step?: number | string; message?: string; error?: string }> => {
-      const res = await fetch("/api/admin/auth/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, deviceId: deviceIdRef.current }),
-      });
-      return res.json();
-    },
-    []
-  );
-
-  const startScanner = useCallback(async (forStep: number) => {
+  // Start camera ONCE — never restarts between steps
+  const startScanner = useCallback(async () => {
+    if (scannerStartedRef.current) return;
     if (!scannerRef.current) return;
 
-    // Dynamic import to avoid SSR issues
+    scannerStartedRef.current = true;
+
     const { Html5Qrcode } = await import("html5-qrcode");
-
-    await stopScanner();
-
     const scanner = new Html5Qrcode("qr-scanner");
     html5QrRef.current = scanner;
 
@@ -78,17 +63,14 @@ export default function VerifyPage() {
           aspectRatio: 1,
         },
         async (decodedText: string) => {
-          // Prevent double-processing
           if (processingRef.current) return;
           if (decodedText === lastScannedRef.current) return;
 
-          // Extract token from URL
           let token: string | null = null;
           try {
             const url = new URL(decodedText);
             token = url.searchParams.get("token");
           } catch {
-            // Not a valid URL — ignore
             return;
           }
 
@@ -112,17 +94,15 @@ export default function VerifyPage() {
                 setMessage("Login godkendt! Computeren logger ind nu.");
               } else if (typeof data.step === "number") {
                 setCurrentStep(data.step);
-                setStatus("step-done");
-                setMessage(data.message || `Trin ${data.step - 1} godkendt`);
-                // Brief pause to show checkmark, then resume scanning
+                // Brief green flash overlay — camera keeps running
+                setStepFlash(true);
                 setTimeout(() => {
+                  setStepFlash(false);
                   lastScannedRef.current = "";
                   processingRef.current = false;
-                  setStatus("scanning");
-                }, 800);
+                }, 600);
               }
             } else {
-              // Token already used or wrong step — keep scanning
               processingRef.current = false;
             }
           } catch {
@@ -136,10 +116,11 @@ export default function VerifyPage() {
     } catch {
       setStatus("error");
       setMessage("Kunne ikke åbne kamera. Tillad kameraadgang og prøv igen.");
+      scannerStartedRef.current = false;
     }
   }, [stopScanner]);
 
-  // Initial token verification (step 1 from URL)
+  // Step 1: verify token from URL, then enter scanning mode
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
@@ -152,7 +133,13 @@ export default function VerifyPage() {
 
     (async () => {
       try {
-        const data = await verifyToken(token);
+        const res = await fetch("/api/admin/auth/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, deviceId: deviceIdRef.current }),
+        });
+        const data = await res.json();
+
         if (!data.ok) {
           setStatus("error");
           setMessage(data.error || "Verifikation fejlede");
@@ -166,7 +153,6 @@ export default function VerifyPage() {
           return;
         }
 
-        // Step 1 done, need to scan QR #2 and #3
         setCurrentStep(typeof data.step === "number" ? data.step : 2);
         setStatus("scanning");
       } catch {
@@ -178,14 +164,14 @@ export default function VerifyPage() {
     return () => {
       stopScanner();
     };
-  }, [verifyToken, stopScanner]);
+  }, [stopScanner]);
 
-  // Start camera when entering scanning mode
+  // Start camera once when entering scanning mode — never restarts
   useEffect(() => {
     if (status === "scanning") {
-      startScanner(currentStep);
+      startScanner();
     }
-  }, [status, currentStep, startScanner]);
+  }, [status, startScanner]);
 
   const stepsCompleted = currentStep - 1;
 
@@ -200,11 +186,10 @@ export default function VerifyPage() {
             {[1, 2, 3].map((s) => (
               <div
                 key={s}
-                className={`h-2 w-8 rounded-full transition-colors ${
+                className={`h-2 w-8 rounded-full transition-all duration-300 ${
                   s <= stepsCompleted
                     ? "bg-melon-green"
-                    : s === stepsCompleted + 1 &&
-                        (status === "scanning" || status === "verifying")
+                    : s === stepsCompleted + 1 && status === "scanning"
                       ? "bg-melon-green/40 animate-pulse"
                       : "bg-gray-200"
                 }`}
@@ -226,26 +211,28 @@ export default function VerifyPage() {
             </>
           )}
 
-          {(status === "scanning" || status === "step-done") && (
+          {status === "scanning" && (
             <>
-              {status === "step-done" && (
-                <div className="flex items-center justify-center gap-2 text-melon-green">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-sm font-medium">{message}</span>
-                </div>
-              )}
-              <div
-                id="qr-scanner"
-                ref={scannerRef}
-                className="mx-auto overflow-hidden rounded-xl"
-                style={{ width: 280, height: 280 }}
-              />
+              <div className="relative mx-auto" style={{ width: 280, height: 280 }}>
+                <div
+                  id="qr-scanner"
+                  ref={scannerRef}
+                  className="overflow-hidden rounded-xl"
+                  style={{ width: 280, height: 280 }}
+                />
+                {/* Green flash overlay — camera keeps running underneath */}
+                {stepFlash && (
+                  <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-melon-green/20 animate-[fadeOut_0.6s_ease-out_forwards]">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                      <svg className="h-8 w-8 text-melon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
               <p className="text-sm text-gray-500">
-                {currentStep <= 3
-                  ? `Ret kameraet mod QR #${currentStep} på skærmen`
-                  : "Vent venligst..."}
+                Ret kameraet mod skærmen
               </p>
             </>
           )}

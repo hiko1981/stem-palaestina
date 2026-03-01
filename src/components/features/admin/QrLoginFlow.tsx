@@ -108,8 +108,8 @@ export default function QrLoginFlow({ onAuthenticated }: QrLoginFlowProps) {
 
   const stepLabels: Record<number, string> = {
     1: "Scan QR-koden med din telefon",
-    2: "Scan QR #2 fra skærmen",
-    3: "Scan QR #3 (sidste trin)",
+    2: "Din telefon scanner automatisk...",
+    3: "Sidste trin — vent venligst...",
   };
 
   return (
@@ -131,10 +131,12 @@ export default function QrLoginFlow({ onAuthenticated }: QrLoginFlowProps) {
                   {[1, 2, 3].map((s) => (
                     <div
                       key={s}
-                      className={`h-2 w-8 rounded-full transition-colors ${
-                        typeof step === "number" && s <= step
+                      className={`h-2 w-8 rounded-full transition-all duration-300 ${
+                        typeof step === "number" && s < step
                           ? "bg-melon-green"
-                          : "bg-gray-200"
+                          : typeof step === "number" && s === step
+                            ? "bg-melon-green/40 animate-pulse"
+                            : "bg-gray-200"
                       }`}
                     />
                   ))}
