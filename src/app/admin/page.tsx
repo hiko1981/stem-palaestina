@@ -36,6 +36,11 @@ interface CandidateRecord {
   party: string;
   constituency: string;
   phoneHash: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  publicStatement: string | null;
+  pledged: boolean;
+  optedOut: boolean;
   verified: boolean;
   createdAt: string;
 }
@@ -56,6 +61,7 @@ export default function AdminPage() {
   const [supportMessages, setSupportMessages] = useState<SupportRecord[]>([]);
   const [langMisses, setLangMisses] = useState<LangMissRecord[]>([]);
   const [hitStats, setHitStats] = useState<HitStats | null>(null);
+  const [expandedCandidate, setExpandedCandidate] = useState<number | null>(null);
   const [votesOpen, setVotesOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -320,29 +326,12 @@ export default function AdminPage() {
               const vote = getCandidateVote(c.phoneHash);
               return (
                 <Card key={c.id}>
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-4 mb-3">
                     <div>
                       <h3 className="font-bold">{c.name}</h3>
                       <p className="text-sm text-gray-500">
                         {c.party} &middot; {c.constituency}
                       </p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {new Date(c.createdAt).toLocaleString("da-DK")}
-                        {c.phoneHash && ` \u00b7 ${maskHash(c.phoneHash)}`}
-                      </p>
-                      {vote && (
-                        <p className="mt-1">
-                          <span
-                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                              vote.voteValue
-                                ? "bg-melon-green/10 text-melon-green"
-                                : "bg-melon-red/10 text-melon-red"
-                            }`}
-                          >
-                            Stemte: {vote.voteValue ? "Ja" : "Nej"}
-                          </span>
-                        </p>
-                      )}
                     </div>
                     <div className="flex gap-2 shrink-0">
                       <Button
@@ -359,6 +348,50 @@ export default function AdminPage() {
                       </button>
                     </div>
                   </div>
+                  {/* Contact info */}
+                  {(c.contactPhone || c.contactEmail) && (
+                    <div className="rounded-md bg-gray-50 px-3 py-2 mb-3 space-y-1">
+                      {c.contactPhone && (
+                        <p className="text-sm">
+                          <span className="text-gray-400 mr-1">Tlf:</span>
+                          <a href={`tel:${c.contactPhone}`} className="text-melon-green hover:underline">{c.contactPhone}</a>
+                        </p>
+                      )}
+                      {c.contactEmail && (
+                        <p className="text-sm">
+                          <span className="text-gray-400 mr-1">Email:</span>
+                          <a href={`mailto:${c.contactEmail}`} className="text-melon-green hover:underline">{c.contactEmail}</a>
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  {/* Meta row */}
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
+                    <span>{new Date(c.createdAt).toLocaleString("da-DK")}</span>
+                    {c.phoneHash && <span>&middot; {maskHash(c.phoneHash)}</span>}
+                    {vote && (
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 font-medium ${
+                          vote.voteValue
+                            ? "bg-melon-green/10 text-melon-green"
+                            : "bg-melon-red/10 text-melon-red"
+                        }`}
+                      >
+                        Stemte: {vote.voteValue ? "Ja" : "Nej"}
+                      </span>
+                    )}
+                    {c.pledged && (
+                      <span className="inline-flex items-center rounded-full bg-melon-green/10 text-melon-green px-2 py-0.5 font-medium">
+                        Tilsluttet
+                      </span>
+                    )}
+                  </div>
+                  {/* Public statement */}
+                  {c.publicStatement && (
+                    <p className="mt-2 text-sm text-gray-600 italic border-l-2 border-gray-200 pl-3">
+                      {c.publicStatement}
+                    </p>
+                  )}
                 </Card>
               );
             })}
@@ -373,33 +406,78 @@ export default function AdminPage() {
             <div className="space-y-2">
               {verifiedCandidates.map((c) => {
                 const vote = getCandidateVote(c.phoneHash);
+                const isExpanded = expandedCandidate === c.id;
                 return (
-                  <div key={c.id} className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
-                    <div>
-                      <p className="text-sm font-medium">{c.name}</p>
-                      <p className="text-xs text-gray-500">
-                        {c.party} &middot; {c.constituency}
-                        {vote && (
-                          <span className={`ml-2 ${vote.voteValue ? "text-melon-green" : "text-melon-red"}`}>
-                            ({vote.voteValue ? "Ja" : "Nej"})
-                          </span>
+                  <div key={c.id} className="rounded-lg border border-gray-200 overflow-hidden">
+                    <button
+                      onClick={() => setExpandedCandidate(isExpanded ? null : c.id)}
+                      className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium">{c.name}</p>
+                        <p className="text-xs text-gray-500">
+                          {c.party} &middot; {c.constituency}
+                          {vote && (
+                            <span className={`ml-2 inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium ${vote.voteValue ? "bg-melon-green/10 text-melon-green" : "bg-melon-red/10 text-melon-red"}`}>
+                              {vote.voteValue ? "Ja" : "Nej"}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                      <ChevronIcon open={isExpanded} />
+                    </button>
+                    {isExpanded && (
+                      <div className="border-t border-gray-100 px-4 py-3 space-y-3 bg-gray-50/50">
+                        {/* Contact info */}
+                        {(c.contactPhone || c.contactEmail) && (
+                          <div className="space-y-1">
+                            {c.contactPhone && (
+                              <p className="text-sm">
+                                <span className="text-gray-400 mr-1">Tlf:</span>
+                                <a href={`tel:${c.contactPhone}`} className="text-melon-green hover:underline">{c.contactPhone}</a>
+                              </p>
+                            )}
+                            {c.contactEmail && (
+                              <p className="text-sm">
+                                <span className="text-gray-400 mr-1">Email:</span>
+                                <a href={`mailto:${c.contactEmail}`} className="text-melon-green hover:underline">{c.contactEmail}</a>
+                              </p>
+                            )}
+                          </div>
                         )}
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => verifyCandidate(c.id, false)}
-                        className="text-xs text-gray-400 hover:underline px-2 py-2 min-h-[44px]"
-                      >
-                        Fjern godkendelse
-                      </button>
-                      <button
-                        onClick={() => deleteCandidate(c.id)}
-                        className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
-                      >
-                        Slet
-                      </button>
-                    </div>
+                        {/* Meta */}
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
+                          <span>{new Date(c.createdAt).toLocaleString("da-DK")}</span>
+                          {c.phoneHash && <span>&middot; {maskHash(c.phoneHash)}</span>}
+                          {c.pledged && (
+                            <span className="inline-flex items-center rounded-full bg-melon-green/10 text-melon-green px-2 py-0.5 font-medium">
+                              Tilsluttet
+                            </span>
+                          )}
+                        </div>
+                        {/* Public statement */}
+                        {c.publicStatement && (
+                          <p className="text-sm text-gray-600 italic border-l-2 border-gray-200 pl-3">
+                            {c.publicStatement}
+                          </p>
+                        )}
+                        {/* Actions */}
+                        <div className="flex gap-2 pt-1">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); verifyCandidate(c.id, false); }}
+                            className="text-xs text-gray-400 hover:underline px-2 py-2 min-h-[44px]"
+                          >
+                            Fjern godkendelse
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); deleteCandidate(c.id); }}
+                            className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
+                          >
+                            Slet
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}

@@ -281,19 +281,84 @@ export default function Home() {
           <PublicVoteBar />
           {postTab === "results" && (
             <div className="space-y-5">
-              {/* Your vote + 3 demands */}
+              {/* Your vote + expandable demand cards */}
               <div>
-                <p className="text-xs text-gray-400 mb-1">{h("yourVote")}</p>
-                <ul className="space-y-1">
-                  {[d("d1Title"), d("d2Title"), d("d3Title")].map((demand, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold ${votedYes ? "bg-melon-green/10 text-melon-green" : "bg-melon-red/10 text-melon-red"}`}>
-                        {votedYes ? "✓" : "✗"}
-                      </span>
-                      <span className="text-gray-700">{demand}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-xs text-gray-400 mb-2">{h("yourVote")}</p>
+                <div className="space-y-2">
+                  {[1, 2, 3].map((n) => {
+                    const isOpen = expandedDemand === n;
+                    const borderColor = votedYes
+                      ? isOpen ? "border-melon-green bg-melon-green/5" : "border-melon-green/30 hover:border-melon-green/50"
+                      : isOpen ? "border-melon-red bg-melon-red/5" : "border-melon-red/30 hover:border-melon-red/50";
+                    return (
+                      <button
+                        key={n}
+                        onClick={() => setExpandedDemand(isOpen ? null : n)}
+                        className={`w-full rounded-lg border text-left px-3.5 py-3 transition-colors ${borderColor}`}
+                      >
+                        <div className="flex items-start gap-2.5">
+                          <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold mt-0.5 ${votedYes ? "bg-melon-green/10 text-melon-green" : "bg-melon-red/10 text-melon-red"}`}>
+                            {votedYes ? "✓" : "✗"}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <span className="text-sm font-semibold text-gray-800">{d(`d${n}Title` as "d1Title" | "d2Title" | "d3Title")}</span>
+                            {!isOpen && (
+                              <p className="text-xs text-gray-400 mt-0.5">{d(`d${n}Short` as "d1Short" | "d2Short" | "d3Short")}</p>
+                            )}
+                            {isOpen && (
+                              <p className="text-xs text-gray-600 mt-1.5 leading-relaxed animate-in slide-in-from-top-2">
+                                {d(`d${n}Detail` as "d1Detail" | "d2Detail" | "d3Detail")}
+                              </p>
+                            )}
+                          </div>
+                          <svg
+                            className={`h-4 w-4 shrink-0 text-gray-400 transition-transform mt-1 ${isOpen ? "rotate-180" : ""}`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Privacy fold-out */}
+              <div>
+                <button
+                  onClick={() => setPrivacyOpen(!privacyOpen)}
+                  className="flex w-full items-center justify-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  {h("privacyToggle")}
+                  <svg
+                    className={`h-3 w-3 transition-transform ${privacyOpen ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {privacyOpen && (
+                  <div className="mt-2 rounded-lg bg-gray-50 px-3 py-3 text-xs text-gray-600 space-y-2 animate-in slide-in-from-top-2">
+                    <div className="flex items-start gap-2">
+                      <span className="mt-0.5 shrink-0 text-melon-green">&#128274;</span>
+                      <p>{h("privacyVote")}</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="mt-0.5 shrink-0 text-melon-green">&#128233;</span>
+                      <p>{h("privacyInvite")}</p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Results (public + candidate) */}
