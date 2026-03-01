@@ -99,7 +99,7 @@ export default function CandidateBoard({ storkreds: controlledStorkreds, onStork
   const baseUrl =
     typeof window !== "undefined"
       ? window.location.origin
-      : "https://stem-palaestina.vercel.app";
+      : "https://vote-palestine.com";
 
   useEffect(() => {
     fetch("/api/votes/candidates")

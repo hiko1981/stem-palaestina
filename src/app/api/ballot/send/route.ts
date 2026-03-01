@@ -17,7 +17,7 @@ function getBaseUrl() {
   if (vercelUrl) return `https://${vercelUrl}`;
   // Explicit override (e.g. custom domain)
   if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
-  return "https://stem-palaestina.vercel.app";
+  return "https://vote-palestine.com";
 }
 
 export async function POST(req: NextRequest) {

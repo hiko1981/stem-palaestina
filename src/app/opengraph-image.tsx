@@ -90,7 +90,7 @@ export default async function OgImage() {
             color: "#999",
           }}
         >
-          stem-palaestina.dk
+          vote-palestine.com
         </div>
       </div>
     ),

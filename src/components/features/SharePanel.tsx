@@ -98,7 +98,7 @@ export default function SharePanel() {
   function getBaseUrl() {
     return typeof window !== "undefined"
       ? window.location.origin
-      : "https://stem-palaestina.vercel.app";
+      : "https://vote-palestine.com";
   }
 
   async function handleShare() {

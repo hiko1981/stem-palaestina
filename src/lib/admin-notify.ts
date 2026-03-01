@@ -6,7 +6,7 @@ function getBaseUrl() {
   const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
   if (vercelUrl) return `https://${vercelUrl}`;
   if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
-  return "https://stem-palaestina.vercel.app";
+  return "https://vote-palestine.com";
 }
 
 /**

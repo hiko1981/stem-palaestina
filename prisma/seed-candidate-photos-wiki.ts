@@ -24,7 +24,7 @@ function normalize(name: string): string {
     .replace(/ü/g, "u").replace(/é/g, "e").replace(/ö/g, "o").trim();
 }
 
-const UA = "stem-palaestina/1.0 (https://stem-palaestina.vercel.app; contact via GitHub)";
+const UA = "vote-palestine/1.0 (https://vote-palestine.com; contact via GitHub)";
 
 async function fetchText(url: string, postData?: string): Promise<string> {
   const res = await fetch(url, {

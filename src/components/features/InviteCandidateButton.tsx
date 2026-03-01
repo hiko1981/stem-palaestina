@@ -48,7 +48,7 @@ export default function InviteCandidateButton({
   const baseUrl =
     typeof window !== "undefined"
       ? window.location.origin
-      : "https://stem-palaestina.vercel.app";
+      : "https://vote-palestine.com";
 
   useEffect(() => {
     if (!open) return;
