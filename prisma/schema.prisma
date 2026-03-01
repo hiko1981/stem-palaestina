@@ -101,11 +101,13 @@ model DeviceParticipation {
 }
 
 model SupportMessage {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   category  String
   message   String
-  deviceId  String?  @map("device_id")
-  createdAt DateTime @default(now()) @map("created_at")
+  deviceId  String?   @map("device_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  handledBy Int?      @map("handled_by")
+  handledAt DateTime? @map("handled_at")
 
   @@map("support_messages")
 }

@@ -70,6 +70,8 @@ interface SupportRecord {
   message: string;
   deviceId: string | null;
   createdAt: string;
+  handledBy: number | null;
+  handledAt: string | null;
 }
 
 interface SuppressionRecord {
@@ -90,6 +92,7 @@ type AuthGate = "checking" | "authed" | "qr" | "denied";
 
 export default function AdminPage() {
   const [gate, setGate] = useState<AuthGate>("checking");
+  const [adminName, setAdminName] = useState<string>("");
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [tokens, setTokens] = useState<BallotTokenRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
@@ -100,17 +103,23 @@ export default function AdminPage() {
   const [expandedCandidate, setExpandedCandidate] = useState<number | null>(null);
   const [votesOpen, setVotesOpen] = useState(false);
   const [ballotOpen, setBallotOpen] = useState(false);
+  const [handledOpen, setHandledOpen] = useState(false);
   const [message, setMessage] = useState("");
+
+  const applyData = useCallback((data: Record<string, unknown>) => {
+    if (data.adminName) setAdminName(data.adminName as string);
+    setVotes((data.votes as VoteRecord[]) || []);
+    setTokens((data.tokens as BallotTokenRecord[]) || []);
+    setCandidates((data.candidates as CandidateRecord[]) || []);
+    setSupportMessages((data.supportMessages as SupportRecord[]) || []);
+    setSuppressions((data.suppressions as SuppressionRecord[]) || []);
+  }, []);
 
   const loadDashboardData = useCallback(async () => {
     const res = await fetch("/api/admin/votes");
     if (res.ok) {
       const data = await res.json();
-      setVotes(data.votes);
-      setTokens(data.tokens || []);
-      setCandidates(data.candidates || []);
-      setSupportMessages(data.supportMessages || []);
-      setSuppressions(data.suppressions || []);
+      applyData(data);
     }
     fetch("/api/admin/lang-miss")
       .then((r) => r.json())
@@ -120,7 +129,7 @@ export default function AdminPage() {
       .then((r) => r.json())
       .then((d) => setHitStats(d))
       .catch(() => {});
-  }, []);
+  }, [applyData]);
 
   // Auth flow on mount
   useEffect(() => {
@@ -129,11 +138,7 @@ export default function AdminPage() {
       const res = await fetch("/api/admin/votes");
       if (res.ok) {
         const data = await res.json();
-        setVotes(data.votes);
-        setTokens(data.tokens || []);
-        setCandidates(data.candidates || []);
-        setSupportMessages(data.supportMessages || []);
-        setSuppressions(data.suppressions || []);
+        applyData(data);
         setGate("authed");
         fetch("/api/admin/lang-miss")
           .then((r) => r.json())
@@ -195,7 +200,7 @@ export default function AdminPage() {
       // 3. PC/desktop = QR flow
       setGate("qr");
     })();
-  }, [loadDashboardData]);
+  }, [loadDashboardData, applyData]);
 
   function handleQrAuthenticated() {
     setGate("authed");
@@ -222,6 +227,45 @@ export default function AdminPage() {
       } else {
         setMessage("Kandidat afvist");
       }
+      await fetchData();
+    }
+  }
+
+  async function approvePhoto(id: number) {
+    setMessage("");
+    const res = await fetch("/api/admin/votes", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ approvePhoto: id }),
+    });
+    if (res.ok) {
+      setMessage("Foto godkendt");
+      await fetchData();
+    }
+  }
+
+  async function rejectPhoto(id: number) {
+    setMessage("");
+    const res = await fetch("/api/admin/votes", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rejectPhoto: id }),
+    });
+    if (res.ok) {
+      setMessage("Foto afvist");
+      await fetchData();
+    }
+  }
+
+  async function handleSupport(id: number) {
+    setMessage("");
+    const res = await fetch("/api/admin/votes", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ handleSupport: id }),
+    });
+    if (res.ok) {
+      setMessage("Support markeret som håndteret");
       await fetchData();
     }
   }
@@ -277,12 +321,18 @@ export default function AdminPage() {
   const claimed = candidates.filter((c) => c.phoneHash);
   const pendingCandidates = claimed.filter((c) => !c.verified);
   const verifiedCandidates = claimed.filter((c) => c.verified);
+  const photoUploads = candidates.filter((c) => c.photoUpload);
+  const unhandledSupport = supportMessages.filter((s) => !s.handledBy);
+  const handledSupport = supportMessages.filter((s) => s.handledBy);
 
   // Ballot token stats
   const now = new Date();
   const pendingBallots = tokens.filter((t) => !t.used && new Date(t.expiresAt) > now);
   const usedBallots = tokens.filter((t) => t.used);
   const expiredBallots = tokens.filter((t) => !t.used && new Date(t.expiresAt) <= now);
+
+  // First name for greeting
+  const firstName = adminName ? adminName.split(" ")[0] : "";
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 space-y-12">
@@ -291,6 +341,255 @@ export default function AdminPage() {
           {message}
         </p>
       )}
+
+      {/* Velkomst + Opgavecenter */}
+      <section>
+        {firstName && (
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold">Hej {firstName},</h1>
+            <p className="text-gray-500 mt-1">hvad har du lyst til at se på i dag?</p>
+            {(photoUploads.length > 0 || pendingCandidates.length > 0 || unhandledSupport.length > 0) && (
+              <p className="text-sm text-gray-400 mt-2">
+                Hvis du vil gå direkte til opgaverne, har jeg samlet dem her:
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Summary-kort */}
+        {(photoUploads.length > 0 || pendingCandidates.length > 0 || unhandledSupport.length > 0) && (
+          <div className="grid grid-cols-3 gap-4 mb-8">
+            <button
+              onClick={() => document.getElementById("opgaver-foto")?.scrollIntoView({ behavior: "smooth" })}
+              className="text-left"
+            >
+              <Card>
+                <p className="text-2xl font-bold tabular-nums text-blue-600">{photoUploads.length}</p>
+                <p className="text-xs text-gray-500">Foto-uploads</p>
+              </Card>
+            </button>
+            <button
+              onClick={() => document.getElementById("opgaver-kandidater")?.scrollIntoView({ behavior: "smooth" })}
+              className="text-left"
+            >
+              <Card>
+                <p className="text-2xl font-bold tabular-nums text-melon-red">{pendingCandidates.length}</p>
+                <p className="text-xs text-gray-500">Kandidater</p>
+              </Card>
+            </button>
+            <button
+              onClick={() => document.getElementById("opgaver-support")?.scrollIntoView({ behavior: "smooth" })}
+              className="text-left"
+            >
+              <Card>
+                <p className="text-2xl font-bold tabular-nums text-amber-600">{unhandledSupport.length}</p>
+                <p className="text-xs text-gray-500">Support</p>
+              </Card>
+            </button>
+          </div>
+        )}
+      </section>
+
+      {/* Opgavecenter */}
+      {(photoUploads.length > 0 || pendingCandidates.length > 0 || unhandledSupport.length > 0) && (
+        <section>
+          <h2 className="text-xl font-bold mb-6">Opgaver</h2>
+
+          {/* Foto-uploads */}
+          {photoUploads.length > 0 && (
+            <div id="opgaver-foto" className="mb-8">
+              <h3 className="text-sm font-medium text-gray-500 mb-3">
+                Foto-uploads ({photoUploads.length})
+              </h3>
+              <div className="space-y-3">
+                {photoUploads.map((c) => (
+                  <Card key={c.id}>
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={c.photoUpload!}
+                        alt={c.name}
+                        className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-200"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium">{c.name}</p>
+                        <p className="text-sm text-gray-500">{c.party}</p>
+                      </div>
+                      <div className="flex gap-2 shrink-0">
+                        <Button
+                          onClick={() => approvePhoto(c.id)}
+                          className="text-xs px-3 py-2 min-h-[44px]"
+                        >
+                          Godkend
+                        </Button>
+                        <button
+                          onClick={() => rejectPhoto(c.id)}
+                          className="text-xs text-gray-400 hover:text-melon-red hover:underline px-2 py-2 min-h-[44px]"
+                        >
+                          Afvis
+                        </button>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Kandidat-ansøgninger */}
+          {pendingCandidates.length > 0 && (
+            <div id="opgaver-kandidater" className="mb-8">
+              <h3 className="text-sm font-medium text-gray-500 mb-3">
+                Kandidat-ansøgninger ({pendingCandidates.length})
+              </h3>
+              <div className="space-y-3">
+                {pendingCandidates.map((c) => {
+                  const vote = getCandidateVote(c.phoneHash);
+                  return (
+                    <Card key={c.id}>
+                      <div className="flex items-start justify-between gap-4 mb-3">
+                        <div className="flex items-center gap-3">
+                          {c.photoUrl ? (
+                            <img src={c.photoUrl} alt={c.name} className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-gray-200" />
+                          ) : (
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-400">
+                              {c.name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()}
+                            </div>
+                          )}
+                          <div>
+                            <h3 className="font-bold">{c.name}</h3>
+                            <p className="text-sm text-gray-500">
+                              {c.party} &middot; {c.constituency}
+                            </p>
+                          </div>
+                        </div>
+                        <Button
+                          onClick={() => verifyCandidate(c.id, true)}
+                          className="text-xs px-3 py-2 min-h-[44px] shrink-0"
+                        >
+                          Godkend
+                        </Button>
+                      </div>
+                      {(c.contactPhone || c.contactEmail) && (
+                        <div className="rounded-md bg-gray-50 px-3 py-2 mb-3 space-y-1">
+                          {c.contactPhone && (
+                            <p className="text-sm">
+                              <span className="text-gray-400 mr-1">Tlf:</span>
+                              <a href={`tel:${c.contactPhone}`} className="text-melon-green hover:underline">{c.contactPhone}</a>
+                            </p>
+                          )}
+                          {c.contactEmail && (
+                            <p className="text-sm">
+                              <span className="text-gray-400 mr-1">Email:</span>
+                              <a href={`mailto:${c.contactEmail}`} className="text-melon-green hover:underline">{c.contactEmail}</a>
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
+                        <span>{new Date(c.createdAt).toLocaleString("da-DK")}</span>
+                        {c.phoneHash && <span>&middot; {maskHash(c.phoneHash)}</span>}
+                        {vote && (
+                          <span
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 font-medium ${
+                              vote.voteValue
+                                ? "bg-melon-green/10 text-melon-green"
+                                : "bg-melon-red/10 text-melon-red"
+                            }`}
+                          >
+                            Stemte: {vote.voteValue ? "Ja" : "Nej"}
+                          </span>
+                        )}
+                        {c.pledged && (
+                          <span className="inline-flex items-center rounded-full bg-melon-green/10 text-melon-green px-2 py-0.5 font-medium">
+                            Tilsluttet
+                          </span>
+                        )}
+                      </div>
+                      {c.publicStatement && (
+                        <p className="mt-2 text-sm text-gray-600 italic border-l-2 border-gray-200 pl-3">
+                          {c.publicStatement}
+                        </p>
+                      )}
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Support-beskeder */}
+          {unhandledSupport.length > 0 && (
+            <div id="opgaver-support" className="mb-8">
+              <h3 className="text-sm font-medium text-gray-500 mb-3">
+                Supportbeskeder ({unhandledSupport.length})
+              </h3>
+              <div className="space-y-3">
+                {unhandledSupport.map((s) => (
+                  <Card key={s.id}>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
+                          {s.category}
+                        </span>
+                        <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
+                          {s.message}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {new Date(s.createdAt).toLocaleString("da-DK")}
+                          {s.deviceId && ` · ${s.deviceId.slice(0, 8)}...`}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleSupport(s.id)}
+                        className="shrink-0 text-xs text-melon-green hover:underline px-2 py-2 min-h-[44px]"
+                      >
+                        Markér håndteret
+                      </button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Håndterede support (collapsed) */}
+          {handledSupport.length > 0 && (
+            <div className="mb-8">
+              <button
+                onClick={() => setHandledOpen(!handledOpen)}
+                className="flex w-full items-center justify-between mb-2"
+              >
+                <h3 className="text-sm font-medium text-gray-400">
+                  Håndterede ({handledSupport.length})
+                </h3>
+                <ChevronIcon open={handledOpen} />
+              </button>
+              {handledOpen && (
+                <div className="space-y-2">
+                  {handledSupport.map((s) => (
+                    <Card key={s.id} className="opacity-60">
+                      <div className="min-w-0">
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
+                          {s.category}
+                        </span>
+                        <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
+                          {s.message}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {new Date(s.createdAt).toLocaleString("da-DK")}
+                          {s.handledAt && ` · Håndteret ${new Date(s.handledAt).toLocaleString("da-DK")}`}
+                        </p>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ─── Fuldt dashboard (eksisterende) ─── */}
 
       {/* Sidevisninger */}
       {hitStats && (
@@ -393,7 +692,7 @@ export default function AdminPage() {
         )}
       </section>
 
-      {/* Kandidat-ansøgninger */}
+      {/* Kandidat-ansøgninger (fuldt dashboard) */}
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold">
@@ -578,77 +877,125 @@ export default function AdminPage() {
         )}
       </section>
 
-      {/* Foto-uploads */}
-      {(() => {
-        const photoUploads = candidates.filter((c) => c.photoUpload);
-        if (photoUploads.length === 0) return null;
-        return (
-          <section>
-            <h2 className="text-xl font-bold mb-4">
-              Foto-uploads
-              <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">
-                {photoUploads.length} nye
-              </span>
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {photoUploads.map((c) => (
-                <Card key={c.id}>
-                  <div className="text-center space-y-2">
-                    <img
-                      src={c.photoUpload!}
-                      alt={c.name}
-                      className="h-24 w-24 rounded-full object-cover mx-auto ring-2 ring-blue-200"
-                    />
-                    <p className="text-sm font-medium">{c.name}</p>
-                    <p className="text-xs text-gray-500">{c.party}</p>
-                    <a
-                      href={c.photoUpload!}
-                      download={`${c.id}.jpg`}
-                      className="inline-block text-xs text-melon-green hover:underline"
-                    >
-                      Download
-                    </a>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* Supportbeskeder */}
-      <section>
-        <h2 className="text-xl font-bold mb-4">
-          Supportbeskeder
-          {supportMessages.length > 0 && (
-            <span className="ml-2 inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
-              {supportMessages.length}
+      {/* Foto-uploads (fuldt dashboard) */}
+      {photoUploads.length > 0 && (
+        <section>
+          <h2 className="text-xl font-bold mb-4">
+            Foto-uploads
+            <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+              {photoUploads.length} nye
             </span>
-          )}
-        </h2>
-        {supportMessages.length === 0 ? (
-          <Card className="text-center py-8">
-            <p className="text-gray-500 text-sm">Ingen supportbeskeder.</p>
-          </Card>
-        ) : (
-          <div className="space-y-3">
-            {supportMessages.map((s) => (
-              <Card key={s.id}>
-                <div className="min-w-0">
-                  <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
-                    {s.category}
-                  </span>
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
-                    {s.message}
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {new Date(s.createdAt).toLocaleString("da-DK")}
-                    {s.deviceId && ` · ${s.deviceId.slice(0, 8)}...`}
-                  </p>
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {photoUploads.map((c) => (
+              <Card key={c.id}>
+                <div className="text-center space-y-2">
+                  <img
+                    src={c.photoUpload!}
+                    alt={c.name}
+                    className="h-24 w-24 rounded-full object-cover mx-auto ring-2 ring-blue-200"
+                  />
+                  <p className="text-sm font-medium">{c.name}</p>
+                  <p className="text-xs text-gray-500">{c.party}</p>
+                  <div className="flex justify-center gap-2">
+                    <Button
+                      onClick={() => approvePhoto(c.id)}
+                      className="text-xs px-3 py-1"
+                    >
+                      Godkend
+                    </Button>
+                    <button
+                      onClick={() => rejectPhoto(c.id)}
+                      className="text-xs text-gray-400 hover:text-melon-red hover:underline px-2 py-1"
+                    >
+                      Afvis
+                    </button>
+                  </div>
                 </div>
               </Card>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Supportbeskeder (fuldt dashboard) */}
+      <section>
+        <h2 className="text-xl font-bold mb-4">
+          Supportbeskeder
+          {unhandledSupport.length > 0 && (
+            <span className="ml-2 inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
+              {unhandledSupport.length}
+            </span>
+          )}
+        </h2>
+        {unhandledSupport.length === 0 && handledSupport.length === 0 ? (
+          <Card className="text-center py-8">
+            <p className="text-gray-500 text-sm">Ingen supportbeskeder.</p>
+          </Card>
+        ) : (
+          <>
+            {unhandledSupport.length > 0 && (
+              <div className="space-y-3 mb-4">
+                {unhandledSupport.map((s) => (
+                  <Card key={s.id}>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
+                          {s.category}
+                        </span>
+                        <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
+                          {s.message}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {new Date(s.createdAt).toLocaleString("da-DK")}
+                          {s.deviceId && ` · ${s.deviceId.slice(0, 8)}...`}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleSupport(s.id)}
+                        className="shrink-0 text-xs text-melon-green hover:underline px-2 py-2 min-h-[44px]"
+                      >
+                        Markér håndteret
+                      </button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+            {handledSupport.length > 0 && (
+              <div>
+                <button
+                  onClick={() => setHandledOpen(!handledOpen)}
+                  className="flex w-full items-center justify-between mb-2"
+                >
+                  <h3 className="text-sm font-medium text-gray-400">
+                    Håndterede ({handledSupport.length})
+                  </h3>
+                  <ChevronIcon open={handledOpen} />
+                </button>
+                {handledOpen && (
+                  <div className="space-y-2">
+                    {handledSupport.map((s) => (
+                      <Card key={s.id} className="opacity-60">
+                        <div className="min-w-0">
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
+                            {s.category}
+                          </span>
+                          <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
+                            {s.message}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {new Date(s.createdAt).toLocaleString("da-DK")}
+                            {s.handledAt && ` · Håndteret ${new Date(s.handledAt).toLocaleString("da-DK")}`}
+                          </p>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         )}
       </section>
 

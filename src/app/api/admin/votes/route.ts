@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   if (isAuthError(auth)) return auth;
 
   try {
-    const [votes, tokens, candidates, supportMessages, suppressions] = await Promise.all([
+    const [votes, tokens, candidates, supportMessages, suppressions, adminUser] = await Promise.all([
       prisma.vote.findMany({
         orderBy: { votedAt: "desc" },
       }),
@@ -32,9 +32,20 @@ export async function GET(req: NextRequest) {
       prisma.phoneSuppression.findMany({
         orderBy: { createdAt: "desc" },
       }),
+      prisma.adminUser.findUnique({
+        where: { id: Number(auth.sub) },
+        select: { name: true, email: true },
+      }),
     ]);
 
-    return NextResponse.json({ votes, tokens, candidates, supportMessages, suppressions });
+    return NextResponse.json({
+      adminName: adminUser?.name || adminUser?.email || auth.email,
+      votes,
+      tokens,
+      candidates,
+      supportMessages,
+      suppressions,
+    });
   } catch (error) {
     console.error("admin/votes GET error:", error);
     return NextResponse.json(
@@ -93,6 +104,43 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const body = await req.json();
+
+    // Approve photo: move photoUpload → photoUrl
+    if (body.approvePhoto) {
+      const candidate = await prisma.candidate.findUnique({
+        where: { id: body.approvePhoto },
+        select: { photoUpload: true },
+      });
+      if (!candidate?.photoUpload) {
+        return NextResponse.json({ error: "Ingen foto at godkende" }, { status: 400 });
+      }
+      await prisma.candidate.update({
+        where: { id: body.approvePhoto },
+        data: { photoUrl: candidate.photoUpload, photoUpload: null },
+      });
+      return NextResponse.json({ ok: true });
+    }
+
+    // Reject photo: clear photoUpload
+    if (body.rejectPhoto) {
+      await prisma.candidate.update({
+        where: { id: body.rejectPhoto },
+        data: { photoUpload: null },
+      });
+      return NextResponse.json({ ok: true });
+    }
+
+    // Handle support message
+    if (body.handleSupport) {
+      await prisma.supportMessage.update({
+        where: { id: body.handleSupport },
+        data: {
+          handledBy: Number(auth.sub),
+          handledAt: new Date(),
+        },
+      });
+      return NextResponse.json({ ok: true });
+    }
 
     if (body.candidateId && typeof body.verified === "boolean") {
       const candidate = await prisma.candidate.update({
