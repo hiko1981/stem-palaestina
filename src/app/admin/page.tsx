@@ -7,6 +7,7 @@ import Card from "@/components/ui/Card";
 import ChevronIcon from "@/components/ui/ChevronIcon";
 import QrLoginFlow from "@/components/features/admin/QrLoginFlow";
 import AdminInviteForm from "@/components/features/admin/AdminInviteForm";
+import QrCode from "@/components/ui/QrCode";
 
 interface HitDay {
   date: string;
@@ -918,27 +919,25 @@ export default function AdminPage() {
       <section>
         <h2 className="text-xl font-bold mb-4">Admin-opsætning</h2>
 
-        {/* Setup link (kun med password login) */}
+        {/* Setup QR (kun med password login) */}
         {password && (
           <Card className="mb-4">
             <h3 className="font-bold mb-2">Registrer admin-enhed</h3>
             <p className="text-sm text-gray-500 mb-3">
-              Generer et setup-link til at registrere din telefon som admin-enhed.
+              Scan QR-koden med din telefon for at registrere den som admin-enhed.
             </p>
             <Button
               onClick={sendSetupLink}
               loading={setupLoading}
               variant="outline"
             >
-              Send setup-link
+              Generer QR-kode
             </Button>
             {setupResult && (
-              <div className="mt-3 rounded-lg bg-gray-50 p-3">
-                <p className="font-mono text-xs break-all text-melon-green">
-                  {setupResult}
-                </p>
-                <p className="text-xs text-gray-400 mt-1">
-                  Åbn dette link på din telefon
+              <div className="mt-4 flex flex-col items-center gap-3">
+                <QrCode value={setupResult} size={200} />
+                <p className="text-xs text-gray-400">
+                  Scan med din telefons kamera
                 </p>
               </div>
             )}
