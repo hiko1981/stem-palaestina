@@ -68,7 +68,13 @@
     "security2": "Stemmeseddel-tokens med 24 timers udløb",
     "security3": "Rate limiting på alle endpoints",
     "security4": "Maks 3 ventende stemmesedler per enhed",
-    "security5": "Ingen tredjepartstracking eller analytics"
+    "security5": "Ingen tredjepartstracking eller analytics",
+    "cryptoTitle": "Krypteringen forklaret",
+    "cryptoP1": "Når du stemmer, kombinerer vores server dit telefonnummer med en hemmelig nøgle (et \"salt\"). Kombinationen køres gennem SHA-256 — en kryptografisk envejs-funktion. Resultatet er et 64 tegn langt fingeraftryk (en \"hash\"), som vi gemmer i stedet for dit telefonnummer.",
+    "cryptoP2": "\"Envejs\" betyder, at man ikke matematisk kan regne baglæns fra fingeraftrykket til nummeret. Når du sender en ny stemmeseddel, laver vi det samme fingeraftryk af dit nummer igen — matcher det et eksisterende, ved vi at du allerede har stemt.",
+    "cryptoQ": "Men kan man ikke bare prøve alle telefonnumre?",
+    "cryptoP3": "Godt spørgsmål. Danske mobilnumre er 8 cifre — ca. 100 millioner kombinationer. En computer kunne hashe dem alle på sekunder. Derfor bruger vi saltet: uden den hemmelige nøgle kan man ikke genskabe fingeraftrykkene. Saltet ligger kun på serveren og optræder aldrig i koden eller databasen.",
+    "cryptoP4": "Selv hvis nogen fik adgang til både databasen og saltet, ville de kun lære, at et specifikt telefonnummer har stemt ja eller nej. Der gemmes ingen navne, IP-adresser eller andre persondata sammen med stemmen."
   },
   "demands": {
     "d1Title": "Anerkend Palæstina",
@@ -309,5 +315,10 @@
     "send": "Send",
     "success": "Tak! Din besked er modtaget.",
     "error": "Kunne ikke sende. Prøv igen."
+  },
+  "alreadyVoted": {
+    "question": "Har du allerede stemt?",
+    "explanation": "Vi gemmer ingen telefonnumre — kun et krypteret fingeraftryk. Til gengæld bruger vi cookies til at huske din stemme på din enhed. Ved opdateringer kan cookies nulstilles, så det ser ud som om du ikke har stemt. Send blot en ny stemmeseddel til dig selv — systemet tillader kun én stemme pr. telefonnummer, og du får straks vist de detaljerede resultater.",
+    "cryptoLink": "Læs mere om kryptering"
   }
 }

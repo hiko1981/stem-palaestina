@@ -76,6 +76,21 @@ export default async function OmPage() {
             <li>{t("security5")}</li>
           </ul>
         </Card>
+
+        <Card>
+          <div id="kryptering" className="scroll-mt-20">
+            <h2 className="text-xl font-bold mb-4">{t("cryptoTitle")}</h2>
+            <div className="text-gray-600 text-sm leading-relaxed space-y-4">
+              <p>{t("cryptoP1")}</p>
+              <p>{t("cryptoP2")}</p>
+              <div className="rounded-lg bg-amber-50 border border-amber-200 px-3.5 py-3">
+                <p className="font-semibold text-amber-800 mb-1">{t("cryptoQ")}</p>
+                <p className="text-amber-700">{t("cryptoP3")}</p>
+              </div>
+              <p>{t("cryptoP4")}</p>
+            </div>
+          </div>
+        </Card>
       </div>
     </div>
   );
