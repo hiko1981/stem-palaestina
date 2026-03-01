@@ -37,7 +37,8 @@
     "yourVote": "Du stemte",
     "yourVoteYes": "Ja, for de tre krav",
     "yourVoteNo": "Nej",
-    "missingCandidate": "Mangler din kandidat?"
+    "missingCandidate": "Mangler din kandidat?",
+    "voteCount": "har taget stilling"
   },
   "candidates": {
     "title": "Kandidater",

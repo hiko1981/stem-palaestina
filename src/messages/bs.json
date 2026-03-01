@@ -37,7 +37,8 @@
     "yourVote": "Vi ste glasali",
     "yourVoteYes": "Da, za tri zahtjeva",
     "yourVoteNo": "Ne",
-    "missingCandidate": "Nedostaje Vaš kandidat?"
+    "missingCandidate": "Nedostaje Vaš kandidat?",
+    "voteCount": "have taken a stand"
   },
   "candidates": {
     "title": "Kandidati",

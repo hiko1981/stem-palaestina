@@ -37,7 +37,8 @@
     "yourVote": "شما رأی دادید",
     "yourVoteYes": "بلی، به نفع سه خواست",
     "yourVoteNo": "نخیر",
-    "missingCandidate": "نامزد شما موجود نیست؟"
+    "missingCandidate": "نامزد شما موجود نیست؟",
+    "voteCount": "have taken a stand"
   },
   "candidates": {
     "title": "نامزدان",

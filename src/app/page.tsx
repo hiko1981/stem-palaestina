@@ -107,7 +107,9 @@ export default function Home() {
   const [mapStorkreds, setMapStorkreds] = useState("");
   const [notification, setNotification] = useState("");
   const [candidateCount, setCandidateCount] = useState<number | null>(null);
+  const [totalVotes, setTotalVotes] = useState<number>(0);
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [demandsOpen, setDemandsOpen] = useState(false);
   const [expandedDemand, setExpandedDemand] = useState<number | null>(null);
   const voterPanelRef = useRef<HTMLDivElement>(null);
 
@@ -117,6 +119,7 @@ export default function Home() {
   const d = useTranslations("demands");
   const h = useTranslations("home");
   const sp = useTranslations("sharePanel");
+  const r = useTranslations("results");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -185,6 +188,7 @@ export default function Home() {
       .then((r) => r.json())
       .then((d) => {
         if (typeof d.candidateCount === "number") setCandidateCount(d.candidateCount);
+        if (typeof d.total === "number") setTotalVotes(d.total);
       })
       .catch(() => {});
   }, []);
@@ -281,82 +285,42 @@ export default function Home() {
           <PublicVoteBar />
           {postTab === "results" && (
             <div className="space-y-5">
-              {/* Your vote + expandable demand cards */}
-              <div>
-                <p className="text-xs text-gray-400 mb-2">{h("yourVote")}</p>
-                <div className="space-y-2">
-                  {[1, 2, 3].map((n) => {
-                    const isOpen = expandedDemand === n;
-                    const borderColor = votedYes
-                      ? isOpen ? "border-melon-green bg-melon-green/5" : "border-melon-green/30 hover:border-melon-green/50"
-                      : isOpen ? "border-melon-red bg-melon-red/5" : "border-melon-red/30 hover:border-melon-red/50";
-                    return (
-                      <button
-                        key={n}
-                        onClick={() => setExpandedDemand(isOpen ? null : n)}
-                        className={`w-full rounded-lg border text-left px-3.5 py-3 transition-colors ${borderColor}`}
-                      >
-                        <div className="flex items-start gap-2.5">
-                          <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold mt-0.5 ${votedYes ? "bg-melon-green/10 text-melon-green" : "bg-melon-red/10 text-melon-red"}`}>
-                            {votedYes ? "✓" : "✗"}
-                          </span>
-                          <div className="flex-1 min-w-0">
-                            <span className="text-sm font-semibold text-gray-800">{d(`d${n}Title` as "d1Title" | "d2Title" | "d3Title")}</span>
-                            {!isOpen && (
-                              <p className="text-xs text-gray-400 mt-0.5">{d(`d${n}Short` as "d1Short" | "d2Short" | "d3Short")}</p>
-                            )}
-                            {isOpen && (
-                              <p className="text-xs text-gray-600 mt-1.5 leading-relaxed animate-in slide-in-from-top-2">
-                                {d(`d${n}Detail` as "d1Detail" | "d2Detail" | "d3Detail")}
-                              </p>
-                            )}
-                          </div>
-                          <svg
-                            className={`h-4 w-4 shrink-0 text-gray-400 transition-transform mt-1 ${isOpen ? "rotate-180" : ""}`}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </button>
-                    );
-                  })}
+              {/* Prominent vote counter */}
+              {totalVotes > 0 && (
+                <div className="rounded-2xl bg-gradient-to-br from-melon-green/10 via-white to-melon-green/5 border border-melon-green/20 px-4 py-5 text-center">
+                  <p className="text-5xl font-black tabular-nums tracking-tight text-melon-green">
+                    {totalVotes.toLocaleString("da-DK")}
+                  </p>
+                  <p className="text-sm font-medium text-gray-500 mt-1">
+                    {h("voteCount")}
+                  </p>
                 </div>
-              </div>
+              )}
 
-              {/* Privacy fold-out */}
-              <div>
+              {/* Compact demands fold-out */}
+              <div className="rounded-lg border border-gray-200 overflow-hidden">
                 <button
-                  onClick={() => setPrivacyOpen(!privacyOpen)}
-                  className="flex w-full items-center justify-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={() => setDemandsOpen(!demandsOpen)}
+                  className="flex w-full items-center justify-between px-3 py-2.5 text-left hover:bg-gray-50 transition-colors"
                 >
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  {h("privacyToggle")}
-                  <svg
-                    className={`h-3 w-3 transition-transform ${privacyOpen ? "rotate-180" : ""}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <div className="flex items-center gap-2">
+                    <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold ${votedYes ? "bg-melon-green/10 text-melon-green" : "bg-melon-red/10 text-melon-red"}`}>
+                      {votedYes ? "\u2713" : "\u2717"}
+                    </span>
+                    <span className="text-sm font-medium text-gray-700">
+                      {h("yourVote")} {votedYes ? r("yes") : r("no")}
+                    </span>
+                  </div>
+                  <ChevronIcon open={demandsOpen} />
                 </button>
-                {privacyOpen && (
-                  <div className="mt-2 rounded-lg bg-gray-50 px-3 py-3 text-xs text-gray-600 space-y-2 animate-in slide-in-from-top-2">
-                    <div className="flex items-start gap-2">
-                      <span className="mt-0.5 shrink-0 text-melon-green">&#128274;</span>
-                      <p>{h("privacyVote")}</p>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="mt-0.5 shrink-0 text-melon-green">&#128233;</span>
-                      <p>{h("privacyInvite")}</p>
-                    </div>
+                {demandsOpen && (
+                  <div className="border-t border-gray-100 px-3 py-2.5 space-y-1.5 animate-in slide-in-from-top-2">
+                    {[1, 2, 3].map((n) => (
+                      <div key={n} className="flex items-start gap-2">
+                        <span className="text-xs font-bold text-gray-300 mt-px">{n}.</span>
+                        <p className="text-xs text-gray-600">{d(`d${n}Title` as "d1Title" | "d2Title" | "d3Title")}</p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>

@@ -37,7 +37,8 @@
     "yourVote": "شما رأی دادید",
     "yourVoteYes": "بله، به سه خواسته",
     "yourVoteNo": "خیر",
-    "missingCandidate": "نامزد شما در لیست نیست؟"
+    "missingCandidate": "نامزد شما در لیست نیست؟",
+    "voteCount": "have taken a stand"
   },
   "candidates": {
     "title": "نامزدها",

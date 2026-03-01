@@ -37,7 +37,8 @@
     "yourVoteNo": "Nein",
     "missingCandidate": "Kandidat nicht gefunden?",
     "voteOnPhoneHint": "Du wählst Ja/Nein, wenn du den Link auf deinem Handy öffnest.",
-    "intro": "Hier können Wähler den Politikern zeigen, was sie denken — und Kandidaten können den Wählern zeigen, wo sie stehen. Können Sie die Haltung Ihres Kandidaten nicht sehen? Bitten Sie ihn, hier Stellung zu beziehen."
+    "intro": "Hier können Wähler den Politikern zeigen, was sie denken — und Kandidaten können den Wählern zeigen, wo sie stehen. Können Sie die Haltung Ihres Kandidaten nicht sehen? Bitten Sie ihn, hier Stellung zu beziehen.",
+    "voteCount": "have taken a stand"
   },
   "candidates": {
     "title": "Kandidaten",

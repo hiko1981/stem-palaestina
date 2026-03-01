@@ -37,7 +37,8 @@
     "yourVoteNo": "Tidak",
     "missingCandidate": "Tidak menemukan kandidat Anda?",
     "voteOnPhoneHint": "Anda memilih Ya/Tidak saat membuka tautan di ponsel Anda.",
-    "intro": "Di sini pemilih dapat menunjukkan kepada politisi apa yang mereka pikirkan — dan kandidat dapat menunjukkan kepada pemilih di mana mereka berdiri. Tidak bisa melihat posisi kandidat Anda? Minta mereka menyampaikan pendapatnya di sini."
+    "intro": "Di sini pemilih dapat menunjukkan kepada politisi apa yang mereka pikirkan — dan kandidat dapat menunjukkan kepada pemilih di mana mereka berdiri. Tidak bisa melihat posisi kandidat Anda? Minta mereka menyampaikan pendapatnya di sini.",
+    "voteCount": "have taken a stand"
   },
   "candidates": {
     "title": "Kandidat",

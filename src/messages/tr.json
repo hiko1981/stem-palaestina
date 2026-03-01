@@ -37,7 +37,8 @@
     "yourVoteNo": "Hayır",
     "missingCandidate": "Adayınızı bulamıyor musunuz?",
     "voteOnPhoneHint": "Bağlantıyı telefonunda açınca Evet/Hayır seçersin.",
-    "intro": "Burada seçmenler politikacılara ne düşündüklerini gösterebilir — ve adaylar seçmenlere nerede durduklarını gösterebilir. Adayınızın tutumunu göremiyorsunuz mu? Ondan burada fikrini belirtmesini isteyin."
+    "intro": "Burada seçmenler politikacılara ne düşündüklerini gösterebilir — ve adaylar seçmenlere nerede durduklarını gösterebilir. Adayınızın tutumunu göremiyorsunuz mu? Ondan burada fikrini belirtmesini isteyin.",
+    "voteCount": "have taken a stand"
   },
   "candidates": {
     "title": "Adaylar",
