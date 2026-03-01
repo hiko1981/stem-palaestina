@@ -42,6 +42,7 @@ interface CandidateRecord {
   photoUrl: string | null;
   pledged: boolean;
   optedOut: boolean;
+  optedOutAt: string | null;
   verified: boolean;
   createdAt: string;
 }
@@ -54,12 +55,21 @@ interface SupportRecord {
   createdAt: string;
 }
 
+interface SuppressionRecord {
+  id: number;
+  phoneHash: string;
+  scope: string;
+  reason: string;
+  createdAt: string;
+}
+
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
   const [supportMessages, setSupportMessages] = useState<SupportRecord[]>([]);
+  const [suppressions, setSuppressions] = useState<SuppressionRecord[]>([]);
   const [langMisses, setLangMisses] = useState<LangMissRecord[]>([]);
   const [hitStats, setHitStats] = useState<HitStats | null>(null);
   const [expandedCandidate, setExpandedCandidate] = useState<number | null>(null);
@@ -83,6 +93,7 @@ export default function AdminPage() {
       setVotes(data.votes);
       setCandidates(data.candidates || []);
       setSupportMessages(data.supportMessages || []);
+      setSuppressions(data.suppressions || []);
       setAuthed(true);
       // Fetch language misses + hit stats
       fetch("/api/admin/lang-miss", {
@@ -113,6 +124,7 @@ export default function AdminPage() {
       setVotes(data.votes);
       setCandidates(data.candidates || []);
       setSupportMessages(data.supportMessages || []);
+      setSuppressions(data.suppressions || []);
     }
     fetch("/api/admin/lang-miss", {
       headers: { Authorization: `Bearer ${password}` },
@@ -547,6 +559,138 @@ export default function AdminPage() {
             ))}
           </div>
         )}
+      </section>
+
+      {/* Opt-out / Suppressions */}
+      <section>
+        <h2 className="text-xl font-bold mb-4">
+          Opt-out oversigt
+          {suppressions.length > 0 && (
+            <span className="ml-2 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
+              {suppressions.length}
+            </span>
+          )}
+        </h2>
+
+        {/* Summary cards */}
+        {(() => {
+          const voterOptouts = suppressions.filter((s) => s.reason === "user_request");
+          const candidateOptouts = suppressions.filter((s) => s.reason === "candidate_optout");
+          const candidateInviteSuppressions = suppressions.filter((s) => s.reason.startsWith("candidate_optout:"));
+          const optedOutCandidates = candidates.filter((c) => c.optedOut);
+
+          return (
+            <>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <Card>
+                  <p className="text-xs text-gray-500">Vælger-afmeldinger</p>
+                  <p className="text-2xl font-bold tabular-nums">{voterOptouts.length}</p>
+                  <p className="text-xs text-gray-400 mt-1">Telefonnumre der har frabedt sig SMS</p>
+                </Card>
+                <Card>
+                  <p className="text-xs text-gray-500">Kandidat-afmeldinger</p>
+                  <p className="text-2xl font-bold tabular-nums">{optedOutCandidates.length}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {candidateOptouts.length + candidateInviteSuppressions.length} telefon-suppressions
+                  </p>
+                </Card>
+              </div>
+
+              {/* Opted-out candidates */}
+              {optedOutCandidates.length > 0 && (
+                <div className="mb-4">
+                  <h3 className="text-sm font-medium text-gray-500 mb-2">Afmeldte kandidater</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b text-left text-gray-500">
+                          <th className="pb-2 pr-4">Navn</th>
+                          <th className="pb-2 pr-4">Parti</th>
+                          <th className="pb-2 pr-4">Storkreds</th>
+                          <th className="pb-2">Afmeldt</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {optedOutCandidates.map((c) => (
+                          <tr key={c.id} className="border-b">
+                            <td className="py-2 pr-4 font-medium">{c.name}</td>
+                            <td className="py-2 pr-4">{c.party}</td>
+                            <td className="py-2 pr-4">{c.constituency}</td>
+                            <td className="py-2 text-gray-500">
+                              {c.optedOutAt
+                                ? new Date(c.optedOutAt).toLocaleString("da-DK")
+                                : "—"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* Recent suppressions */}
+              {suppressions.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500 mb-2">Seneste suppressions</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b text-left text-gray-500">
+                          <th className="pb-2 pr-4">Phone Hash</th>
+                          <th className="pb-2 pr-4">Type</th>
+                          <th className="pb-2 pr-4">Årsag</th>
+                          <th className="pb-2">Dato</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {suppressions.slice(0, 20).map((s) => (
+                          <tr key={s.id} className="border-b">
+                            <td className="py-2 pr-4 font-mono text-xs">{maskHash(s.phoneHash)}</td>
+                            <td className="py-2 pr-4">
+                              <span
+                                className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                                  s.scope === "all"
+                                    ? "bg-melon-red/10 text-melon-red"
+                                    : "bg-amber-100 text-amber-700"
+                                }`}
+                              >
+                                {s.scope === "all" ? "Fuld blokering" : "Kandidat-invite"}
+                              </span>
+                            </td>
+                            <td className="py-2 pr-4 text-gray-500">
+                              {s.reason === "user_request"
+                                ? "Vælger-afmelding"
+                                : s.reason === "candidate_optout"
+                                ? "Kandidat afmeldt"
+                                : s.reason.startsWith("candidate_optout:")
+                                ? `Kandidat #${s.reason.split(":")[1]} afmeldt`
+                                : s.reason}
+                            </td>
+                            <td className="py-2 text-gray-500">
+                              {new Date(s.createdAt).toLocaleString("da-DK")}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    {suppressions.length > 20 && (
+                      <p className="text-xs text-gray-400 mt-2 text-center">
+                        Viser de seneste 20 af {suppressions.length} suppressions
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {suppressions.length === 0 && optedOutCandidates.length === 0 && (
+                <Card className="text-center py-8">
+                  <p className="text-gray-500 text-sm">Ingen opt-outs endnu.</p>
+                </Card>
+              )}
+            </>
+          );
+        })()}
       </section>
 
       {/* Sprogbehov */}

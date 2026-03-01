@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [votes, tokens, candidates, supportMessages] = await Promise.all([
+    const [votes, tokens, candidates, supportMessages, suppressions] = await Promise.all([
       prisma.vote.findMany({
         orderBy: { votedAt: "desc" },
       }),
@@ -38,9 +38,12 @@ export async function GET(req: NextRequest) {
       prisma.supportMessage.findMany({
         orderBy: { createdAt: "desc" },
       }),
+      prisma.phoneSuppression.findMany({
+        orderBy: { createdAt: "desc" },
+      }),
     ]);
 
-    return NextResponse.json({ votes, tokens, candidates, supportMessages });
+    return NextResponse.json({ votes, tokens, candidates, supportMessages, suppressions });
   } catch (error) {
     console.error("admin/votes GET error:", error);
     return NextResponse.json(
