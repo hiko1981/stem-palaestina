@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { STORKREDSE } from "@/lib/storkredse";
+import { PARTY_OPTIONS } from "@/lib/parties";
 import { useTranslations } from "next-intl";
 
 interface CandidatePublicFormProps {
@@ -74,13 +75,24 @@ export default function CandidatePublicForm({ token }: CandidatePublicFormProps)
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <Input
-        id="candidate-party"
-        label={t("partyLabel")}
-        placeholder={t("partyPlaceholder")}
-        value={party}
-        onChange={(e) => setParty(e.target.value)}
-      />
+      <div>
+        <label htmlFor="candidate-party" className="mb-1 block text-sm font-medium text-gray-700">
+          {t("partyLabel")}
+        </label>
+        <select
+          id="candidate-party"
+          value={party}
+          onChange={(e) => setParty(e.target.value)}
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-melon-green"
+        >
+          <option value="">{t("partyPlaceholder")}</option>
+          {PARTY_OPTIONS.map((p) => (
+            <option key={p.letter} value={p.value}>
+              {p.label}
+            </option>
+          ))}
+        </select>
+      </div>
       <div>
         <label htmlFor="candidate-constituency" className="mb-1 block text-sm font-medium text-gray-700">
           {t("constituencyLabel")}
