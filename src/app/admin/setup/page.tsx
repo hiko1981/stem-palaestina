@@ -3,16 +3,10 @@
 import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-
-function getDeviceId(): string {
-  const key = "admin_device_id";
-  let id = localStorage.getItem(key);
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem(key, id);
-  }
-  return id;
-}
+import {
+  getDeviceId,
+  generateKeyPair,
+} from "@/lib/admin-device-crypto";
 
 export default function SetupPage() {
   const [status, setStatus] = useState<
@@ -28,23 +22,34 @@ export default function SetupPage() {
       return;
     }
 
-    setStatus("registering");
-    const deviceId = getDeviceId();
+    (async () => {
+      setStatus("registering");
+      const deviceId = getDeviceId();
 
-    const ua = navigator.userAgent;
-    let label = "Ukendt enhed";
-    if (/iPhone/.test(ua)) label = "iPhone";
-    else if (/iPad/.test(ua)) label = "iPad";
-    else if (/Android/.test(ua)) label = "Android";
-    else if (/Mac/.test(ua)) label = "Mac";
-    else if (/Windows/.test(ua)) label = "Windows";
+      // Generate ECDSA keypair — private key stored non-extractable in IndexedDB
+      let publicKey: string;
+      try {
+        publicKey = await generateKeyPair();
+      } catch {
+        setStatus("error");
+        setMessage("Kunne ikke generere enhedsnøgle");
+        return;
+      }
 
-    fetch("/api/admin/auth/register-device", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, deviceId, label }),
-    })
-      .then(async (res) => {
+      const ua = navigator.userAgent;
+      let label = "Ukendt enhed";
+      if (/iPhone/.test(ua)) label = "iPhone";
+      else if (/iPad/.test(ua)) label = "iPad";
+      else if (/Android/.test(ua)) label = "Android";
+      else if (/Mac/.test(ua)) label = "Mac";
+      else if (/Windows/.test(ua)) label = "Windows";
+
+      try {
+        const res = await fetch("/api/admin/auth/register-device", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, deviceId, label, publicKey }),
+        });
         const data = await res.json();
         if (!res.ok) {
           setStatus("error");
@@ -53,11 +58,11 @@ export default function SetupPage() {
         }
         setStatus("success");
         setMessage("Enhed registreret! Du er nu logget ind.");
-      })
-      .catch(() => {
+      } catch {
         setStatus("error");
         setMessage("Netværksfejl");
-      });
+      }
+    })();
   }, []);
 
   return (

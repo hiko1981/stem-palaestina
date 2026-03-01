@@ -3,31 +3,25 @@ import { verifyJwt } from "@/lib/admin-auth";
 
 /**
  * POST: Set JWT as HttpOnly cookie.
- * Body: { jwt: string }
+ * Body: { jwt: string, sessionOnly?: boolean }
+ * sessionOnly=true → cookie deleted on browser close (for PC logins)
  */
 export async function POST(req: NextRequest) {
-  let body: { jwt?: string };
+  let body: { jwt?: string; sessionOnly?: boolean };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Ugyldig body" }, { status: 400 });
   }
 
-  const { jwt } = body;
+  const { jwt, sessionOnly } = body;
   if (!jwt) {
-    return NextResponse.json(
-      { error: "Mangler jwt" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Mangler jwt" }, { status: 400 });
   }
 
-  // Verify JWT is valid before setting cookie
   const payload = await verifyJwt(jwt);
   if (!payload) {
-    return NextResponse.json(
-      { error: "Ugyldig JWT" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Ugyldig JWT" }, { status: 400 });
   }
 
   const response = NextResponse.json({ ok: true });
@@ -35,8 +29,9 @@ export async function POST(req: NextRequest) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 24 * 60 * 60, // 24 hours
     path: "/",
+    // Session-only: omit maxAge → cookie deleted on browser close
+    ...(sessionOnly ? {} : { maxAge: 24 * 60 * 60 }),
   });
 
   return response;

@@ -55,3 +55,6 @@ ALTER TABLE "admin_devices" ADD CONSTRAINT "admin_devices_admin_user_id_fkey" FO
 
 -- AddForeignKey
 ALTER TABLE "admin_invites" ADD CONSTRAINT "admin_invites_invited_by_fkey" FOREIGN KEY ("invited_by") REFERENCES "admin_users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- Add public key column for device crypto
+ALTER TABLE "admin_devices" ADD COLUMN "public_key" TEXT;

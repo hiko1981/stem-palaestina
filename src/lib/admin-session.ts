@@ -7,8 +7,10 @@ const SESSION_TTL = 300; // 5 minutes
 
 export interface QrSession {
   id: string;
-  status: "pending" | "authenticated" | "failed";
-  challenge: string;
+  step: 1 | 2 | 3 | "authenticated" | "failed";
+  challenge1: string;
+  challenge2: string | null;
+  challenge3: string | null;
   deviceId: string | null;
   adminUserId: number | null;
   jwt: string | null;
@@ -19,13 +21,19 @@ function kvConfigured(): boolean {
   return Boolean(KV_URL && KV_TOKEN);
 }
 
-function sessKey(sessionId: string): string {
-  return `qr:sess:${sessionId}`;
+function sessKey(id: string): string {
+  return `qr:sess:${id}`;
 }
 
-function tokKey(token: string): string {
-  return `qr:tok:${token}`;
+function tokKey(tok: string): string {
+  return `qr:tok:${tok}`;
 }
+
+function newChallenge(): string {
+  return randomBytes(32).toString("hex");
+}
+
+// --- KV helpers ---
 
 async function kvSet(key: string, value: string, ttl: number): Promise<void> {
   await fetch(`${KV_URL}/pipeline`, {
@@ -58,108 +66,117 @@ async function kvDel(key: string): Promise<void> {
   });
 }
 
-// In-memory fallback for development
-const memStore = new Map<string, { value: string; expiresAt: number }>();
+// --- In-memory fallback ---
 
-function memSet(key: string, value: string, ttl: number): void {
-  memStore.set(key, { value, expiresAt: Date.now() + ttl * 1000 });
+const mem = new Map<string, { value: string; expiresAt: number }>();
+
+function memSet(k: string, v: string, ttl: number): void {
+  mem.set(k, { value: v, expiresAt: Date.now() + ttl * 1000 });
 }
 
-function memGet(key: string): string | null {
-  const entry = memStore.get(key);
-  if (!entry) return null;
-  if (Date.now() > entry.expiresAt) {
-    memStore.delete(key);
+function memGet(k: string): string | null {
+  const e = mem.get(k);
+  if (!e) return null;
+  if (Date.now() > e.expiresAt) {
+    mem.delete(k);
     return null;
   }
-  return entry.value;
+  return e.value;
 }
 
-function memDel(key: string): void {
-  memStore.delete(key);
+function memDel(k: string): void {
+  mem.delete(k);
 }
 
-async function setVal(key: string, value: string, ttl: number): Promise<void> {
-  if (kvConfigured()) {
-    await kvSet(key, value, ttl);
-  } else {
-    memSet(key, value, ttl);
-  }
+// --- Unified accessors ---
+
+async function setVal(k: string, v: string, ttl: number): Promise<void> {
+  kvConfigured() ? await kvSet(k, v, ttl) : memSet(k, v, ttl);
 }
 
-async function getVal(key: string): Promise<string | null> {
-  if (kvConfigured()) {
-    return kvGet(key);
-  }
-  return memGet(key);
+async function getVal(k: string): Promise<string | null> {
+  return kvConfigured() ? kvGet(k) : memGet(k);
 }
 
-async function delVal(key: string): Promise<void> {
-  if (kvConfigured()) {
-    await kvDel(key);
-  } else {
-    memDel(key);
-  }
+async function delVal(k: string): Promise<void> {
+  kvConfigured() ? await kvDel(k) : memDel(k);
 }
 
-/** Create a new QR login session */
+// --- Public API ---
+
 export async function createSession(): Promise<QrSession> {
   const session: QrSession = {
     id: randomUUID(),
-    status: "pending",
-    challenge: randomBytes(32).toString("hex"),
+    step: 1,
+    challenge1: newChallenge(),
+    challenge2: null,
+    challenge3: null,
     deviceId: null,
     adminUserId: null,
     jwt: null,
     createdAt: Date.now(),
   };
-
   await setVal(sessKey(session.id), JSON.stringify(session), SESSION_TTL);
-  await setVal(tokKey(session.challenge), session.id, SESSION_TTL);
-
+  await setVal(tokKey(session.challenge1), session.id, SESSION_TTL);
   return session;
 }
 
-/** Get session by ID */
-export async function getSession(sessionId: string): Promise<QrSession | null> {
-  const raw = await getVal(sessKey(sessionId));
-  if (!raw) return null;
-  return JSON.parse(raw) as QrSession;
+export async function getSession(id: string): Promise<QrSession | null> {
+  const raw = await getVal(sessKey(id));
+  return raw ? (JSON.parse(raw) as QrSession) : null;
 }
 
-/** Update session */
-async function updateSession(session: QrSession): Promise<void> {
-  const elapsed = (Date.now() - session.createdAt) / 1000;
-  const remainingTtl = Math.max(1, Math.floor(SESSION_TTL - elapsed));
-  await setVal(sessKey(session.id), JSON.stringify(session), remainingTtl);
+async function saveSession(s: QrSession): Promise<void> {
+  const elapsed = (Date.now() - s.createdAt) / 1000;
+  const ttl = Math.max(1, Math.floor(SESSION_TTL - elapsed));
+  await setVal(sessKey(s.id), JSON.stringify(s), ttl);
 }
 
-/** Resolve challenge token to sessionId */
-export async function resolveToken(token: string): Promise<string | null> {
-  return getVal(tokKey(token));
+export async function resolveToken(tok: string): Promise<string | null> {
+  return getVal(tokKey(tok));
 }
 
-/** Delete a challenge token (single-use) */
-export async function consumeToken(token: string): Promise<void> {
-  await delVal(tokKey(token));
+export async function consumeToken(tok: string): Promise<void> {
+  await delVal(tokKey(tok));
 }
 
-/** Mark session as authenticated with JWT */
-export async function markAuthenticated(
-  session: QrSession,
-  jwt: string,
+/** Step 1 → 2: phone scanned first QR, device verified */
+export async function advanceToStep2(
+  s: QrSession,
   deviceId: string,
   adminUserId: number
-): Promise<void> {
-  session.status = "authenticated";
-  session.jwt = jwt;
-  session.deviceId = deviceId;
-  session.adminUserId = adminUserId;
-  await updateSession(session);
+): Promise<string> {
+  const c2 = newChallenge();
+  s.step = 2;
+  s.deviceId = deviceId;
+  s.adminUserId = adminUserId;
+  s.challenge2 = c2;
+  await saveSession(s);
+  await setVal(tokKey(c2), s.id, SESSION_TTL);
+  return c2;
 }
 
-/** Mark session as failed */
-export async function markFailed(session: QrSession): Promise<void> {
-  session.status = "failed";
-  await updateSession(session);
+/** Step 2 → 3: phone scanned second QR */
+export async function advanceToStep3(s: QrSession): Promise<string> {
+  const c3 = newChallenge();
+  s.step = 3;
+  s.challenge3 = c3;
+  await saveSession(s);
+  await setVal(tokKey(c3), s.id, SESSION_TTL);
+  return c3;
+}
+
+/** Step 3 → authenticated: phone scanned third QR, JWT issued */
+export async function markAuthenticated(
+  s: QrSession,
+  jwt: string
+): Promise<void> {
+  s.step = "authenticated";
+  s.jwt = jwt;
+  await saveSession(s);
+}
+
+export async function markFailed(s: QrSession): Promise<void> {
+  s.step = "failed";
+  await saveSession(s);
 }

@@ -18,7 +18,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { token?: string; deviceId?: string; label?: string };
+  let body: {
+    token?: string;
+    deviceId?: string;
+    label?: string;
+    publicKey?: string;
+  };
   try {
     body = await req.json();
   } catch {
@@ -71,7 +76,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // Register device
+  // Register device with public key
   await prisma.adminDevice.upsert({
     where: {
       adminUserId_deviceId: {
@@ -82,11 +87,13 @@ export async function POST(req: NextRequest) {
     create: {
       adminUserId: adminUser.id,
       deviceId,
+      publicKey: body.publicKey || null,
       label: label || null,
     },
     update: {
       active: true,
       lastUsedAt: new Date(),
+      publicKey: body.publicKey || undefined,
       label: label || undefined,
     },
   });

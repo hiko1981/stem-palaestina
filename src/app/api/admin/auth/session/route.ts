@@ -17,12 +17,12 @@ export async function POST(req: NextRequest) {
   }
 
   const session = await createSession();
-  const qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge}`;
+  const qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge1}`;
 
   return NextResponse.json({
     sessionId: session.id,
     qrUrl,
-    status: session.status,
+    step: session.step,
   });
 }
 
@@ -39,16 +39,20 @@ export async function GET(req: NextRequest) {
   const session = await getSession(sessionId);
   if (!session) {
     return NextResponse.json(
-      { error: "Session udløbet eller ikke fundet" },
+      { error: "Session udløbet" },
       { status: 404 }
     );
   }
 
-  const response: Record<string, unknown> = {
-    status: session.status,
-  };
+  const response: Record<string, unknown> = { step: session.step };
 
-  if (session.status === "authenticated" && session.jwt) {
+  if (session.step === 2 && session.challenge2) {
+    response.qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge2}`;
+  } else if (session.step === 3 && session.challenge3) {
+    response.qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge3}`;
+  }
+
+  if (session.step === "authenticated" && session.jwt) {
     response.jwt = session.jwt;
   }
 

@@ -6,6 +6,11 @@ import Card from "@/components/ui/Card";
 import ChevronIcon from "@/components/ui/ChevronIcon";
 import QrLoginFlow from "@/components/features/admin/QrLoginFlow";
 import AdminInviteForm from "@/components/features/admin/AdminInviteForm";
+import {
+  getDeviceId,
+  hasKeyPair,
+  signChallenge,
+} from "@/lib/admin-device-crypto";
 
 
 interface HitDay {
@@ -113,7 +118,7 @@ export default function AdminPage() {
       .catch(() => {});
   }, []);
 
-  // On mount: try JWT cookie first, then try device-login
+  // On mount: try JWT cookie, then try device challenge-response login
   useEffect(() => {
     (async () => {
       // 1. Try existing JWT cookie
@@ -138,23 +143,49 @@ export default function AdminPage() {
         return;
       }
 
-      // 2. Try device-login (registered phone)
-      const deviceId = localStorage.getItem("admin_device_id");
-      if (deviceId) {
-        setHasRegisteredDevice(true);
-        const dlRes = await fetch("/api/admin/auth/device-login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ deviceId }),
-        });
-        if (dlRes.ok) {
-          setAuthed(true);
-          await loadDashboardData();
-          setAuthChecking(false);
-          return;
+      // 2. Try device challenge-response login (registered phone with keypair)
+      try {
+        const deviceId = getDeviceId();
+        const hasKey = await hasKeyPair();
+        if (hasKey) {
+          setHasRegisteredDevice(true);
+          // Step 1: get challenge
+          const challengeRes = await fetch("/api/admin/auth/device-login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ deviceId }),
+          });
+          const challengeData = await challengeRes.json();
+
+          if (challengeData.challenge) {
+            // Step 2: sign and verify
+            const signature = await signChallenge(challengeData.challenge);
+            const verifyRes = await fetch("/api/admin/auth/device-login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                deviceId,
+                challenge: challengeData.challenge,
+                signature,
+              }),
+            });
+            if (verifyRes.ok) {
+              setAuthed(true);
+              await loadDashboardData();
+              setAuthChecking(false);
+              return;
+            }
+          } else if (challengeData.ok) {
+            // Legacy device without crypto — server issued JWT directly
+            setAuthed(true);
+            await loadDashboardData();
+            setAuthChecking(false);
+            return;
+          }
+          setHasRegisteredDevice(false);
         }
-        // Device not recognized — might have been revoked
-        setHasRegisteredDevice(false);
+      } catch {
+        // No keypair or crypto error — show QR
       }
 
       setAuthChecking(false);
@@ -169,23 +200,39 @@ export default function AdminPage() {
   async function handleDeviceLogin() {
     setLoading(true);
     setDeviceLoginError("");
-    const deviceId = localStorage.getItem("admin_device_id");
-    if (!deviceId) {
-      setDeviceLoginError("Ingen registreret enhed fundet");
-      setLoading(false);
-      return;
-    }
     try {
-      const res = await fetch("/api/admin/auth/device-login", {
+      const deviceId = getDeviceId();
+
+      // Step 1: get challenge
+      const challengeRes = await fetch("/api/admin/auth/device-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ deviceId }),
       });
-      if (!res.ok) {
-        const data = await res.json();
-        setDeviceLoginError(data.error || "Login fejlede");
+      const challengeData = await challengeRes.json();
+
+      if (challengeData.challenge) {
+        // Step 2: sign and verify
+        const signature = await signChallenge(challengeData.challenge);
+        const verifyRes = await fetch("/api/admin/auth/device-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            deviceId,
+            challenge: challengeData.challenge,
+            signature,
+          }),
+        });
+        if (!verifyRes.ok) {
+          const data = await verifyRes.json();
+          setDeviceLoginError(data.error || "Login fejlede");
+          return;
+        }
+      } else if (!challengeData.ok) {
+        setDeviceLoginError(challengeData.error || "Login fejlede");
         return;
       }
+
       setAuthed(true);
       await loadDashboardData();
     } catch {

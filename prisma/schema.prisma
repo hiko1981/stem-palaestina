@@ -138,6 +138,7 @@ model AdminDevice {
   id           Int      @id @default(autoincrement())
   adminUserId  Int      @map("admin_user_id")
   deviceId     String   @map("device_id")
+  publicKey    String?  @map("public_key")
   label        String?
   registeredAt DateTime @default(now()) @map("registered_at")
   lastUsedAt   DateTime @default(now()) @map("last_used_at")
