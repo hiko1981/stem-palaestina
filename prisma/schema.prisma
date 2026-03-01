@@ -153,6 +153,7 @@ model AdminDevice {
 model AdminInvite {
   id        Int       @id @default(autoincrement())
   token     String    @unique @default(uuid())
+  name      String?
   email     String?
   phone     String?
   invitedBy Int       @map("invited_by")

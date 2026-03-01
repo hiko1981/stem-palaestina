@@ -71,8 +71,15 @@ export async function POST(req: NextRequest) {
       data: {
         email: invite.email || `device-${deviceId.slice(0, 8)}@admin.local`,
         phone: invite.phone,
+        name: invite.name || null,
         role: "admin",
       },
+    });
+  } else if (invite.name && !adminUser.name) {
+    // Update name if it wasn't set before
+    adminUser = await prisma.adminUser.update({
+      where: { id: adminUser.id },
+      data: { name: invite.name },
     });
   }
 

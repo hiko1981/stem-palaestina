@@ -6,13 +6,13 @@ import Input from "@/components/ui/Input";
 import Card from "@/components/ui/Card";
 
 export default function AdminInviteForm() {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
     ok: boolean;
     message: string;
-    setupUrl?: string;
+    smsSent?: boolean;
   } | null>(null);
 
   async function invite() {
@@ -23,8 +23,8 @@ export default function AdminInviteForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: email || undefined,
-          phone: phone || undefined,
+          name: name.trim() || undefined,
+          phone: phone.trim() || undefined,
         }),
       });
       const data = await res.json();
@@ -35,9 +35,9 @@ export default function AdminInviteForm() {
       setResult({
         ok: true,
         message: data.message,
-        setupUrl: data.setupUrl,
+        smsSent: data.smsSent,
       });
-      setEmail("");
+      setName("");
       setPhone("");
     } catch {
       setResult({ ok: false, message: "Netværksfejl" });
@@ -51,16 +51,16 @@ export default function AdminInviteForm() {
       <h3 className="font-bold mb-4">Inviter ny admin</h3>
       <div className="space-y-3">
         <Input
-          id="invite-email"
-          label="Email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="admin@example.com"
+          id="invite-name"
+          label="Navn"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Adminens navn"
         />
         <Input
           id="invite-phone"
-          label="Telefon (valgfrit)"
+          label="Telefon (SMS)"
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -69,10 +69,10 @@ export default function AdminInviteForm() {
         <Button
           onClick={invite}
           loading={loading}
-          disabled={!email && !phone}
+          disabled={!phone.trim()}
           className="w-full"
         >
-          Send invitation
+          Send invitation via SMS
         </Button>
         {result && (
           <div
@@ -83,11 +83,6 @@ export default function AdminInviteForm() {
             }`}
           >
             <p>{result.message}</p>
-            {result.setupUrl && (
-              <p className="mt-2 font-mono text-xs break-all">
-                {result.setupUrl}
-              </p>
-            )}
           </div>
         )}
       </div>
