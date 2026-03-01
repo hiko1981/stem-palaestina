@@ -4,6 +4,18 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Card from "@/components/ui/Card";
+import ChevronIcon from "@/components/ui/ChevronIcon";
+
+interface HitDay {
+  date: string;
+  count: number;
+}
+
+interface HitStats {
+  days: HitDay[];
+  total: number;
+  today: number;
+}
 
 interface LangMissRecord {
   language: string;
@@ -43,6 +55,8 @@ export default function AdminPage() {
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
   const [supportMessages, setSupportMessages] = useState<SupportRecord[]>([]);
   const [langMisses, setLangMisses] = useState<LangMissRecord[]>([]);
+  const [hitStats, setHitStats] = useState<HitStats | null>(null);
+  const [votesOpen, setVotesOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -63,12 +77,18 @@ export default function AdminPage() {
       setCandidates(data.candidates || []);
       setSupportMessages(data.supportMessages || []);
       setAuthed(true);
-      // Fetch language misses
+      // Fetch language misses + hit stats
       fetch("/api/admin/lang-miss", {
         headers: { Authorization: `Bearer ${password}` },
       })
         .then((r) => r.json())
         .then((d) => setLangMisses(d.misses || []))
+        .catch(() => {});
+      fetch("/api/admin/hits", {
+        headers: { Authorization: `Bearer ${password}` },
+      })
+        .then((r) => r.json())
+        .then((d) => setHitStats(d))
         .catch(() => {});
     } catch {
       setError("Netværksfejl");
@@ -92,6 +112,12 @@ export default function AdminPage() {
     })
       .then((r) => r.json())
       .then((d) => setLangMisses(d.misses || []))
+      .catch(() => {});
+    fetch("/api/admin/hits", {
+      headers: { Authorization: `Bearer ${password}` },
+    })
+      .then((r) => r.json())
+      .then((d) => setHitStats(d))
       .catch(() => {});
   }
 
@@ -232,6 +258,40 @@ export default function AdminPage() {
         <p className="text-center text-sm text-melon-green font-medium">
           {message}
         </p>
+      )}
+
+      {/* Sidevisninger */}
+      {hitStats && (
+        <section>
+          <h2 className="text-xl font-bold mb-4">Sidevisninger</h2>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <Card>
+              <p className="text-xs text-gray-500">I alt</p>
+              <p className="text-2xl font-bold tabular-nums">{hitStats.total.toLocaleString("da-DK")}</p>
+            </Card>
+            <Card>
+              <p className="text-xs text-gray-500">I dag</p>
+              <p className="text-2xl font-bold tabular-nums">{hitStats.today.toLocaleString("da-DK")}</p>
+            </Card>
+          </div>
+          {hitStats.days.length > 0 && (() => {
+            const last7 = hitStats.days.slice(-7);
+            const max = Math.max(...last7.map((d) => d.count), 1);
+            return (
+              <div className="flex items-end gap-1 h-20">
+                {last7.map((d) => (
+                  <div key={d.date} className="flex-1 flex flex-col items-center gap-1">
+                    <div
+                      className="w-full bg-melon-green/70 rounded-t"
+                      style={{ height: `${(d.count / max) * 100}%`, minHeight: 2 }}
+                    />
+                    <span className="text-[10px] text-gray-400">{d.date.slice(5)}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+        </section>
       )}
 
       {/* Kandidat-ansøgninger */}
@@ -424,71 +484,80 @@ export default function AdminPage() {
         </section>
       )}
 
-      {/* Stemmer */}
+      {/* Stemmer (collapsible) */}
       <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold">Stemmer</h2>
-          <div className="flex gap-2">
-            <Button variant="secondary" onClick={deleteAll}>
+        <button
+          onClick={() => setVotesOpen(!votesOpen)}
+          className="flex w-full items-center justify-between mb-4"
+        >
+          <h2 className="text-xl font-bold">
+            Stemmer
+            <span className="ml-2 text-sm font-normal text-gray-500">
+              ({votes.length} i alt)
+            </span>
+          </h2>
+          <div className="flex items-center gap-2">
+            <Button variant="secondary" onClick={(e: React.MouseEvent) => { e.stopPropagation(); deleteAll(); }}>
               Slet alle
             </Button>
+            <ChevronIcon open={votesOpen} />
           </div>
-        </div>
+        </button>
 
-        <p className="mb-4 text-sm text-gray-500">
-          {votes.length} stemme{votes.length !== 1 ? "r" : ""} i alt
-        </p>
-
-        {votes.length === 0 ? (
-          <Card className="text-center py-12">
-            <p className="text-gray-500">Ingen stemmer endnu.</p>
-          </Card>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b text-left text-gray-500">
-                  <th className="pb-2 pr-4">ID</th>
-                  <th className="pb-2 pr-4">Phone Hash</th>
-                  <th className="pb-2 pr-4">Stemme</th>
-                  <th className="pb-2 pr-4">Tidspunkt</th>
-                  <th className="pb-2"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {votes.map((v) => (
-                  <tr key={v.id} className="border-b">
-                    <td className="py-2 pr-4 text-gray-400">{v.id}</td>
-                    <td className="py-2 pr-4 font-mono text-xs">
-                      {maskHash(v.phoneHash)}
-                    </td>
-                    <td className="py-2 pr-4">
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                          v.voteValue
-                            ? "bg-melon-green/10 text-melon-green"
-                            : "bg-melon-red/10 text-melon-red"
-                        }`}
-                      >
-                        {v.voteValue ? "Ja" : "Nej"}
-                      </span>
-                    </td>
-                    <td className="py-2 pr-4 text-gray-500">
-                      {new Date(v.votedAt).toLocaleString("da-DK")}
-                    </td>
-                    <td className="py-2">
-                      <button
-                        onClick={() => deleteVote(v.phoneHash)}
-                        className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
-                      >
-                        Slet
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {votesOpen && (
+          <>
+            {votes.length === 0 ? (
+              <Card className="text-center py-12">
+                <p className="text-gray-500">Ingen stemmer endnu.</p>
+              </Card>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b text-left text-gray-500">
+                      <th className="pb-2 pr-4">ID</th>
+                      <th className="pb-2 pr-4">Phone Hash</th>
+                      <th className="pb-2 pr-4">Stemme</th>
+                      <th className="pb-2 pr-4">Tidspunkt</th>
+                      <th className="pb-2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {votes.map((v) => (
+                      <tr key={v.id} className="border-b">
+                        <td className="py-2 pr-4 text-gray-400">{v.id}</td>
+                        <td className="py-2 pr-4 font-mono text-xs">
+                          {maskHash(v.phoneHash)}
+                        </td>
+                        <td className="py-2 pr-4">
+                          <span
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                              v.voteValue
+                                ? "bg-melon-green/10 text-melon-green"
+                                : "bg-melon-red/10 text-melon-red"
+                            }`}
+                          >
+                            {v.voteValue ? "Ja" : "Nej"}
+                          </span>
+                        </td>
+                        <td className="py-2 pr-4 text-gray-500">
+                          {new Date(v.votedAt).toLocaleString("da-DK")}
+                        </td>
+                        <td className="py-2">
+                          <button
+                            onClick={() => deleteVote(v.phoneHash)}
+                            className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
+                          >
+                            Slet
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
         )}
       </section>
     </div>

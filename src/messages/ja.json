@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100%匿名。個人データは一切保存されません。"
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "",
     "heroHighlight": "パレスチナ",
     "heroSubtitle": "行動を求めよう。匿名・安全、1分以内で完了。",
-    "cta": "投票する",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "3つの行動要求",
     "anonTitle": "100%匿名",
     "anonText": "あなたの電話番号は一方向ハッシュで暗号化されます。誰が投票したかは誰にもわかりません。",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "詳しく見る",
     "yourVote": "あなたの投票",
     "yourVoteYes": "はい、3つの要求に賛成",

@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "১০০% বেনামী। কোনো ব্যক্তিগত তথ্য সংরক্ষণ করা হয় না।"
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "ভোট দিন",
     "heroHighlight": "ফিলিস্তিন",
     "heroSubtitle": "পদক্ষেপের দাবি করুন। বেনামী, সুরক্ষিত এবং এক মিনিটেরও কম সময়ে।",
-    "cta": "আপনার ভোট দিন",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "পদক্ষেপের জন্য তিনটি দাবি",
     "anonTitle": "১০০% বেনামী",
     "anonText": "আপনার ফোন নম্বর ওয়ান-ওয়ে হ্যাশিং দিয়ে এনক্রিপ্ট করা হয়। কে ভোট দিয়েছে কেউ দেখতে পারবে না।",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "আরও পড়ুন",
     "yourVote": "আপনি ভোট দিয়েছেন",
     "yourVoteYes": "হ্যাঁ, তিনটি দাবির জন্য",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import CountryCodeSelect from "@/components/features/CountryCodeSelect";
@@ -14,6 +14,8 @@ import BottomTabBar, { type TabKey } from "@/components/layout/BottomTabBar";
 import { getDeviceId, setDeviceVoted, getDeviceVoted } from "@/lib/device-cookie";
 import ResultsView from "@/components/features/ResultsView";
 import PublicVoteBar from "@/components/features/PublicVoteBar";
+import FT2026Countdown from "@/components/features/FT2026Countdown";
+import ChevronIcon from "@/components/ui/ChevronIcon";
 import { useTranslations, useLocale } from "next-intl";
 
 type ActivePanel = "voter" | "candidate" | "invite" | null;
@@ -91,20 +93,6 @@ function AboutContent() {
   );
 }
 
-function ChevronIcon({ open }: { open: boolean }) {
-  return (
-    <svg
-      className={`h-4 w-4 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-}
-
 export default function Home() {
   const [hasVoted, setHasVoted] = useState(false);
   const [votedYes, setVotedYes] = useState(true);
@@ -118,6 +106,9 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabKey>("vote");
   const [mapStorkreds, setMapStorkreds] = useState("");
   const [notification, setNotification] = useState("");
+  const [candidateCount, setCandidateCount] = useState<number | null>(null);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+  const voterPanelRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
   const t = useTranslations("vote");
@@ -184,6 +175,17 @@ export default function Home() {
           .catch(() => {});
       }
     }
+  }, []);
+
+  // Hit tracking + candidate count (fire-and-forget)
+  useEffect(() => {
+    fetch("/api/hit", { method: "POST" }).catch(() => {});
+    fetch("/api/votes/count")
+      .then((r) => r.json())
+      .then((d) => {
+        if (typeof d.candidateCount === "number") setCandidateCount(d.candidateCount);
+      })
+      .catch(() => {});
   }, []);
 
   const handleDialCode = useCallback((code: string) => {
@@ -381,8 +383,8 @@ export default function Home() {
       <div className="mx-auto max-w-xl px-4 pt-6 pb-24">
         {activeTab === "vote" && (
           <>
-            {/* Compact hero */}
-            <div className="text-center mb-3">
+            {/* 1. Compact hero */}
+            <div className="text-center mb-2">
               <p className="text-3xl mb-1" role="img" aria-label="vandmelon">&#127817;</p>
               <h1 className="text-xl font-extrabold tracking-tight">
                 {h("heroTitle")}{" "}
@@ -390,12 +392,80 @@ export default function Home() {
               </h1>
             </div>
 
-            {/* Purpose description */}
-            <p className="text-center text-sm text-gray-500 mb-4 leading-relaxed">
-              {h("intro")}
+            {/* 2. Tagline */}
+            <p className="text-center text-sm text-gray-500 mb-4">
+              {h("tagline")}
             </p>
 
-            {/* 3 demands — compact numbered list */}
+            {/* 3. Results bar (hero variant) */}
+            <div className="mb-4">
+              <PublicVoteBar variant="hero" />
+            </div>
+
+            {/* 4. Social proof row */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="rounded-lg bg-gray-50 px-3 py-2.5 text-center">
+                <FT2026Countdown />
+              </div>
+              <div className="rounded-lg bg-gray-50 px-3 py-2.5 text-center">
+                {candidateCount !== null && candidateCount > 0 ? (
+                  <p className="text-sm text-gray-600">
+                    {h("candidateCount", { count: candidateCount })}
+                  </p>
+                ) : (
+                  <p className="text-sm text-gray-400">&nbsp;</p>
+                )}
+              </div>
+            </div>
+
+            {/* 5. CTA button */}
+            <button
+              onClick={() => {
+                setActivePanel("voter");
+                setTimeout(() => {
+                  voterPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }, 100);
+              }}
+              className="w-full rounded-xl bg-melon-green py-3.5 text-base font-bold text-white shadow-sm hover:bg-melon-green/90 transition-colors mb-4"
+            >
+              {h("cta")}
+            </button>
+
+            {/* 6. Privacy fold-out */}
+            <div className="mb-4">
+              <button
+                onClick={() => setPrivacyOpen(!privacyOpen)}
+                className="flex w-full items-center justify-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                {h("privacyToggle")}
+                <svg
+                  className={`h-3 w-3 transition-transform ${privacyOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {privacyOpen && (
+                <div className="mt-2 rounded-lg bg-gray-50 px-3 py-3 text-xs text-gray-600 space-y-2 animate-in slide-in-from-top-2">
+                  <div className="flex items-start gap-2">
+                    <span className="mt-0.5 shrink-0 text-melon-green">&#128274;</span>
+                    <p>{h("privacyVote")}</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="mt-0.5 shrink-0 text-melon-green">&#128233;</span>
+                    <p>{h("privacyInvite")}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 7. 3 demands — compact numbered list */}
             <ul className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
               <li className="flex items-start gap-2">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">1</span>
@@ -411,8 +481,8 @@ export default function Home() {
               </li>
             </ul>
 
-            {/* ── Accordion panels ── */}
-            <div className="space-y-2 mb-4">
+            {/* 7. Accordion panels */}
+            <div ref={voterPanelRef} className="space-y-2 mb-4">
               {/* Panel 1: Jeg er vælger */}
               <div className={`rounded-lg border overflow-hidden transition-colors ${activePanel === "voter" ? "border-melon-green" : "border-gray-200"}`}>
                 <button
@@ -470,8 +540,6 @@ export default function Home() {
                 )}
               </div>
             </div>
-
-            {/* Privacy note moved under each phone input */}
           </>
         )}
 

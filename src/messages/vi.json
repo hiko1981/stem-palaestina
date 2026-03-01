@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100% ẩn danh. Không lưu trữ dữ liệu cá nhân."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "Bỏ phiếu",
     "heroHighlight": "Palestine",
     "heroSubtitle": "Yêu cầu hành động. Ẩn danh, an toàn, chỉ trong một phút.",
-    "cta": "Bỏ phiếu ngay",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "Ba yêu cầu hành động",
     "anonTitle": "100% ẩn danh",
     "anonText": "Số điện thoại của bạn được mã hóa bằng hàm băm một chiều. Không ai có thể biết ai đã bỏ phiếu.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "Tìm hiểu thêm",
     "yourVote": "Bạn đã bỏ phiếu",
     "yourVoteYes": "Có, cho ba yêu cầu",

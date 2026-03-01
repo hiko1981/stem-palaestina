@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "Tamamen anonim. Hiçbir kişisel veri saklanmaz."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "",
     "heroHighlight": "Filistin'e oy ver",
     "heroSubtitle": "Harekete geç. Anonim, güvenli ve bir dakikadan kısa sürede.",
-    "cta": "Oyunu kullan",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "Üç eylem talebi",
     "anonTitle": "Tamamen anonim",
     "anonText": "Telefon numaran tek yönlü şifreleme ile korunur. Kimin oy verdiğini kimse göremez.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "Daha fazla oku",
     "yourVote": "Oy verdiniz",
     "yourVoteYes": "Evet, üç talep için",

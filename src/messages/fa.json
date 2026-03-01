@@ -13,16 +13,26 @@
   "footer": {
     "anonymous": "۱۰۰٪ ناشناس. هیچ اطلاعات شخصی ذخیره نمی‌شود."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "رأی",
     "heroHighlight": "فلسطین",
     "heroSubtitle": "خواستار اقدام شوید. ناشناس، امن و در کمتر از یک دقیقه.",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
     "intro": "در اینجا رأی‌دهندگان می‌توانند نظر خود را به سیاستمداران نشان دهند — و نامزدها می‌توانند موضع خود را به رأی‌دهندگان اعلام کنند. آیا موضع نامزد خود را نمی‌بینید؟ از او بخواهید که اینجا اعلام نظر کند.",
     "voteOnPhoneHint": "هنگام باز کردن لینک روی تلفن همراه، بله/خیر را انتخاب می‌کنید.",
-    "cta": "رأی خود را ثبت کنید",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "سه خواسته برای اقدام",
     "anonTitle": "۱۰۰٪ ناشناس",
     "anonText": "شماره تلفن شما با رمزنگاری یک‌طرفه رمزگذاری می‌شود. هیچ‌کس نمی‌تواند ببیند چه کسی رأی داده است.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "بیشتر بخوانید",
     "yourVote": "شما رأی دادید",
     "yourVoteYes": "بله، به سه خواسته",

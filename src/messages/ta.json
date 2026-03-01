@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100% அநாமதேயம். தனிப்பட்ட தரவு எதுவும் சேமிக்கப்படவில்லை."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "வாக்களியுங்கள்",
     "heroHighlight": "பாலஸ்தீனம்",
     "heroSubtitle": "நடவடிக்கையைக் கோருங்கள். அநாமதேயமாக, பாதுகாப்பாக, ஒரு நிமிடத்திற்குள்.",
-    "cta": "உங்கள் வாக்கைப் பதிவு செய்யுங்கள்",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "நடவடிக்கைக்கான மூன்று கோரிக்கைகள்",
     "anonTitle": "100% அநாமதேயம்",
     "anonText": "உங்கள் தொலைபேசி எண் ஒருவழி ஹாஷிங் மூலம் மறைகுறியாக்கப்பட்டுள்ளது. யார் வாக்களித்தார்கள் என்பதை யாரும் பார்க்க முடியாது.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "மேலும் படிக்கவும்",
     "yourVote": "நீங்கள் வாக்களித்தீர்கள்",
     "yourVoteYes": "ஆம், மூன்று கோரிக்கைகளுக்கு",

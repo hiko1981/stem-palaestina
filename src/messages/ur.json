@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "‏100% گمنام۔ کوئی ذاتی ڈیٹا محفوظ نہیں کیا جاتا۔"
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "ووٹ کریں",
     "heroHighlight": "فلسطین",
     "heroSubtitle": "کارروائی کا مطالبہ کریں۔ گمنام، محفوظ، اور ایک منٹ سے بھی کم میں۔",
-    "cta": "اپنا ووٹ ڈالیں",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "کارروائی کے لیے تین مطالبات",
     "anonTitle": "‏100% گمنام",
     "anonText": "آپ کا فون نمبر ون وے ہیشنگ سے انکرپٹ کیا جاتا ہے۔ کوئی نہیں دیکھ سکتا کہ کس نے ووٹ دیا۔",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "مزید پڑھیں",
     "yourVote": "آپ نے ووٹ دیا",
     "yourVoteYes": "ہاں، تین مطالبات کے لیے",

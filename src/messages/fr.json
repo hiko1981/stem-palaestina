@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100 % anonyme. Aucune donnée personnelle n'est stockée."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "Votez",
     "heroHighlight": "Palestine",
     "heroSubtitle": "Exigez des actes. Anonyme, sécurisé, en moins d'une minute.",
-    "cta": "Votez maintenant",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "Trois exigences d'action",
     "anonTitle": "100 % anonyme",
     "anonText": "Votre numéro de téléphone est chiffré par hachage irréversible. Personne ne peut savoir qui a voté.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "En savoir plus",
     "yourVote": "Vous avez voté",
     "yourVoteYes": "Oui, pour les trois revendications",

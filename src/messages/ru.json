@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100% анонимно. Личные данные не сохраняются."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "Голосуй",
     "heroHighlight": "Палестина",
     "heroSubtitle": "Требуй действий. Анонимно, безопасно и меньше чем за минуту.",
-    "cta": "Отдать свой голос",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "Три требования к действию",
     "anonTitle": "100% анонимно",
     "anonText": "Ваш номер телефона зашифрован с помощью одностороннего хеширования. Никто не может увидеть, кто голосовал.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "Подробнее",
     "yourVote": "Вы проголосовали",
     "yourVoteYes": "Да, за три требования",

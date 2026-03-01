@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100%匿名。不存储任何个人数据。"
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "投票",
     "heroHighlight": "巴勒斯坦",
     "heroSubtitle": "要求行动。匿名、安全，一分钟内完成。",
-    "cta": "投出您的一票",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "三项行动诉求",
     "anonTitle": "100%匿名",
     "anonText": "您的手机号码通过单向哈希加密。没有人能看到谁投了票。",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "了解更多",
     "yourVote": "你投了",
     "yourVoteYes": "是，支持三项要求",

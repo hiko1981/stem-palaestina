@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100% गुमनाम। कोई व्यक्तिगत डेटा संग्रहीत नहीं किया जाता।"
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "वोट करें",
     "heroHighlight": "फ़िलिस्तीन",
     "heroSubtitle": "कार्रवाई की माँग करें। गुमनाम, सुरक्षित, और एक मिनट से भी कम में।",
-    "cta": "अपना वोट डालें",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "कार्रवाई के लिए तीन माँगें",
     "anonTitle": "100% गुमनाम",
     "anonText": "आपका फ़ोन नंबर वन-वे हैशिंग से एन्क्रिप्ट किया जाता है। कोई नहीं देख सकता कि किसने वोट किया।",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "और पढ़ें",
     "yourVote": "आपने वोट दिया",
     "yourVoteYes": "हाँ, तीन मांगों के लिए",

@@ -13,16 +13,26 @@
   "footer": {
     "anonymous": "100% anonym. Ingen persondata gemmes."
   },
+  "countdown": {
+    "daysUntil": "dage til seneste valgdato",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "Stem",
     "heroHighlight": "Palæstina",
   "heroSubtitle": "Kræv handling. Anonymt, sikkert og på under ét minut.",
+  "tagline": "Vis politikerne hvad du mener — anonymt og på under ét minut",
   "intro": "Her kan vælgere vise politikerne, hvad de mener — og kandidater kan vise vælgerne, hvor de står. Kan du ikke se din kandidats holdning? Bed dem tage stilling herinde.",
   "voteOnPhoneHint": "Du vælger Ja/Nej når du åbner linket på din mobil.",
-  "cta": "Afgiv din stemme",
+  "cta": "Tag stilling nu",
+  "candidateCount": "{count} kandidater har taget stilling",
+  "resultsPending": "Indsamlingen er i gang...",
   "demandsHeading": "Tre krav til handling",
     "anonTitle": "100% anonymt",
     "anonText": "Dit telefonnummer krypteres med envejs-hashing. Ingen kan se, hvem der har stemt.",
+    "privacyToggle": "Hvordan beskyttes din anonymitet?",
+    "privacyVote": "Dit telefonnummer krypteres med en envejs-algoritme (SHA-256) og kan ikke genskabes. Vi gemmer ingen IP-adresser eller persondata.",
+    "privacyInvite": "Invitationer sendes direkte fra vores server — modtageren kan ikke se, hvem der har sendt den.",
     "readMore": "Læs mere",
     "yourVote": "Du stemte",
     "yourVoteYes": "Ja, for de tre krav",

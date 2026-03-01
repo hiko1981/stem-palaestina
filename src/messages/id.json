@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100% anonim. Tidak ada data pribadi yang disimpan."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "Suarakan",
     "heroHighlight": "Palestina",
     "heroSubtitle": "Tuntut tindakan. Anonim, aman, dan kurang dari satu menit.",
-    "cta": "Berikan suaramu",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "Tiga tuntutan untuk bertindak",
     "anonTitle": "100% anonim",
     "anonText": "Nomor teleponmu dienkripsi dengan hashing satu arah. Tidak ada yang bisa melihat siapa yang memberikan suara.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "Baca selengkapnya",
     "yourVote": "Anda memilih",
     "yourVoteYes": "Ya, untuk tiga tuntutan",

@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "100% siri. Hakuna data binafsi inayohifadhiwa."
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "Pigia kura",
     "heroHighlight": "Palestina",
     "heroSubtitle": "Dai hatua. Kwa siri, kwa usalama, na chini ya dakika moja.",
-    "cta": "Pigia kura yako",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "Madai matatu ya hatua",
     "anonTitle": "100% siri",
     "anonText": "Nambari yako ya simu imefichwa kwa hashing ya njia moja. Hakuna mtu anayeweza kuona ni nani aliyepigia kura.",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "Soma zaidi",
     "yourVote": "Ulipiga kura",
     "yourVoteYes": "Ndiyo, kwa madai matatu",

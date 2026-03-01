@@ -13,14 +13,24 @@
   "footer": {
     "anonymous": "ไม่ระบุตัวตน 100% ไม่มีการจัดเก็บข้อมูลส่วนบุคคล"
   },
+  "countdown": {
+    "daysUntil": "days until latest election date",
+    "ft2026": "FT2026"
+  },
   "home": {
     "heroTitle": "โหวต",
     "heroHighlight": "ปาเลสไตน์",
     "heroSubtitle": "เรียกร้องการดำเนินการ ไม่ระบุตัวตน ปลอดภัย ใช้เวลาไม่ถึงหนึ่งนาที",
-    "cta": "ลงคะแนนเสียง",
+    "tagline": "Show the politicians what you think — anonymously and in under one minute",
+    "cta": "Take a stand now",
+    "candidateCount": "{count} candidates have taken a stand",
+    "resultsPending": "Collection is underway...",
     "demandsHeading": "ข้อเรียกร้องสามประการ",
     "anonTitle": "ไม่ระบุตัวตน 100%",
     "anonText": "หมายเลขโทรศัพท์ของคุณถูกเข้ารหัสด้วยการแฮชทางเดียว ไม่มีใครสามารถเห็นว่าใครเป็นผู้โหวต",
+    "privacyToggle": "How is your anonymity protected?",
+    "privacyVote": "Your phone number is encrypted with a one-way algorithm (SHA-256) and cannot be reconstructed. We store no IP addresses or personal data.",
+    "privacyInvite": "Invitations are sent directly from our server — the recipient cannot see who sent it.",
     "readMore": "อ่านเพิ่มเติม",
     "yourVote": "คุณโหวตแล้ว",
     "yourVoteYes": "ใช่ สำหรับข้อเรียกร้องสามข้อ",

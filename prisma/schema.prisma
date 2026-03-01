@@ -106,3 +106,13 @@ model SupportMessage {
 
   @@map("support_messages")
 }
+
+model PageView {
+  id    Int      @id @default(autoincrement())
+  page  String   @default("/")
+  date  DateTime @db.Date
+  count Int      @default(1)
+
+  @@unique([page, date], name: "page_date")
+  @@map("page_views")
+}
