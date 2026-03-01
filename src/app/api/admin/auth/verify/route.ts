@@ -6,16 +6,14 @@ import {
   resolveToken,
   consumeToken,
   getSession,
-  advanceToStep2,
-  advanceToStep3,
   markAuthenticated,
   markFailed,
 } from "@/lib/admin-session";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-/** POST: phone sends {token, deviceId} to verify a QR step */
+/**
+ * POST: Phone scans QR → sends {token, deviceId}.
+ * Single step: if device is registered → JWT issued → session authenticated.
+ */
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") || "unknown";
   const rl = await checkRateLimit("admin-verify", ip, 30, 60_000);
@@ -50,116 +48,48 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Consume token (single-use)
   await consumeToken(token);
 
   const session = await getSession(sessionId);
-  if (!session) {
+  if (!session || session.status !== "pending") {
     return NextResponse.json(
-      { error: "Session udløbet" },
+      { error: "Session udløbet eller allerede brugt" },
       { status: 400 }
     );
   }
 
-  // Step 1: device scans first QR
-  if (session.step === 1 && token === session.challenge1) {
-    // Look up device in database
-    const device = await prisma.adminDevice.findFirst({
-      where: { deviceId, active: true },
-      include: { admin: true },
-    });
+  // Look up device
+  const device = await prisma.adminDevice.findFirst({
+    where: { deviceId, active: true },
+    include: { admin: true },
+  });
 
-    if (!device || !device.admin.active) {
-      await markFailed(session);
-      return NextResponse.json(
-        { error: "Enhed ikke genkendt. Registrer den først." },
-        { status: 403 }
-      );
-    }
-
-    // Advance to step 2
-    const challenge2 = await advanceToStep2(
-      session,
-      deviceId,
-      device.adminUserId
+  if (!device || !device.admin.active) {
+    await markFailed(session);
+    return NextResponse.json(
+      { error: "Enhed ikke genkendt. Registrer den først." },
+      { status: 403 }
     );
-
-    // Update last used
-    await prisma.adminDevice.update({
-      where: { id: device.id },
-      data: { lastUsedAt: new Date() },
-    });
-
-    return NextResponse.json({
-      ok: true,
-      step: 2,
-      message: "Trin 1 godkendt. Scan QR #2 fra computerskærmen.",
-      nextQrUrl: `${BASE_URL}/admin/verify?token=${challenge2}`,
-    });
   }
 
-  // Step 2: device scans second QR
-  if (session.step === 2 && token === session.challenge2) {
-    // Verify same device
-    if (session.deviceId !== deviceId) {
-      await markFailed(session);
-      return NextResponse.json(
-        { error: "Forkert enhed. Brug samme telefon." },
-        { status: 403 }
-      );
-    }
+  // Generate JWT
+  const jwt = await generateJwt({
+    sub: String(device.admin.id),
+    email: device.admin.email,
+    role: device.admin.role,
+    deviceId,
+  });
 
-    const challenge3 = await advanceToStep3(session);
+  await markAuthenticated(session, jwt, deviceId, device.adminUserId);
 
-    return NextResponse.json({
-      ok: true,
-      step: 3,
-      message: "Trin 2 godkendt. Scan QR #3 fra computerskærmen.",
-      nextQrUrl: `${BASE_URL}/admin/verify?token=${challenge3}`,
-    });
-  }
+  // Update last used
+  await prisma.adminDevice.update({
+    where: { id: device.id },
+    data: { lastUsedAt: new Date() },
+  });
 
-  // Step 3: device scans third QR → generate JWT
-  if (session.step === 3 && token === session.challenge3) {
-    if (session.deviceId !== deviceId) {
-      await markFailed(session);
-      return NextResponse.json(
-        { error: "Forkert enhed. Brug samme telefon." },
-        { status: 403 }
-      );
-    }
-
-    // Fetch admin user
-    const admin = await prisma.adminUser.findUnique({
-      where: { id: session.adminUserId! },
-    });
-
-    if (!admin || !admin.active) {
-      await markFailed(session);
-      return NextResponse.json(
-        { error: "Admin-bruger deaktiveret" },
-        { status: 403 }
-      );
-    }
-
-    const jwt = await generateJwt({
-      sub: String(admin.id),
-      email: admin.email,
-      role: admin.role,
-      deviceId,
-    });
-
-    await markAuthenticated(session, jwt);
-
-    return NextResponse.json({
-      ok: true,
-      step: "authenticated",
-      message: "Login godkendt! Computeren logger ind nu.",
-    });
-  }
-
-  return NextResponse.json(
-    { error: "Ugyldigt trin eller token" },
-    { status: 400 }
-  );
+  return NextResponse.json({
+    ok: true,
+    message: "Login godkendt! Computeren logger ind nu.",
+  });
 }

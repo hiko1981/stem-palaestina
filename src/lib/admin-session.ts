@@ -7,12 +7,10 @@ const SESSION_TTL = 300; // 5 minutes
 
 export interface QrSession {
   id: string;
-  step: 1 | 2 | 3 | "authenticated" | "failed";
+  status: "pending" | "authenticated" | "failed";
+  challenge: string;
   deviceId: string | null;
   adminUserId: number | null;
-  challenge1: string;
-  challenge2: string | null;
-  challenge3: string | null;
   jwt: string | null;
   createdAt: number;
 }
@@ -29,15 +27,7 @@ function tokKey(token: string): string {
   return `qr:tok:${token}`;
 }
 
-function generateChallenge(): string {
-  return randomBytes(32).toString("hex");
-}
-
-async function kvSet(
-  key: string,
-  value: string,
-  ttl: number
-): Promise<void> {
+async function kvSet(key: string, value: string, ttl: number): Promise<void> {
   await fetch(`${KV_URL}/pipeline`, {
     method: "POST",
     headers: {
@@ -112,47 +102,40 @@ async function delVal(key: string): Promise<void> {
   }
 }
 
-/** Create a new QR login session. Returns session with challenge1. */
+/** Create a new QR login session */
 export async function createSession(): Promise<QrSession> {
   const session: QrSession = {
     id: randomUUID(),
-    step: 1,
+    status: "pending",
+    challenge: randomBytes(32).toString("hex"),
     deviceId: null,
     adminUserId: null,
-    challenge1: generateChallenge(),
-    challenge2: null,
-    challenge3: null,
     jwt: null,
     createdAt: Date.now(),
   };
 
   await setVal(sessKey(session.id), JSON.stringify(session), SESSION_TTL);
-  // Map challenge1 token → sessionId
-  await setVal(tokKey(session.challenge1), session.id, SESSION_TTL);
+  await setVal(tokKey(session.challenge), session.id, SESSION_TTL);
 
   return session;
 }
 
 /** Get session by ID */
-export async function getSession(
-  sessionId: string
-): Promise<QrSession | null> {
+export async function getSession(sessionId: string): Promise<QrSession | null> {
   const raw = await getVal(sessKey(sessionId));
   if (!raw) return null;
   return JSON.parse(raw) as QrSession;
 }
 
 /** Update session */
-export async function updateSession(session: QrSession): Promise<void> {
+async function updateSession(session: QrSession): Promise<void> {
   const elapsed = (Date.now() - session.createdAt) / 1000;
   const remainingTtl = Math.max(1, Math.floor(SESSION_TTL - elapsed));
   await setVal(sessKey(session.id), JSON.stringify(session), remainingTtl);
 }
 
 /** Resolve challenge token to sessionId */
-export async function resolveToken(
-  token: string
-): Promise<string | null> {
+export async function resolveToken(token: string): Promise<string | null> {
   return getVal(tokKey(token));
 }
 
@@ -161,44 +144,22 @@ export async function consumeToken(token: string): Promise<void> {
   await delVal(tokKey(token));
 }
 
-/** Advance session to step 2: generate challenge2 */
-export async function advanceToStep2(
-  session: QrSession,
-  deviceId: string,
-  adminUserId: number
-): Promise<string> {
-  const challenge2 = generateChallenge();
-  session.step = 2;
-  session.deviceId = deviceId;
-  session.adminUserId = adminUserId;
-  session.challenge2 = challenge2;
-  await updateSession(session);
-  await setVal(tokKey(challenge2), session.id, SESSION_TTL);
-  return challenge2;
-}
-
-/** Advance session to step 3: generate challenge3 */
-export async function advanceToStep3(session: QrSession): Promise<string> {
-  const challenge3 = generateChallenge();
-  session.step = 3;
-  session.challenge3 = challenge3;
-  await updateSession(session);
-  await setVal(tokKey(challenge3), session.id, SESSION_TTL);
-  return challenge3;
-}
-
 /** Mark session as authenticated with JWT */
 export async function markAuthenticated(
   session: QrSession,
-  jwt: string
+  jwt: string,
+  deviceId: string,
+  adminUserId: number
 ): Promise<void> {
-  session.step = "authenticated";
+  session.status = "authenticated";
   session.jwt = jwt;
+  session.deviceId = deviceId;
+  session.adminUserId = adminUserId;
   await updateSession(session);
 }
 
 /** Mark session as failed */
 export async function markFailed(session: QrSession): Promise<void> {
-  session.step = "failed";
+  session.status = "failed";
   await updateSession(session);
 }

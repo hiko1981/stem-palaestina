@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
 
 function getDeviceId(): string {
   const key = "admin_device_id";
@@ -19,7 +18,6 @@ export default function VerifyPage() {
     "loading" | "verifying" | "success" | "error" | "no-token"
   >("loading");
   const [message, setMessage] = useState("");
-  const [nextQrUrl, setNextQrUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -46,9 +44,6 @@ export default function VerifyPage() {
         }
         setStatus("success");
         setMessage(data.message || "Godkendt!");
-        if (data.nextQrUrl) {
-          setNextQrUrl(data.nextQrUrl);
-        }
       })
       .catch(() => {
         setStatus("error");
@@ -59,7 +54,7 @@ export default function VerifyPage() {
   return (
     <div className="mx-auto max-w-sm px-4 py-16">
       <h1 className="mb-8 text-center text-2xl font-bold">
-        Admin Verifikation
+        Admin Login
       </h1>
       <Card>
         <div className="space-y-4 text-center py-4">
@@ -92,11 +87,9 @@ export default function VerifyPage() {
                 </svg>
               </div>
               <p className="text-sm font-medium text-melon-green">{message}</p>
-              {nextQrUrl && (
-                <p className="text-xs text-gray-400">
-                  Gå tilbage til computerskærmen og scan den næste QR-kode.
-                </p>
-              )}
+              <p className="text-xs text-gray-400">
+                Du kan lukke dette vindue.
+              </p>
             </>
           )}
 
@@ -118,13 +111,6 @@ export default function VerifyPage() {
                 </svg>
               </div>
               <p className="text-sm text-melon-red">{message}</p>
-              <Button
-                variant="outline"
-                onClick={() => window.close()}
-                className="mt-2"
-              >
-                Luk
-              </Button>
             </>
           )}
 

@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { prisma } from "@/lib/prisma";
+import { generateJwt } from "@/lib/admin-auth";
 
 /**
- * POST: Register a device using a magic link token.
+ * POST: Register a device using an invite token.
+ * Registers device + issues JWT cookie → user is immediately logged in.
  * Body: { token: string, deviceId: string, label?: string }
  */
 export async function POST(req: NextRequest) {
@@ -34,14 +36,10 @@ export async function POST(req: NextRequest) {
   // Find invite
   const invite = await prisma.adminInvite.findUnique({
     where: { token },
-    include: { inviter: true },
   });
 
   if (!invite) {
-    return NextResponse.json(
-      { error: "Ugyldigt link" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Ugyldigt link" }, { status: 400 });
   }
 
   if (invite.usedAt) {
@@ -52,13 +50,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (new Date() > invite.expiresAt) {
-    return NextResponse.json(
-      { error: "Link er udløbet" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Link er udløbet" }, { status: 400 });
   }
 
-  // Find or create admin user for the invitee
+  // Find or create admin user
   let adminUser;
   if (invite.email) {
     adminUser = await prisma.adminUser.findUnique({
@@ -67,7 +62,6 @@ export async function POST(req: NextRequest) {
   }
 
   if (!adminUser) {
-    // Create new admin from invite
     adminUser = await prisma.adminUser.create({
       data: {
         email: invite.email || `device-${deviceId.slice(0, 8)}@admin.local`,
@@ -103,9 +97,25 @@ export async function POST(req: NextRequest) {
     data: { usedAt: new Date() },
   });
 
-  return NextResponse.json({
-    ok: true,
-    message: "Enhed registreret! Du kan nu bruge QR-login på computeren.",
-    adminEmail: adminUser.email,
+  // Issue JWT and set cookie → logged in immediately
+  const jwt = await generateJwt({
+    sub: String(adminUser.id),
+    email: adminUser.email,
+    role: adminUser.role,
+    deviceId,
   });
+
+  const response = NextResponse.json({
+    ok: true,
+    message: "Enhed registreret!",
+  });
+  response.cookies.set("admin_token", jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 24 * 60 * 60,
+    path: "/",
+  });
+
+  return response;
 }

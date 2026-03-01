@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
-import {
-  createSession,
-  getSession,
-} from "@/lib/admin-session";
+import { createSession, getSession } from "@/lib/admin-session";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -20,13 +17,12 @@ export async function POST(req: NextRequest) {
   }
 
   const session = await createSession();
-
-  const qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge1}`;
+  const qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge}`;
 
   return NextResponse.json({
     sessionId: session.id,
     qrUrl,
-    step: session.step,
+    status: session.status,
   });
 }
 
@@ -49,17 +45,10 @@ export async function GET(req: NextRequest) {
   }
 
   const response: Record<string, unknown> = {
-    step: session.step,
+    status: session.status,
   };
 
-  // Provide QR URL for current step
-  if (session.step === 2 && session.challenge2) {
-    response.qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge2}`;
-  } else if (session.step === 3 && session.challenge3) {
-    response.qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge3}`;
-  }
-
-  if (session.step === "authenticated" && session.jwt) {
+  if (session.status === "authenticated" && session.jwt) {
     response.jwt = session.jwt;
   }
 

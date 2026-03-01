@@ -31,7 +31,6 @@ export default function SetupPage() {
     setStatus("registering");
     const deviceId = getDeviceId();
 
-    // Detect device label
     const ua = navigator.userAgent;
     let label = "Ukendt enhed";
     if (/iPhone/.test(ua)) label = "iPhone";
@@ -53,9 +52,7 @@ export default function SetupPage() {
           return;
         }
         setStatus("success");
-        setMessage(
-          data.message || "Enhed registreret!"
-        );
+        setMessage("Enhed registreret! Du er nu logget ind.");
       })
       .catch(() => {
         setStatus("error");
@@ -66,7 +63,7 @@ export default function SetupPage() {
   return (
     <div className="mx-auto max-w-sm px-4 py-16">
       <h1 className="mb-8 text-center text-2xl font-bold">
-        Registrer Admin-enhed
+        Admin-adgang
       </h1>
       <Card>
         <div className="space-y-4 text-center py-4">
@@ -101,9 +98,12 @@ export default function SetupPage() {
                 </svg>
               </div>
               <p className="text-sm font-medium text-melon-green">{message}</p>
-              <p className="text-xs text-gray-400">
-                Du kan nu gå til computeren og logge ind med QR-koden.
-              </p>
+              <Button
+                onClick={() => (window.location.href = "/admin")}
+                className="w-full mt-2"
+              >
+                Gå til admin
+              </Button>
             </>
           )}
 
@@ -130,18 +130,9 @@ export default function SetupPage() {
 
           {status === "no-token" && (
             <p className="text-sm text-gray-500">
-              Ugyldigt link. Bed en administrator om at sende et nyt
-              invitationslink.
+              Ugyldigt link. Bed en administrator om et nyt invitationslink.
             </p>
           )}
-
-          <Button
-            variant="outline"
-            onClick={() => (window.location.href = "/admin")}
-            className="mt-4"
-          >
-            Gå til admin
-          </Button>
         </div>
       </Card>
     </div>
