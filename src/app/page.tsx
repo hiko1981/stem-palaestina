@@ -108,6 +108,7 @@ export default function Home() {
   const [notification, setNotification] = useState("");
   const [candidateCount, setCandidateCount] = useState<number | null>(null);
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [expandedDemand, setExpandedDemand] = useState<number | null>(null);
   const voterPanelRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -465,21 +466,37 @@ export default function Home() {
               )}
             </div>
 
-            {/* 7. 3 demands — compact numbered list */}
-            <ul className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
-              <li className="flex items-start gap-2">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">1</span>
-                <span>{d("d1Title")}</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">2</span>
-                <span>{d("d2Title")}</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold">3</span>
-                <span>{d("d3Title")}</span>
-              </li>
-            </ul>
+            {/* 7. 3 demands — expandable list */}
+            <div className="text-left text-sm text-gray-700 space-y-1.5 mb-4">
+              {[1, 2, 3].map((n) => {
+                const isOpen = expandedDemand === n;
+                return (
+                  <div key={n}>
+                    <button
+                      onClick={() => setExpandedDemand(isOpen ? null : n)}
+                      className="flex w-full items-start gap-2 text-left"
+                    >
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-melon-green-light text-melon-green text-xs font-bold mt-0.5">{n}</span>
+                      <span className="flex-1">{d(`d${n}Title` as "d1Title" | "d2Title" | "d3Title")}</span>
+                      <svg
+                        className={`h-3.5 w-3.5 shrink-0 text-gray-400 transition-transform mt-1 ${isOpen ? "rotate-180" : ""}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <p className="ml-7 mt-1 text-xs text-gray-500 leading-relaxed animate-in slide-in-from-top-2">
+                        {d(`d${n}Detail` as "d1Detail" | "d2Detail" | "d3Detail")}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
             {/* 7. Accordion panels */}
             <div ref={voterPanelRef} className="space-y-2 mb-4">

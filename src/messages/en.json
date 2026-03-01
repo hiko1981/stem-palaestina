@@ -73,12 +73,15 @@
     "d1Title": "Recognize Palestine",
     "d1Short": "Denmark must officially recognize the state of Palestine.",
     "d1Long": "Denmark must officially recognize the state of Palestine as a sovereign state.",
+    "d1Detail": "156 of 193 UN member states and 14 EU countries have already recognized Palestine — including Sweden, France, the UK, Spain and Ireland. Denmark remains one of the few Western countries that has not.",
     "d2Title": "Stop arms sales to Israel",
     "d2Short": "Denmark must stop all sales and exports of weapons and military equipment to Israel.",
     "d2Long": "All sales and exports of weapons and military equipment to Israel must be stopped.",
+    "d2Detail": "15 Danish companies supply parts for the F-35 fighter jet, including Terma, which produces the pylons that carry and release the aircraft's bombs. Denmark has also purchased artillery from Israeli weapons firm Elbit Systems for DKK 1.7 billion — a deal subject to a landmark legal case over its legality.",
     "d3Title": "Stop illegal investments",
     "d3Short": "Danish pension funds and public funds must divest from companies profiting from the illegal occupation.",
-    "d3Long": "Danish pension funds and public funds must divest from companies profiting from the illegal occupation."
+    "d3Long": "Danish pension funds and public funds must divest from companies profiting from the illegal occupation.",
+    "d3Detail": "Danish pension funds have invested approx. DKK 5.2 billion in companies on the UN list of businesses with activities in the illegal settlements — from surveillance technology to travel platforms and food production. This includes PFA, Danica, Velliv, and PensionDanmark, which most Danes are tied to through their employer's collective schemes and cannot freely opt out of."
   },
   "vote": {
     "thanksTitle": "Thank you for your vote!",

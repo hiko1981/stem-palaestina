@@ -73,12 +73,15 @@
     "d1Title": "パレスチナを承認する",
     "d1Short": "デンマークはパレスチナ国を公式に承認すべきです。",
     "d1Long": "デンマークはパレスチナを主権国家として公式に承認すべきです。",
+    "d1Detail": "156 of 193 UN member states and 14 EU countries have already recognized Palestine — including Sweden, France, the UK, Spain and Ireland. Denmark remains one of the few Western countries that has not.",
     "d2Title": "イスラエルへの武器売却を停止する",
     "d2Short": "デンマークはイスラエルへのすべての武器および軍事装備の販売・輸出を停止すべきです。",
     "d2Long": "イスラエルへのすべての武器および軍事装備の販売・輸出を停止すべきです。",
+    "d2Detail": "15 Danish companies supply parts for the F-35 fighter jet, including Terma, which produces the pylons that carry and release the aircraft's bombs. Denmark has also purchased artillery from Israeli weapons firm Elbit Systems for DKK 1.7 billion — a deal subject to a landmark legal case over its legality.",
     "d3Title": "違法投資を中止する",
     "d3Short": "デンマークの年金基金および公的資金は、違法な占領から利益を得ている企業から撤退すべきです。",
-    "d3Long": "デンマークの年金基金および公的資金は、違法な占領から利益を得ている企業から撤退すべきです。"
+    "d3Long": "デンマークの年金基金および公的資金は、違法な占領から利益を得ている企業から撤退すべきです。",
+    "d3Detail": "Danish pension funds have invested approx. DKK 5.2 billion in companies on the UN list of businesses with activities in the illegal settlements — from surveillance technology to travel platforms and food production. This includes PFA, Danica, Velliv, and PensionDanmark, which most Danes are tied to through their employer's collective schemes and cannot freely opt out of."
   },
   "vote": {
     "thanksTitle": "投票ありがとうございます！",
