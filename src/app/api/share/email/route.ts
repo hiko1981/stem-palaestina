@@ -46,9 +46,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("share/email error:", error);
-    const msg = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: `Kunne ikke sende e-mail: ${msg}` },
+      { error: "Kunne ikke sende e-mail. Prøv igen senere." },
       { status: 500 }
     );
   }
