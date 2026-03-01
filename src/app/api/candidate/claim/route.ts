@@ -16,10 +16,10 @@ export async function POST(req: Request) {
 
     const { candidateId, token } = parsed.data;
 
-    // Look up ballot token to get phoneHash
+    // Look up ballot token to get phoneHash + phone
     const ballotToken = await prisma.ballotToken.findUnique({
       where: { token },
-      select: { phoneHash: true },
+      select: { phoneHash: true, phone: true },
     });
     if (!ballotToken) {
       return NextResponse.json(
@@ -54,7 +54,10 @@ export async function POST(req: Request) {
     // verified stays false — admin must approve manually
     const result = await prisma.candidate.updateMany({
       where: { id: candidateId, phoneHash: null },
-      data: { phoneHash: ballotToken.phoneHash },
+      data: {
+        phoneHash: ballotToken.phoneHash,
+        ...(ballotToken.phone ? { contactPhone: ballotToken.phone } : {}),
+      },
     });
 
     if (result.count === 0) {

@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
         select: {
           id: true,
           phoneHash: true,
+          phone: true,
           used: true,
           expiresAt: true,
           createdAt: true,

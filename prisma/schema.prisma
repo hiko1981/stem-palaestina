@@ -19,6 +19,7 @@ model BallotToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique @db.Uuid
   phoneHash String   @map("phone_hash")
+  phone     String?
   deviceId  String?  @map("device_id")
   used      Boolean  @default(false)
   expiresAt DateTime @map("expires_at")

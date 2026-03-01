@@ -30,6 +30,15 @@ interface VoteRecord {
   votedAt: string;
 }
 
+interface BallotTokenRecord {
+  id: number;
+  phoneHash: string;
+  phone: string | null;
+  used: boolean;
+  expiresAt: string;
+  createdAt: string;
+}
+
 interface CandidateRecord {
   id: number;
   name: string;
@@ -67,6 +76,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
+  const [tokens, setTokens] = useState<BallotTokenRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
   const [supportMessages, setSupportMessages] = useState<SupportRecord[]>([]);
   const [suppressions, setSuppressions] = useState<SuppressionRecord[]>([]);
@@ -74,6 +84,7 @@ export default function AdminPage() {
   const [hitStats, setHitStats] = useState<HitStats | null>(null);
   const [expandedCandidate, setExpandedCandidate] = useState<number | null>(null);
   const [votesOpen, setVotesOpen] = useState(false);
+  const [ballotOpen, setBallotOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -91,11 +102,11 @@ export default function AdminPage() {
       }
       const data = await res.json();
       setVotes(data.votes);
+      setTokens(data.tokens || []);
       setCandidates(data.candidates || []);
       setSupportMessages(data.supportMessages || []);
       setSuppressions(data.suppressions || []);
       setAuthed(true);
-      // Fetch language misses + hit stats
       fetch("/api/admin/lang-miss", {
         headers: { Authorization: `Bearer ${password}` },
       })
@@ -122,6 +133,7 @@ export default function AdminPage() {
     if (res.ok) {
       const data = await res.json();
       setVotes(data.votes);
+      setTokens(data.tokens || []);
       setCandidates(data.candidates || []);
       setSupportMessages(data.supportMessages || []);
       setSuppressions(data.suppressions || []);
@@ -140,45 +152,6 @@ export default function AdminPage() {
       .catch(() => {});
   }
 
-  async function deleteVote(phoneHash: string) {
-    setMessage("");
-    if (!confirm("Er du sikker på, at du vil slette denne stemme?")) return;
-    const res = await fetch("/api/admin/votes", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${password}`,
-      },
-      body: JSON.stringify({ phoneHash }),
-    });
-    if (res.ok) {
-      setMessage("Stemme slettet");
-      await fetchData();
-    }
-  }
-
-  async function deleteAll() {
-    setMessage("");
-    if (!confirm("Er du sikker? ALLE stemmer slettes permanent.")) return;
-    const typed = prompt("Skriv SLET ALLE for at bekræfte:");
-    if (typed !== "SLET ALLE") {
-      setMessage("Sletning annulleret.");
-      return;
-    }
-    const res = await fetch("/api/admin/votes", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${password}`,
-      },
-      body: JSON.stringify({ all: true }),
-    });
-    if (res.ok) {
-      setMessage("Alle stemmer slettet");
-      await fetchData();
-    }
-  }
-
   async function verifyCandidate(id: number, verified: boolean) {
     setMessage("");
     const res = await fetch("/api/admin/votes", {
@@ -195,45 +168,10 @@ export default function AdminPage() {
     }
   }
 
-  async function deleteCandidate(id: number) {
-    setMessage("");
-    if (!confirm("Er du sikker på, at du vil slette denne kandidat?")) return;
-    const res = await fetch("/api/admin/votes", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${password}`,
-      },
-      body: JSON.stringify({ deleteCandidateId: id }),
-    });
-    if (res.ok) {
-      setMessage("Kandidat slettet");
-      await fetchData();
-    }
-  }
-
-  async function deleteSupportMessage(id: number) {
-    setMessage("");
-    if (!confirm("Slet denne supportbesked?")) return;
-    const res = await fetch("/api/admin/votes", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${password}`,
-      },
-      body: JSON.stringify({ deleteSupportId: id }),
-    });
-    if (res.ok) {
-      setMessage("Supportbesked slettet");
-      await fetchData();
-    }
-  }
-
   function maskHash(hash: string) {
     return hash.slice(0, 8) + "...";
   }
 
-  // Find vote for a candidate by phoneHash
   function getCandidateVote(phoneHash: string | null): VoteRecord | undefined {
     if (!phoneHash) return undefined;
     return votes.find((v) => v.phoneHash === phoneHash);
@@ -265,11 +203,15 @@ export default function AdminPage() {
     );
   }
 
-  // Only show candidates who have claimed their profile (phoneHash set = voted + verified phone)
-  // Seeded candidates without phoneHash are just directory entries, not applications
   const claimed = candidates.filter((c) => c.phoneHash);
   const pendingCandidates = claimed.filter((c) => !c.verified);
   const verifiedCandidates = claimed.filter((c) => c.verified);
+
+  // Ballot token stats
+  const now = new Date();
+  const pendingBallots = tokens.filter((t) => !t.used && new Date(t.expiresAt) > now);
+  const usedBallots = tokens.filter((t) => t.used);
+  const expiredBallots = tokens.filter((t) => !t.used && new Date(t.expiresAt) <= now);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 space-y-12">
@@ -313,6 +255,73 @@ export default function AdminPage() {
         </section>
       )}
 
+      {/* Stemmesedler (ballots) */}
+      <section>
+        <h2 className="text-xl font-bold mb-4">Stemmesedler (SMS)</h2>
+        <div className="grid grid-cols-3 gap-4 mb-4">
+          <Card>
+            <p className="text-xs text-gray-500">Ventende</p>
+            <p className="text-2xl font-bold tabular-nums text-amber-600">{pendingBallots.length}</p>
+          </Card>
+          <Card>
+            <p className="text-xs text-gray-500">Brugt (stemt)</p>
+            <p className="text-2xl font-bold tabular-nums text-melon-green">{usedBallots.length}</p>
+          </Card>
+          <Card>
+            <p className="text-xs text-gray-500">Udløbet</p>
+            <p className="text-2xl font-bold tabular-nums text-gray-400">{expiredBallots.length}</p>
+          </Card>
+        </div>
+
+        {/* Pending ballots list */}
+        {pendingBallots.length > 0 && (
+          <div>
+            <button
+              onClick={() => setBallotOpen(!ballotOpen)}
+              className="flex w-full items-center justify-between mb-2"
+            >
+              <h3 className="text-sm font-medium text-gray-500">
+                Ventende stemmesedler ({pendingBallots.length})
+              </h3>
+              <ChevronIcon open={ballotOpen} />
+            </button>
+            {ballotOpen && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b text-left text-gray-500">
+                      <th className="pb-2 pr-4">Telefon</th>
+                      <th className="pb-2 pr-4">Sendt</th>
+                      <th className="pb-2">Udløber</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pendingBallots.slice(0, 30).map((t) => (
+                      <tr key={t.id} className="border-b">
+                        <td className="py-2 pr-4 font-mono text-xs">
+                          {t.phone || maskHash(t.phoneHash)}
+                        </td>
+                        <td className="py-2 pr-4 text-gray-500">
+                          {new Date(t.createdAt).toLocaleString("da-DK")}
+                        </td>
+                        <td className="py-2 text-gray-500">
+                          {new Date(t.expiresAt).toLocaleString("da-DK")}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {pendingBallots.length > 30 && (
+                  <p className="text-xs text-gray-400 mt-2 text-center">
+                    Viser de seneste 30 af {pendingBallots.length}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+
       {/* Kandidat-ansøgninger */}
       <section>
         <div className="flex items-center justify-between mb-4">
@@ -355,20 +364,12 @@ export default function AdminPage() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex gap-2 shrink-0">
-                      <Button
-                        onClick={() => verifyCandidate(c.id, true)}
-                        className="text-xs px-3 py-2 min-h-[44px]"
-                      >
-                        Godkend
-                      </Button>
-                      <button
-                        onClick={() => deleteCandidate(c.id)}
-                        className="text-xs text-melon-red hover:underline px-3 py-2 min-h-[44px]"
-                      >
-                        Slet
-                      </button>
-                    </div>
+                    <Button
+                      onClick={() => verifyCandidate(c.id, true)}
+                      className="text-xs px-3 py-2 min-h-[44px] shrink-0"
+                    >
+                      Godkend
+                    </Button>
                   </div>
                   {/* Contact info */}
                   {(c.contactPhone || c.contactEmail) && (
@@ -408,7 +409,6 @@ export default function AdminPage() {
                       </span>
                     )}
                   </div>
-                  {/* Public statement */}
                   {c.publicStatement && (
                     <p className="mt-2 text-sm text-gray-600 italic border-l-2 border-gray-200 pl-3">
                       {c.publicStatement}
@@ -459,7 +459,6 @@ export default function AdminPage() {
                     </button>
                     {isExpanded && (
                       <div className="border-t border-gray-100 px-4 py-3 space-y-3 bg-gray-50/50">
-                        {/* Contact info */}
                         {(c.contactPhone || c.contactEmail) && (
                           <div className="space-y-1">
                             {c.contactPhone && (
@@ -476,7 +475,6 @@ export default function AdminPage() {
                             )}
                           </div>
                         )}
-                        {/* Meta */}
                         <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400">
                           <span>{new Date(c.createdAt).toLocaleString("da-DK")}</span>
                           {c.phoneHash && <span>&middot; {maskHash(c.phoneHash)}</span>}
@@ -486,25 +484,17 @@ export default function AdminPage() {
                             </span>
                           )}
                         </div>
-                        {/* Public statement */}
                         {c.publicStatement && (
                           <p className="text-sm text-gray-600 italic border-l-2 border-gray-200 pl-3">
                             {c.publicStatement}
                           </p>
                         )}
-                        {/* Actions */}
-                        <div className="flex gap-2 pt-1">
+                        <div className="pt-1">
                           <button
                             onClick={(e) => { e.stopPropagation(); verifyCandidate(c.id, false); }}
                             className="text-xs text-gray-400 hover:underline px-2 py-2 min-h-[44px]"
                           >
                             Fjern godkendelse
-                          </button>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); deleteCandidate(c.id); }}
-                            className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
-                          >
-                            Slet
                           </button>
                         </div>
                       </div>
@@ -535,25 +525,17 @@ export default function AdminPage() {
           <div className="space-y-3">
             {supportMessages.map((s) => (
               <Card key={s.id}>
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
-                      {s.category}
-                    </span>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
-                      {s.message}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {new Date(s.createdAt).toLocaleString("da-DK")}
-                      {s.deviceId && ` · ${s.deviceId.slice(0, 8)}...`}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => deleteSupportMessage(s.id)}
-                    className="text-xs text-melon-red hover:underline shrink-0 px-2 py-2 min-h-[44px]"
-                  >
-                    Slet
-                  </button>
+                <div className="min-w-0">
+                  <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 mb-1">
+                    {s.category}
+                  </span>
+                  <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
+                    {s.message}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {new Date(s.createdAt).toLocaleString("da-DK")}
+                    {s.deviceId && ` · ${s.deviceId.slice(0, 8)}...`}
+                  </p>
                 </div>
               </Card>
             ))}
@@ -572,7 +554,6 @@ export default function AdminPage() {
           )}
         </h2>
 
-        {/* Summary cards */}
         {(() => {
           const voterOptouts = suppressions.filter((s) => s.reason === "user_request");
           const candidateOptouts = suppressions.filter((s) => s.reason === "candidate_optout");
@@ -596,7 +577,6 @@ export default function AdminPage() {
                 </Card>
               </div>
 
-              {/* Opted-out candidates */}
               {optedOutCandidates.length > 0 && (
                 <div className="mb-4">
                   <h3 className="text-sm font-medium text-gray-500 mb-2">Afmeldte kandidater</h3>
@@ -629,7 +609,6 @@ export default function AdminPage() {
                 </div>
               )}
 
-              {/* Recent suppressions */}
               {suppressions.length > 0 && (
                 <div>
                   <h3 className="text-sm font-medium text-gray-500 mb-2">Seneste suppressions</h3>
@@ -725,7 +704,7 @@ export default function AdminPage() {
         </section>
       )}
 
-      {/* Stemmer (collapsible) */}
+      {/* Stemmer (collapsible, read-only) */}
       <section>
         <button
           onClick={() => setVotesOpen(!votesOpen)}
@@ -734,15 +713,10 @@ export default function AdminPage() {
           <h2 className="text-xl font-bold">
             Stemmer
             <span className="ml-2 text-sm font-normal text-gray-500">
-              ({votes.length} i alt)
+              ({votes.length} i alt — {votes.filter(v => v.voteValue).length} ja, {votes.filter(v => !v.voteValue).length} nej)
             </span>
           </h2>
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" onClick={(e: React.MouseEvent) => { e.stopPropagation(); deleteAll(); }}>
-              Slet alle
-            </Button>
-            <ChevronIcon open={votesOpen} />
-          </div>
+          <ChevronIcon open={votesOpen} />
         </button>
 
         {votesOpen && (
@@ -759,8 +733,7 @@ export default function AdminPage() {
                       <th className="pb-2 pr-4">ID</th>
                       <th className="pb-2 pr-4">Phone Hash</th>
                       <th className="pb-2 pr-4">Stemme</th>
-                      <th className="pb-2 pr-4">Tidspunkt</th>
-                      <th className="pb-2"></th>
+                      <th className="pb-2">Tidspunkt</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -781,16 +754,8 @@ export default function AdminPage() {
                             {v.voteValue ? "Ja" : "Nej"}
                           </span>
                         </td>
-                        <td className="py-2 pr-4 text-gray-500">
+                        <td className="py-2 text-gray-500">
                           {new Date(v.votedAt).toLocaleString("da-DK")}
-                        </td>
-                        <td className="py-2">
-                          <button
-                            onClick={() => deleteVote(v.phoneHash)}
-                            className="text-xs text-melon-red hover:underline px-2 py-2 min-h-[44px]"
-                          >
-                            Slet
-                          </button>
                         </td>
                       </tr>
                     ))}
