@@ -78,7 +78,7 @@ interface SuppressionRecord {
 type AuthMode = "qr" | "password";
 
 export default function AdminPage() {
-  const [authMode, setAuthMode] = useState<AuthMode>("qr");
+  const [authMode, setAuthMode] = useState<AuthMode>("password");
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
