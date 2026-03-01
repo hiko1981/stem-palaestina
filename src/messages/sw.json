@@ -68,7 +68,13 @@
     "security2": "Tokeni za karatasi ya kura zenye muda wa kuisha wa saa 24",
     "security3": "Kikomo cha kasi kwenye vituo vyote",
     "security4": "Upeo wa karatasi 3 zinazosubiri kwa kifaa",
-    "security5": "Hakuna ufuatiliaji au uchambuzi wa wahusika wengine"
+    "security5": "Hakuna ufuatiliaji au uchambuzi wa wahusika wengine",
+    "cryptoTitle": "How the encryption works",
+    "cryptoP1": "When you vote, our server combines your phone number with a secret key (a \"salt\"). This combination is run through SHA-256 — a cryptographic one-way function. The result is a 64-character fingerprint (a \"hash\") that we store instead of your phone number.",
+    "cryptoP2": "\"One-way\" means you cannot mathematically calculate backwards from the fingerprint to the number. When you send a new ballot, we create the same fingerprint from your number again — if it matches, we know you've already voted.",
+    "cryptoQ": "But can't you just try all phone numbers?",
+    "cryptoP3": "Good question. Danish mobile numbers are 8 digits — about 100 million combinations. A computer could hash all of them in seconds. That's why we use the salt: without the secret key, you can't recreate the fingerprints. The salt is stored only on the server and never appears in the code or database.",
+    "cryptoP4": "Even if someone gained access to both the database and the salt, they would only learn that a specific phone number voted yes or no. No names, IP addresses, or other personal data is stored alongside the vote."
   },
   "demands": {
     "d1Title": "Tambua Palestina",
@@ -308,5 +314,10 @@
     "send": "Tuma",
     "success": "Asante! Ujumbe wako umepokelewa.",
     "error": "Haikuweza kutuma. Jaribu tena."
+  },
+  "alreadyVoted": {
+    "question": "Already voted?",
+    "explanation": "We don't store phone numbers — only an encrypted fingerprint. We use cookies to remember your vote on your device. Updates can sometimes reset cookies, making it look like you haven't voted. Just send yourself a new ballot — the system allows only one vote per phone number, and you'll immediately see the detailed results.",
+    "cryptoLink": "Read more about the encryption"
   }
 }

@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { rtlLocales, type Locale } from "@/i18n/config";
 import TopBar from "@/components/layout/TopBar";
+import AlreadyVotedBanner from "@/components/features/AlreadyVotedBanner";
 import AppShell from "@/components/layout/AppShell";
 import LangMissLogger from "@/components/features/LangMissLogger";
 
@@ -38,6 +39,7 @@ export default async function RootLayout({
       <body className="flex min-h-screen flex-col antialiased">
         <NextIntlClientProvider messages={messages}>
           <TopBar />
+          <AlreadyVotedBanner />
           <AppShell>{children}</AppShell>
           <LangMissLogger />
         </NextIntlClientProvider>
