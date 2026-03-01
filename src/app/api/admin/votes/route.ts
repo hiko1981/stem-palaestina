@@ -1,22 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { timingSafeEqual } from "crypto";
 import { sendVerificationEmail } from "@/lib/candidate-email";
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-if (!ADMIN_PASSWORD) throw new Error("ADMIN_PASSWORD not set");
-
-function checkAuth(req: NextRequest): boolean {
-  const auth = req.headers.get("authorization") || "";
-  const expected = `Bearer ${ADMIN_PASSWORD}`;
-  if (auth.length !== expected.length) return false;
-  return timingSafeEqual(Buffer.from(auth), Buffer.from(expected));
-}
+import { requireAdmin, isAuthError } from "@/lib/admin-auth";
 
 export async function GET(req: NextRequest) {
-  if (!checkAuth(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = await requireAdmin(req);
+  if (isAuthError(auth)) return auth;
 
   try {
     const [votes, tokens, candidates, supportMessages, suppressions] = await Promise.all([
@@ -56,9 +45,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!checkAuth(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = await requireAdmin(req);
+  if (isAuthError(auth)) return auth;
 
   try {
     const body = await req.json();
@@ -100,9 +88,8 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  if (!checkAuth(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const auth = await requireAdmin(req);
+  if (isAuthError(auth)) return auth;
 
   try {
     const body = await req.json();

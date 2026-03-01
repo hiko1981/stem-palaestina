@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Card from "@/components/ui/Card";
 import ChevronIcon from "@/components/ui/ChevronIcon";
+import QrLoginFlow from "@/components/features/admin/QrLoginFlow";
+import AdminInviteForm from "@/components/features/admin/AdminInviteForm";
 
 interface HitDay {
   date: string;
@@ -73,9 +75,13 @@ interface SuppressionRecord {
   createdAt: string;
 }
 
+type AuthMode = "qr" | "password";
+
 export default function AdminPage() {
+  const [authMode, setAuthMode] = useState<AuthMode>("qr");
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
+  const [authChecking, setAuthChecking] = useState(true);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [tokens, setTokens] = useState<BallotTokenRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
@@ -89,6 +95,59 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [setupLoading, setSetupLoading] = useState(false);
+  const [setupResult, setSetupResult] = useState<string | null>(null);
+
+  // Check if already authed via JWT cookie
+  useEffect(() => {
+    fetch("/api/admin/votes")
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("not authed");
+      })
+      .then((data) => {
+        setVotes(data.votes);
+        setTokens(data.tokens || []);
+        setCandidates(data.candidates || []);
+        setSupportMessages(data.supportMessages || []);
+        setSuppressions(data.suppressions || []);
+        setAuthed(true);
+        // Fetch extra data
+        fetch("/api/admin/lang-miss")
+          .then((r) => r.json())
+          .then((d) => setLangMisses(d.misses || []))
+          .catch(() => {});
+        fetch("/api/admin/hits")
+          .then((r) => r.json())
+          .then((d) => setHitStats(d))
+          .catch(() => {});
+      })
+      .catch(() => {})
+      .finally(() => setAuthChecking(false));
+  }, []);
+
+  const loadDashboardData = useCallback(async (bearerToken?: string) => {
+    const headers: Record<string, string> = {};
+    if (bearerToken) headers.Authorization = `Bearer ${bearerToken}`;
+
+    const res = await fetch("/api/admin/votes", { headers });
+    if (res.ok) {
+      const data = await res.json();
+      setVotes(data.votes);
+      setTokens(data.tokens || []);
+      setCandidates(data.candidates || []);
+      setSupportMessages(data.supportMessages || []);
+      setSuppressions(data.suppressions || []);
+    }
+    fetch("/api/admin/lang-miss", { headers })
+      .then((r) => r.json())
+      .then((d) => setLangMisses(d.misses || []))
+      .catch(() => {});
+    fetch("/api/admin/hits", { headers })
+      .then((r) => r.json())
+      .then((d) => setHitStats(d))
+      .catch(() => {});
+  }, []);
 
   async function login() {
     setError("");
@@ -127,30 +186,40 @@ export default function AdminPage() {
     }
   }
 
-  async function fetchData() {
-    const res = await fetch("/api/admin/votes", {
-      headers: { Authorization: `Bearer ${password}` },
-    });
-    if (res.ok) {
+  function handleQrAuthenticated() {
+    setAuthed(true);
+    loadDashboardData();
+  }
+
+  async function sendSetupLink() {
+    setSetupLoading(true);
+    setSetupResult(null);
+    try {
+      const res = await fetch("/api/admin/auth/setup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${password}`,
+        },
+        body: JSON.stringify({}),
+      });
       const data = await res.json();
-      setVotes(data.votes);
-      setTokens(data.tokens || []);
-      setCandidates(data.candidates || []);
-      setSupportMessages(data.supportMessages || []);
-      setSuppressions(data.suppressions || []);
+      if (!res.ok) {
+        setSetupResult(`Fejl: ${data.error}`);
+        return;
+      }
+      setSetupResult(data.setupUrl);
+    } catch {
+      setSetupResult("Netværksfejl");
+    } finally {
+      setSetupLoading(false);
     }
-    fetch("/api/admin/lang-miss", {
-      headers: { Authorization: `Bearer ${password}` },
-    })
-      .then((r) => r.json())
-      .then((d) => setLangMisses(d.misses || []))
-      .catch(() => {});
-    fetch("/api/admin/hits", {
-      headers: { Authorization: `Bearer ${password}` },
-    })
-      .then((r) => r.json())
-      .then((d) => setHitStats(d))
-      .catch(() => {});
+  }
+
+  async function fetchData() {
+    const headers: Record<string, string> = {};
+    if (password) headers.Authorization = `Bearer ${password}`;
+    await loadDashboardData(password || undefined);
   }
 
   async function verifyCandidate(id: number, verified: boolean) {
@@ -185,7 +254,31 @@ export default function AdminPage() {
     return votes.find((v) => v.phoneHash === phoneHash);
   }
 
+  if (authChecking) {
+    return (
+      <div className="mx-auto max-w-sm px-4 py-16 text-center">
+        <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-melon-green border-t-transparent" />
+      </div>
+    );
+  }
+
   if (!authed) {
+    if (authMode === "qr") {
+      return (
+        <div>
+          <QrLoginFlow onAuthenticated={handleQrAuthenticated} />
+          <div className="text-center mt-4">
+            <button
+              onClick={() => setAuthMode("password")}
+              className="text-xs text-gray-400 hover:underline"
+            >
+              Log ind med adgangskode i stedet
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="mx-auto max-w-sm px-4 py-16">
         <h1 className="mb-8 text-center text-2xl font-bold">Admin</h1>
@@ -207,6 +300,14 @@ export default function AdminPage() {
             )}
           </div>
         </Card>
+        <div className="text-center mt-4">
+          <button
+            onClick={() => setAuthMode("qr")}
+            className="text-xs text-gray-400 hover:underline"
+          >
+            Log ind med QR-kode i stedet
+          </button>
+        </div>
       </div>
     );
   }
@@ -811,6 +912,41 @@ export default function AdminPage() {
             )}
           </>
         )}
+      </section>
+
+      {/* Admin-opsætning */}
+      <section>
+        <h2 className="text-xl font-bold mb-4">Admin-opsætning</h2>
+
+        {/* Setup link (kun med password login) */}
+        {password && (
+          <Card className="mb-4">
+            <h3 className="font-bold mb-2">Registrer admin-enhed</h3>
+            <p className="text-sm text-gray-500 mb-3">
+              Generer et setup-link til at registrere din telefon som admin-enhed.
+            </p>
+            <Button
+              onClick={sendSetupLink}
+              loading={setupLoading}
+              variant="outline"
+            >
+              Send setup-link
+            </Button>
+            {setupResult && (
+              <div className="mt-3 rounded-lg bg-gray-50 p-3">
+                <p className="font-mono text-xs break-all text-melon-green">
+                  {setupResult}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Åbn dette link på din telefon
+                </p>
+              </div>
+            )}
+          </Card>
+        )}
+
+        {/* Invite form (for master admins) */}
+        <AdminInviteForm />
       </section>
     </div>
   );

@@ -119,3 +119,46 @@ model PageView {
   @@unique([page, date], name: "page_date")
   @@map("page_views")
 }
+
+model AdminUser {
+  id        Int           @id @default(autoincrement())
+  email     String        @unique
+  phone     String?
+  name      String?
+  role      String        @default("admin")
+  active    Boolean       @default(true)
+  createdAt DateTime      @default(now()) @map("created_at")
+  devices   AdminDevice[]
+  invites   AdminInvite[] @relation("inviter")
+
+  @@map("admin_users")
+}
+
+model AdminDevice {
+  id           Int      @id @default(autoincrement())
+  adminUserId  Int      @map("admin_user_id")
+  deviceId     String   @map("device_id")
+  label        String?
+  registeredAt DateTime @default(now()) @map("registered_at")
+  lastUsedAt   DateTime @default(now()) @map("last_used_at")
+  active       Boolean  @default(true)
+  admin        AdminUser @relation(fields: [adminUserId], references: [id])
+
+  @@unique([adminUserId, deviceId])
+  @@index([deviceId])
+  @@map("admin_devices")
+}
+
+model AdminInvite {
+  id        Int       @id @default(autoincrement())
+  token     String    @unique @default(uuid())
+  email     String?
+  phone     String?
+  invitedBy Int       @map("invited_by")
+  usedAt    DateTime? @map("used_at")
+  expiresAt DateTime  @map("expires_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  inviter   AdminUser @relation("inviter", fields: [invitedBy], references: [id])
+
+  @@map("admin_invites")
+}
