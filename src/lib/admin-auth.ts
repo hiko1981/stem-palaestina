@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SignJWT, jwtVerify } from "jose";
-import { timingSafeEqual } from "crypto";
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 function getSecret(): Uint8Array {
   if (!JWT_SECRET) throw new Error("JWT_SECRET not set");
@@ -36,16 +34,8 @@ export async function verifyJwt(
   }
 }
 
-function checkBearerPassword(req: NextRequest): boolean {
-  if (!ADMIN_PASSWORD) return false;
-  const auth = req.headers.get("authorization") || "";
-  const expected = `Bearer ${ADMIN_PASSWORD}`;
-  if (auth.length !== expected.length) return false;
-  return timingSafeEqual(Buffer.from(auth), Buffer.from(expected));
-}
-
 /**
- * Dual-mode auth: accepts JWT cookie OR legacy Bearer password.
+ * JWT-only auth: accepts JWT from cookie or Authorization header.
  * Returns admin payload on success, or NextResponse 401 on failure.
  */
 export async function requireAdmin(
@@ -62,13 +52,8 @@ export async function requireAdmin(
   const auth = req.headers.get("authorization") || "";
   if (auth.startsWith("Bearer ")) {
     const token = auth.slice(7);
-    // Try as JWT
     const payload = await verifyJwt(token);
     if (payload) return payload;
-    // Try as legacy password
-    if (checkBearerPassword(req)) {
-      return { sub: "0", email: "legacy", role: "master", deviceId: "legacy" };
-    }
   }
 
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

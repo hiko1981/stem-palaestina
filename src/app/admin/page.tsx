@@ -2,12 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
 import Card from "@/components/ui/Card";
 import ChevronIcon from "@/components/ui/ChevronIcon";
 import QrLoginFlow from "@/components/features/admin/QrLoginFlow";
 import AdminInviteForm from "@/components/features/admin/AdminInviteForm";
-import QrCode from "@/components/ui/QrCode";
+
 
 interface HitDay {
   date: string;
@@ -76,13 +75,11 @@ interface SuppressionRecord {
   createdAt: string;
 }
 
-type AuthMode = "qr" | "password";
-
 export default function AdminPage() {
-  const [authMode, setAuthMode] = useState<AuthMode>("password");
-  const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
+  const [hasRegisteredDevice, setHasRegisteredDevice] = useState(false);
+  const [deviceLoginError, setDeviceLoginError] = useState("");
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [tokens, setTokens] = useState<BallotTokenRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
@@ -94,44 +91,10 @@ export default function AdminPage() {
   const [votesOpen, setVotesOpen] = useState(false);
   const [ballotOpen, setBallotOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [setupLoading, setSetupLoading] = useState(false);
-  const [setupResult, setSetupResult] = useState<string | null>(null);
 
-  // Check if already authed via JWT cookie
-  useEffect(() => {
-    fetch("/api/admin/votes")
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error("not authed");
-      })
-      .then((data) => {
-        setVotes(data.votes);
-        setTokens(data.tokens || []);
-        setCandidates(data.candidates || []);
-        setSupportMessages(data.supportMessages || []);
-        setSuppressions(data.suppressions || []);
-        setAuthed(true);
-        // Fetch extra data
-        fetch("/api/admin/lang-miss")
-          .then((r) => r.json())
-          .then((d) => setLangMisses(d.misses || []))
-          .catch(() => {});
-        fetch("/api/admin/hits")
-          .then((r) => r.json())
-          .then((d) => setHitStats(d))
-          .catch(() => {});
-      })
-      .catch(() => {})
-      .finally(() => setAuthChecking(false));
-  }, []);
-
-  const loadDashboardData = useCallback(async (bearerToken?: string) => {
-    const headers: Record<string, string> = {};
-    if (bearerToken) headers.Authorization = `Bearer ${bearerToken}`;
-
-    const res = await fetch("/api/admin/votes", { headers });
+  const loadDashboardData = useCallback(async () => {
+    const res = await fetch("/api/admin/votes");
     if (res.ok) {
       const data = await res.json();
       setVotes(data.votes);
@@ -140,97 +103,107 @@ export default function AdminPage() {
       setSupportMessages(data.supportMessages || []);
       setSuppressions(data.suppressions || []);
     }
-    fetch("/api/admin/lang-miss", { headers })
+    fetch("/api/admin/lang-miss")
       .then((r) => r.json())
       .then((d) => setLangMisses(d.misses || []))
       .catch(() => {});
-    fetch("/api/admin/hits", { headers })
+    fetch("/api/admin/hits")
       .then((r) => r.json())
       .then((d) => setHitStats(d))
       .catch(() => {});
   }, []);
 
-  async function login() {
-    setError("");
-    setLoading(true);
-    try {
-      const res = await fetch("/api/admin/votes", {
-        headers: { Authorization: `Bearer ${password}` },
-      });
-      if (!res.ok) {
-        setError("Forkert adgangskode");
+  // On mount: try JWT cookie first, then try device-login
+  useEffect(() => {
+    (async () => {
+      // 1. Try existing JWT cookie
+      const res = await fetch("/api/admin/votes");
+      if (res.ok) {
+        const data = await res.json();
+        setVotes(data.votes);
+        setTokens(data.tokens || []);
+        setCandidates(data.candidates || []);
+        setSupportMessages(data.supportMessages || []);
+        setSuppressions(data.suppressions || []);
+        setAuthed(true);
+        fetch("/api/admin/lang-miss")
+          .then((r) => r.json())
+          .then((d) => setLangMisses(d.misses || []))
+          .catch(() => {});
+        fetch("/api/admin/hits")
+          .then((r) => r.json())
+          .then((d) => setHitStats(d))
+          .catch(() => {});
+        setAuthChecking(false);
         return;
       }
-      const data = await res.json();
-      setVotes(data.votes);
-      setTokens(data.tokens || []);
-      setCandidates(data.candidates || []);
-      setSupportMessages(data.supportMessages || []);
-      setSuppressions(data.suppressions || []);
-      setAuthed(true);
-      fetch("/api/admin/lang-miss", {
-        headers: { Authorization: `Bearer ${password}` },
-      })
-        .then((r) => r.json())
-        .then((d) => setLangMisses(d.misses || []))
-        .catch(() => {});
-      fetch("/api/admin/hits", {
-        headers: { Authorization: `Bearer ${password}` },
-      })
-        .then((r) => r.json())
-        .then((d) => setHitStats(d))
-        .catch(() => {});
-    } catch {
-      setError("Netværksfejl");
-    } finally {
-      setLoading(false);
-    }
-  }
+
+      // 2. Try device-login (registered phone)
+      const deviceId = localStorage.getItem("admin_device_id");
+      if (deviceId) {
+        setHasRegisteredDevice(true);
+        const dlRes = await fetch("/api/admin/auth/device-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ deviceId }),
+        });
+        if (dlRes.ok) {
+          setAuthed(true);
+          await loadDashboardData();
+          setAuthChecking(false);
+          return;
+        }
+        // Device not recognized — might have been revoked
+        setHasRegisteredDevice(false);
+      }
+
+      setAuthChecking(false);
+    })();
+  }, [loadDashboardData]);
 
   function handleQrAuthenticated() {
     setAuthed(true);
     loadDashboardData();
   }
 
-  async function sendSetupLink() {
-    setSetupLoading(true);
-    setSetupResult(null);
+  async function handleDeviceLogin() {
+    setLoading(true);
+    setDeviceLoginError("");
+    const deviceId = localStorage.getItem("admin_device_id");
+    if (!deviceId) {
+      setDeviceLoginError("Ingen registreret enhed fundet");
+      setLoading(false);
+      return;
+    }
     try {
-      const res = await fetch("/api/admin/auth/setup", {
+      const res = await fetch("/api/admin/auth/device-login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${password}`,
-        },
-        body: JSON.stringify({}),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deviceId }),
       });
-      const data = await res.json();
       if (!res.ok) {
-        setSetupResult(`Fejl: ${data.error}`);
+        const data = await res.json();
+        setDeviceLoginError(data.error || "Login fejlede");
         return;
       }
-      setSetupResult(data.setupUrl);
+      setAuthed(true);
+      await loadDashboardData();
     } catch {
-      setSetupResult("Netværksfejl");
+      setDeviceLoginError("Netværksfejl");
     } finally {
-      setSetupLoading(false);
+      setLoading(false);
     }
   }
 
   async function fetchData() {
-    const headers: Record<string, string> = {};
-    if (password) headers.Authorization = `Bearer ${password}`;
-    await loadDashboardData(password || undefined);
+    await loadDashboardData();
   }
 
   async function verifyCandidate(id: number, verified: boolean) {
     setMessage("");
     const res = await fetch("/api/admin/votes", {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${password}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ candidateId: id, verified }),
     });
     if (res.ok) {
@@ -264,53 +237,34 @@ export default function AdminPage() {
   }
 
   if (!authed) {
-    if (authMode === "qr") {
+    // Registered phone: show one-tap login
+    if (hasRegisteredDevice) {
       return (
-        <div>
-          <QrLoginFlow onAuthenticated={handleQrAuthenticated} />
-          <div className="text-center mt-4">
-            <button
-              onClick={() => setAuthMode("password")}
-              className="text-xs text-gray-400 hover:underline"
-            >
-              Log ind med adgangskode i stedet
-            </button>
-          </div>
+        <div className="mx-auto max-w-sm px-4 py-16">
+          <h1 className="mb-8 text-center text-2xl font-bold">Admin</h1>
+          <Card>
+            <div className="space-y-4 text-center">
+              <p className="text-sm text-gray-500">
+                Denne enhed er registreret som admin-enhed.
+              </p>
+              <Button
+                onClick={handleDeviceLogin}
+                loading={loading}
+                className="w-full"
+              >
+                Log ind
+              </Button>
+              {deviceLoginError && (
+                <p className="text-sm text-melon-red">{deviceLoginError}</p>
+              )}
+            </div>
+          </Card>
         </div>
       );
     }
 
-    return (
-      <div className="mx-auto max-w-sm px-4 py-16">
-        <h1 className="mb-8 text-center text-2xl font-bold">Admin</h1>
-        <Card>
-          <div className="space-y-4">
-            <Input
-              id="admin-pw"
-              label="Adgangskode"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && login()}
-            />
-            <Button onClick={login} loading={loading} className="w-full">
-              Log ind
-            </Button>
-            {error && (
-              <p className="text-center text-sm text-melon-red">{error}</p>
-            )}
-          </div>
-        </Card>
-        <div className="text-center mt-4">
-          <button
-            onClick={() => setAuthMode("qr")}
-            className="text-xs text-gray-400 hover:underline"
-          >
-            Log ind med QR-kode i stedet
-          </button>
-        </div>
-      </div>
-    );
+    // PC / unknown device: QR flow
+    return <QrLoginFlow onAuthenticated={handleQrAuthenticated} />;
   }
 
   const claimed = candidates.filter((c) => c.phoneHash);
@@ -918,33 +872,6 @@ export default function AdminPage() {
       {/* Admin-opsætning */}
       <section>
         <h2 className="text-xl font-bold mb-4">Admin-opsætning</h2>
-
-        {/* Setup QR (kun med password login) */}
-        {password && (
-          <Card className="mb-4">
-            <h3 className="font-bold mb-2">Registrer admin-enhed</h3>
-            <p className="text-sm text-gray-500 mb-3">
-              Scan QR-koden med din telefon for at registrere den som admin-enhed.
-            </p>
-            <Button
-              onClick={sendSetupLink}
-              loading={setupLoading}
-              variant="outline"
-            >
-              Generer QR-kode
-            </Button>
-            {setupResult && (
-              <div className="mt-4 flex flex-col items-center gap-3">
-                <QrCode value={setupResult} size={200} />
-                <p className="text-xs text-gray-400">
-                  Scan med din telefons kamera
-                </p>
-              </div>
-            )}
-          </Card>
-        )}
-
-        {/* Invite form (for master admins) */}
         <AdminInviteForm />
       </section>
     </div>
