@@ -1,4 +1,4 @@
-import { randomBytes, randomUUID } from "crypto";
+import { randomBytes, randomUUID, timingSafeEqual } from "crypto";
 
 const KV_URL = process.env.KV_REST_API_URL;
 const KV_TOKEN = process.env.KV_REST_API_TOKEN;
@@ -218,7 +218,8 @@ export async function verifyAndConsumeChallenge(
 ): Promise<boolean> {
   const key = `dev:ch:${deviceId}`;
   const stored = await getVal(key);
-  if (!stored || stored !== challenge) return false;
+  if (!stored || stored.length !== challenge.length) return false;
+  if (!timingSafeEqual(Buffer.from(stored), Buffer.from(challenge))) return false;
   await delVal(key);
   return true;
 }

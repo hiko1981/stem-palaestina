@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwt } from "@/lib/admin-auth";
 import { consumeExchangeCode } from "@/lib/admin-session";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const MAX_TTL = 30 * 60; // 30 minutes max for PC sessions
 
@@ -10,6 +11,14 @@ const MAX_TTL = 30 * 60; // 30 minutes max for PC sessions
  * maxAge in seconds, capped at 30 min for PC sessions.
  */
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const rl = await checkRateLimit("admin-token-exchange", ip, 10, 60_000);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "For mange forsøg. Vent venligst." },
+      { status: 429 }
+    );
+  }
   let body: { exchangeCode?: string; maxAge?: number };
   try {
     body = await req.json();

@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin, isAuthError } from "@/lib/admin-auth";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 // POST: log a language miss (public, no auth needed)
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const rl = await checkRateLimit("lang-miss", ip, 5, 60_000);
+    if (!rl.ok) return NextResponse.json({ ok: true });
+
     const { language } = await req.json();
     if (!language || typeof language !== "string" || language.length > 10) {
       return NextResponse.json({ error: "invalid" }, { status: 400 });

@@ -1,10 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { candidateClaimSchema } from "@/lib/validation";
 import { notifyAdminNewCandidate } from "@/lib/admin-notify";
+import { checkRateLimit } from "@/lib/rate-limit";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const rl = await checkRateLimit("candidate-claim", ip, 10, 60_000);
+    if (!rl.ok) {
+      return NextResponse.json(
+        { error: "For mange forsøg. Vent venligst." },
+        { status: 429 }
+      );
+    }
     const body = await req.json();
     const parsed = candidateClaimSchema.safeParse(body);
     if (!parsed.success) {
