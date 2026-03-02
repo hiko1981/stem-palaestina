@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { notifyAdminNewSupport } from "@/lib/admin-notify";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -13,17 +14,19 @@ const supportSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
+
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     const limit = await checkRateLimit("support-ip", ip, RATE_LIMITS.supportPerIp.max, RATE_LIMITS.supportPerIp.windowMs);
     if (!limit.ok) {
-      return NextResponse.json({ error: "For mange beskeder. Prøv igen senere." }, { status: 429 });
+      return NextResponse.json({ error: te("tooManyMessages") }, { status: 429 });
     }
 
     const body = await req.json();
     const parsed = supportSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
-        { error: "Ugyldige data" },
+        { error: te("invalidData") },
         { status: 400 }
       );
     }
@@ -41,8 +44,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("support POST error:", error);
+    const te = await getTranslations("errors");
     return NextResponse.json(
-      { error: "Intern serverfejl" },
+      { error: te("serverError") },
       { status: 500 }
     );
   }

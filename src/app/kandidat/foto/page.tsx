@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { verifyOptout } from "@/lib/optout-sig";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import PhotoUploadForm from "./PhotoUploadForm";
 
 interface Props {
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default async function KandidatFotoPage({ searchParams }: Props) {
+  const t = await getTranslations("photoUpload");
+  const to = await getTranslations("optout");
   const params = await searchParams;
   const cidStr = params.cid;
   const sig = params.sig;
@@ -16,13 +19,9 @@ export default async function KandidatFotoPage({ searchParams }: Props) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-bold mb-2">Ugyldigt link</h1>
+          <h1 className="text-xl font-bold mb-2">{to("invalidLink")}</h1>
           <p className="text-gray-600 text-sm">
-            Dette link er ugyldigt. Kontakt{" "}
-            <Link href="/" className="text-melon-green hover:underline">
-              Stem Palæstina
-            </Link>{" "}
-            hvis du har brug for hjælp.
+            {to("linkVerifyFailed")}
           </p>
         </div>
       </div>
@@ -34,9 +33,9 @@ export default async function KandidatFotoPage({ searchParams }: Props) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-bold mb-2">Ugyldigt link</h1>
+          <h1 className="text-xl font-bold mb-2">{to("invalidLink")}</h1>
           <p className="text-gray-600 text-sm">
-            Linket kunne ikke verificeres.
+            {to("linkVerifyFailed")}
           </p>
         </div>
       </div>
@@ -52,7 +51,7 @@ export default async function KandidatFotoPage({ searchParams }: Props) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-bold mb-2">Kandidat ikke fundet</h1>
+          <h1 className="text-xl font-bold mb-2">{to("candidateNotFound")}</h1>
         </div>
       </div>
     );
@@ -62,15 +61,15 @@ export default async function KandidatFotoPage({ searchParams }: Props) {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
         <div className="text-center">
-          <h1 className="text-xl font-bold mb-2">Upload profilbillede</h1>
+          <h1 className="text-xl font-bold mb-2">{t("title")}</h1>
           <p className="text-gray-600 text-sm">
-            Hej {candidate.name}! Upload et profilbillede til din kandidatprofil på Stem Palæstina.
+            {t("greeting", { name: candidate.name })}
           </p>
         </div>
 
         {candidate.photoUrl && (
           <div className="text-center">
-            <p className="text-xs text-gray-400 mb-2">Nuværende billede:</p>
+            <p className="text-xs text-gray-400 mb-2">{t("currentImage")}</p>
             <img
               src={candidate.photoUrl}
               alt={candidate.name}

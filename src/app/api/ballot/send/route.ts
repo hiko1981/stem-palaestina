@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { hashPhone } from "@/lib/hash";
 import { sendSms } from "@/lib/sms";
@@ -22,11 +23,15 @@ function getBaseUrl() {
 
 export async function POST(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
+    const tv = await getTranslations("validation");
+
     const body = await req.json();
     const parsed = ballotRequestSchema.safeParse(body);
     if (!parsed.success) {
+      const key = parsed.error.issues[0].message;
       return NextResponse.json(
-        { error: parsed.error.issues[0].message },
+        { error: tv.has(key) ? tv(key) : key },
         { status: 400 }
       );
     }
@@ -35,7 +40,7 @@ export async function POST(req: NextRequest) {
     const phone = normalizeToE164(parsed.data.phone, parsed.data.dialCode);
     if (!phone || !isValidE164(phone)) {
       return NextResponse.json(
-        { error: "Ugyldigt telefonnummer" },
+        { error: te("invalidPhone") },
         { status: 400 }
       );
     }
@@ -59,7 +64,7 @@ export async function POST(req: NextRequest) {
 
       const response = NextResponse.json(
         {
-          error: "Du har allerede stemt. Genindlæs siden for at se resultater.",
+          error: te("alreadyVoted"),
           alreadyVoted: true,
           voteValue: existingVote.voteValue,
         },
@@ -91,7 +96,7 @@ export async function POST(req: NextRequest) {
     );
     if (!phoneLimit.ok) {
       return NextResponse.json(
-        { error: "For mange forsøg. Prøv igen om en time." },
+        { error: te("tooManyAttempts") },
         { status: 429 }
       );
     }
@@ -105,7 +110,7 @@ export async function POST(req: NextRequest) {
     );
     if (!globalLimit.ok) {
       return NextResponse.json(
-        { error: "Tjenesten er midlertidigt overbelastet. Prøv igen senere." },
+        { error: te("serviceOverloaded") },
         { status: 429 }
       );
     }
@@ -113,8 +118,9 @@ export async function POST(req: NextRequest) {
     // Check phone type (block VoIP/virtual numbers)
     const phoneType = await checkPhoneType(phone);
     if (!phoneType.ok) {
+      const key = phoneType.error || "mobileOnlyNumbers";
       return NextResponse.json(
-        { error: phoneType.error },
+        { error: te.has(key) ? te(key) : key },
         { status: 403 }
       );
     }
@@ -165,15 +171,16 @@ export async function POST(req: NextRequest) {
 
     // Surface Twilio "invalid phone" errors to the user
     const msg = error instanceof Error ? error.message : "";
+    const te = await getTranslations("errors");
     if (msg.includes("Invalid") && msg.includes("Phone Number")) {
       return NextResponse.json(
-        { error: "Ugyldigt telefonnummer. Tjek nummer og landekode." },
+        { error: te("invalidPhoneCheck") },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { error: "Intern serverfejl" },
+      { error: te("serverError") },
       { status: 500 }
     );
   }

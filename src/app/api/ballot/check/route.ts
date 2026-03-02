@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { RATE_LIMITS } from "@/lib/constants";
 
 export async function GET(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     const limit = await checkRateLimit("ballot-check-ip", ip, RATE_LIMITS.ballotCheckPerIp.max, RATE_LIMITS.ballotCheckPerIp.windowMs);
     if (!limit.ok) {
-      return NextResponse.json({ error: "For mange forespørgsler." }, { status: 429 });
+      return NextResponse.json({ error: te("tooManyRequests") }, { status: 429 });
     }
 
     const token = req.nextUrl.searchParams.get("token");
@@ -46,8 +48,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ status: "valid" });
   } catch (error) {
     console.error("ballot/check error:", error);
+    const te = await getTranslations("errors");
     return NextResponse.json(
-      { error: "Intern serverfejl" },
+      { error: te("serverError") },
       { status: 500 }
     );
   }

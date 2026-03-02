@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { verifyOptout } from "@/lib/optout-sig";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import OptoutConfirmButton from "./OptoutConfirmButton";
 
 interface Props {
@@ -55,6 +56,7 @@ async function performOptout(candidateId: number) {
 }
 
 export default async function AfmeldKandidatPage({ searchParams }: Props) {
+  const t = await getTranslations("optout");
   const params = await searchParams;
   const cidStr = params.cid;
   const sig = params.sig;
@@ -63,13 +65,15 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-bold mb-2">Ugyldigt link</h1>
+          <h1 className="text-xl font-bold mb-2">{t("invalidLink")}</h1>
           <p className="text-gray-600 text-sm">
-            Dette afmeldingslink er ugyldigt. Kontakt{" "}
-            <Link href="/" className="text-melon-green hover:underline">
-              Stem Palæstina
-            </Link>{" "}
-            hvis du har brug for hjælp.
+            {t.rich("invalidLinkHelp", {
+              link: (chunks) => (
+                <Link href="/" className="text-melon-green hover:underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
           </p>
         </div>
       </div>
@@ -81,13 +85,15 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-bold mb-2">Ugyldigt link</h1>
+          <h1 className="text-xl font-bold mb-2">{t("invalidLink")}</h1>
           <p className="text-gray-600 text-sm">
-            Signaturen kunne ikke verificeres. Kontakt{" "}
-            <Link href="/" className="text-melon-green hover:underline">
-              Stem Palæstina
-            </Link>{" "}
-            hvis du har brug for hjælp.
+            {t.rich("signatureInvalid", {
+              link: (chunks) => (
+                <Link href="/" className="text-melon-green hover:underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
           </p>
         </div>
       </div>
@@ -104,9 +110,9 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-bold mb-2">Kandidat ikke fundet</h1>
+          <h1 className="text-xl font-bold mb-2">{t("candidateNotFound")}</h1>
           <p className="text-gray-600 text-sm">
-            Denne kandidat findes ikke længere.
+            {t("candidateGone")}
           </p>
         </div>
       </div>
@@ -122,9 +128,9 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-xl font-bold mb-2">Allerede afmeldt</h1>
+          <h1 className="text-xl font-bold mb-2">{t("alreadyOptedOut")}</h1>
           <p className="text-gray-600 text-sm">
-            {candidate.name} er allerede afmeldt fra Stem Palæstina.
+            {t("alreadyOptedOutText", { name: candidate.name })}
           </p>
         </div>
       </div>
@@ -142,9 +148,12 @@ export default async function AfmeldKandidatPage({ searchParams }: Props) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
           </svg>
         </div>
-        <h1 className="text-xl font-bold mb-2">Afmeld fra Stem Palæstina</h1>
+        <h1 className="text-xl font-bold mb-2">{t("title")}</h1>
         <p className="text-gray-600 text-sm mb-6">
-          Er du sikker på, at du vil afmelde <strong>{candidate.name}</strong> fra Stem Palæstina? Du vil ikke modtage flere henvendelser.
+          {t.rich("confirmText", {
+            name: candidate.name,
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </p>
         <OptoutConfirmButton action={boundOptout} />
       </div>

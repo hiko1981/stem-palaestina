@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { z } from "zod/v4";
 import { sendEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -18,11 +19,13 @@ function getBaseUrl() {
 
 export async function POST(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
+
     // Require proof of voting — only voters can share
     const voted = req.cookies.get("stem_voted")?.value;
     if (voted !== "1") {
       return NextResponse.json(
-        { error: "Du skal stemme før du kan dele." },
+        { error: te("mustVoteToShare") },
         { status: 403 }
       );
     }
@@ -42,7 +45,7 @@ export async function POST(req: NextRequest) {
     const limit = await checkRateLimit("share-email-ip", ip, 10, 60 * 60 * 1000);
     if (!limit.ok) {
       return NextResponse.json(
-        { error: "For mange forsøg. Prøv igen senere." },
+        { error: te("tooManyRetry") },
         { status: 429 }
       );
     }
@@ -55,8 +58,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("share/email error:", error);
+    const te = await getTranslations("errors");
     return NextResponse.json(
-      { error: "Kunne ikke sende e-mail. Prøv igen senere." },
+      { error: te("emailSendFailed") },
       { status: 500 }
     );
   }

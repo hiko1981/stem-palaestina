@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { candidateRegisterSchema } from "@/lib/validation";
 import { notifyAdminNewCandidate } from "@/lib/admin-notify";
@@ -6,19 +7,23 @@ import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
+    const tv = await getTranslations("validation");
+
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     const rl = await checkRateLimit("candidate-register", ip, 10, 60_000);
     if (!rl.ok) {
       return NextResponse.json(
-        { error: "For mange forsøg. Vent venligst." },
+        { error: te("tooManyWait") },
         { status: 429 }
       );
     }
     const body = await req.json();
     const parsed = candidateRegisterSchema.safeParse(body);
     if (!parsed.success) {
+      const key = parsed.error.issues[0].message;
       return NextResponse.json(
-        { error: parsed.error.issues[0].message },
+        { error: tv.has(key) ? tv(key) : key },
         { status: 400 }
       );
     }
@@ -30,7 +35,7 @@ export async function POST(req: NextRequest) {
     });
     if (!ballotToken) {
       return NextResponse.json(
-        { error: "Ugyldig stemmeseddel" },
+        { error: te("invalidBallot") },
         { status: 400 }
       );
     }
@@ -41,7 +46,7 @@ export async function POST(req: NextRequest) {
     });
     if (!vote) {
       return NextResponse.json(
-        { error: "Du skal stemme før du kan registrere dig som kandidat" },
+        { error: te("mustVoteToRegister") },
         { status: 400 }
       );
     }
@@ -52,7 +57,7 @@ export async function POST(req: NextRequest) {
     });
     if (existing) {
       return NextResponse.json(
-        { error: "Du er allerede registreret som kandidat" },
+        { error: te("alreadyRegistered") },
         { status: 409 }
       );
     }
@@ -73,8 +78,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("candidate/register error:", error);
+    const te = await getTranslations("errors");
     return NextResponse.json(
-      { error: "Intern serverfejl" },
+      { error: te("serverError") },
       { status: 500 }
     );
   }

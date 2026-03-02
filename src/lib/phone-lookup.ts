@@ -53,7 +53,7 @@ export async function checkPhoneType(phone: string): Promise<LookupResult> {
     return {
       ok: false,
       type: lineType,
-      error: "Kun mobilnumre accepteres. Virtuelle numre og fastnet er ikke tilladt.",
+      error: "mobileOnlyNumbers",
     };
   } catch (err) {
     console.error("Twilio Lookup error:", err);

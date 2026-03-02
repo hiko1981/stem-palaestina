@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { ballotVoteSchema } from "@/lib/validation";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -7,11 +8,15 @@ import { RATE_LIMITS } from "@/lib/constants";
 
 export async function POST(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
+    const tv = await getTranslations("validation");
+
     const body = await req.json();
     const parsed = ballotVoteSchema.safeParse(body);
     if (!parsed.success) {
+      const key = parsed.error.issues[0].message;
       return NextResponse.json(
-        { error: parsed.error.issues[0].message },
+        { error: tv.has(key) ? tv(key) : key },
         { status: 400 }
       );
     }
@@ -21,7 +26,7 @@ export async function POST(req: NextRequest) {
     const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
     if (!isMobile) {
       return NextResponse.json(
-        { error: "Stemmer kan kun afgives fra en mobilenhed." },
+        { error: te("mobileOnly") },
         { status: 403 }
       );
     }
@@ -37,7 +42,7 @@ export async function POST(req: NextRequest) {
     );
     if (!limit.ok) {
       return NextResponse.json(
-        { error: "For mange forsøg. Prøv igen senere." },
+        { error: te("tooManyRetry") },
         { status: 429 }
       );
     }
@@ -49,21 +54,21 @@ export async function POST(req: NextRequest) {
 
     if (!ballot) {
       return NextResponse.json(
-        { error: "Ugyldig stemmeseddel." },
+        { error: te("invalidBallot") },
         { status: 404 }
       );
     }
 
     if (ballot.used) {
       return NextResponse.json(
-        { error: "Denne stemmeseddel er allerede brugt." },
+        { error: te("ballotUsed") },
         { status: 409 }
       );
     }
 
     if (new Date() > ballot.expiresAt) {
       return NextResponse.json(
-        { error: "Stemmesedlen er udløbet. Anmod om en ny." },
+        { error: te("ballotExpired") },
         { status: 410 }
       );
     }
@@ -79,7 +84,7 @@ export async function POST(req: NextRequest) {
         data: { used: true },
       });
       return NextResponse.json(
-        { error: "Du har allerede afgivet din stemme." },
+        { error: te("alreadyCast") },
         { status: 409 }
       );
     }
@@ -131,14 +136,16 @@ export async function POST(req: NextRequest) {
       "code" in error &&
       (error as { code: string }).code === "P2002"
     ) {
+      const te = await getTranslations("errors");
       return NextResponse.json(
-        { error: "Du har allerede afgivet din stemme." },
+        { error: te("alreadyCast") },
         { status: 409 }
       );
     }
     console.error("vote error:", error);
+    const te = await getTranslations("errors");
     return NextResponse.json(
-      { error: "Intern serverfejl" },
+      { error: te("serverError") },
       { status: 500 }
     );
   }

@@ -1,19 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { z } from "zod/v4";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const optoutSchema = z.object({
-  token: z.string().uuid("Ugyldig token"),
+  token: z.string().uuid("invalidToken"),
 });
 
 export async function POST(req: NextRequest) {
   try {
+    const te = await getTranslations("errors");
+
     const body = await req.json();
     const parsed = optoutSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
-        { error: parsed.error.issues[0].message },
+        { error: te("invalidToken") },
         { status: 400 }
       );
     }
@@ -23,7 +26,7 @@ export async function POST(req: NextRequest) {
     const limit = await checkRateLimit("optout-ip", ip, 10, 60 * 1000);
     if (!limit.ok) {
       return NextResponse.json(
-        { error: "For mange forsøg. Prøv igen senere." },
+        { error: te("tooManyRetry") },
         { status: 429 }
       );
     }
@@ -35,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     if (!ballot) {
       return NextResponse.json(
-        { error: "Ugyldig stemmeseddel." },
+        { error: te("invalidBallot") },
         { status: 404 }
       );
     }
@@ -54,8 +57,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("optout error:", error);
+    const te = await getTranslations("errors");
     return NextResponse.json(
-      { error: "Intern serverfejl" },
+      { error: te("serverError") },
       { status: 500 }
     );
   }

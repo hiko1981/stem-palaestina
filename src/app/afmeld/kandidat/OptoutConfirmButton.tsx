@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface Props {
   action: () => Promise<void>;
 }
 
 export default function OptoutConfirmButton({ action }: Props) {
+  const t = useTranslations("optout");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -24,13 +26,13 @@ export default function OptoutConfirmButton({ action }: Props) {
         disabled={loading}
         className="w-full rounded-lg bg-melon-red py-3 text-sm font-bold text-white transition-colors hover:bg-melon-red/90 disabled:opacity-50"
       >
-        {loading ? "Afmelder..." : "Bekræft afmelding"}
+        {loading ? t("confirming") : t("confirmButton")}
       </button>
       <a
         href="/"
         className="block text-sm text-gray-400 hover:text-gray-600 hover:underline"
       >
-        Annullér
+        {t("cancel")}
       </a>
     </div>
   );
