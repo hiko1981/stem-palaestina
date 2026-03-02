@@ -115,6 +115,10 @@ const REVERSIBLE_ACTIONS = new Set([
   "verify_candidate",
   "unverify_candidate",
   "handle_support",
+  "delete_candidate",
+  "delete_support",
+  "delete_all_votes",
+  "delete_vote",
 ]);
 
 // "mobile" = has touch + small screen (phone/tablet)

@@ -105,18 +105,33 @@ export async function DELETE(req: NextRequest) {
     const adminId = Number(auth.sub);
 
     if (body.all === true) {
-      const voteCount = await prisma.vote.count();
+      const votes = await prisma.vote.findMany();
+      const usedTokenIds = (await prisma.ballotToken.findMany({
+        where: { used: true },
+        select: { id: true },
+      })).map((t) => t.id);
       await Promise.all([
         prisma.vote.deleteMany(),
         prisma.ballotToken.updateMany({
           data: { used: false },
         }),
       ]);
-      await logAudit(adminId, "delete_all_votes", "vote", 0, { count: voteCount });
+      await logAudit(adminId, "delete_all_votes", "vote", 0, {
+        votes,
+        usedTokenIds,
+        count: votes.length,
+      });
       return NextResponse.json({ ok: true, deleted: "all" });
     }
 
     if (body.phoneHash) {
+      const deletedVotes = await prisma.vote.findMany({
+        where: { phoneHash: body.phoneHash },
+      });
+      const affectedTokenIds = (await prisma.ballotToken.findMany({
+        where: { phoneHash: body.phoneHash, used: true },
+        select: { id: true },
+      })).map((t) => t.id);
       await Promise.all([
         prisma.vote.deleteMany({
           where: { phoneHash: body.phoneHash },
@@ -126,7 +141,11 @@ export async function DELETE(req: NextRequest) {
           data: { used: false },
         }),
       ]);
-      await logAudit(adminId, "delete_vote", "vote", 0, { phoneHash: body.phoneHash });
+      await logAudit(adminId, "delete_vote", "vote", 0, {
+        phoneHash: body.phoneHash,
+        votes: deletedVotes,
+        affectedTokenIds,
+      });
       return NextResponse.json({ ok: true, deleted: body.phoneHash });
     }
 
@@ -210,6 +229,88 @@ export async function PATCH(req: NextRequest) {
             where: { id: entry.targetId },
             data: { handledBy: null, handledAt: null },
           });
+          break;
+        }
+        case "delete_candidate": {
+          if (!meta.candidate) {
+            return NextResponse.json({ error: "Ingen kandidatdata gemt" }, { status: 400 });
+          }
+          await prisma.candidate.create({
+            data: {
+              name: meta.candidate.name,
+              party: meta.candidate.party,
+              constituency: meta.candidate.constituency,
+              contactEmail: meta.candidate.contactEmail || null,
+              contactPhone: meta.candidate.contactPhone || null,
+              phoneHash: meta.candidate.phoneHash || null,
+              pledged: meta.candidate.pledged || false,
+              publicStatement: meta.candidate.publicStatement || null,
+              photoUrl: meta.candidate.photoUrl || null,
+              verified: meta.candidate.verified || false,
+              optedOut: meta.candidate.optedOut || false,
+              optedOutAt: meta.candidate.optedOutAt ? new Date(meta.candidate.optedOutAt) : null,
+            },
+          });
+          break;
+        }
+        case "delete_support": {
+          if (!meta.supportMessage) {
+            return NextResponse.json({ error: "Ingen beskeddata gemt" }, { status: 400 });
+          }
+          await prisma.supportMessage.create({
+            data: {
+              category: meta.supportMessage.category,
+              message: meta.supportMessage.message,
+              deviceId: meta.supportMessage.deviceId || null,
+              createdAt: meta.supportMessage.createdAt ? new Date(meta.supportMessage.createdAt) : new Date(),
+              handledBy: meta.supportMessage.handledBy || null,
+              handledAt: meta.supportMessage.handledAt ? new Date(meta.supportMessage.handledAt) : null,
+            },
+          });
+          break;
+        }
+        case "delete_all_votes": {
+          if (!meta.votes || !Array.isArray(meta.votes)) {
+            return NextResponse.json({ error: "Ingen stemmedata gemt" }, { status: 400 });
+          }
+          // Recreate all votes
+          for (const v of meta.votes) {
+            await prisma.vote.create({
+              data: {
+                phoneHash: v.phoneHash,
+                voteValue: v.voteValue,
+                votedAt: new Date(v.votedAt),
+              },
+            }).catch(() => { /* skip duplicates */ });
+          }
+          // Restore ballot tokens to used
+          if (meta.usedTokenIds && Array.isArray(meta.usedTokenIds)) {
+            await prisma.ballotToken.updateMany({
+              where: { id: { in: meta.usedTokenIds } },
+              data: { used: true },
+            });
+          }
+          break;
+        }
+        case "delete_vote": {
+          if (!meta.votes || !Array.isArray(meta.votes)) {
+            return NextResponse.json({ error: "Ingen stemmedata gemt" }, { status: 400 });
+          }
+          for (const v of meta.votes) {
+            await prisma.vote.create({
+              data: {
+                phoneHash: v.phoneHash,
+                voteValue: v.voteValue,
+                votedAt: new Date(v.votedAt),
+              },
+            }).catch(() => { /* skip duplicates */ });
+          }
+          if (meta.affectedTokenIds && Array.isArray(meta.affectedTokenIds)) {
+            await prisma.ballotToken.updateMany({
+              where: { id: { in: meta.affectedTokenIds } },
+              data: { used: true },
+            });
+          }
           break;
         }
         default:
@@ -315,13 +416,29 @@ export async function PATCH(req: NextRequest) {
       const candidate = await prisma.candidate.findUnique({
         where: { id: body.deleteCandidateId },
       });
+      // Delete related invite phones first
+      await prisma.candidateInvitePhone.deleteMany({
+        where: { candidateId: body.deleteCandidateId },
+      });
       await prisma.candidate.delete({
         where: { id: body.deleteCandidateId },
       });
       await logAudit(adminId, "delete_candidate", "candidate", body.deleteCandidateId, {
         candidateName: candidate?.name,
-        party: candidate?.party,
-        constituency: candidate?.constituency,
+        candidate: candidate ? {
+          name: candidate.name,
+          party: candidate.party,
+          constituency: candidate.constituency,
+          contactEmail: candidate.contactEmail,
+          contactPhone: candidate.contactPhone,
+          phoneHash: candidate.phoneHash,
+          pledged: candidate.pledged,
+          publicStatement: candidate.publicStatement,
+          photoUrl: candidate.photoUrl,
+          verified: candidate.verified,
+          optedOut: candidate.optedOut,
+          optedOutAt: candidate.optedOutAt,
+        } : null,
       });
       return NextResponse.json({ ok: true });
     }
@@ -330,7 +447,6 @@ export async function PATCH(req: NextRequest) {
     if (body.deleteSupportId) {
       const msg = await prisma.supportMessage.findUnique({
         where: { id: body.deleteSupportId },
-        select: { category: true, message: true },
       });
       await prisma.supportMessage.delete({
         where: { id: body.deleteSupportId },
@@ -338,6 +454,14 @@ export async function PATCH(req: NextRequest) {
       await logAudit(adminId, "delete_support", "support_message", body.deleteSupportId, {
         category: msg?.category,
         message: msg?.message,
+        supportMessage: msg ? {
+          category: msg.category,
+          message: msg.message,
+          deviceId: msg.deviceId,
+          createdAt: msg.createdAt,
+          handledBy: msg.handledBy,
+          handledAt: msg.handledAt,
+        } : null,
       });
       return NextResponse.json({ ok: true });
     }
