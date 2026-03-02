@@ -13,11 +13,11 @@ export default function ProfileFrameGenerator() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // Clean up object URLs on unmount
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -40,8 +40,6 @@ export default function ProfileFrameGenerator() {
         const canvas = canvasRef.current;
         if (!canvas) return;
         renderFrame(canvas, img, t("stampText"), locale);
-
-        // Generate preview blob URL
         canvas.toBlob((blob) => {
           if (blob) {
             if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -54,7 +52,7 @@ export default function ProfileFrameGenerator() {
     [locale, t, previewUrl],
   );
 
-  // Re-render when locale changes (stampText changes)
+  // Re-render when locale changes
   useEffect(() => {
     if (!imageSrc) return;
     const img = new Image();
@@ -78,49 +76,40 @@ export default function ProfileFrameGenerator() {
     if (file) processImage(file);
   }
 
-  async function handleDownload() {
+  async function handleSave() {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const blob = await canvasToBlob(canvas);
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "vote-palestine-profile.png";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+    setSaving(true);
 
-  async function handleShare() {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const blob = await canvasToBlob(canvas);
-    const file = new File([blob], "vote-palestine-profile.png", {
-      type: "image/png",
-    });
+    try {
+      const blob = await canvasToBlob(canvas);
+      const file = new File([blob], "vote-palestine-profile.png", {
+        type: "image/png",
+      });
 
-    if (navigator.share && navigator.canShare?.({ files: [file] })) {
-      try {
+      // Mobile: native share sheet (Save to Photos / share to apps)
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: "Vote Palestine",
-          text: "vote-palestine.com",
         });
         return;
-      } catch {
-        // User cancelled or share failed — fall through to download
       }
-    }
-    // Fallback: trigger download
-    handleDownload();
-  }
 
-  function handleStartOver() {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    if (imageSrc) URL.revokeObjectURL(imageSrc);
-    setImageSrc(null);
-    setPreviewUrl(null);
-    setError("");
-    if (fileRef.current) fileRef.current.value = "";
+      // Desktop fallback: trigger download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "vote-palestine-profile.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      // User cancelled share — that's fine
+    } finally {
+      setSaving(false);
+    }
   }
 
   // ── Upload state ──
@@ -137,10 +126,10 @@ export default function ProfileFrameGenerator() {
         />
         <label
           htmlFor="frame-upload"
-          className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-16 cursor-pointer hover:border-melon-green hover:bg-melon-green/5 transition-colors"
+          className="flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50/50 px-6 py-20 cursor-pointer active:bg-melon-green/5 active:border-melon-green transition-colors"
         >
           <svg
-            className="h-10 w-10 text-gray-400"
+            className="h-12 w-12 text-gray-300"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -149,10 +138,15 @@ export default function ProfileFrameGenerator() {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M12 16v-8m0 0l-3 3m3-3l3 3M6.75 21A3.75 3.75 0 013 17.25V6.75A3.75 3.75 0 016.75 3h10.5A3.75 3.75 0 0121 6.75v10.5A3.75 3.75 0 0117.25 21H6.75z"
+              d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"
             />
           </svg>
-          <span className="text-sm font-semibold text-gray-700">
+          <span className="text-sm font-semibold text-gray-600">
             {t("uploadLabel")}
           </span>
           <span className="text-xs text-gray-400">{t("uploadHint")}</span>
@@ -166,7 +160,6 @@ export default function ProfileFrameGenerator() {
           {t("privacyNote")}
         </p>
 
-        {/* Hidden canvas for rendering */}
         <canvas ref={canvasRef} className="hidden" />
       </div>
     );
@@ -174,9 +167,9 @@ export default function ProfileFrameGenerator() {
 
   // ── Preview state ──
   return (
-    <div className="space-y-4">
-      {/* Preview */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100">
+    <div className="space-y-5">
+      {/* Preview with subtle shadow */}
+      <div className="relative aspect-square w-full overflow-hidden rounded-2xl shadow-lg">
         <img
           src={previewUrl}
           alt="Profile frame preview"
@@ -184,37 +177,28 @@ export default function ProfileFrameGenerator() {
         />
       </div>
 
-      {/* Action buttons */}
-      <div className="flex gap-3">
-        <button
-          onClick={handleDownload}
-          className="flex-1 rounded-lg bg-melon-green py-3 text-sm font-bold text-white hover:bg-melon-green-dark transition-colors"
-        >
-          {t("download")}
-        </button>
-        <button
-          onClick={handleShare}
-          className="flex-1 rounded-lg border border-melon-green py-3 text-sm font-bold text-melon-green hover:bg-melon-green/5 transition-colors"
-        >
-          {t("share")}
-        </button>
-      </div>
+      {/* Single primary action */}
+      <button
+        onClick={handleSave}
+        disabled={saving}
+        className="w-full rounded-xl bg-melon-green py-4 text-base font-bold text-white active:bg-melon-green-dark transition-colors disabled:opacity-60"
+      >
+        {saving ? (
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+          </span>
+        ) : (
+          t("download")
+        )}
+      </button>
 
-      {/* Change image / Start over */}
-      <div className="flex justify-center gap-4">
-        <label
-          htmlFor="frame-upload-change"
-          className="text-sm text-melon-green font-medium cursor-pointer hover:underline"
-        >
-          {t("changeImage")}
-        </label>
-        <button
-          onClick={handleStartOver}
-          className="text-sm text-gray-400 hover:text-gray-600"
-        >
-          {t("startOver")}
-        </button>
-      </div>
+      {/* Change image */}
+      <label
+        htmlFor="frame-upload-change"
+        className="block text-center text-sm text-gray-400 font-medium cursor-pointer active:text-gray-600"
+      >
+        {t("changeImage")}
+      </label>
 
       <input
         ref={fileRef}
@@ -227,7 +211,6 @@ export default function ProfileFrameGenerator() {
 
       <p className="text-center text-xs text-gray-400">{t("privacyNote")}</p>
 
-      {/* Hidden canvas */}
       <canvas ref={canvasRef} className="hidden" />
     </div>
   );

@@ -249,8 +249,8 @@
     "unverified": "Not verified",
     "optedOut": "Opted out",
     "noContact": "No contact info",
-    "votedYes": "Yes \u2713",
-    "votedNo": "No \u2717"
+    "votedYes": "Yes ✓",
+    "votedNo": "No ✗"
   },
   "map": {
     "title": "Find your candidate",
@@ -400,7 +400,7 @@
     "uploadLabel": "Upload your photo",
     "uploadHint": "JPG or PNG, max 10 MB",
     "changeImage": "Change image",
-    "download": "Download",
+    "download": "Save to Photos",
     "share": "Share",
     "stampText": "I voted Palestine",
     "privacyNote": "Your image never leaves your device — everything happens locally.",
