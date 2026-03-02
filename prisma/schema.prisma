@@ -152,6 +152,22 @@ model AdminDevice {
   @@map("admin_devices")
 }
 
+model AdminAuditLog {
+  id         Int       @id @default(autoincrement())
+  adminId    Int       @map("admin_id")
+  action     String
+  targetType String    @map("target_type")
+  targetId   Int       @map("target_id")
+  meta       String?
+  reversed   Boolean   @default(false)
+  reversedAt DateTime? @map("reversed_at")
+  reversedBy Int?      @map("reversed_by")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  @@index([adminId])
+  @@map("admin_audit_log")
+}
+
 model AdminInvite {
   id        Int       @id @default(autoincrement())
   token     String    @unique @default(uuid())

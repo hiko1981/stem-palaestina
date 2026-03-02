@@ -82,6 +82,41 @@ interface SuppressionRecord {
   createdAt: string;
 }
 
+interface AuditLogRecord {
+  id: number;
+  adminId: number;
+  adminName: string;
+  action: string;
+  targetType: string;
+  targetId: number;
+  meta: Record<string, unknown> | null;
+  reversed: boolean;
+  reversedAt: string | null;
+  reversedBy: number | null;
+  reversedByName: string | null;
+  createdAt: string;
+}
+
+const ACTION_LABELS: Record<string, string> = {
+  approve_photo: "Godkendte foto",
+  reject_photo: "Afviste foto",
+  verify_candidate: "Godkendte kandidat",
+  unverify_candidate: "Fjernede godkendelse",
+  handle_support: "Håndterede support",
+  delete_candidate: "Slettede kandidat",
+  delete_support: "Slettede supportbesked",
+  delete_all_votes: "Slettede alle stemmer",
+  delete_vote: "Slettede stemme",
+};
+
+const REVERSIBLE_ACTIONS = new Set([
+  "approve_photo",
+  "reject_photo",
+  "verify_candidate",
+  "unverify_candidate",
+  "handle_support",
+]);
+
 // "mobile" = has touch + small screen (phone/tablet)
 function isMobileDevice(): boolean {
   if (typeof window === "undefined") return false;
@@ -93,6 +128,9 @@ type AuthGate = "checking" | "authed" | "qr" | "denied";
 export default function AdminPage() {
   const [gate, setGate] = useState<AuthGate>("checking");
   const [adminName, setAdminName] = useState<string>("");
+  const [adminRole, setAdminRole] = useState<string>("admin");
+  const [auditLog, setAuditLog] = useState<AuditLogRecord[]>([]);
+  const [auditOpen, setAuditOpen] = useState(false);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [tokens, setTokens] = useState<BallotTokenRecord[]>([]);
   const [candidates, setCandidates] = useState<CandidateRecord[]>([]);
@@ -108,11 +146,13 @@ export default function AdminPage() {
 
   const applyData = useCallback((data: Record<string, unknown>) => {
     if (data.adminName) setAdminName(data.adminName as string);
+    if (data.adminRole) setAdminRole(data.adminRole as string);
     setVotes((data.votes as VoteRecord[]) || []);
     setTokens((data.tokens as BallotTokenRecord[]) || []);
     setCandidates((data.candidates as CandidateRecord[]) || []);
     setSupportMessages((data.supportMessages as SupportRecord[]) || []);
     setSuppressions((data.suppressions as SuppressionRecord[]) || []);
+    if (data.auditLog) setAuditLog(data.auditLog as AuditLogRecord[]);
   }, []);
 
   const loadDashboardData = useCallback(async () => {
@@ -267,6 +307,22 @@ export default function AdminPage() {
     if (res.ok) {
       setMessage("Support markeret som håndteret");
       await fetchData();
+    }
+  }
+
+  async function reverseAudit(auditId: number) {
+    setMessage("");
+    const res = await fetch("/api/admin/votes", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reverseAudit: auditId }),
+    });
+    if (res.ok) {
+      setMessage("Handling fortrudt");
+      await fetchData();
+    } else {
+      const data = await res.json();
+      setMessage(data.error || "Kunne ikke fortryde");
     }
   }
 
@@ -1222,6 +1278,81 @@ export default function AdminPage() {
           </>
         )}
       </section>
+
+      {/* Aktivitetslog (kun superadmin) */}
+      {adminRole === "master" && auditLog.length > 0 && (
+        <section>
+          <button
+            onClick={() => setAuditOpen(!auditOpen)}
+            className="flex w-full items-center justify-between mb-4"
+          >
+            <h2 className="text-xl font-bold">
+              Aktivitetslog
+              <span className="ml-2 text-sm font-normal text-gray-500">
+                ({auditLog.length})
+              </span>
+            </h2>
+            <ChevronIcon open={auditOpen} />
+          </button>
+
+          {auditOpen && (
+            <div className="space-y-2">
+              {auditLog.map((entry) => {
+                const label = ACTION_LABELS[entry.action] || entry.action;
+                const target = entry.meta?.candidateName || entry.meta?.category || `#${entry.targetId}`;
+                const canReverse = REVERSIBLE_ACTIONS.has(entry.action) && !entry.reversed;
+
+                return (
+                  <div
+                    key={entry.id}
+                    className={`rounded-lg border px-4 py-3 ${
+                      entry.reversed ? "border-gray-100 opacity-50" : "border-gray-200"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm">
+                          <span className="font-medium">{entry.adminName}</span>
+                          {" "}
+                          <span className="text-gray-500">{label.toLowerCase()}</span>
+                          {target !== "#0" && (
+                            <>
+                              {": "}
+                              <span className="font-medium">{String(target)}</span>
+                            </>
+                          )}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-0.5">
+                          {new Date(entry.createdAt).toLocaleString("da-DK")}
+                          {entry.reversed && entry.reversedByName && (
+                            <span className="ml-2 text-amber-600">
+                              Fortrudt af {entry.reversedByName}
+                              {entry.reversedAt && ` · ${new Date(entry.reversedAt).toLocaleString("da-DK")}`}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                      {canReverse && (
+                        <button
+                          onClick={() => reverseAudit(entry.id)}
+                          className="shrink-0 text-xs text-amber-600 hover:text-amber-700 hover:underline px-2 py-1 min-h-[36px]"
+                        >
+                          Fortryd
+                        </button>
+                      )}
+                      {entry.reversed && (
+                        <span className="shrink-0 text-xs text-gray-400 px-2 py-1">
+                          Fortrudt
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      )}
 
       {/* Admin-opsætning */}
       <section>
