@@ -13,7 +13,7 @@ const BASE_URL =
  * Requires legacy ADMIN_PASSWORD auth.
  */
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const rl = await checkRateLimit("admin-setup", ip, 5, 60_000);
   if (!rl.ok) {
     return NextResponse.json(
@@ -37,6 +37,18 @@ export async function POST(req: NextRequest) {
     !timingSafeEqual(Buffer.from(auth), Buffer.from(expected))
   ) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Block setup if a master admin with registered devices already exists
+  const existingMaster = await prisma.adminUser.findFirst({
+    where: { role: "master", active: true },
+    include: { devices: { where: { active: true }, take: 1 } },
+  });
+  if (existingMaster && existingMaster.devices.length > 0) {
+    return NextResponse.json(
+      { error: "Setup allerede fuldført. Master admin er registreret." },
+      { status: 403 }
+    );
   }
 
   // Find or create master admin

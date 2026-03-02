@@ -11,7 +11,7 @@ const MAX_TTL = 30 * 60; // 30 minutes max for PC sessions
  * maxAge in seconds, capped at 30 min for PC sessions.
  */
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const rl = await checkRateLimit("admin-token-exchange", ip, 10, 60_000);
   if (!rl.ok) {
     return NextResponse.json(
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
   const maxAge =
     body.maxAge != null
       ? Math.min(Math.max(body.maxAge, 60), MAX_TTL)
-      : 24 * 60 * 60;
+      : MAX_TTL;
 
   const response = NextResponse.json({ ok: true });
   response.cookies.set("admin_token", jwt, {

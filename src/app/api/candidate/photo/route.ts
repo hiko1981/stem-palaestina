@@ -23,6 +23,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Ugyldigt billedformat" }, { status: 400 });
     }
 
+    // Block SVG (XSS risk via embedded scripts)
+    if (photo.startsWith("data:image/svg")) {
+      return NextResponse.json({ error: "SVG er ikke tilladt. Brug JPEG, PNG eller WebP." }, { status: 400 });
+    }
+
     if (photo.length > MAX_SIZE) {
       return NextResponse.json({ error: "Billedet er for stort (max 1.5 MB)" }, { status: 400 });
     }

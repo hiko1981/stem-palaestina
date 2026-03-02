@@ -15,7 +15,7 @@ import {
  * Step 2: { deviceId, challenge, signature } → returns JWT cookie
  */
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const rl = await checkRateLimit("admin-device-login", ip, 10, 60_000);
   if (!rl.ok) {
     return NextResponse.json(
