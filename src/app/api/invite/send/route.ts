@@ -29,6 +29,15 @@ function getBaseUrl() {
 
 export async function POST(req: NextRequest) {
   try {
+    // Require proof of voting — only voters can send candidate invites
+    const voted = req.cookies.get("stem_voted")?.value;
+    if (voted !== "1") {
+      return NextResponse.json(
+        { error: "mustVoteFirst" },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
     const parsed = inviteSchema.safeParse(body);
     if (!parsed.success) {
@@ -104,6 +113,20 @@ export async function POST(req: NextRequest) {
     } else {
       // SMS invite: look up candidate's stored contactPhone
       const { candidateId, deviceId } = parsed.data;
+
+      // Global cap: max 5 SMS per candidate per day (prevents harassment)
+      const globalSmsLimit = await checkRateLimit(
+        "invite-sms-global",
+        `cand:${candidateId}`,
+        5,
+        24 * 60 * 60 * 1000
+      );
+      if (!globalSmsLimit.ok) {
+        return NextResponse.json(
+          { error: "alreadyInvited" },
+          { status: 429 }
+        );
+      }
 
       // Rate limit: 1 SMS per candidate per device per hour
       const deviceKey = deviceId || ip;

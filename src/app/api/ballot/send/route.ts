@@ -140,7 +140,6 @@ export async function POST(req: NextRequest) {
       data: {
         token,
         phoneHash,
-        phone,
         deviceId: deviceId || null,
         expiresAt,
       },

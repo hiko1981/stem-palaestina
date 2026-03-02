@@ -18,6 +18,15 @@ function getBaseUrl() {
 
 export async function POST(req: NextRequest) {
   try {
+    // Require proof of voting — only voters can share
+    const voted = req.cookies.get("stem_voted")?.value;
+    if (voted !== "1") {
+      return NextResponse.json(
+        { error: "Du skal stemme før du kan dele." },
+        { status: 403 }
+      );
+    }
+
     const json = await req.json();
     const parsed = schema.safeParse(json);
     if (!parsed.success) {

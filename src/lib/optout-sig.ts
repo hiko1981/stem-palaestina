@@ -1,4 +1,4 @@
-import { createHmac } from "crypto";
+import { createHmac, timingSafeEqual } from "crypto";
 
 function getSecret(): string {
   const secret = process.env.OPTOUT_SECRET;
@@ -14,5 +14,7 @@ export function signOptout(candidateId: number): string {
 }
 
 export function verifyOptout(candidateId: number, sig: string): boolean {
-  return signOptout(candidateId) === sig;
+  const expected = signOptout(candidateId);
+  if (sig.length !== expected.length) return false;
+  return timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
 }
