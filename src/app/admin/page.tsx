@@ -1283,8 +1283,8 @@ export default function AdminPage() {
         )}
       </section>
 
-      {/* Aktivitetslog (kun superadmin) */}
-      {adminRole === "master" && auditLog.length > 0 && (
+      {/* Aktivitetslog */}
+      {auditLog.length > 0 && (
         <section>
           <button
             onClick={() => setAuditOpen(!auditOpen)}
@@ -1336,7 +1336,7 @@ export default function AdminPage() {
                           )}
                         </p>
                       </div>
-                      {canReverse && (
+                      {canReverse && adminRole === "master" && (
                         <button
                           onClick={() => reverseAudit(entry.id)}
                           className="shrink-0 text-xs text-amber-600 hover:text-amber-700 hover:underline px-2 py-1 min-h-[36px]"
