@@ -52,8 +52,8 @@ export async function GET(req: NextRequest) {
     response.qrUrl = `${BASE_URL}/admin/verify?token=${session.challenge3}`;
   }
 
-  if (session.step === "authenticated" && session.jwt) {
-    response.jwt = session.jwt;
+  if (session.step === "authenticated" && session.exchangeCode) {
+    response.exchangeCode = session.exchangeCode;
   }
 
   return NextResponse.json(response);

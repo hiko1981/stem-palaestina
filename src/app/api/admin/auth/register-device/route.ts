@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomInt, timingSafeEqual } from "crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { prisma } from "@/lib/prisma";
 import { generateJwt } from "@/lib/admin-auth";
+import { sendSms } from "@/lib/sms";
+import {
+  storeRegVerifyCode,
+  getRegVerifyData,
+  deleteRegVerifyData,
+} from "@/lib/admin-session";
 
 /**
  * POST: Register a device using an invite token.
- * Registers device + issues JWT cookie → user is immediately logged in.
- * Body: { token: string, deviceId: string, label?: string }
+ *
+ * Two-step flow:
+ *   Step 1 (no `code`): validate invite, send SMS verification code → { needsVerification }
+ *   Step 2 (with `code`): verify code, register device, issue JWT cookie
  */
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") || "unknown";
@@ -23,6 +32,7 @@ export async function POST(req: NextRequest) {
     deviceId?: string;
     label?: string;
     publicKey?: string;
+    code?: string;
   };
   try {
     body = await req.json();
@@ -30,10 +40,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Ugyldig body" }, { status: 400 });
   }
 
-  const { token, deviceId, label } = body;
+  const { token, deviceId, label, publicKey, code } = body;
   if (!token || !deviceId) {
     return NextResponse.json(
       { error: "Mangler token eller deviceId" },
+      { status: 400 }
+    );
+  }
+
+  // Require cryptographic public key
+  if (!publicKey) {
+    return NextResponse.json(
+      { error: "Kryptografisk nøgle påkrævet" },
       { status: 400 }
     );
   }
@@ -58,6 +76,84 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Link er udløbet" }, { status: 400 });
   }
 
+  // Invite must be tied to a phone number
+  if (!invite.phone) {
+    return NextResponse.json(
+      { error: "Invitation mangler telefonnummer" },
+      { status: 400 }
+    );
+  }
+
+  // ── Step 1: no code → send SMS verification ──────────────────────────
+  if (!code) {
+    const existing = await getRegVerifyData(token);
+    if (existing && existing.attempts >= 3) {
+      return NextResponse.json(
+        { error: "For mange forsøg. Bed om ny invitation." },
+        { status: 429 }
+      );
+    }
+
+    const verifyCode = String(randomInt(100000, 1000000));
+    await storeRegVerifyCode(token, {
+      code: verifyCode,
+      phone: invite.phone,
+      attempts: 0,
+    });
+
+    try {
+      await sendSms(
+        invite.phone,
+        `Din bekræftelseskode for Stem Palæstina admin:\n\n${verifyCode}\n\nKoden udløber om 5 minutter.`
+      );
+    } catch {
+      await deleteRegVerifyData(token);
+      return NextResponse.json(
+        { error: "Kunne ikke sende SMS. Prøv igen." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      needsVerification: true,
+      phoneLast4: invite.phone.slice(-4),
+    });
+  }
+
+  // ── Step 2: verify code → complete registration ──────────────────────
+  const verifyData = await getRegVerifyData(token);
+  if (!verifyData) {
+    return NextResponse.json(
+      { error: "Bekræftelseskode udløbet. Prøv igen uden kode." },
+      { status: 400 }
+    );
+  }
+
+  if (verifyData.attempts >= 3) {
+    await deleteRegVerifyData(token);
+    return NextResponse.json(
+      { error: "For mange forsøg. Bed om ny invitation." },
+      { status: 429 }
+    );
+  }
+
+  // Timing-safe comparison of verification code
+  const codeMatch =
+    code.length === verifyData.code.length &&
+    timingSafeEqual(Buffer.from(code), Buffer.from(verifyData.code));
+
+  if (!codeMatch) {
+    verifyData.attempts++;
+    await storeRegVerifyCode(token, verifyData);
+    return NextResponse.json(
+      { error: "Forkert kode. Prøv igen." },
+      { status: 400 }
+    );
+  }
+
+  // Code verified — clean up
+  await deleteRegVerifyData(token);
+
   // Find or create admin user
   let adminUser;
   if (invite.email) {
@@ -76,14 +172,13 @@ export async function POST(req: NextRequest) {
       },
     });
   } else if (invite.name && !adminUser.name) {
-    // Update name if it wasn't set before
     adminUser = await prisma.adminUser.update({
       where: { id: adminUser.id },
       data: { name: invite.name },
     });
   }
 
-  // Register device with public key
+  // Register device with public key (required)
   await prisma.adminDevice.upsert({
     where: {
       adminUserId_deviceId: {
@@ -94,13 +189,13 @@ export async function POST(req: NextRequest) {
     create: {
       adminUserId: adminUser.id,
       deviceId,
-      publicKey: body.publicKey || null,
+      publicKey,
       label: label || null,
     },
     update: {
       active: true,
       lastUsedAt: new Date(),
-      publicKey: body.publicKey || undefined,
+      publicKey,
       label: label || undefined,
     },
   });
@@ -111,7 +206,7 @@ export async function POST(req: NextRequest) {
     data: { usedAt: new Date() },
   });
 
-  // Issue JWT and set cookie → logged in immediately
+  // Issue JWT and set cookie
   const jwt = await generateJwt({
     sub: String(adminUser.id),
     email: adminUser.email,

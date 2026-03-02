@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import {
@@ -8,11 +8,22 @@ import {
   generateKeyPair,
 } from "@/lib/admin-device-crypto";
 
+type Status = "loading" | "registering" | "verify" | "success" | "error" | "no-token";
+
 export default function SetupPage() {
-  const [status, setStatus] = useState<
-    "loading" | "registering" | "success" | "error" | "no-token"
-  >("loading");
+  const [status, setStatus] = useState<Status>("loading");
   const [message, setMessage] = useState("");
+  const [phoneLast4, setPhoneLast4] = useState("");
+  const [code, setCode] = useState("");
+  const [codeError, setCodeError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const regRef = useRef<{
+    token: string;
+    deviceId: string;
+    publicKey: string;
+    label: string;
+  } | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -26,7 +37,6 @@ export default function SetupPage() {
       setStatus("registering");
       const deviceId = getDeviceId();
 
-      // Generate ECDSA keypair — private key stored non-extractable in IndexedDB
       let publicKey: string;
       try {
         publicKey = await generateKeyPair();
@@ -44,6 +54,8 @@ export default function SetupPage() {
       else if (/Mac/.test(ua)) label = "Mac";
       else if (/Windows/.test(ua)) label = "Windows";
 
+      regRef.current = { token, deviceId, publicKey, label };
+
       try {
         const res = await fetch("/api/admin/auth/register-device", {
           method: "POST",
@@ -51,6 +63,13 @@ export default function SetupPage() {
           body: JSON.stringify({ token, deviceId, label, publicKey }),
         });
         const data = await res.json();
+
+        if (data.needsVerification) {
+          setPhoneLast4(data.phoneLast4 || "");
+          setStatus("verify");
+          return;
+        }
+
         if (!res.ok) {
           setStatus("error");
           setMessage(data.error || "Registrering fejlede");
@@ -64,6 +83,34 @@ export default function SetupPage() {
       }
     })();
   }, []);
+
+  const handleVerify = async () => {
+    if (!regRef.current || code.length !== 6) return;
+    setSubmitting(true);
+    setCodeError("");
+
+    try {
+      const res = await fetch("/api/admin/auth/register-device", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...regRef.current, code }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setCodeError(data.error || "Verifikation fejlede");
+        setCode("");
+        setSubmitting(false);
+        return;
+      }
+
+      setStatus("success");
+      setMessage("Enhed registreret! Du er nu logget ind.");
+    } catch {
+      setCodeError("Netværksfejl");
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-sm px-4 py-16">
@@ -82,6 +129,39 @@ export default function SetupPage() {
               <p className="text-sm text-gray-500">
                 Registrerer din enhed...
               </p>
+            </>
+          )}
+
+          {status === "verify" && (
+            <>
+              <p className="text-sm text-gray-600">
+                Indtast bekræftelseskoden sendt til ****{phoneLast4}
+              </p>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={6}
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+                placeholder="000000"
+                className="mx-auto block w-40 rounded-lg border border-gray-300 px-4 py-3 text-center text-2xl tracking-[0.3em] font-mono focus:border-melon-green focus:outline-none focus:ring-1 focus:ring-melon-green"
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && code.length === 6) handleVerify();
+                }}
+              />
+              {codeError && (
+                <p className="text-sm text-melon-red">{codeError}</p>
+              )}
+              <Button
+                onClick={handleVerify}
+                loading={submitting}
+                disabled={code.length !== 6}
+                className="w-full"
+              >
+                Bekræft
+              </Button>
             </>
           )}
 

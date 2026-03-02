@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { prisma } from "@/lib/prisma";
+import { sendSms } from "@/lib/sms";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const BASE_URL =
@@ -72,9 +73,30 @@ export async function POST(req: NextRequest) {
 
   const setupUrl = `${BASE_URL}/admin/setup?token=${invite.token}`;
 
+  // Send via SMS — never return the URL in the response
+  const adminPhone = admin.phone || process.env.ADMIN_PHONE;
+  if (!adminPhone) {
+    return NextResponse.json(
+      { error: "Admin telefonnummer mangler. Sæt ADMIN_PHONE env var." },
+      { status: 500 }
+    );
+  }
+
+  try {
+    await sendSms(
+      adminPhone,
+      `Din admin-setup-link for Stem Palæstina:\n\n${setupUrl}\n\nLinket udløber om 1 time.`
+    );
+  } catch (err) {
+    console.error("SMS send error:", err);
+    return NextResponse.json(
+      { error: "Kunne ikke sende SMS. Tjek Twilio-konfiguration." },
+      { status: 500 }
+    );
+  }
+
   return NextResponse.json({
     ok: true,
-    setupUrl,
-    message: `Åbn dette link på din telefon for at registrere den: ${setupUrl}`,
+    message: "Setup-link sendt via SMS.",
   });
 }

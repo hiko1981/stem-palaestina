@@ -1,37 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwt } from "@/lib/admin-auth";
+import { consumeExchangeCode } from "@/lib/admin-session";
 
 const MAX_TTL = 30 * 60; // 30 minutes max for PC sessions
 
 /**
- * POST: Set JWT as HttpOnly cookie.
- * Body: { jwt: string, maxAge?: number }
+ * POST: Exchange a one-time code for an HttpOnly JWT cookie.
+ * Body: { exchangeCode: string, maxAge?: number }
  * maxAge in seconds, capped at 30 min for PC sessions.
- * Omit maxAge for persistent 24h cookie (phone device login).
  */
 export async function POST(req: NextRequest) {
-  let body: { jwt?: string; maxAge?: number };
+  let body: { exchangeCode?: string; maxAge?: number };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Ugyldig body" }, { status: 400 });
   }
 
-  const { jwt } = body;
-  if (!jwt) {
-    return NextResponse.json({ error: "Mangler jwt" }, { status: 400 });
+  const { exchangeCode } = body;
+  if (!exchangeCode) {
+    return NextResponse.json(
+      { error: "Mangler exchangeCode" },
+      { status: 400 }
+    );
   }
 
+  // One-time exchange: retrieve JWT, then delete the code
+  const jwt = await consumeExchangeCode(exchangeCode);
+  if (!jwt) {
+    return NextResponse.json(
+      { error: "Ugyldig eller allerede brugt kode" },
+      { status: 400 }
+    );
+  }
+
+  // Verify the JWT is still valid
   const payload = await verifyJwt(jwt);
   if (!payload) {
     return NextResponse.json({ error: "Ugyldig JWT" }, { status: 400 });
   }
 
-  // Cap maxAge at MAX_TTL if provided
   const maxAge =
     body.maxAge != null
-      ? Math.min(Math.max(body.maxAge, 60), MAX_TTL) // min 1 min, max 30 min
-      : 24 * 60 * 60; // default 24h (phone)
+      ? Math.min(Math.max(body.maxAge, 60), MAX_TTL)
+      : 24 * 60 * 60;
 
   const response = NextResponse.json({ ok: true });
   response.cookies.set("admin_token", jwt, {

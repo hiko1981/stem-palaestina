@@ -56,6 +56,7 @@ export async function POST(req: NextRequest) {
     normalizedPhone = "+45" + normalizedPhone;
   }
 
+  // Send SMS first — invite only persists if SMS succeeds
   const invite = await prisma.adminInvite.create({
     data: {
       invitedBy: Number(auth.sub),
@@ -67,7 +68,6 @@ export async function POST(req: NextRequest) {
 
   const setupUrl = `${BASE_URL}/admin/setup?token=${invite.token}`;
 
-  // Send SMS
   const greeting = name?.trim() ? `Hej ${name.trim()}` : "Hej";
   const smsBody = [
     `${greeting}, du er inviteret som administrator for Stem Palæstina.`,
@@ -78,20 +78,20 @@ export async function POST(req: NextRequest) {
     `Bemærk: Denne telefon godkendes som din administrator-enhed. Linket udløber om 1 time.`,
   ].join("\n");
 
-  let smsSent = false;
   try {
     await sendSms(normalizedPhone, smsBody);
-    smsSent = true;
   } catch (err) {
     console.error("SMS send error:", err);
+    // Delete invite — it must never exist without having been sent via SMS
+    await prisma.adminInvite.delete({ where: { id: invite.id } });
+    return NextResponse.json(
+      { error: "Kunne ikke sende SMS. Tjek Twilio-konfiguration." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({
     ok: true,
-    smsSent,
-    message: smsSent
-      ? `SMS sendt til ${normalizedPhone}`
-      : `SMS kunne ikke sendes. Del linket manuelt: ${setupUrl}`,
-    setupUrl: smsSent ? undefined : setupUrl,
+    message: `Invitation sendt via SMS til ${normalizedPhone}`,
   });
 }

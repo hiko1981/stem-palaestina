@@ -3,6 +3,10 @@ import { randomBytes } from "crypto";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { prisma } from "@/lib/prisma";
 import { generateJwt, verifyDeviceSignature } from "@/lib/admin-auth";
+import {
+  storeDeviceChallenge,
+  verifyAndConsumeChallenge,
+} from "@/lib/admin-session";
 
 /**
  * POST: Challenge-response login for registered devices.
@@ -51,21 +55,31 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Step 1: No signature → return challenge
-  if (!body.challenge || !body.signature) {
-    // If device has no public key (legacy), fall back to simple login
-    if (!device.publicKey) {
-      return issueJwt(device);
-    }
+  // Require cryptographic key — no legacy fallback
+  if (!device.publicKey) {
+    return NextResponse.json(
+      { error: "Enhed skal genregistreres med kryptografisk nøgle." },
+      { status: 403 }
+    );
+  }
 
+  // Step 1: No signature → generate and store challenge server-side
+  if (!body.challenge || !body.signature) {
     const challenge = randomBytes(32).toString("hex");
+    await storeDeviceChallenge(deviceId, challenge);
     return NextResponse.json({ challenge });
   }
 
-  // Step 2: Verify signature
-  if (!device.publicKey) {
-    // Legacy device without crypto — allow simple login
-    return issueJwt(device);
+  // Step 2: Verify challenge was issued by this server (prevents replay)
+  const challengeValid = await verifyAndConsumeChallenge(
+    deviceId,
+    body.challenge
+  );
+  if (!challengeValid) {
+    return NextResponse.json(
+      { error: "Ugyldig eller udløbet challenge" },
+      { status: 403 }
+    );
   }
 
   const valid = verifyDeviceSignature(

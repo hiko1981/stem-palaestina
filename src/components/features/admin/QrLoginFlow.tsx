@@ -78,14 +78,14 @@ export default function QrLoginFlow({ onAuthenticated }: QrLoginFlowProps) {
           if (data.qrUrl) setQrUrl(data.qrUrl);
         }
 
-        if (data.step === "authenticated" && data.jwt) {
+        if (data.step === "authenticated" && data.exchangeCode) {
           doneRef.current = true;
           stopPolling();
-          // Set cookie with chosen TTL (PC only)
+          // Exchange one-time code for HttpOnly cookie
           await fetch("/api/admin/auth/token", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ jwt: data.jwt, maxAge: ttl }),
+            body: JSON.stringify({ exchangeCode: data.exchangeCode, maxAge: ttl }),
           });
           onAuthenticated();
         }

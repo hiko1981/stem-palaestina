@@ -14,6 +14,7 @@ export interface QrSession {
   deviceId: string | null;
   adminUserId: number | null;
   jwt: string | null;
+  exchangeCode: string | null;
   createdAt: number;
 }
 
@@ -114,6 +115,7 @@ export async function createSession(): Promise<QrSession> {
     deviceId: null,
     adminUserId: null,
     jwt: null,
+    exchangeCode: null,
     createdAt: Date.now(),
   };
   await setVal(sessKey(session.id), JSON.stringify(session), SESSION_TTL);
@@ -171,12 +173,84 @@ export async function markAuthenticated(
   s: QrSession,
   jwt: string
 ): Promise<void> {
+  // Store JWT behind a one-time exchange code — never in the session itself
+  const exchangeCode = randomBytes(32).toString("hex");
+  await setVal(`qr:exchange:${exchangeCode}`, jwt, 60);
+
   s.step = "authenticated";
-  s.jwt = jwt;
+  s.jwt = null;
+  s.exchangeCode = exchangeCode;
   await saveSession(s);
+}
+
+/** Consume a one-time exchange code → returns JWT, then deletes it */
+export async function consumeExchangeCode(
+  code: string
+): Promise<string | null> {
+  const key = `qr:exchange:${code}`;
+  const jwt = await getVal(key);
+  if (!jwt) return null;
+  await delVal(key);
+  return jwt;
 }
 
 export async function markFailed(s: QrSession): Promise<void> {
   s.step = "failed";
   await saveSession(s);
+}
+
+// ---------------------------------------------------------------------------
+// Device login: server-side challenge storage (prevents replay)
+// ---------------------------------------------------------------------------
+
+const CHALLENGE_TTL = 60; // 60 seconds
+
+export async function storeDeviceChallenge(
+  deviceId: string,
+  challenge: string
+): Promise<void> {
+  await setVal(`dev:ch:${deviceId}`, challenge, CHALLENGE_TTL);
+}
+
+export async function verifyAndConsumeChallenge(
+  deviceId: string,
+  challenge: string
+): Promise<boolean> {
+  const key = `dev:ch:${deviceId}`;
+  const stored = await getVal(key);
+  if (!stored || stored !== challenge) return false;
+  await delVal(key);
+  return true;
+}
+
+// ---------------------------------------------------------------------------
+// Registration SMS verification
+// ---------------------------------------------------------------------------
+
+const REG_VERIFY_TTL = 300; // 5 minutes
+
+export interface RegVerifyData {
+  code: string;
+  phone: string;
+  attempts: number;
+}
+
+export async function storeRegVerifyCode(
+  inviteToken: string,
+  data: RegVerifyData
+): Promise<void> {
+  await setVal(`reg:v:${inviteToken}`, JSON.stringify(data), REG_VERIFY_TTL);
+}
+
+export async function getRegVerifyData(
+  inviteToken: string
+): Promise<RegVerifyData | null> {
+  const raw = await getVal(`reg:v:${inviteToken}`);
+  return raw ? (JSON.parse(raw) as RegVerifyData) : null;
+}
+
+export async function deleteRegVerifyData(
+  inviteToken: string
+): Promise<void> {
+  await delVal(`reg:v:${inviteToken}`);
 }
