@@ -391,5 +391,18 @@
     "confirming": "Abmeldung...",
     "confirmButton": "Abmeldung bestätigen",
     "cancel": "Abbrechen"
+  },
+  "profileFrame": {
+    "title": "Profilrahmen-Generator",
+    "subtitle": "Erstelle dein Profilbild mit Rahmen — zeige, dass du abgestimmt hast",
+    "uploadLabel": "Lade dein Foto hoch",
+    "uploadHint": "JPG oder PNG, max. 10 MB",
+    "changeImage": "Bild ändern",
+    "download": "Herunterladen",
+    "share": "Teilen",
+    "stampText": "Ich habe für Palästina gestimmt",
+    "privacyNote": "Dein Bild verlässt nie dein Gerät — alles passiert lokal.",
+    "startOver": "Neu starten",
+    "imageTooLarge": "Bild zu groß (max. 10 MB)"
   }
 }

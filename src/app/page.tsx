@@ -17,6 +17,7 @@ import PublicVoteBar from "@/components/features/PublicVoteBar";
 import FT2026Countdown from "@/components/features/FT2026Countdown";
 import ChevronIcon from "@/components/ui/ChevronIcon";
 import { useTranslations, useLocale } from "next-intl";
+import Link from "next/link";
 
 type ActivePanel = "voter" | "candidate" | "invite" | null;
 
@@ -120,6 +121,7 @@ export default function Home() {
   const h = useTranslations("home");
   const sp = useTranslations("sharePanel");
   const r = useTranslations("results");
+  const pf = useTranslations("profileFrame");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -335,6 +337,19 @@ export default function Home() {
                 </h3>
                 <SharePanel />
               </div>
+
+              {/* Profile frame CTA */}
+              <Link
+                href="/profilramme"
+                className="block rounded-lg border border-melon-green/20 bg-melon-green/5 px-4 py-3.5 text-center hover:bg-melon-green/10 transition-colors"
+              >
+                <span className="text-sm font-semibold text-melon-green">
+                  {pf("title")}
+                </span>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {pf("subtitle")}
+                </p>
+              </Link>
             </div>
           )}
 

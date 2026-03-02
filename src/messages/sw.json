@@ -391,5 +391,18 @@
     "confirming": "Inajitoa...",
     "confirmButton": "Thibitisha kujitoa",
     "cancel": "Ghairi"
+  },
+  "profileFrame": {
+    "title": "Kitengeneza fremu ya wasifu",
+    "subtitle": "Tengeneza picha yako ya wasifu na fremu — onyesha kuwa umepiga kura",
+    "uploadLabel": "Pakia picha yako",
+    "uploadHint": "JPG au PNG, upeo wa MB 10",
+    "changeImage": "Badilisha picha",
+    "download": "Pakua",
+    "share": "Shiriki",
+    "stampText": "Nilipiga kura kwa Palestina",
+    "privacyNote": "Picha yako haiondoki kwenye kifaa chako kamwe — kila kitu kinafanyika ndani ya kifaa.",
+    "startOver": "Anza upya",
+    "imageTooLarge": "Picha ni kubwa sana (upeo wa MB 10)"
   }
 }

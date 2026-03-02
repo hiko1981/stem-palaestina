@@ -391,5 +391,18 @@
     "confirming": "正在退订...",
     "confirmButton": "确认退订",
     "cancel": "取消"
+  },
+  "profileFrame": {
+    "title": "头像框生成器",
+    "subtitle": "用相框创建你的头像 — 展示你已投票",
+    "uploadLabel": "上传你的照片",
+    "uploadHint": "JPG 或 PNG，最大 10 MB",
+    "changeImage": "更换图片",
+    "download": "下载",
+    "share": "分享",
+    "stampText": "我为巴勒斯坦投票了",
+    "privacyNote": "你的图片不会离开你的设备 — 一切在本地完成。",
+    "startOver": "重新开始",
+    "imageTooLarge": "图片太大（最大 10 MB）"
   }
 }

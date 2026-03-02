@@ -393,5 +393,18 @@
     "confirming": "Opting out...",
     "confirmButton": "Confirm opt-out",
     "cancel": "Cancel"
+  },
+  "profileFrame": {
+    "title": "Profile frame generator",
+    "subtitle": "Create your profile picture with a frame — show that you voted",
+    "uploadLabel": "Upload your photo",
+    "uploadHint": "JPG or PNG, max 10 MB",
+    "changeImage": "Change image",
+    "download": "Download",
+    "share": "Share",
+    "stampText": "I voted Palestine",
+    "privacyNote": "Your image never leaves your device — everything happens locally.",
+    "startOver": "Start over",
+    "imageTooLarge": "Image too large (max 10 MB)"
   }
 }

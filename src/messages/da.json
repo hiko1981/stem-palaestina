@@ -392,5 +392,18 @@
     "confirming": "Afmelder...",
     "confirmButton": "Bekræft afmelding",
     "cancel": "Annullér"
+  },
+  "profileFrame": {
+    "title": "Profilramme-generator",
+    "subtitle": "Lav dit profilbillede med ramme — vis at du har stemt",
+    "uploadLabel": "Upload dit billede",
+    "uploadHint": "JPG eller PNG, max 10 MB",
+    "changeImage": "Skift billede",
+    "download": "Download",
+    "share": "Del",
+    "stampText": "Jeg har stemt Palæstina",
+    "privacyNote": "Dit billede forlader aldrig din enhed — alt sker lokalt.",
+    "startOver": "Start forfra",
+    "imageTooLarge": "Billedet er for stort (max 10 MB)"
   }
 }

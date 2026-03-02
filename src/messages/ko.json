@@ -391,5 +391,18 @@
     "confirming": "수신 거부 처리 중...",
     "confirmButton": "수신 거부 확인",
     "cancel": "취소"
+  },
+  "profileFrame": {
+    "title": "프로필 프레임 생성기",
+    "subtitle": "프레임이 있는 프로필 사진 만들기 — 투표했음을 보여주세요",
+    "uploadLabel": "사진 업로드",
+    "uploadHint": "JPG 또는 PNG, 최대 10 MB",
+    "changeImage": "이미지 변경",
+    "download": "다운로드",
+    "share": "공유",
+    "stampText": "팔레스타인에 투표했습니다",
+    "privacyNote": "이미지는 기기를 떠나지 않습니다 — 모든 처리가 로컬에서 이루어집니다.",
+    "startOver": "처음부터",
+    "imageTooLarge": "이미지가 너무 큽니다 (최대 10 MB)"
   }
 }

@@ -391,5 +391,18 @@
     "confirming": "Cancelando...",
     "confirmButton": "Confirmar cancelación",
     "cancel": "Cancelar"
+  },
+  "profileFrame": {
+    "title": "Generador de marco de perfil",
+    "subtitle": "Crea tu foto de perfil con un marco — muestra que votaste",
+    "uploadLabel": "Sube tu foto",
+    "uploadHint": "JPG o PNG, máx. 10 MB",
+    "changeImage": "Cambiar imagen",
+    "download": "Descargar",
+    "share": "Compartir",
+    "stampText": "Voté por Palestina",
+    "privacyNote": "Tu imagen nunca sale de tu dispositivo — todo ocurre localmente.",
+    "startOver": "Empezar de nuevo",
+    "imageTooLarge": "Imagen demasiado grande (máx. 10 MB)"
   }
 }

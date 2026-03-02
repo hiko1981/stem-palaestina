@@ -391,5 +391,18 @@
     "confirming": "Çıkılıyor...",
     "confirmButton": "Abonelikten çıkmayı onayla",
     "cancel": "İptal"
+  },
+  "profileFrame": {
+    "title": "Profil çerçevesi oluşturucu",
+    "subtitle": "Çerçeveli profil fotoğrafını oluştur — oy verdiğini göster",
+    "uploadLabel": "Fotoğrafını yükle",
+    "uploadHint": "JPG veya PNG, maks. 10 MB",
+    "changeImage": "Resmi değiştir",
+    "download": "İndir",
+    "share": "Paylaş",
+    "stampText": "Filistin için oy verdim",
+    "privacyNote": "Fotoğrafın cihazından asla ayrılmaz — her şey yerel olarak gerçekleşir.",
+    "startOver": "Baştan başla",
+    "imageTooLarge": "Resim çok büyük (maks. 10 MB)"
   }
 }

@@ -391,5 +391,18 @@
     "confirming": "配信停止処理中...",
     "confirmButton": "配信停止を確認",
     "cancel": "キャンセル"
+  },
+  "profileFrame": {
+    "title": "プロフィールフレーム生成",
+    "subtitle": "フレーム付きプロフィール写真を作成 — 投票したことを示そう",
+    "uploadLabel": "写真をアップロード",
+    "uploadHint": "JPGまたはPNG、最大10 MB",
+    "changeImage": "画像を変更",
+    "download": "ダウンロード",
+    "share": "シェア",
+    "stampText": "パレスチナに投票しました",
+    "privacyNote": "画像はデバイスから送信されません — すべてローカルで処理されます。",
+    "startOver": "やり直す",
+    "imageTooLarge": "画像が大きすぎます（最大10 MB）"
   }
 }

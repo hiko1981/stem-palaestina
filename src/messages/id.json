@@ -391,5 +391,18 @@
     "confirming": "Memproses penghentian...",
     "confirmButton": "Konfirmasi berhenti berlangganan",
     "cancel": "Batal"
+  },
+  "profileFrame": {
+    "title": "Generator bingkai profil",
+    "subtitle": "Buat foto profil dengan bingkai — tunjukkan bahwa kamu sudah memilih",
+    "uploadLabel": "Unggah fotomu",
+    "uploadHint": "JPG atau PNG, maks. 10 MB",
+    "changeImage": "Ganti gambar",
+    "download": "Unduh",
+    "share": "Bagikan",
+    "stampText": "Saya memilih Palestina",
+    "privacyNote": "Fotomu tidak pernah meninggalkan perangkatmu — semuanya terjadi secara lokal.",
+    "startOver": "Mulai ulang",
+    "imageTooLarge": "Gambar terlalu besar (maks. 10 MB)"
   }
 }

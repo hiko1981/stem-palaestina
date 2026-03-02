@@ -391,5 +391,18 @@
     "confirming": "A cancelar...",
     "confirmButton": "Confirmar cancelamento",
     "cancel": "Cancelar"
+  },
+  "profileFrame": {
+    "title": "Gerador de moldura de perfil",
+    "subtitle": "Crie sua foto de perfil com moldura — mostre que você votou",
+    "uploadLabel": "Envie sua foto",
+    "uploadHint": "JPG ou PNG, máx. 10 MB",
+    "changeImage": "Trocar imagem",
+    "download": "Baixar",
+    "share": "Compartilhar",
+    "stampText": "Eu votei Palestina",
+    "privacyNote": "Sua imagem nunca sai do seu dispositivo — tudo acontece localmente.",
+    "startOver": "Recomeçar",
+    "imageTooLarge": "Imagem muito grande (máx. 10 MB)"
   }
 }

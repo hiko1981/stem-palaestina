@@ -391,5 +391,18 @@
     "confirming": "Désinscription...",
     "confirmButton": "Confirmer la désinscription",
     "cancel": "Annuler"
+  },
+  "profileFrame": {
+    "title": "Générateur de cadre de profil",
+    "subtitle": "Crée ta photo de profil avec un cadre — montre que tu as voté",
+    "uploadLabel": "Télécharge ta photo",
+    "uploadHint": "JPG ou PNG, max 10 Mo",
+    "changeImage": "Changer l'image",
+    "download": "Télécharger",
+    "share": "Partager",
+    "stampText": "J'ai voté Palestine",
+    "privacyNote": "Ton image ne quitte jamais ton appareil — tout se passe localement.",
+    "startOver": "Recommencer",
+    "imageTooLarge": "Image trop grande (max 10 Mo)"
   }
 }

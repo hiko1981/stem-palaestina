@@ -390,5 +390,18 @@
     "confirming": "Odjava u toku...",
     "confirmButton": "Potvrdi odjavu",
     "cancel": "Otkaži"
+  },
+  "profileFrame": {
+    "title": "Generator okvira za profil",
+    "subtitle": "Napravi svoju profilnu sliku s okvirom — pokaži da si glasao/la",
+    "uploadLabel": "Učitaj svoju fotografiju",
+    "uploadHint": "JPG ili PNG, maks. 10 MB",
+    "changeImage": "Promijeni sliku",
+    "download": "Preuzmi",
+    "share": "Podijeli",
+    "stampText": "Glasao/la sam za Palestinu",
+    "privacyNote": "Tvoja slika nikada ne napušta tvoj uređaj — sve se odvija lokalno.",
+    "startOver": "Počni ispočetka",
+    "imageTooLarge": "Slika je prevelika (maks. 10 MB)"
   }
 }
